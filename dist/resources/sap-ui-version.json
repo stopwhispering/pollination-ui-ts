@@ -1,0 +1,38 @@
+{
+	"name": "pollination-app",
+	"version": "0.2.0",
+	"buildTimestamp": "202212172114",
+	"scmRevision": "",
+	"libraries": [
+		{
+			"name": "sap.f",
+			"version": "1.104.0",
+			"buildTimestamp": "202212172114",
+			"scmRevision": ""
+		},
+		{
+			"name": "sap.m",
+			"version": "1.104.0",
+			"buildTimestamp": "202212172114",
+			"scmRevision": ""
+		},
+		{
+			"name": "sap.ui.core",
+			"version": "1.104.0",
+			"buildTimestamp": "202212172114",
+			"scmRevision": ""
+		},
+		{
+			"name": "sap.ui.layout",
+			"version": "1.104.0",
+			"buildTimestamp": "202212172114",
+			"scmRevision": ""
+		},
+		{
+			"name": "sap.ui.unified",
+			"version": "1.104.0",
+			"buildTimestamp": "202212172114",
+			"scmRevision": ""
+		}
+	]
+}

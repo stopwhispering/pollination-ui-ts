@@ -1,0 +1,88 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+ 
+    <Dialog 
+        id="addActiveFlorescence"
+    	title='Add active Florescence'
+		class="sapUiContentPadding"
+		afterClose=".onAfterCloseAddActiveFlorescence">
+ 
+	    <content>
+            <VBox>
+                <SegmentedButton 
+                    selectedKey="{newFlorescenceModel>/florescence_status}"
+                    enabled="false"
+                    width="24.5rem"
+                    class="sapUiSmallMarginBottom">
+                    <items>
+                        <SegmentedButtonItem text="Inflorescence appeared" key="inflorescence_appeared" />
+                        <SegmentedButtonItem text="Flowering" key="flowering" />
+                        <SegmentedButtonItem text="Finished" key="finished"/>
+                    </items>
+                </SegmentedButton>
+
+                <HBox>
+                    <VBox>
+                        <Label 
+                            text="{i18n>AddActiveFlorescenceFragment.Plant}"/>
+                        <ComboBox
+                            items="{
+                                path: 'plantsForNewFlorescenceModel>/',
+                                sorter: { path: 'plant_name' }
+                            }"
+                            selectedKey="{newFlorescenceModel>/plant_id}"
+                            class="sapUiTinyMarginEnd"
+                            width="15rem">
+                            <core:Item 
+                                key="{plantsForNewFlorescenceModel>plant_id}" 
+                                text="{plantsForNewFlorescenceModel>plant_id} {plantsForNewFlorescenceModel>plant_name}" />
+                        </ComboBox>
+                    </VBox>
+
+                    <VBox>
+                        <Label 
+                            text="{i18n>AddActiveFlorescenceFragment.InflorescenceAppearedAt}"/>
+                        <HBox>
+                            <MaskInput 
+                                value="{newFlorescenceModel>/inflorescence_appearance_date}"
+                                mask="9999-99-99" 
+                                width="9rem"
+                                class="sapUiTinyMarginEnd"  />
+                            <Button 
+                                icon="sap-icon://calendar"
+                                type="Transparent"
+                                press=".onSetToday('newFlorescenceModel', 'inflorescence_appearance_date')"/>
+                        </HBox>
+                    </VBox>
+
+                </HBox>
+
+                <Label 
+                    text="{i18n>AddActiveFlorescenceFragment.Comment}"/>
+                <TextArea
+                    value="{newFlorescenceModel>/comment}"
+                    width="24.5rem"
+                    class="sapUiMediumMarginEnd"
+                    maxLength="40"
+                    placeholder="(e.g. location if multiple plants in one container)"/>
+
+            </VBox>
+
+		</content>
+
+		<beginButton>
+			<Button
+				type="Emphasized"
+				text="{i18n>AddActiveFlorescenceFragment.Submit}"
+                enabled="{= !!${newFlorescenceModel>/plant_id} }"
+				press=".onPressSubmitNewFlorescence"/>
+		</beginButton>
+		
+		<endButton>
+			<Button
+				text="{i18n>AddActiveFlorescenceFragment.Cancel}"
+				press=".onCancelDialog('addActiveFlorescence')"/>
+		</endButton>				
+    </Dialog>
+</core:FragmentDefinition>

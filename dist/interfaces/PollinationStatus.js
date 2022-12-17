@@ -1,0 +1,1 @@
+sap.ui.define([],function(){var e;(function(e){e["ATTEMPT"]="attempt";e["SEED_CAPSULE"]="seed_capsule";e["SEED"]="seed";e["GERMINATED"]="germinated";e["UNKNOWN"]="unknown"})(e||(e={}));var n={__esModule:true};n.PollinationStatus=e;return n});

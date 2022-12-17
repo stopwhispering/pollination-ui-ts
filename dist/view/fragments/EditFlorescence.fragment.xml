@@ -1,0 +1,167 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core">
+	<Dialog
+		id="editFlorescence"
+		title="Edit Florescence (ID {editedFlorescenceModel>/id})"
+		class="sapUiContentPadding"
+		afterClose=".onAfterCloseEditFlorescenceDialog">
+		<content>
+			<VBox>
+				<Text text="{editedFlorescenceModel>plant_name} {editedFlorescenceModel>plant_id}"/>
+				<SegmentedButton
+					selectedKey="{editedFlorescenceModel>/florescence_status}"
+					class="sapUiSmallMarginBottom"
+				>
+					<items>
+						<SegmentedButtonItem
+							text="Inflorescence appeared"
+							key="inflorescence_appeared"
+						/>
+						<SegmentedButtonItem
+							text="Flowering"
+							key="flowering"
+						/>
+						<SegmentedButtonItem
+							text="Finished"
+							key="finished"
+						/>
+					</items>
+				</SegmentedButton>
+				<Label text="Inflorescence appeared at"/>
+				<HBox>
+					<CheckBox selected="{editedFlorescenceModel>/inflorescence_appearance_date_known}"/>
+					<MaskInput
+						enabled="{editedFlorescenceModel>/inflorescence_appearance_date_known}"
+						value="{editedFlorescenceModel>/inflorescence_appearance_date}"
+						mask="9999-99-99"
+						width="6rem"
+						class="sapUiTinyMarginEnd"
+					/>
+					<Button
+						icon="sap-icon://calendar"
+						type="Transparent"
+						enabled="{editedFlorescenceModel>/inflorescence_appearance_date_known}"
+						press=".onPressEditFlorescenceSetToday('inflorescence_appearance_date')"
+					/>
+				</HBox>
+				<Label text="Comment"/>
+				<TextArea
+					value="{editedFlorescenceModel>/comment}"
+					class="sapUiMediumMarginEnd"
+					maxLength="40"
+					width="95%"
+					placeholder="(e.g. location if multiple plants in one container)"
+				/>
+				<Label text="First flower opened at"/>
+				<HBox>
+					<CheckBox
+						enabled="{= (${editedFlorescenceModel>/florescence_status} === 'flowering' 
+								|| ${editedFlorescenceModel>/florescence_status} === 'finished')
+							}"
+						selected="{editedFlorescenceModel>/first_flower_opening_date_known}"
+					/>
+					<MaskInput
+						enabled="{editedFlorescenceModel>/first_flower_opening_date_known}"
+						value="{editedFlorescenceModel>/first_flower_opening_date}"
+						mask="9999-99-99"
+						width="6rem"
+						class="sapUiTinyMarginEnd"
+					/>
+					<Button
+						icon="sap-icon://calendar"
+						type="Transparent"
+						enabled="{editedFlorescenceModel>/first_flower_opening_date_known}"
+						press=".onPressEditFlorescenceSetToday('first_flower_opening_date')"
+					/>
+				</HBox>
+				<Label text="Last flower closed at"/>
+				<HBox class="sapUiSmallMarginBottom">
+					<CheckBox
+						enabled="{= ${editedFlorescenceModel>/florescence_status} === 'finished'}"
+						selected="{editedFlorescenceModel>/last_flower_closing_date_known}"
+					/>
+					<MaskInput
+						enabled="{editedFlorescenceModel>/last_flower_closing_date_known}"
+						value="{editedFlorescenceModel>/last_flower_closing_date}"
+						mask="9999-99-99"
+						width="6rem"
+						class="sapUiTinyMarginEnd"
+					/>
+					<Button
+						icon="sap-icon://calendar"
+						type="Transparent"
+						enabled="{editedFlorescenceModel>/last_flower_closing_date_known}"
+						press=".onPressEditFlorescenceSetToday('last_flower_closing_date')"
+					/>
+				</HBox>
+				<VBox>
+					<Label
+						text="Branches"
+						labelFor="sliderBranches"
+					/>
+					<HBox>
+						<CheckBox selected="{editedFlorescenceModel>/branches_count_known}"/>
+						<Slider
+							id="sliderBranches"
+							enabled="{editedFlorescenceModel>/branches_count_known}"
+							value="{editedFlorescenceModel>/branches_count}"
+							inputsAsTooltips="true"
+							enableTickmarks="true"
+							min="1"
+							max="4"
+							class="sapUiMediumMarginBottom"
+							width="18rem"
+						/>
+					</HBox>
+				</VBox>
+				<VBox>
+					<Label
+						text="Flowers (first branch only)"
+						labelFor="inputFlowers"
+					/>
+					<HBox>
+						<CheckBox selected="{editedFlorescenceModel>/flowers_count_known}"/>
+						<Input
+							id="inputFlowers"
+							type="Number"
+							maxLength="2"
+							enabled="{editedFlorescenceModel>/flowers_count_known}"
+							value="{editedFlorescenceModel>/flowers_count}"
+							width="1.5rem"
+							class="sapUiMediumMarginEnd"
+						/>
+						<Slider
+							id="sliderFlowers"
+							enabled="{editedFlorescenceModel>/flowers_count_known}"
+							value="{editedFlorescenceModel>/flowers_count}"
+							inputsAsTooltips="true"
+							enableTickmarks="true"
+							min="1"
+							max="50"
+							class="sapUiMediumMarginBottom"
+							width="14.2rem"
+						/>
+					</HBox>
+				</VBox>
+			</VBox>
+		</content>
+		<buttons>
+			<Button
+				text="Delete"
+				icon="sap-icon://delete"
+				press=".onPressDeleteFlorescence"
+				type="Negative"
+			/>
+			<Button
+				type="Emphasized"
+				text="Submit"
+				press=".onPressSubmitEditFlorescence"
+			/>
+			<Button
+				text="Cancel"
+				press=".onCancelDialog('editFlorescence')"
+			/>
+		</buttons>
+	</Dialog>
+</c:FragmentDefinition>
