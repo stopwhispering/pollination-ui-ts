@@ -1,0 +1,22 @@
+<mvc:View
+	controllerName="pollination.ui.controller.App"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<App id="app">
+		<MessagePage
+			title="Pollination"
+			text="This is a UI5 TypeScript app"
+			icon="sap-icon://accept"
+			id="page"
+			description="">
+			<buttons>
+				<Button
+					text="Say Hello"
+					press="sayHello" />
+			</buttons>
+		</MessagePage>
+	</App>
+
+</mvc:View>

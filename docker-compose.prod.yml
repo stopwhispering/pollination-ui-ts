@@ -1,0 +1,14 @@
+services:
+      pollination-frontend:
+        restart: always
+
+        labels:
+          # make traefik use this sub-domain in entrypoing "https-ep" (as defined in docker-compose.yml)
+          # note: router name is arbitrary but must be unique among containers
+          - traefik.http.routers.pollination-frontend.entrypoints=https-ep
+          - traefik.http.routers.pollination-frontend.rule=Host(`pollination.astroloba.net`) && !PathPrefix(`/api`)
+          - traefik.http.routers.pollination-frontend.tls=true
+          - traefik.http.routers.pollination-frontend.tls.certresolver=le
+
+          # enable basic auth as defined in traefik's docker compose file
+          - traefik.http.routers.pollination-frontend.middlewares=my-basic-auth
