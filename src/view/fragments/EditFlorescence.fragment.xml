@@ -15,15 +15,15 @@
 				>
 					<items>
 						<SegmentedButtonItem
-							text="Inflorescence appeared"
+							text="{i18n>EditFlorescenceFragment.InflorescenceAppeared}"
 							key="inflorescence_appeared"
 						/>
 						<SegmentedButtonItem
-							text="Flowering"
+							text="{i18n>EditFlorescenceFragment.Flowering}"
 							key="flowering"
 						/>
 						<SegmentedButtonItem
-							text="Finished"
+							text="{i18n>EditFlorescenceFragment.Finished}"
 							key="finished"
 						/>
 					</items>
@@ -97,7 +97,7 @@
 				</HBox>
 				<VBox>
 					<Label
-						text="Branches"
+						text="{i18n>EditFlorescenceFragment.Branches}"
 						labelFor="sliderBranches"
 					/>
 					<HBox>
@@ -148,18 +148,18 @@
 		</content>
 		<buttons>
 			<Button
-				text="Delete"
+				text="{i18n>EditFlorescenceFragment.Delete}"
 				icon="sap-icon://delete"
 				press=".onPressDeleteFlorescence"
 				type="Negative"
 			/>
 			<Button
+				text="{i18n>EditFlorescenceFragment.Submit}"
 				type="Emphasized"
-				text="Submit"
 				press=".onPressSubmitEditFlorescence"
 			/>
 			<Button
-				text="Cancel"
+				text="{i18n>EditFlorescenceFragment.Cancel}"
 				press=".onCancelDialog('editFlorescence')"
 			/>
 		</buttons>

@@ -54,7 +54,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "plants.pollination.ui.i18n.i18n"
+					"bundleName": "pollination.ui.i18n.i18n"
 				}
 			}
 		},

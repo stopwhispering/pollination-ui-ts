@@ -26,7 +26,7 @@
 					}"
 					class="sapUiSmallMarginBottom"
 				/>
-				<Label text="Pollination at"/>
+				<Label text="{i18n>EditPollinationFragment.PollinationAt}"/>
 				<HBox class="sapUiTinyMarginBottom">
 					<CheckBox selected="{editedPollinationModel>/pollination_timestamp_known}"/>
 					<MaskInput
@@ -36,7 +36,7 @@
 						width="8.5rem"
 					/>
 				</HBox>
-				<Label text="Harvest at"/>
+				<Label text="{i18n>EditPollinationFragment.HarvestAt}"/>
 				<HBox class="sapUiTinyMarginBottom">
 					<CheckBox selected="{editedPollinationModel>/harvest_date_known}"/>
 					<MaskInput
@@ -60,15 +60,15 @@
 				>
 					<items>
 						<SegmentedButtonItem
-							text="indoor"
+							text="{i18n>EditPollinationFragment.Indoor}"
 							key="indoor"
 						/>
 						<SegmentedButtonItem
-							text="indoor LED"
+							text="{i18n>EditPollinationFragment.IndoorLED}"
 							key="indoor_led"
 						/>
 						<SegmentedButtonItem
-							text="outdoor"
+							text="{i18n>EditPollinationFragment.Outdoor}"
 							key="outdoor"
 						/>
 					</items>
@@ -81,11 +81,11 @@
 				>
 					<items>
 						<SegmentedButtonItem
-							text="fresh"
+							text="{i18n>EditPollinationFragment.Fresh}"
 							key="fresh"
 						/>
 						<SegmentedButtonItem
-							text="frozen"
+							text="{i18n>EditPollinationFragment.Frozen}"
 							key="frozen"
 						/>
 					</items>
@@ -129,7 +129,7 @@
 				</SegmentedButton>
 				<HBox class="sapUiTinyMarginBottom">
 					<VBox>
-						<Label text="Capsule"/>
+						<Label text="{i18n>EditPollinationFragment.Capsule}"/>
 						<HBox class="sapUiTinyMarginEnd">
 							<VBox>
 								<Label text="Length"/>
@@ -141,7 +141,7 @@
 								/>
 							</VBox>
 							<VBox>
-								<Label text="Width"/>
+								<Label text="{i18n>EditPollinationFragment.Width}"/>
 								<Input
 									value="{editedPollinationModel>/seed_capsule_width}"
 									width="5rem"
@@ -151,10 +151,10 @@
 						</HBox>
 					</VBox>
 					<VBox>
-						<Label text="Seed"/>
+						<Label text="{i18n>EditPollinationFragment.Seed}"/>
 						<HBox>
 							<VBox>
-								<Label text="Length"/>
+								<Label text="{i18n>EditPollinationFragment.Length}"/>
 								<Input
 									value="{editedPollinationModel>/seed_length}"
 									width="5rem"
@@ -174,7 +174,7 @@
 					</VBox>
 				</HBox>
 				<VBox class="sapUiTinyMarginBottom">
-					<Label text="Seeds Count"/>
+					<Label text="{i18n>EditPollinationFragment.SeedsCount}"/>
 					<Input
 						value="{editedPollinationModel>/seed_count}"
 						width="3rem"
@@ -182,7 +182,7 @@
 					/>
 				</VBox>
 				<VBox class="sapUiTinyMarginBottom">
-					<Label text="Capsule Description"/>
+					<Label text="{i18n>EditPollinationFragment.CapsuleDescription}"/>
 					<TextArea
 						value="{editedPollinationModel>/seed_capsule_description}"
 						maxLength="400"
@@ -190,7 +190,7 @@
 					/>
 				</VBox>
 				<VBox class="sapUiTinyMarginBottom">
-					<Label text="Seed Description"/>
+					<Label text="{i18n>EditPollinationFragment.SeedDescription}"/>
 					<TextArea
 						value="{editedPollinationModel>/seed_description}"
 						maxLength="400"
@@ -198,7 +198,7 @@
 					/>
 				</VBox>
 				<VBox class="sapUiTinyMarginBottom">
-					<Label text="Days until first seed germinated"/>
+					<Label text="{i18n>EditPollinationFragment.DaysUntilFirstSeedGerminated}"/>
 					<Input
 						value="{editedPollinationModel>/days_until_first_germination}"
 						width="3rem"
@@ -212,7 +212,7 @@
 								class="sapUiTinyMarginEnd"
 								width="6rem"
 							>
-								<Label text="Seeds sown"/>
+								<Label text="{i18n>EditPollinationFragment.SeedsSown}"/>
 								<Input
 									value="{editedPollinationModel>/first_seeds_sown}"
 									change=".onChangeInputCalcGerminationRate"
@@ -222,14 +222,14 @@
 								class="sapUiSmallMarginEnd"
 								width="6rem"
 							>
-								<Label text="germinated"/>
+								<Label text="{i18n>EditPollinationFragment.Germinated}"/>
 								<Input
 									value="{editedPollinationModel>/first_seeds_germinated}"
 									change=".onChangeInputCalcGerminationRate"
 								/>
 							</VBox>
 							<VBox width="6rem">
-								<Label text="Germ. Rate"/>
+								<Label text="{i18n>EditPollinationFragment.GermRate}"/>
 								<Input
 									value="{editedPollinationModel>/germination_rate} %"
 									editable="false"
@@ -242,23 +242,23 @@
 		</content>
 		<buttons>
 			<Button
-				text="Delete"
+				text="{i18n>EditPollinationFragment.Delete}"
 				icon="sap-icon://delete"
 				press=".onPressDeletePollination"
 				type="Negative"
 			/>
 			<Button
-				type="Emphasized"
+				type="{i18n>EditPollinationFragment.Emphasized}"
 				text="Submit"
 				press=".onPressSubmitEditPollination(false)"
 			/>
 			<Button
-				type="Emphasized"
+				type="{i18n>EditPollinationFragment.Emphasized}"
 				text="Submit &amp; Set Finished"
 				press=".onPressSubmitEditPollinationAndFinish"
 			/>
 			<Button
-				text="Cancel"
+				text="{i18n>EditPollinationFragment.Cancel}"
 				press=".onCancelDialog('editPollination')"
 			/>
 		</buttons>

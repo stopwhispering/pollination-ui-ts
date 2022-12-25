@@ -69,7 +69,7 @@
                     class="sapUiMediumMarginEnd"/>
 
                 <Button
-                    text="Add"
+                    text="{i18n>MaintainPollenContainersFragment.Add}"
                     press=".onPressAddPlantForPollenContainer"/>
 
             </HBox>
@@ -79,13 +79,13 @@
 		<beginButton>
 			<Button
 				type="Emphasized"
-				text="Submit"
+				text="{i18n>MaintainPollenContainersFragment.Submit}"
 				press=".onPressSubmitPollenContainers"/>
 		</beginButton>
 		
 		<endButton>
 			<Button
-				text="Cancel"
+				text="{i18n>MaintainPollenContainersFragment.Cancel}"
 				press=".onCancelDialog('maintainPollenContainers')"/>
 		</endButton>				
     </Dialog>

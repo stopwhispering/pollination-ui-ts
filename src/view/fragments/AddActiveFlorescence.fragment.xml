@@ -16,9 +16,9 @@
                     width="24.5rem"
                     class="sapUiSmallMarginBottom">
                     <items>
-                        <SegmentedButtonItem text="Inflorescence appeared" key="inflorescence_appeared" />
-                        <SegmentedButtonItem text="Flowering" key="flowering" />
-                        <SegmentedButtonItem text="Finished" key="finished"/>
+                        <SegmentedButtonItem text="{i18n>AddActiveFlorescenceFragment.InflorescenceAppeared}" key="inflorescence_appeared" />
+                        <SegmentedButtonItem text="{i18n>AddActiveFlorescenceFragment.Flowering}" key="flowering" />
+                        <SegmentedButtonItem text="{i18n>AddActiveFlorescenceFragment.Finished}" key="finished"/>
                     </items>
                 </SegmentedButton>
 
