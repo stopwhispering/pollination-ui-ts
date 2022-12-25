@@ -1,1 +1,0 @@
-sap.ui.define(["sap/ui/core/UIComponent"],function(n){const e=n.extend("pollination.ui.Component",{metadata:{manifest:"json"}});return e});
