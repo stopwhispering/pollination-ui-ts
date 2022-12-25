@@ -49,7 +49,7 @@
 				<TextArea
 					value="{editedFlorescenceModel>/comment}"
 					class="sapUiMediumMarginEnd"
-					maxLength="40"
+					maxLength="110"
 					width="95%"
 					placeholder="(e.g. location if multiple plants in one container)"
 				/>

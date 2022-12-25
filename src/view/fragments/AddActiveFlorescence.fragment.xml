@@ -64,7 +64,7 @@
                     value="{newFlorescenceModel>/comment}"
                     width="24.5rem"
                     class="sapUiMediumMarginEnd"
-                    maxLength="40"
+                    maxLength="110"
                     placeholder="(e.g. location if multiple plants in one container)"/>
 
             </VBox>
