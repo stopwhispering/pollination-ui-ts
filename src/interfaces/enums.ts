@@ -9,7 +9,7 @@ export enum PollinationStatus {
   UNKNOWN = 'unknown',
 }
 
-export enum FlorescenceStatus {
+export enum LFlorescenceStatus {
   INFLORESCENCE_APPEARED = 'inflorescence_appeared',
   FLOWERING = 'flowering',
   FINISHED = 'finished',

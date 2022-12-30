@@ -7,21 +7,26 @@ import MessageToast from "sap/m/MessageToast";
 import FilterOperator from "sap/ui/model/FilterOperator";
 import Filter from "sap/ui/model/Filter";
 import Fragment from "sap/ui/core/Fragment";
-import { Pollination, Florescence, RetrainPollinationModelResults, PollenDonor, NewPollenContainerItem, Plant } from "../interfaces/entities";
+import { Pollination, Florescence, PollenDonor, NewPollenContainerItem, Plant } from "../interfaces/entitiesLocal";
 import Dialog from "sap/m/Dialog";
 import List from "sap/m/List";
 import ColorPalettePopover from "sap/m/ColorPalettePopover";
 import formatter from "../model/formatter";
 import Button from "sap/m/Button";
-import { ButtonType, DialogType } from "sap/m/library";
-import { ValueState } from "sap/ui/core/library";
-import Text from "sap/m/Text";
 import Context from "sap/ui/model/Context";
 import StepInput from "sap/m/StepInput";
 import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField from "sap/m/SearchField";
+import { BActiveFlorescence, BResultsActiveFlorescences, FRequestNewPollination } from "../interfaces/entities";
+import Control from "sap/ui/core/Control";
+import PollinationToSeedProbabilityModelTrainer from "./custom/PollinationToSeedProbabilityModelTrainer";
+import Util from "./custom/Util";
+import FlorescenceCRUD from "./custom/FlorescenceCRUD";
+import FlorescenceDialogHandler from "./custom/FlorescenceDialogHandler";
+import Input from "sap/m/Input";
+import PollinationHandler from "./custom/PollinationHandler";
 
 /**
  * @namespace pollination.ui.controller
@@ -31,7 +36,6 @@ export default class App extends BaseController {
 	private _new_temp_pollination: Pollination;
 	private _new_pollinations: Pollination[]; // = [];
 	private _oColorPalettePopoverMinDefautButton: ColorPalettePopover;
-	private _oSuccessMessageDialog: Dialog;
 	public formatter: formatter = new formatter();
 
 	public onInit(): void {
@@ -45,7 +49,7 @@ export default class App extends BaseController {
 
 		// initialize empty model for new pollination
 		this._new_temp_pollination = {
-			pollinationTimestamp: this.format_timestamp(new Date()),
+			pollinationTimestamp: Util.format_timestamp(new Date()),
 			location: 'indoor_led'
 		}
 		var oModel = new JSONModel(this._new_temp_pollination);
@@ -87,13 +91,13 @@ export default class App extends BaseController {
 
 	private _load_settings() {
 		$.ajax({
-			url: this.getServiceUrl('pollinations/settings'),
+			url: Util.getServiceUrl('pollinations/settings'),
 			data: {},
 			context: this,
 			async: true
 		})
 			.done(this._onDoneLoadSettings)
-			.fail(this.onFail.bind(this, 'Load settings'))
+			.fail(Util.onFail.bind(this, 'Load settings'))
 	}
 
 	private _onDoneLoadSettings(result: any) {
@@ -102,18 +106,20 @@ export default class App extends BaseController {
 	}
 
 	private _load_active_florescences() {
+		// load active florescences and reset the corresponding model
 		$.ajax({
-			url: this.getServiceUrl('active_florescences'),
+			url: Util.getServiceUrl('active_florescences'),
 			data: {},
 			context: this,
 			async: true
 		})
 			.done(this._onDoneLoadActiveInflorescences)
-			.fail(this.onFail.bind(this, 'Load current florescences'))
+			.fail(Util.onFail.bind(this, 'Load current florescences'))
 	}
 
-	private _onDoneLoadActiveInflorescences(result: any) {
-		var oModel = new JSONModel(result.activeFlorescenceCollection);
+	private _onDoneLoadActiveInflorescences(results: BResultsActiveFlorescences) {
+		const aActiveFlorescences: BActiveFlorescence[] = results.activeFlorescenceCollection;
+		var oModel = new JSONModel(aActiveFlorescences);
 		this.getView().setModel(oModel, "currentFlorescencesModel");
 
 		this._reset_temp_pollination_florescence();
@@ -122,13 +128,13 @@ export default class App extends BaseController {
 	private _load_ongoing_pollinations() {
 
 		$.ajax({
-			url: this.getServiceUrl('ongoing_pollinations'),
+			url: Util.getServiceUrl('ongoing_pollinations'),
 			data: {},
 			context: this,
 			async: true
 		})
 			.done(this._onDoneLoadOngoingPollinations)
-			.fail(this.onFail.bind(this, 'Load ongoing pollinations'))
+			.fail(Util.onFail.bind(this, 'Load ongoing pollinations'))
 	}
 
 	private _onDoneLoadOngoingPollinations(result: any) {
@@ -145,13 +151,13 @@ export default class App extends BaseController {
 		var florescence: Florescence = oEvent.getParameter('listItem').getBindingContext('currentFlorescencesModel').getObject();
 		// var plant_id = florescence.id;
 		$.ajax({
-			url: this.getServiceUrl('potential_pollen_donors/' + florescence.id),
+			url: Util.getServiceUrl('potential_pollen_donors/' + florescence.id),
 			data: {},
 			context: this,
 			async: true
 		})
 			.done(this._onDoneLoadPotentialPollenDonors)
-			.fail(this.onFail.bind(this, 'Load potential pollen donors'))
+			.fail(Util.onFail.bind(this, 'Load potential pollen donors'))
 
 		// set selected florescence plant in new pollination temp model 
 		this._new_temp_pollination.florescencePlantName = florescence.plant_name;
@@ -245,7 +251,7 @@ export default class App extends BaseController {
 		oNewTempPollinationModel.updateBindings(false);
 	}
 
-	public onPressAddButton(oEvent: Event) {
+	public onPressAddAsPollinationPreview(oEvent: Event) {
 		var selectedFlorescenceItem = (<List>this.getView().byId('activeFlorescencesList')).getSelectedItem();
 		if (selectedFlorescenceItem === null || selectedFlorescenceItem === undefined) {
 			MessageToast.show('Please select a florescence.')
@@ -312,18 +318,18 @@ export default class App extends BaseController {
 	}
 
 	public onPressSaveNewPollinationButton(oEvent: Event) {
-		var oNewPollination = <Pollination>(<Button>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();  // todo type
-		var oNewPollinationsJson = JSON.stringify(oNewPollination);
+		const oControl = <Control>oEvent.getSource()
+		var oNewPollination = <FRequestNewPollination>oControl.getBindingContext("newPollinationsModel")!.getObject();
 		$.ajax({
-			url: this.getServiceUrl('pollinations'),
-			data: oNewPollinationsJson,
+			url: Util.getServiceUrl('pollinations'),
+			data: JSON.stringify(oNewPollination),
 			context: this,
 			async: true,
 			type: 'POST',
 			contentType: 'application/json'
 		})
 			.done(this._onDonePostNewPollination.bind(this, oNewPollination))
-			.fail(this.onFail.bind(this, 'Save new pollinations'))
+			.fail(Util.onFail.bind(this, 'Save new pollinations'))
 	}
 
 	private _onDonePostNewPollination(oNewPollination: Pollination) {
@@ -366,50 +372,6 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//		edit florescence
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onPressEditActiveFlorescence(oEvent: Event) {
-		// clone active florescence object for manipulation in the dialog
-		var oCurrentFlorescence = (<Button>oEvent.getSource()).getBindingContext("currentFlorescencesModel")!.getObject();
-		var oEditedFlorescence = JSON.parse(JSON.stringify(oCurrentFlorescence));
-
-		// add some control attributes to allow for usage of sliders and keeping undefined values
-		oEditedFlorescence.flowers_count_known = !!oEditedFlorescence.flowers_count
-		oEditedFlorescence.branches_count_known = !!oEditedFlorescence.branches_count
-		oEditedFlorescence.inflorescence_appearance_date_known = !!oEditedFlorescence.inflorescence_appearance_date
-		oEditedFlorescence.first_flower_opening_date_known = !!oEditedFlorescence.first_flower_opening_date
-		oEditedFlorescence.last_flower_closing_date_known = !!oEditedFlorescence.last_flower_closing_date
-
-		// // open dialog and bind model
-		// this.applyToFragment('editFlorescence',(o)=>{asdf
-		// 	var oEditedFlorescenceModel = new sap.ui.model.json.JSONModel(oEditedFlorescence);
-		// 	this.getView().setModel(oEditedFlorescenceModel, "editedFlorescenceModel");
-		// 	o.open();
-		// }, undefined);
-
-		// open dialog
-		var oView = this.getView();
-		var fn = (oDialog: any) => {
-			oView.addDependent(oDialog);  // required to bind fragment to view
-			var oEditedFlorescenceModel = new JSONModel(oEditedFlorescence);
-			oView.setModel(oEditedFlorescenceModel, "editedFlorescenceModel");
-			oDialog.open();
-		};
-		if (!this.byId('editedFlorescenceModel')) {
-			Fragment.load({
-				name: "pollination.ui.view.fragments.EditFlorescence",
-				id: oView.getId(),
-				controller: this
-			}).then(fn);
-		} else {
-			fn(<Dialog>this.byId('editedFlorescenceModel'));
-		}
-	}
-
-	public onAfterCloseEditFlorescenceDialog(oEvent: Event) {
-		// destroy model and fragment, works for both regular closing and hitting ESC
-		var oDialog = oEvent.getSource();
-		oDialog.destroy();
-		this.getView().getModel("editedFlorescenceModel").destroy();
-	}
 
 	public onPressEditFlorescenceSetToday(dateField: string) {
 		var oEditedFlorescenceModel = <JSONModel>this.getView().getModel("editedFlorescenceModel");
@@ -455,7 +417,7 @@ export default class App extends BaseController {
 
 		var oEditedFlorescenceJson = JSON.stringify(oEditedFlorescence);
 		$.ajax({
-			url: this.getServiceUrl('active_florescences/' + oEditedFlorescence.id),
+			url: Util.getServiceUrl('active_florescences/' + oEditedFlorescence.id),
 			data: oEditedFlorescenceJson,
 			context: this,
 			async: true,
@@ -463,7 +425,7 @@ export default class App extends BaseController {
 			contentType: 'application/json'
 		})
 			.done(this._onDonePutFlorescence)
-			.fail(this.onFail.bind(this, 'Update florescence'))
+			.fail(Util.onFail.bind(this, 'Update florescence'))
 	}
 
 	private _onDonePutFlorescence() {
@@ -473,222 +435,18 @@ export default class App extends BaseController {
 		this._load_active_florescences();
 	}
 
-	public onPressDeleteFlorescence(oEvent: Event) {
-		var florescence_id = (<JSONModel>this.getView().getModel("editedFlorescenceModel")).getData().id;
-		MessageBox.confirm("Really delete Florescence? This cannot be undone.",
-			{ onClose: this._onConfirmDeleteFlorescence.bind(this, florescence_id) }
-		);
-	}
 
-	private _onConfirmDeleteFlorescence(florescence_id: int, sAction: string) {
-		if (sAction === "OK") {
-			this._deleteFlorescence(florescence_id);
-		} else {
-			// do nothing
-		}
-	}
-
-	private _deleteFlorescence(florescence_id: int) {
-		$.ajax({
-			url: this.getServiceUrl('florescences/' + florescence_id),
-			context: this,
-			async: true,
-			type: 'DELETE',
-			contentType: 'application/json'
-		})
-			.done(this._onDoneDeleteFlorescence)
-			.fail(this.onFail.bind(this, 'Delete florescences'))
-	}
-
-	private _onDoneDeleteFlorescence() {
-		this.applyToFragment('editFlorescence', (o: Dialog) => {
-			o.close();
-		});
-
-		this._load_active_florescences();
-	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		editPollination
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onPressEditOngoingPollination(oEvent: Event) {
-		// clone ongoing pollination object for manipulation in the dialog
-		var oOngoingPollination = (<Button>oEvent.getSource()).getBindingContext("ongoingPollinationsModel")!.getObject();
-		var oEditedPollination = JSON.parse(JSON.stringify(oOngoingPollination));
-
-		// add some control attributes to allow for usage of sliders and keeping undefined values
-		oEditedPollination.pollination_timestamp_known = !!oEditedPollination.pollination_timestamp
-		oEditedPollination.harvest_date_known = !!oEditedPollination.harvest_date
-
-		// // open dialog and bind model
-		// this.applyToFragment('editPollination',(o)=>{
-		// 	var oEditedPollinationModel = new sap.ui.model.json.JSONModel(oEditedPollination);
-		// 	this.getView().setModel(oEditedPollinationModel, "editedPollinationModel");
-		// 	o.open();
-		// });
-
-		var oView = this.getView();
-		var fn = (o: any) => {
-			oView.addDependent(o);  // required to bind fragment to view
-			var oEditedPollinationModel = new JSONModel(oEditedPollination);
-			oView.setModel(oEditedPollinationModel, "editedPollinationModel");
-			o.open();
-		};
-
-		// open dialog
-		if (!this.byId('editPollination')) {
-			Fragment.load({
-				name: "pollination.ui.view.fragments.EditPollination",
-				id: this.getView().getId(),
-				controller: this
-			}).then(fn);
-		} else {
-			fn(this.byId('editPollination'));
-		}
-	}
-
-	public onAfterCloseEditPollinationDialog(oEvent: Event) {
-		// destroy model and fragment, works for both regular closing and hitting ESC
-		var oDialog = oEvent.getSource();
-		oDialog.destroy();
-		this.getView().getModel("editedPollinationModel").destroy();
-	}
-
-	public onOpenColorPalettePopover(oEvent: Event) {
-		const oButton = <Button>oEvent.getSource()
-		// read colors from settings model
-		var oSettingsModel = this.getView().getModel("settingsModel");
-		var aColors = oSettingsModel.getProperty("/colors");
-
-		// open popover and set colors
-		if (!this._oColorPalettePopoverMinDefautButton) {
-			this._oColorPalettePopoverMinDefautButton = new ColorPalettePopover("oColorPalettePopoverMinDef", {
-				showMoreColorsButton: false,
-				colors: aColors,
-				colorSelect: this._onSelectColorInColorPalettePopover.bind(this)
-			});
-		}
-		// @ts-ignore  typescript data definitions for sap.m.ColorPalette are missing .openBy()
-		this._oColorPalettePopoverMinDefautButton.openBy(oButton);
-	}
-
-	private _onSelectColorInColorPalettePopover(oEvent: Event) {
-		// update color in model
-		var oEditedPollinationModel = <JSONModel>this.getView().getModel("editedPollinationModel");
-		oEditedPollinationModel.setProperty("/label_color_rgb", oEvent.getParameter("value"));
-		oEditedPollinationModel.updateBindings(false);
-	}
-
-	public onChangeInputCalcGerminationRate(oEvent: Event) {
-		// upon changing # seeds sown or # seeds germinated, re-calculates germination rate
-
-		// apply our default validator for int input
-		this.onChangeInputPreventNonInt(oEvent);
-
-		// get values and calculate germination rate
-		var oEditedPollinationModel = <JSONModel>this.getView().getModel("editedPollinationModel");
-		var iSeedsSown = oEditedPollinationModel.getProperty("/first_seeds_sown");
-		var iSeedsGerminated = oEditedPollinationModel.getProperty("/first_seeds_germinated");
-		if (iSeedsSown && iSeedsGerminated) {
-			var fGerminationRate = iSeedsGerminated / iSeedsSown * 100;
-			var iGerminationRate = Math.round(fGerminationRate);
-			oEditedPollinationModel.setProperty("/germination_rate", iGerminationRate);
-		}
-		oEditedPollinationModel.updateBindings(false);
+		const oOngoingPollination = (<Button>oEvent.getSource()).getBindingContext("ongoingPollinationsModel")!.getObject();
+		const oPollinationHandler = new PollinationHandler();
+		oPollinationHandler.onPressEditOngoingPollination(oOngoingPollination, this.getView());
 
 	}
 
-	public onPressSubmitEditPollinationAndFinish(oEvent: Event) {
-		MessageBox.confirm("Finish Pollination? This will remove it from the list and cannot be undone.",
-			{ onClose: this._onConfirmSubmitEditPollinationAndFinish.bind(this) }
-		);
-	}
-
-	private _onConfirmSubmitEditPollinationAndFinish(sAction: string) {
-		if (sAction === "OK") {
-			this.onPressSubmitEditPollination(true);
-		} else {
-			// do nothing
-		}
-	}
-
-	public onPressSubmitEditPollination(setFinished: boolean) {
-		var oEditedPollinationModel = <JSONModel>this.getView().getModel("editedPollinationModel");
-		var oEditedPollination = oEditedPollinationModel.getData();
-
-		// the inputs are bound to the model and might update undefined values to default values
-		// we need to set them back to undefined
-		if (!oEditedPollination.pollination_timestamp_known) {
-			oEditedPollination.pollination_timestamp = undefined;
-		}
-		if (!oEditedPollination.harvest_date_known) {
-			oEditedPollination.harvest_date = undefined;
-		}
-
-		// set finished if confirmed
-		if (setFinished === true) {
-			oEditedPollination.ongoing = false;
-		}
-
-		// todo validate status with certain inputs and cancel with message
-
-		var oEditedPollinationJson = JSON.stringify(oEditedPollination);
-		$.ajax({
-			url: this.getServiceUrl('pollinations/' + oEditedPollination.id),
-			data: oEditedPollinationJson,
-			context: this,
-			async: true,
-			type: 'PUT',
-			contentType: 'application/json'
-		})
-			.done(this._onDonePutPollination)
-			.fail(this.onFail.bind(this, 'Update pollination'))
-	}
-
-	private _onDonePutPollination() {
-		this.applyToFragment('editPollination', (o: Dialog) => {
-			o.close();
-		});
-
-		this._load_active_florescences();
-		this._load_ongoing_pollinations();
-	}
-
-	public onPressDeletePollination(oEvent: Event) {
-		var pollination_id = (<JSONModel>this.getView().getModel("editedPollinationModel")).getData().id;
-		MessageBox.confirm("Really delete Pollination? This cannot be undone.",
-			{ onClose: this._onConfirmDeletePollination.bind(this, pollination_id) }
-		);
-	}
-
-	private _onConfirmDeletePollination(pollination_id: int, sAction: string) {
-		if (sAction === "OK") {
-			this._deletePollination(pollination_id);
-		} else {
-			// do nothing
-		}
-	}
-
-	private _deletePollination(pollination_id: int) {
-		$.ajax({
-			url: this.getServiceUrl('pollinations/' + pollination_id),
-			context: this,
-			async: true,
-			type: 'DELETE',
-			contentType: 'application/json'
-		})
-			.done(this._onDoneDeletePollination)
-			.fail(this.onFail.bind(this, 'Delete pollination'))
-	}
-
-	private _onDoneDeletePollination() {
-		this.applyToFragment('editPollination', (o: Dialog) => {
-			o.close();
-		});
-
-		this._load_active_florescences();
-		this._load_ongoing_pollinations();
-	}
 
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -697,13 +455,13 @@ export default class App extends BaseController {
 	public onPressOpenPollenContainersMaintenance(oEvent: Event) {
 		// query pollen containers from backend and open dialog for maintenance
 		$.ajax({
-			url: this.getServiceUrl('pollen_containers'),
+			url: Util.getServiceUrl('pollen_containers'),
 			context: this,
 			async: true,
 			contentType: 'application/json'
 		})
 			.done(this._onDoneGetPollenContainers)
-			.fail(this.onFail.bind(this, 'Get pollen containers'))
+			.fail(Util.onFail.bind(this, 'Get pollen containers'))
 
 		// // open dialog
 		// this.applyToFragment('maintainPollenContainers',(o)=>{
@@ -750,7 +508,7 @@ export default class App extends BaseController {
 
 		var oPollenContainersJson = JSON.stringify(oPollenContainers);
 		$.ajax({
-			url: this.getServiceUrl('pollen_containers'),
+			url: Util.getServiceUrl('pollen_containers'),
 			data: oPollenContainersJson,
 			context: this,
 			async: true,
@@ -758,7 +516,7 @@ export default class App extends BaseController {
 			contentType: 'application/json'
 		})
 			.done(this._onDonePutPollenContainers)
-			.fail(this.onFail.bind(this, 'Maintained Pollen Containers'))
+			.fail(Util.onFail.bind(this, 'Maintained Pollen Containers'))
 	}
 
 	private _onDonePutPollenContainers() {
@@ -806,114 +564,86 @@ export default class App extends BaseController {
 
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 		add active florescences
+	// 		add/delete/update active florescences
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onPressAddActiveFlorescence(oEvent: Event) {
-		// query plants to fill combobox for new florescence
-		$.ajax({
-			url: this.getServiceUrl('plants_for_new_florescence'),
-			context: this,
-			async: true,
-			contentType: 'application/json'
-		})
-			.done(this._onDoneGetPlantsForNewFlorescence)
-			.fail(this.onFail.bind(this, 'Get plants for new florescence'))
-
-		// create model for new florescence
-		var oNewFlorescence = {
-			plant_id: undefined,
-			plant_name: undefined,
-			florescence_status: 'inflorescence_appeared',
-			inflorescence_appearance_date: undefined,
-			comment: undefined
-		}
-		// var oNewFlorescenceModel = new sap.ui.model.json.JSONModel(oNewFlorescence);
-		var oNewFlorescenceModel = new JSONModel(oNewFlorescence);
-		this.getView().setModel(oNewFlorescenceModel, "newFlorescenceModel");
-
-		// open dialog
-		var oView = this.getView();
-		if (!this.byId('addActiveFlorescence')) {
-			Fragment.load({
-				name: "pollination.ui.view.fragments.AddActiveFlorescence",
-				id: oView.getId(),
-				controller: this
-			}).then((oDialog: any) => {
-				oView.addDependent(oDialog);
-				oDialog.open();
-			});
-		} else {
-			(<Dialog>this.byId('addActiveFlorescence')).open();
-		}
+		// open the dialog to create a new active florescence
+		new FlorescenceDialogHandler().openDialogAddActiveFlorescence(this.getView(),
+																		 "pollination.ui.view.fragments.AddActiveFlorescence");
 	}
 
-	private _onDoneGetPlantsForNewFlorescence(result: any) {
-		var oModel = new JSONModel(result.plantsForNewFlorescenceCollection);
-		oModel.setSizeLimit(2000);
-		this.getView().setModel(oModel, "plantsForNewFlorescenceModel");
-	}
-
-	public onPressSubmitNewFlorescence() {
-		var oNewFlorescenceModel = <JSONModel>this.getView().getModel("newFlorescenceModel");
-		var oNewFlorescence = oNewFlorescenceModel.getData();
-
-		var oNewFlorescenceJson = JSON.stringify(oNewFlorescence);
-		$.ajax({
-			url: this.getServiceUrl('active_florescences'),
-			data: oNewFlorescenceJson,
-			context: this,
-			async: true,
-			type: 'POST',
-			contentType: 'application/json'
-		})
-			.done(this._onDonePostNewFlorescence)
-			.fail(this.onFail.bind(this, 'Create new florescence'))
-	}
-
-	private _onDonePostNewFlorescence() {
-		this.applyToFragment('addActiveFlorescence', (o: Dialog) => {
-			o.close();
-		}, undefined);
-
-		this._load_active_florescences();
+	public onPressSubmitNewFlorescence(oEvent: Event): void {
+		const oDialogNewFlorescence = <Dialog>this.byId('addActiveFlorescence')
+		new FlorescenceCRUD().saveNewFlorescence(oDialogNewFlorescence, this._load_active_florescences)
 	}
 
 	public onAfterCloseAddActiveFlorescence(oEvent: Event) {
-		var oDialog = oEvent.getSource();
+		var oDialog = <Dialog>oEvent.getSource();
+		oDialog.getModel("plantsForNewFlorescenceModel").destroy();
+		oDialog.getModel("newFlorescenceModel").destroy();
 		oDialog.destroy();
-		this.getView().getModel("plantsForNewFlorescenceModel").destroy();
-		this.getView().getModel("newFlorescenceModel").destroy();
 	}
 
+	public onPressDeleteFlorescence(oEvent: Event) {
+		const iFlorescenceId = (<JSONModel>this.getView().getModel("editedFlorescenceModel")).getData().id;
+		const oDialogEditFlorescence = <Dialog>this.byId('editFlorescence');
+		new FlorescenceCRUD().askToDeleteFlorescence(iFlorescenceId, oDialogEditFlorescence, this._load_active_florescences);
+	}
+
+    public onSetToday(oEvent: Event) : any{
+		// find (masked)Input that belongs to the triggered event and
+		// set its value to today's date
+		const sDateInputId = (<Control>oEvent.getSource()).data()['inputId'];
+		const oDateInput = <Input>this.byId(sDateInputId);
+		const sToday = (new Date()).toISOString().substring(0,10);  // e.g. '2022-11-17';
+		oDateInput.setValue(sToday);
+    }
+
+	public onPressEditActiveFlorescence(oEvent: Event) {
+		const oFlorescence = (<Button>oEvent.getSource()).getBindingContext("currentFlorescencesModel")!.getObject();
+		new FlorescenceDialogHandler().openDialogEditActiveFlorescence(this.getView(),
+														   			   "pollination.ui.view.fragments.EditFlorescence",
+																	   oFlorescence)
+	}
+
+	public onAfterCloseEditFlorescenceDialog(oEvent: Event) {
+		// destroy model and fragment, works for both regular closing and hitting ESC
+		const oDialog = <Dialog>oEvent.getSource();
+		oDialog.getModel("editedFlorescenceModel").destroy();
+		oDialog.destroy();		
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 		Edit pollination handlers
+	/////////////////////////////////////////////////////////////////////////////////////////////////////	
+    public onChangeInputPreventNonFloat(oEvent: Event) : void{
+        // prevent non-float (i.e. non-numerical) input
+        var newValue = oEvent.getParameter('newValue');
+        if(isNaN(Number(newValue))){
+            var sPath = (<Control>oEvent.getSource()).getBindingPath('value');  // e.g. '/seed_capsule_length'
+            var oEditPollinationInputModel = <JSONModel>this.getView().getModel('editedPollinationModel')
+            oEditPollinationInputModel.setProperty(sPath, undefined);
+            oEditPollinationInputModel.updateBindings(false);
+        }
+    }
+
+    public onChangeInputPreventNonInt(oEvent: Event) : void{
+        // prevent non-integer (i.e. non-numerical or decimal) input
+        var newValue = oEvent.getParameter('newValue');
+        if(isNaN(Number(newValue)) || !Number.isInteger(Number(newValue))){
+            var sPath = (<Control>oEvent.getSource()).getBindingPath('value');  // e.g. '/seed_capsule_length'
+            var oEditPollinationInputModel = <JSONModel>this.getView().getModel('editedPollinationModel')
+            oEditPollinationInputModel.setProperty(sPath, undefined);
+            oEditPollinationInputModel.updateBindings(false);
+        }
+    }
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 		retraining the model that predicts
+	//      the probability of an attempted pollination 
+	//   	to make it into seeds stage
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
-		$.ajax({
-			url: this.getServiceUrl('retrain_probability_pollination_to_seed_model'),
-			context: this,
-			async: true,
-			type: 'POST',
-			contentType: 'application/json'
-		})
-			.done(this._onDoneRetrainPollinationModel)
-			.fail(this.onFail.bind(this, 'Retrain Pollination Model'))
-	}
-
-	private _onDoneRetrainPollinationModel(result: RetrainPollinationModelResults) {
-		var oSuccessMessageDialog = this._oSuccessMessageDialog;
-		if (!this._oSuccessMessageDialog) {
-			this._oSuccessMessageDialog = new Dialog({
-				type: DialogType.Message,
-				title: "Success",
-				state: ValueState.Success,
-				content: new Text({ text: "Trained Model: " + result.model + "\n" + "Mean F1 Score: " + result.mean_f1_score }),
-				beginButton: new Button({
-					type: ButtonType.Emphasized,
-					text: "OK",
-					press() {
-						oSuccessMessageDialog.close();
-					}  //.bind(this)
-				})
-			});
-		}
-		this._oSuccessMessageDialog.open();
+		new PollinationToSeedProbabilityModelTrainer().triggerRetrain();
 	}
 }

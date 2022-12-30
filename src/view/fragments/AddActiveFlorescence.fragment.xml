@@ -1,5 +1,6 @@
 <core:FragmentDefinition
     xmlns="sap.m"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:core="sap.ui.core">
  
     <Dialog 
@@ -45,6 +46,7 @@
                             text="{i18n>AddActiveFlorescenceFragment.InflorescenceAppearedAt}"/>
                         <HBox>
                             <MaskInput 
+                                id="inpInflorescenceAppearedAt"
                                 value="{newFlorescenceModel>/inflorescence_appearance_date}"
                                 mask="9999-99-99" 
                                 width="9rem"
@@ -52,7 +54,9 @@
                             <Button 
                                 icon="sap-icon://calendar"
                                 type="Transparent"
-                                press=".onSetToday('newFlorescenceModel', 'inflorescence_appearance_date')"/>
+                                press=".onSetToday"
+                                app:inputId= "inpInflorescenceAppearedAt"
+                                />
                         </HBox>
                     </VBox>
 

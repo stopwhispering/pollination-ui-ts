@@ -40,6 +40,7 @@
 				<HBox class="sapUiTinyMarginBottom">
 					<CheckBox selected="{editedPollinationModel>/harvest_date_known}"/>
 					<MaskInput
+						id="inpHarvestDate"
 						enabled="{editedPollinationModel>/harvest_date_known}"
 						value="{editedPollinationModel>/harvest_date}"
 						mask="9999-99-99"
@@ -49,7 +50,8 @@
 						icon="sap-icon://calendar"
 						type="Transparent"
 						enabled="{editedPollinationModel>/harvest_date_known}"
-						press=".onSetToday('editedPollinationModel', 'harvest_date')"
+						press=".onSetToday"
+						app:inputId= "inpHarvestDate"
 					/>
 				</HBox>
 				<SegmentedButton

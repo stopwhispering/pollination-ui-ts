@@ -327,7 +327,7 @@
 													}"
 													text="{i18n>AppView.Preview}"
 													type="Emphasized"
-													press=".onPressAddButton"
+													press=".onPressAddAsPollinationPreview"
 												/>
 											</FlexBox>
 										</VBox>
