@@ -22,7 +22,7 @@
 						<OverflowToolbarButton
 							icon="sap-icon://shortcut"
 							tooltip="{i18n>AppView.NewFlorescence}"
-							press=".onPressAddActiveFlorescence"
+							press=".onPressNewActiveFlorescence"
 						/>
 						<OverflowToolbarButton
 							icon="sap-icon://fridge"
@@ -230,7 +230,7 @@
 									<f:header>
 										<card:Header
 											title="New pollination attempt"
-											subtitle="Plant: {newTempPollinationModel>/florescencePlantName}"
+											subtitle="Plant: {newTempPollinationInput>/florescencePlantName}"
 											iconSrc="sap-icon://add"
 											iconBackgroundColor="Accent5"
 										/>
@@ -240,15 +240,15 @@
 											<VBox class="sapUiTinyMarginBottom">
 												<Input
 													id="florescencePlantNameInput"
-													value="{newTempPollinationModel>/florescencePlantId} {newTempPollinationModel>/florescencePlantName}"
+													value="{newTempPollinationInput>/florescencePlantId} {newTempPollinationInput>/florescencePlantName}"
 													editable="false"
-													tooltip="{newTempPollinationModel>/florescencePlantId} {newTempPollinationModel>/florescencePlantName}"
+													tooltip="{newTempPollinationInput>/florescencePlantId} {newTempPollinationInput>/florescencePlantName}"
 												/>
 												<Input
 													id="pollenDonorPlantNameInput"
-													value="{newTempPollinationModel>/pollenDonorPlantId} {newTempPollinationModel>/pollenDonorPlantName}"
+													value="{newTempPollinationInput>/pollenDonorPlantId} {newTempPollinationInput>/pollenDonorPlantName}"
 													editable="false"
-													tooltip="{newTempPollinationModel>/pollenDonorPlantId} {newTempPollinationModel>/pollenDonorPlantName}"
+													tooltip="{newTempPollinationInput>/pollenDonorPlantId} {newTempPollinationInput>/pollenDonorPlantName}"
 												/>
 											</VBox>
 											<HBox
@@ -262,21 +262,21 @@
 													displayFormat="yyyy-MM-dd HH:mm"
 													valueFormat="yyyy-MM-dd HH:mm"
 													value="{
-														path: 'newTempPollinationModel>/pollinationTimestamp'
+														path: 'newTempPollinationInput>/pollinationTimestamp'
 													}"
 													placeholder="Enter Date"
 												/>
 												<GenericTag
 													text="{
-														path: 'newTempPollinationModel>/pollenType'
+														path: 'newTempPollinationInput>/pollenType'
 													}"
 													design="StatusIconHidden"
-													status="{= (${newTempPollinationModel>/pollenType} === 'fresh' ? 'Success' : 'Information') }"
+													status="{= (${newTempPollinationInput>/pollenType} === 'fresh' ? 'Success' : 'Information') }"
 												/>
 											</HBox>
 											<SegmentedButton
 												selectedKey="{
-													path: 'newTempPollinationModel>/location'
+													path: 'newTempPollinationInput>/location'
 												}"
 												class="sapUiTinyMarginBottom"
 												width="17rem"
@@ -301,14 +301,14 @@
 													id="newTempPollinationColorPalette"
 													colorSelect=".onColorSelect"
 													colors="{
-														path: 'newTempPollinationModel>/availableColorsRgb'
+														path: 'newTempPollinationInput>/availableColorsRgb'
 													}"
 												/>
 												<FlexBox alignItems="Center">
 													<core:Icon
 														src="sap-icon://color-fill"
 														color="{
-															path: 'newTempPollinationModel>/labelColorRgb'
+															path: 'newTempPollinationInput>/labelColorRgb'
 														}"
 														size="3rem"
 													>
@@ -321,9 +321,9 @@
 											<FlexBox justifyContent="End">
 												<Button
 													enabled="{=
-														!!${newTempPollinationModel>/florescencePlantName} 
-														&amp;&amp; !!${newTempPollinationModel>/pollenDonorPlantName} 
-														&amp;&amp; ${newTempPollinationModel>/florescenceStatus} === 'flowering' 
+														!!${newTempPollinationInput>/florescencePlantName} 
+														&amp;&amp; !!${newTempPollinationInput>/pollenDonorPlantName} 
+														&amp;&amp; ${newTempPollinationInput>/florescenceStatus} === 'flowering' 
 													}"
 													text="{i18n>AppView.Preview}"
 													type="Emphasized"

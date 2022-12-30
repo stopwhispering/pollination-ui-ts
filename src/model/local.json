@@ -1,0 +1,8 @@
+{
+	"pollinationStatusCollection": [
+		{"key": "attempt", 	"text": "Attempt", "enabled": true, "tooltip": "Attempted Pollination"},
+		{"key": "seed_capsule",  "text": "Capsule", "enabled": true, "tooltip": "Seed Capsule is developing"},
+		{"key": "seed",	"text": "Seed", "enabled": true, "tooltip": "Seeds have been harvested"},
+        {"key": "germinated", "text": "Germinated", "enabled": true, "tooltip": "First plants has germinated"}
+	]
+}

@@ -160,7 +160,7 @@
 			/>
 			<Button
 				text="{i18n>EditFlorescenceFragment.Cancel}"
-				press=".onCancelDialog('editFlorescence')"
+				press=".onCancelDialog"
 			/>
 		</buttons>
 	</Dialog>

@@ -10,14 +10,13 @@ export interface BMessage {
     description?: string;
   }
 export type BMessageType = "Information" | "None" | "Success" | "Warning" | "Error" | "Debug";
-
-
+export type BFlorescenceStatus = "inflorescence_appeared" | "flowering" | "finished"
 // auto-generated via pydantic-2-ts
 export interface BActiveFlorescence {
   id: number;
   plant_id: number;
   plant_name: string;
-  florescence_status: string;
+  florescence_status: BFlorescenceStatus;
   inflorescence_appearance_date?: string;
   comment?: string;
   branches_count?: number;

@@ -4,10 +4,10 @@
     xmlns:core="sap.ui.core">
  
     <Dialog 
-        id="addActiveFlorescence"
+        id="newActiveFlorescence"
     	title='Add active Florescence'
 		class="sapUiContentPadding"
-		afterClose=".onAfterCloseAddActiveFlorescence">
+		afterClose=".onAfterCloseNewActiveFlorescence">
  
 	    <content>
             <VBox>
@@ -17,16 +17,16 @@
                     width="24.5rem"
                     class="sapUiSmallMarginBottom">
                     <items>
-                        <SegmentedButtonItem text="{i18n>AddActiveFlorescenceFragment.InflorescenceAppeared}" key="inflorescence_appeared" />
-                        <SegmentedButtonItem text="{i18n>AddActiveFlorescenceFragment.Flowering}" key="flowering" />
-                        <SegmentedButtonItem text="{i18n>AddActiveFlorescenceFragment.Finished}" key="finished"/>
+                        <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.InflorescenceAppeared}" key="inflorescence_appeared" />
+                        <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.Flowering}" key="flowering" />
+                        <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.Finished}" key="finished"/>
                     </items>
                 </SegmentedButton>
 
                 <HBox>
                     <VBox>
                         <Label 
-                            text="{i18n>AddActiveFlorescenceFragment.Plant}"/>
+                            text="{i18n>NewActiveFlorescenceFragment.Plant}"/>
                         <ComboBox
                             items="{
                                 path: 'plantsForNewFlorescenceModel>/',
@@ -43,7 +43,7 @@
 
                     <VBox>
                         <Label 
-                            text="{i18n>AddActiveFlorescenceFragment.InflorescenceAppearedAt}"/>
+                            text="{i18n>NewActiveFlorescenceFragment.InflorescenceAppearedAt}"/>
                         <HBox>
                             <MaskInput 
                                 id="inpInflorescenceAppearedAt"
@@ -54,7 +54,7 @@
                             <Button 
                                 icon="sap-icon://calendar"
                                 type="Transparent"
-                                press=".onSetToday"
+                                press=".onPressNewFlorescenceSetToday"
                                 app:inputId= "inpInflorescenceAppearedAt"
                                 />
                         </HBox>
@@ -63,7 +63,7 @@
                 </HBox>
 
                 <Label 
-                    text="{i18n>AddActiveFlorescenceFragment.Comment}"/>
+                    text="{i18n>NewActiveFlorescenceFragment.Comment}"/>
                 <TextArea
                     value="{newFlorescenceModel>/comment}"
                     width="24.5rem"
@@ -78,15 +78,15 @@
 		<beginButton>
 			<Button
 				type="Emphasized"
-				text="{i18n>AddActiveFlorescenceFragment.Submit}"
+				text="{i18n>NewActiveFlorescenceFragment.Submit}"
                 enabled="{= !!${newFlorescenceModel>/plant_id} }"
 				press=".onPressSubmitNewFlorescence"/>
 		</beginButton>
 		
 		<endButton>
 			<Button
-				text="{i18n>AddActiveFlorescenceFragment.Cancel}"
-				press=".onCancelDialog('addActiveFlorescence')"/>
+				text="{i18n>NewActiveFlorescenceFragment.Cancel}"
+				press=".onCancelDialog"/>
 		</endButton>				
     </Dialog>
 </core:FragmentDefinition>

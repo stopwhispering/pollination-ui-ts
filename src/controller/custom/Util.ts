@@ -25,4 +25,10 @@ export default class Util extends ManagedObject {
         var formatted = iso.replace('T', ' ').substring(0, 16);  // '2022-11-15 22:29'
         return formatted
     } 
+
+    public static getToday() : any{
+		// return today as string in format 'yyyy-MM-dd'
+		return (new Date()).toISOString().substring(0,10);  // e.g. '2022-11-17';
+    }
+
 }

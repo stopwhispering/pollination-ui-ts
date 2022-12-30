@@ -21,7 +21,6 @@ export default class BaseController extends Controller {
         
         //fragment id to fragment file path
         var mIdToFragment: LIdToFragmentMap = {
-            editFlorescence: 'pollination.ui.view.fragments.EditFlorescence',
             maintainPollenContainers: 'pollination.ui.view.fragments.MaintainPollenContainers',
         }
 

@@ -1,6 +1,8 @@
 /**
  * @namespace pollination.ui.interfaces
  */
+
+// sync with local.json model and backend!
 export enum PollinationStatus {
   ATTEMPT = 'attempt',
   SEED_CAPSULE = 'seed_capsule',

@@ -1,246 +1,281 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:core="sap.ui.core"
 >
 	<Dialog
 		id="editPollination"
-		title="Edit Pollination (ID {editedPollinationModel>/id})"
+		title="Edit Pollination (ID {editPollinationInput>/id})"
 		class="sapUiContentPadding"
 		afterClose=".onAfterCloseEditPollinationDialog"
-		contentWidth="28rem"
+		contentWidth="32rem"
 	>
 		<content>
-			<VBox>
-				<FormattedText
-					htmlText="&lt;strong&gt;{
-						path: 'editedPollinationModel>/seed_capsule_plant_id'
-					}&lt;/strong&gt; 
-						{
-						path: 'editedPollinationModel>/seed_capsule_plant_name'
-					} &lt;strong&gt;☓&lt;/strong&gt; 
-						&lt;strong&gt;{
-						path: 'editedPollinationModel>/pollen_donor_plant_id'
-					}&lt;/strong&gt; 
-						{
-						path: 'editedPollinationModel>/pollen_donor_plant_name'
-					}"
-					class="sapUiSmallMarginBottom"
-				/>
-				<Label text="{i18n>EditPollinationFragment.PollinationAt}"/>
-				<HBox class="sapUiTinyMarginBottom">
-					<CheckBox selected="{editedPollinationModel>/pollination_timestamp_known}"/>
-					<MaskInput
-						enabled="{editedPollinationModel>/pollination_timestamp_known}"
-						value="{editedPollinationModel>/pollination_timestamp}"
-						mask="9999-99-99 99:99"
-						width="8.5rem"
+			<FormattedText
+				htmlText="&lt;strong&gt;{
+					path: 'editPollinationInput>/seed_capsule_plant_id'
+				}&lt;/strong&gt; 
+					{
+					path: 'editPollinationInput>/seed_capsule_plant_name'
+				} &lt;strong&gt;☓&lt;/strong&gt; 
+					&lt;strong&gt;{
+					path: 'editPollinationInput>/pollen_donor_plant_id'
+				}&lt;/strong&gt; 
+					{
+					path: 'editPollinationInput>/pollen_donor_plant_name'
+				}"
+				class="sapUiSmallMarginBottom"
+			/>
+			<SegmentedButton
+				selectedKey="{
+					path: 'editPollinationInput>/pollination_status'
+				}"
+				class="sapUiTinyMarginBottom"
+				items="{
+					path: 'local>/pollinationStatusCollection'
+				}"
+			>
+				<items>
+					<SegmentedButtonItem
+						text="{local>text}"
+						key="{local>key}"
+						enabled="{local>enabled}"
+						tooltip="{local>tooltip}"
 					/>
-				</HBox>
-				<Label text="{i18n>EditPollinationFragment.HarvestAt}"/>
-				<HBox class="sapUiTinyMarginBottom">
-					<CheckBox selected="{editedPollinationModel>/harvest_date_known}"/>
-					<MaskInput
-						id="inpHarvestDate"
-						enabled="{editedPollinationModel>/harvest_date_known}"
-						value="{editedPollinationModel>/harvest_date}"
-						mask="9999-99-99"
-						width="6rem"
-					/>
-					<Button
-						icon="sap-icon://calendar"
-						type="Transparent"
-						enabled="{editedPollinationModel>/harvest_date_known}"
-						press=".onSetToday"
-						app:inputId= "inpHarvestDate"
-					/>
-				</HBox>
-				<SegmentedButton
-					selectedKey="{
-						path: 'editedPollinationModel>/location'
-					}"
-					class="sapUiTinyMarginBottom"
-				>
-					<items>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.Indoor}"
-							key="indoor"
-						/>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.IndoorLED}"
-							key="indoor_led"
-						/>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.Outdoor}"
-							key="outdoor"
-						/>
-					</items>
-				</SegmentedButton>
-				<SegmentedButton
-					selectedKey="{
-						path: 'editedPollinationModel>/pollen_type'
-					}"
-					class="sapUiTinyMarginBottom"
-				>
-					<items>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.Fresh}"
-							key="fresh"
-						/>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.Frozen}"
-							key="frozen"
-						/>
-					</items>
-				</SegmentedButton>
-				<HBox
-					alignItems="Center"
-					class="sapUiTinyMarginBottom"
-				>
-					<core:Icon
-						src="sap-icon://color-fill"
-						color="{
-							path: 'editedPollinationModel>/label_color_rgb'
-						}"
-						size="3rem"
-						tooltip="{
-							path: 'editedPollinationModel>/label_color_rgb'
-						}"
-						class="sapUiTinyMarginEnd"
-					/>
-					<Button
-						text="Pick Color"
-						press="onOpenColorPalettePopover"
-						icon="sap-icon://color-fill"
-					/>
-				</HBox>
-				<SegmentedButton
-					selectedKey="{
-						path: 'editedPollinationModel>/pollination_status'
-					}"
-					class="sapUiTinyMarginBottom"
-					items="{
-						path: 'settingsModel>/pollination_status'
-					}"
-				>
-					<items>
-						<SegmentedButtonItem
-							text="{settingsModel>text}"
-							key="{settingsModel>key}"
-						/>
-					</items>
-				</SegmentedButton>
-				<HBox class="sapUiTinyMarginBottom">
-					<VBox>
-						<Label text="{i18n>EditPollinationFragment.Capsule}"/>
-						<HBox class="sapUiTinyMarginEnd">
-							<VBox>
-								<Label text="Length"/>
-								<Input
-									value="{editedPollinationModel>/seed_capsule_length}"
-									width="5rem"
-									class="sapUiTinyMarginEnd"
-									change=".onChangeInputPreventNonFloat"
+				</items>
+			</SegmentedButton>
+			<IconTabBar
+				id="editPollinationIconTabBar"
+				expanded="{device>/isNoPhone}"
+				class="sapUiResponsiveContentPadding"
+				backgroundDesign="Transparent"
+			>
+				<items>
+					<IconTabFilter
+						text="Pollination Details"
+						key="icon_tab_pollination_details"
+					>
+						<VBox>
+							<Label text="{i18n>EditPollinationFragment.PollinationAt}"/>
+							<HBox class="sapUiTinyMarginBottom">
+								<CheckBox selected="{editPollinationInput>/pollination_timestamp_known}"/>
+								<MaskInput
+									enabled="{editPollinationInput>/pollination_timestamp_known}"
+									value="{editPollinationInput>/pollination_timestamp}"
+									mask="9999-99-99 99:99"
+									width="8.5rem"
 								/>
-							</VBox>
-							<VBox>
-								<Label text="{i18n>EditPollinationFragment.Width}"/>
-								<Input
-									value="{editedPollinationModel>/seed_capsule_width}"
-									width="5rem"
-									change=".onChangeInputPreventNonFloat"
+							</HBox>
+							<Label text="{i18n>EditPollinationFragment.HarvestAt}"/>
+							<HBox class="sapUiTinyMarginBottom">
+								<CheckBox selected="{editPollinationInput>/harvest_date_known}"/>
+								<MaskInput
+									id="inpHarvestDate"
+									enabled="{editPollinationInput>/harvest_date_known}"
+									value="{editPollinationInput>/harvest_date}"
+									mask="9999-99-99"
+									width="6rem"
 								/>
-							</VBox>
-						</HBox>
-					</VBox>
-					<VBox>
-						<Label text="{i18n>EditPollinationFragment.Seed}"/>
-						<HBox>
-							<VBox>
-								<Label text="{i18n>EditPollinationFragment.Length}"/>
-								<Input
-									value="{editedPollinationModel>/seed_length}"
-									width="5rem"
-									class="sapUiTinyMarginEnd"
-									change=".onChangeInputPreventNonFloat"
+								<Button
+									icon="sap-icon://calendar"
+									type="Transparent"
+									enabled="{editPollinationInput>/harvest_date_known}"
+									press=".onPressEditPollinationSetToday"
+									app:inputId="inpHarvestDate"
 								/>
-							</VBox>
-							<VBox>
-								<Label text="Width"/>
-								<Input
-									value="{editedPollinationModel>/seed_width}"
-									width="5rem"
-									change=".onChangeInputPreventNonFloat"
-								/>
-							</VBox>
-						</HBox>
-					</VBox>
-				</HBox>
-				<VBox class="sapUiTinyMarginBottom">
-					<Label text="{i18n>EditPollinationFragment.SeedsCount}"/>
-					<Input
-						value="{editedPollinationModel>/seed_count}"
-						width="3rem"
-						change=".onChangeInputPreventNonInt"
-					/>
-				</VBox>
-				<VBox class="sapUiTinyMarginBottom">
-					<Label text="{i18n>EditPollinationFragment.CapsuleDescription}"/>
-					<TextArea
-						value="{editedPollinationModel>/seed_capsule_description}"
-						maxLength="400"
-						width="100%"
-					/>
-				</VBox>
-				<VBox class="sapUiTinyMarginBottom">
-					<Label text="{i18n>EditPollinationFragment.SeedDescription}"/>
-					<TextArea
-						value="{editedPollinationModel>/seed_description}"
-						maxLength="400"
-						width="100%"
-					/>
-				</VBox>
-				<VBox class="sapUiTinyMarginBottom">
-					<Label text="{i18n>EditPollinationFragment.DaysUntilFirstSeedGerminated}"/>
-					<Input
-						value="{editedPollinationModel>/days_until_first_germination}"
-						width="3rem"
-						change=".onChangeInputPreventNonInt"
-					/>
-				</VBox>
-				<HBox>
-					<VBox>
-						<HBox>
-							<VBox
-								class="sapUiTinyMarginEnd"
-								width="6rem"
+							</HBox>
+							<SegmentedButton
+								selectedKey="{
+									path: 'editPollinationInput>/location'
+								}"
+								class="sapUiTinyMarginBottom"
 							>
-								<Label text="{i18n>EditPollinationFragment.SeedsSown}"/>
-								<Input
-									value="{editedPollinationModel>/first_seeds_sown}"
-									change=".onChangeInputCalcGerminationRate"
-								/>
-							</VBox>
-							<VBox
-								class="sapUiSmallMarginEnd"
-								width="6rem"
+								<items>
+									<SegmentedButtonItem
+										text="{i18n>EditPollinationFragment.Indoor}"
+										key="indoor"
+									/>
+									<SegmentedButtonItem
+										text="{i18n>EditPollinationFragment.IndoorLED}"
+										key="indoor_led"
+									/>
+									<SegmentedButtonItem
+										text="{i18n>EditPollinationFragment.Outdoor}"
+										key="outdoor"
+									/>
+								</items>
+							</SegmentedButton>
+							<SegmentedButton
+								selectedKey="{
+									path: 'editPollinationInput>/pollen_type'
+								}"
+								class="sapUiTinyMarginBottom"
 							>
-								<Label text="{i18n>EditPollinationFragment.Germinated}"/>
+								<items>
+									<SegmentedButtonItem
+										text="{i18n>EditPollinationFragment.Fresh}"
+										key="fresh"
+									/>
+									<SegmentedButtonItem
+										text="{i18n>EditPollinationFragment.Frozen}"
+										key="frozen"
+									/>
+								</items>
+							</SegmentedButton>
+							<HBox
+								alignItems="Center"
+								class="sapUiTinyMarginBottom"
+							>
+								<core:Icon
+									src="sap-icon://color-fill"
+									color="{
+										path: 'editPollinationInput>/label_color_rgb'
+									}"
+									size="3rem"
+									tooltip="{
+										path: 'editPollinationInput>/label_color_rgb'
+									}"
+									class="sapUiTinyMarginEnd"
+								/>
+								<Button
+									text="Pick Color"
+									press="onOpenColorPalettePopover"
+									icon="sap-icon://color-fill"
+								/>
+							</HBox>
+						</VBox>
+					</IconTabFilter>
+					<IconTabFilter
+						text="Seed Details"
+						enabled="{= ['seed', 'germinated'].includes(${editPollinationInput>/pollination_status}) }"
+						key="icon_tab_seed_details"
+					>
+						<VBox>
+							<HBox class="sapUiTinyMarginBottom">
+								<VBox>
+									<Label text="{i18n>EditPollinationFragment.Capsule}"/>
+									<HBox class="sapUiTinyMarginEnd">
+										<VBox>
+											<Label text="Length"/>
+											<Input
+												value="{editPollinationInput>/seed_capsule_length}"
+												width="5rem"
+												class="sapUiTinyMarginEnd"
+												change=".onChangeInputPreventNonFloat"
+											/>
+										</VBox>
+										<VBox>
+											<Label text="{i18n>EditPollinationFragment.Width}"/>
+											<Input
+												value="{editPollinationInput>/seed_capsule_width}"
+												width="5rem"
+												change=".onChangeInputPreventNonFloat"
+											/>
+										</VBox>
+									</HBox>
+								</VBox>
+								<VBox>
+									<Label text="{i18n>EditPollinationFragment.Seed}"/>
+									<HBox>
+										<VBox>
+											<Label text="{i18n>EditPollinationFragment.Length}"/>
+											<Input
+												value="{editPollinationInput>/seed_length}"
+												width="5rem"
+												class="sapUiTinyMarginEnd"
+												change=".onChangeInputPreventNonFloat"
+											/>
+										</VBox>
+										<VBox>
+											<Label text="Width"/>
+											<Input
+												value="{editPollinationInput>/seed_width}"
+												width="5rem"
+												change=".onChangeInputPreventNonFloat"
+											/>
+										</VBox>
+									</HBox>
+								</VBox>
+							</HBox>
+							<VBox class="sapUiTinyMarginBottom">
+								<Label text="{i18n>EditPollinationFragment.SeedsCount}"/>
 								<Input
-									value="{editedPollinationModel>/first_seeds_germinated}"
-									change=".onChangeInputCalcGerminationRate"
+									value="{editPollinationInput>/seed_count}"
+									width="3rem"
+									change=".onChangeInputPreventNonInt"
 								/>
 							</VBox>
-							<VBox width="6rem">
-								<Label text="{i18n>EditPollinationFragment.GermRate}"/>
-								<Input
-									value="{editedPollinationModel>/germination_rate} %"
-									editable="false"
+							<VBox class="sapUiTinyMarginBottom">
+								<Label text="{i18n>EditPollinationFragment.CapsuleDescription}"/>
+								<TextArea
+									value="{editPollinationInput>/seed_capsule_description}"
+									maxLength="400"
+									width="100%"
 								/>
 							</VBox>
-						</HBox>
-					</VBox>
-				</HBox>
-			</VBox>
+							<VBox class="sapUiTinyMarginBottom">
+								<Label text="{i18n>EditPollinationFragment.SeedDescription}"/>
+								<TextArea
+									value="{editPollinationInput>/seed_description}"
+									maxLength="400"
+									width="100%"
+								/>
+							</VBox>
+						</VBox>
+					</IconTabFilter>
+					<IconTabFilter
+						text="Germination Details"
+						enabled="{= ${editPollinationInput>/pollination_status} === 'germinated' }"
+						key="icon_tab_seed_details"
+					>
+						<VBox class="sapUiTinyMarginBottom">
+							<Label text="{i18n>EditPollinationFragment.DaysUntilFirstSeedGerminated}"/>
+							<Input
+								value="{editPollinationInput>/days_until_first_germination}"
+								width="3rem"
+								change=".onChangeInputPreventNonInt"
+							/>
+						</VBox>
+						<VBox>
+							<HBox>
+								<VBox>
+									<HBox>
+										<VBox
+											class="sapUiTinyMarginEnd"
+											width="6rem"
+										>
+											<Label text="{i18n>EditPollinationFragment.SeedsSown}"/>
+											<Input
+												value="{editPollinationInput>/first_seeds_sown}"
+												change=".onChangeInputCalcGerminationRate"
+											/>
+										</VBox>
+										<VBox
+											class="sapUiSmallMarginEnd"
+											width="6rem"
+										>
+											<Label text="{i18n>EditPollinationFragment.Germinated}"/>
+											<Input
+												value="{editPollinationInput>/first_seeds_germinated}"
+												change=".onChangeInputCalcGerminationRate"
+											/>
+										</VBox>
+										<VBox width="6rem">
+											<Label text="{i18n>EditPollinationFragment.GermRate}"/>
+											<Input
+												value="{editPollinationInput>/germination_rate} %"
+												editable="false"
+											/>
+										</VBox>
+									</HBox>
+								</VBox>
+							</HBox>
+						</VBox>
+						<!-- </HBox>
+					<VBox/> -->
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
 		</content>
 		<buttons>
 			<Button
@@ -261,7 +296,7 @@
 			/>
 			<Button
 				text="{i18n>EditPollinationFragment.Cancel}"
-				press=".onCancelDialog('editPollination')"
+				press=".onCancelEditPollinationDialog"
 			/>
 		</buttons>
 	</Dialog>
