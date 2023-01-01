@@ -1,5 +1,6 @@
 services:
       pollination-frontend:
+        container_name: pollination-frontend-container
         image: nginx:latest
 
         volumes:
