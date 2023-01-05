@@ -45,6 +45,7 @@ export default class App extends BaseController {
 	private _oPollinationsHandler: PollinationsHandler;
 	private _oUnsavedPollinationsHandler: UnsavedPollinationsHandler;
 	private _oNewFlorescenceDialogHandler: NewFlorescenceDialogHandler;  // lazy loaded
+	private _oEditFlorescenceDialogHandler: EditFlorescenceDialogHandler;  // lazy loaded
 
 	public onInit(): void {
 
@@ -449,11 +450,12 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onPressEditActiveFlorescence(oEvent: Event) {
 		// open the dialog to edit the selected active florescence
+		if (!this._oEditFlorescenceDialogHandler){
+			this._oEditFlorescenceDialogHandler = new EditFlorescenceDialogHandler(this._oActiveFlorescencesHandler);
+		}
 		const oControl = <Control>oEvent.getSource();
 		const oFlorescence = <BActiveFlorescence>oControl.getBindingContext("currentFlorescencesModel")!.getObject();
-		
-		const oEditFlorescenceDialogHandler = new EditFlorescenceDialogHandler(this._oActiveFlorescencesHandler);
-		oEditFlorescenceDialogHandler.openDialogEditActiveFlorescence(this.getView(), oFlorescence)
+		this._oEditFlorescenceDialogHandler.openDialogEditActiveFlorescence(this.getView(), oFlorescence)
 	}
 	public onPressNewActiveFlorescence(oEvent: Event) {
 		// open the dialog to create a new active florescence

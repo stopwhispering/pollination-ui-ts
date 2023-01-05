@@ -59,7 +59,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		);
 	}
 
-	private _onConfirmDeleteFlorescence(iFlorescenceId: int, oDialogEditFlorescence: Dialog, sAction: string): void {
+	private _onConfirmDeleteFlorescence(iFlorescenceId: int, sAction: string): void {
 		if (sAction === "OK")
 			this._deleteFlorescence(iFlorescenceId);
 		else 
@@ -84,7 +84,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 	}
 
 	public onPressDeleteFlorescence(oEvent: Event) {
-		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel()
+		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
 		const oEditedFlorescence = <LEditFlorescenceInput>oEditFlorescenceModel.getData()
 		const iFlorescenceId = oEditedFlorescence.id;
 		// const iFlorescenceId = (<JSONModel>this.getView().getModel("editedFlorescenceModel")).getData().id;
@@ -95,7 +95,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 	public onAfterCloseEditFlorescenceDialog(oEvent: Event) {
 		// destroy model and fragment, works for both regular closing and hitting ESC
 		// const oDialog = <Dialog>oEvent.getSource();
-		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel()
+		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
 		oEditFlorescenceModel.destroy();
 		this._oEditFlorescenceDialog.destroy();		
 	}
