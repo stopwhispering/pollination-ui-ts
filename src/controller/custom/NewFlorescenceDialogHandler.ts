@@ -42,10 +42,9 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 		Fragment.load({
 			name: "pollination.ui.view.fragments.NewActiveFlorescence",
 			id: oViewToAddTo.getId(),
-			controller: oViewToAddTo.getController()
+			controller: this,
 		}).then((oControl: Control | Control[]) => {
 			this._oNewFlorescenceDialog = <Dialog>oControl;
-			// const oDialog = <Dialog>oControl;
 			oViewToAddTo.addDependent(this._oNewFlorescenceDialog);
 			this._oNewFlorescenceDialog.setModel(this._oNewFlorescenceModel, "newFlorescenceModel");
 			this._oNewFlorescenceDialog.open();
@@ -56,7 +55,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 				async: true,
 				contentType: 'application/json'
 			})
-				.done(this._onDoneGetPlantsForNewFlorescence.bind)
+				.done(this._onDoneGetPlantsForNewFlorescence)
 				.fail(Util.onFail.bind(this, 'Get plants for new florescence dialog'))
 		});
 	}
@@ -93,7 +92,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			type: 'POST',
 			contentType: 'application/json'
 		})
-			.done(this._cbDonePostNewFlorescence.bind)
+			.done(this._cbDonePostNewFlorescence)
 			.fail(Util.onFail.bind(this, 'Create new florescence'))
 	}
 

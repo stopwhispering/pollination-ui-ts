@@ -44,6 +44,7 @@ export default class App extends BaseController {
 	private _oActiveFlorescencesHandler: ActiveFlorescencesHandler;
 	private _oPollinationsHandler: PollinationsHandler;
 	private _oUnsavedPollinationsHandler: UnsavedPollinationsHandler;
+	private _oNewFlorescenceDialogHandler: NewFlorescenceDialogHandler;  // lazy loaded
 
 	public onInit(): void {
 
@@ -456,8 +457,10 @@ export default class App extends BaseController {
 	}
 	public onPressNewActiveFlorescence(oEvent: Event) {
 		// open the dialog to create a new active florescence
-		const oNewFlorescenceDialogHandler = new NewFlorescenceDialogHandler(this._oActiveFlorescencesHandler);
-		oNewFlorescenceDialogHandler.openDialogNewActiveFlorescence(this.getView());
+		if (!this._oNewFlorescenceDialogHandler){
+			this._oNewFlorescenceDialogHandler = new NewFlorescenceDialogHandler(this._oActiveFlorescencesHandler);
+		}
+		this._oNewFlorescenceDialogHandler.openDialogNewActiveFlorescence(this.getView());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
