@@ -16,3 +16,5 @@ export enum LFlorescenceStatus {
   FLOWERING = 'flowering',
   FINISHED = 'finished',
 }
+
+export type BFloweringState = "inflorescence_growing" | "flowering" | "seeds_ripening" | "not_flowering";

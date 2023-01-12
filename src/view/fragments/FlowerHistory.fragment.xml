@@ -1,0 +1,18 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+	<Dialog
+		title="Flower History"
+		class="sapUiContentPadding sapUiSizeCompact	"
+		afterClose=".onAfterCloseFlowerHistory"
+		contentWidth="95%"
+	>
+		<content>
+			<Table
+				id="flowerHistoryList"
+			>
+			</Table>
+		</content>
+	</Dialog>
+</c:FragmentDefinition>

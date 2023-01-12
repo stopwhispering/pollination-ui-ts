@@ -32,6 +32,7 @@ import ListItem from "sap/ui/core/ListItem";
 import ListItemBase from "sap/m/ListItemBase";
 import UnsavedPollinationsHandler from "./custom/UnsavedPollinationsHandler";
 import EditPollinationDialogHandler from "./custom/EditPollinationDialogHandler";
+import FlowerHistoryHandler from "./custom/FlowerHistoryHandler";
 
 /**
  * @namespace pollination.ui.controller
@@ -46,6 +47,7 @@ export default class App extends BaseController {
 	private _oUnsavedPollinationsHandler: UnsavedPollinationsHandler;
 	private _oNewFlorescenceDialogHandler: NewFlorescenceDialogHandler;  // lazy loaded
 	private _oEditFlorescenceDialogHandler: EditFlorescenceDialogHandler;  // lazy loaded
+	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
 
 	public onInit(): void {
 
@@ -472,5 +474,15 @@ export default class App extends BaseController {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
 		new PollinationToSeedProbabilityModelTrainer().triggerRetrain();
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 		Open dialog displaying flowering plants history in tabular format
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	onPressOpenFloweringPlantsTable(oEvent: Event) {
+		if (!this._oFlowerHistoryHandler){
+			this._oFlowerHistoryHandler = new FlowerHistoryHandler();
+		}
+		this._oFlowerHistoryHandler.openDialog(this.getView());
 	}
 }

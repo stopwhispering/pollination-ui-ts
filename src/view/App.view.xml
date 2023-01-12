@@ -20,6 +20,11 @@
 				>
 					<f:additionalContent>
 						<OverflowToolbarButton
+							icon="sap-icon://excel-attachment"
+							tooltip="Open Flowering Plants Table"
+							press=".onPressOpenFloweringPlantsTable"
+						/>
+						<OverflowToolbarButton
 							icon="sap-icon://shortcut"
 							tooltip="{i18n>AppView.NewFlorescence}"
 							press=".onPressNewActiveFlorescence"

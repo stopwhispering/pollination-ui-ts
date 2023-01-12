@@ -70,4 +70,3 @@ export interface LEditFlorescenceInput extends BActiveFlorescence{
     first_flower_opening_date_known: boolean;
     last_flower_closing_date_known: boolean;
 }
-

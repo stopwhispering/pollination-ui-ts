@@ -2,6 +2,8 @@
  * @namespace pollination.ui.interfaces.entities
  */
 
+import { BFloweringState } from "./enums";
+
 // from other modules
 export interface BMessage {
     type: BMessageType;
@@ -178,4 +180,25 @@ export interface FRequestNewPollination {
 }
 export interface FRequestPollenContainers {
   pollenContainerCollection: FBPollenContainer[];
+}
+
+
+
+
+export interface BFloweringPeriodState {
+  month: string;
+  flowering_state: BFloweringState;
+}
+
+export interface BPlantFlowerHistory {
+  plant_id: number;
+  plant_name: string;
+  periods: BFloweringPeriodState[];
+}
+
+export interface BResultsFlowerHistory {
+  action: string;
+  message: BMessage;
+  plants: BPlantFlowerHistory[];
+  months: string[];
 }
