@@ -31,4 +31,18 @@ export default class Util extends ManagedObject {
 		return (new Date()).toISOString().substring(0,10);  // e.g. '2022-11-17';
     }
 
+    private static _componentToHex(c: int): string {
+		// 112 -> '70'
+		const sHex = c.toString(16);
+		return sHex.length == 1 ? "0" + sHex : sHex;
+	}
+
+	public static rgbToHex(sRgb: string): string {
+		// 'rgb(112,31,31)' -> '#701f1f'
+		const sRgbWithoutBrackets = sRgb.substring(4, sRgb.length - 1);
+		const aRgb = sRgbWithoutBrackets.split(',');
+		const sHex = "#" + this._componentToHex(parseInt(aRgb[0])) + this._componentToHex(parseInt(aRgb[1])) + this._componentToHex(parseInt(aRgb[2]));
+		return sHex;
+	}
+
 }

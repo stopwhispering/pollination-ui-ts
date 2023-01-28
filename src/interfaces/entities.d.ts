@@ -23,6 +23,12 @@ export interface BActiveFlorescence {
   comment?: string;
   branches_count?: number;
   flowers_count?: number;
+  perianth_length?: number;
+  perianth_diameter?: number;
+  flower_color?: string;
+  flower_color_second?: string;
+  flower_colors_differentiation?: FlowerColorDifferentiation;
+  stigma_position?: StigmaPosition;
   first_flower_opening_date?: string;
   last_flower_closing_date?: string;
   available_colors_rgb: string[];
@@ -129,6 +135,9 @@ export interface BResultsRetrainingPollinationToSeedsModel {
     mean_f1_score: float;
 }
 
+export type FlowerColorDifferentiation = "top_bottom" | "ovary_mouth" | "uniform";
+export type StigmaPosition = "exserted" | "mouth" | "inserted" | "deeply_inserted";
+
 export interface FRequestEditedFlorescence {
   id: number;
   plant_id: number;
@@ -138,6 +147,12 @@ export interface FRequestEditedFlorescence {
   comment?: string;
   branches_count?: number;
   flowers_count?: number;
+  perianth_length?: number;
+  perianth_diameter?: number;
+  flower_color?: string;
+  flower_color_second?: string;
+  flower_colors_differentiation?: FlowerColorDifferentiation;
+  stigma_position?: StigmaPosition;
   first_flower_opening_date?: string;
   last_flower_closing_date?: string;
 }

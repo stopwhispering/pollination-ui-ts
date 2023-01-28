@@ -69,4 +69,10 @@ export interface LEditFlorescenceInput extends BActiveFlorescence{
     inflorescence_appearance_date_known: boolean;
     first_flower_opening_date_known: boolean;
     last_flower_closing_date_known: boolean;
+
+    perianth_size_known: boolean;
+    flower_colors_known: boolean;
+    stigma_position_known: boolean;
 }
+
+export type LColorProperties = "flower_color" | "flower_color_second";

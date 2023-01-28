@@ -1,5 +1,5 @@
 import { BActiveFlorescence } from "pollination/ui/interfaces/entities";
-import { LEditFlorescenceInput } from "pollination/ui/interfaces/entitiesLocal";
+import { LColorProperties, LEditFlorescenceInput } from "pollination/ui/interfaces/entitiesLocal";
 import Dialog from "sap/m/Dialog";
 import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
@@ -10,6 +10,8 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import Util from "./Util";
 import Event from "sap/ui/base/Event";
+import ColorPalettePopover from "sap/m/ColorPalettePopover";
+import MessageToast from "sap/m/MessageToast";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -37,6 +39,13 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		oEditedFlorescence.inflorescence_appearance_date_known = !!oEditedFlorescence.inflorescence_appearance_date
 		oEditedFlorescence.first_flower_opening_date_known = !!oEditedFlorescence.first_flower_opening_date
 		oEditedFlorescence.last_flower_closing_date_known = !!oEditedFlorescence.last_flower_closing_date
+
+		oEditedFlorescence.perianth_size_known = (!!oEditedFlorescence.perianth_length && !!oEditedFlorescence.perianth_diameter);
+		oEditedFlorescence.flower_colors_known = !!oEditedFlorescence.flower_color;
+		oEditedFlorescence.stigma_position_known = !!oEditedFlorescence.stigma_position;
+
+		if (!oEditedFlorescence.flower_colors_differentiation)
+			oEditedFlorescence.flower_colors_differentiation = 'uniform';
 
 		// open dialog
 		Fragment.load({
@@ -126,6 +135,27 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		if (!oEditedFlorescence.last_flower_closing_date_known) {
 			oEditedFlorescence.last_flower_closing_date = undefined;
 		}
+		if (!oEditedFlorescence.perianth_size_known) {
+			oEditedFlorescence.perianth_length = undefined;
+			oEditedFlorescence.perianth_diameter = undefined;
+		}
+		if (!oEditedFlorescence.stigma_position_known) {
+			oEditedFlorescence.stigma_position = undefined;
+		}
+		if (!oEditedFlorescence.flower_colors_known) {
+			oEditedFlorescence.flower_color = undefined;
+			oEditedFlorescence.flower_color_second = undefined;
+			oEditedFlorescence.flower_colors_differentiation = undefined;
+		}
+		if (oEditedFlorescence.flower_colors_differentiation === "uniform") {
+			oEditedFlorescence.flower_color_second = undefined;
+		}
+		if ((oEditedFlorescence.flower_colors_differentiation === "top_bottom" || 
+			oEditedFlorescence.flower_colors_differentiation === "ovary_mouth")
+			&& !oEditedFlorescence.flower_color_second) {
+			MessageToast.show("Please pick second flower color");
+			return;
+		}
 
 		// depending on florescence status, we might set some dates to undefined
 		// todo better validate and cancel with message
@@ -159,6 +189,42 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 	}
 	onCancelDialog(oEvent: Event) {
 		this._oEditFlorescenceDialog.close();
-	}	
+	}
+	onFirstColorPress(oEvent: Event) {
+		const oSource: Control = <Control>oEvent.getSource();
+		this.openColorPalettePopover("flower_color", oSource)
+	}
+
+	onSecondColorPress(oEvent: Event) {
+		const oSource: Control = <Control>oEvent.getSource();
+		this.openColorPalettePopover("flower_color_second", oSource)
+	}
+
+	private openColorPalettePopover(color_property: LColorProperties, oSource: Control) {
+		const oColorPalettePopoverCustom = new ColorPalettePopover({
+			defaultColor: "white",
+			showDefaultColorButton: false,
+			colors: ["#292f36", "#4ecdc4", "#3a506b"],
+			colorSelect: this._handleColorSelect.bind(this, this._oEditedFlorescenceModel, color_property)
+		});
+	// @ts-ignore
+	oColorPalettePopoverCustom.openBy(oSource);
+	}
+
+	private _handleColorSelect(oEditedFlorescenceModel: JSONModel, color_property: LColorProperties, oEvent: Event) {
+		let sColor = oEvent.getParameter('value');
+		
+		// color returns either a predefined color (only rgb hex codes, e.g. "#4ecdc4") or, if user picked 
+		// a custom color, a rgb components string like 'rgb(112,31,31)'. in the latter case, we need to convert
+		if (sColor.startsWith('rgb')) {
+			sColor = Util.rgbToHex(sColor);
+		} else if (!sColor.startsWith('#')) {
+			throw new Error("Unknown color format: " + sColor);
+		}
+
+		const oEditedFlorescence = <LEditFlorescenceInput>oEditedFlorescenceModel.getData();
+		oEditedFlorescence[color_property] = sColor;
+		oEditedFlorescenceModel.updateBindings(false);
+	}
 
 }
