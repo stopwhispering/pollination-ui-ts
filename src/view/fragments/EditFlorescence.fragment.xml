@@ -159,7 +159,7 @@
 								inputsAsTooltips="true"
 								enableTickmarks="true"
 								min="0.1"
-								max="50.0"
+								max="8.0"
 								step="0.1"
 								class="sapUiMediumMarginBottom"
 								width="11rem"
@@ -177,7 +177,7 @@
 								inputsAsTooltips="true"
 								enableTickmarks="true"
 								min="0.1"
-								max="9.0"
+								max="3.0"
 								step="0.1"
 								class="sapUiMediumMarginBottom"
 								width="11rem"
@@ -198,7 +198,7 @@
 								selectedKey="{editedFlorescenceModel>/flower_colors_differentiation}"
 								enabled="{editedFlorescenceModel>/flower_colors_known}"
 								class="sapUiTinyMarginEnd"
-								width="23rem"
+								width="18rem"
 							>
 								<items>
 									<SegmentedButtonItem
@@ -286,7 +286,7 @@
 									key="inserted"
 								/>
 								<SegmentedButtonItem
-									text="deeply_inserted"
+									text="deeply inserted"
 									tooltip="deeply inserted, below anthers"
 									key="deeply_inserted"
 								/>

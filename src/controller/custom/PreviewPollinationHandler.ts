@@ -6,7 +6,6 @@ import { BActiveFlorescence, BPotentialPollenDonor } from "pollination/ui/interf
 import MessageToast from "sap/m/MessageToast";
 import UnsavedPollinationsHandler from "./UnsavedPollinationsHandler";
 
-
 /**
  * @namespace pollination.ui.controller.custom
  */
@@ -21,9 +20,10 @@ export default class PreviewPollinationHandler extends ManagedObject {
         this._oNewTempPollinationInputModel = oNewTempPollinationInputModel;
 		this._oUnsavedPollinationsHandler = oUnsavedPollinationsHandler;
 		
-		this._oNewTempPollination = {   //todo entity
+		this._oNewTempPollination = {
 			pollinationTimestamp: Util.format_timestamp(new Date()),
-			location: 'indoor_led'
+			location: 'indoor_led',
+			count: 1,
 		}
 		this._oNewTempPollinationInputModel.setData(this._oNewTempPollination);
 		this.resetTempPollinationFlorescence();
@@ -108,6 +108,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			pollinationTimestamp: this._oNewTempPollination.pollinationTimestamp,  // '%Y-%m-%d %H:%M' without seconds
 			location: this._oNewTempPollination.location,
 			locationText: locationText,
+			count: this._oNewTempPollination.count,
 			labelColorRgb: this._oNewTempPollination.labelColorRgb
 		}
 		this._oUnsavedPollinationsHandler.addPollination(oNewPollination);

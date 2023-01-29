@@ -197,65 +197,8 @@ export default class App extends BaseController {
 		
 		this._oTemporaryPollinationsHandler.preview(oFlorescence, oSelectedPollenDonor)
 
-		// var selectedFlorescenceItem = (<List>this.getView().byId('activeFlorescencesList')).getSelectedItem();
-		// if (selectedFlorescenceItem === null || selectedFlorescenceItem === undefined) {
-		// 	MessageToast.show('Please select a florescence.')
-		// 	return;
-		// }
-		// var selectedFlorescence = <Florescence>selectedFlorescenceItem.getBindingContext('currentFlorescencesModel')!.getObject();
-
-		// var selectedPollenDonorItem = (<List>this.getView().byId('potentialPollenDonorsList')).getSelectedItem();
-		// var selectedPollenDonor = <PollenDonor>selectedPollenDonorItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
-
-		// // var onewTempPollinationInput = this.getView().getModel("newTempPollinationInput");
-		// // var oNewTempPollination = onewTempPollinationInput.getData();
-		// if (this._new_temp_pollination.florescencePlantName !== selectedFlorescence.plant_name
-		// 	|| this._new_temp_pollination.pollenDonorPlantName !== selectedPollenDonor.plant_name) {
-		// 	MessageToast.show('Bad Plant Names.')
-		// 	return;
-		// }
-
-		// switch (this._new_temp_pollination.location) {
-		// 	case 'indoor_led': var locationText = 'indoor LED'; break;
-		// 	case 'indoor': var locationText = 'indoor'; break;
-		// 	case 'outdoor': var locationText = 'outdoor'; break;
-		// 	default:
-		// 		MessageToast.show('Bad Location.')
-		// 		return;
-		// }
-
-		// if (!this._new_temp_pollination.labelColorRgb || this._new_temp_pollination.labelColorRgb === '' || this._new_temp_pollination.labelColorRgb === 'transparent') {
-		// 	MessageToast.show('Choose Color first.')
-		// 	return;
-		// }
-
-		// // add new pollination to the newPollinationsModel
-		// var oNewPollination = {
-		// 	florescenceId: this._new_temp_pollination.florescenceId,
-		// 	seedCapsulePlantName: selectedFlorescence.plant_name,
-		// 	seedCapsulePlantId: selectedFlorescence.plant_id,
-		// 	pollenDonorPlantName: selectedPollenDonor.plant_name,
-		// 	pollenDonorPlantId: selectedPollenDonor.plant_id,
-		// 	pollenType: this._new_temp_pollination.pollenType,
-		// 	pollinationTimestamp: this._new_temp_pollination.pollinationTimestamp,  // '%Y-%m-%d %H:%M' without seconds
-		// 	location: this._new_temp_pollination.location,
-		// 	locationText: locationText,
-		// 	labelColorRgb: this._new_temp_pollination.labelColorRgb
-		// }
-		// this._new_pollinations.push(oNewPollination);
-		// (<JSONModel>this.getView().getModel("newPollinationsModel")).updateBindings(false);
-
-		// // remove label color from available colors for this florescence
-		// this._new_temp_pollination.labelColorRgb = 'transparent';
-		// this._new_temp_pollination.availableColorsRgb = this._getAvailableColors(selectedFlorescence);
-		// (<JSONModel>this.getView().getModel("newTempPollinationInput")).updateBindings(false);
 	}
 
-	// private _deleteNewPollination(oNewPollination: LUnsavedPollination) {
-	// 	var index = this._new_pollinations.indexOf(oNewPollination);
-	// 	this._new_pollinations.splice(index, 1);
-	// 	(<JSONModel>this.getView().getModel("newPollinationsModel")).updateBindings(false);
-	// }
 
 	public onPressDeleteNewPollinationButton(oEvent: Event) {
 		const oUnsavedPollination = <LUnsavedPollination>(<Button>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();  // todo Type
@@ -269,31 +212,8 @@ export default class App extends BaseController {
 		const oPollination = <FRequestNewPollination>oControl.getBindingContext("newPollinationsModel")!.getObject();
 		this._oUnsavedPollinationsHandler.savePollination(oPollination)
 
-		// const oControl = <Control>oEvent.getSource()
-		// var oNewPollination = <FRequestNewPollination>oControl.getBindingContext("newPollinationsModel")!.getObject();
-		// $.ajax({
-		// 	url: Util.getServiceUrl('pollinations'),
-		// 	data: JSON.stringify(oNewPollination),
-		// 	context: this,
-		// 	async: true,
-		// 	type: 'POST',
-		// 	contentType: 'application/json'
-		// })
-		// 	.done(this._onDonePostNewPollination.bind(this, oNewPollination))
-		// 	.fail(Util.onFail.bind(this, 'Save new pollinations'))
 	}
 
-	// private _onDonePostNewPollination(oNewPollination: LUnsavedPollination) {
-	// 	// having posted a new pollination, re-read the ongoing pollinations list
-	// 	this._oPollinationsHandler.loadPollinations();
-
-	// 	// also re-read the active florescences list
-	// 	this._oActiveFlorescencesHandler.loadFlorescences();
-
-	// 	// remove saved new pollination from new pollinations model 
-	// 	this.getView().getModel("newPollinationsModel")
-	// 	this._deleteNewPollination(oNewPollination);
-	// }
 
 	public onLiveChangeOngoingPollinationsFilter(oEvent: Event) {
 		// add filter to ongoing pollinations gridlist

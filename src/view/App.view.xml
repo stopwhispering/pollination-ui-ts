@@ -323,18 +323,29 @@
 													</core:Icon>
 												</FlexBox>
 											</HBox>
-											<FlexBox justifyContent="End">
-												<Button
-													enabled="{=
-														!!${newTempPollinationInput>/florescencePlantName} 
-														&amp;&amp; !!${newTempPollinationInput>/pollenDonorPlantName} 
-														&amp;&amp; ${newTempPollinationInput>/florescenceStatus} === 'flowering' 
-													}"
-													text="{i18n>AppView.Preview}"
-													type="Emphasized"
-													press=".onPressAddAsPollinationPreview"
+											<HBox justifyContent="SpaceBetween">
+												<StepInput
+													description="Flowers"
+													max="4"
+													min="1"
+													required="true"
+													textAlign="Center"
+													value="{newTempPollinationInput>/count}"
 												/>
-											</FlexBox>
+													
+												<FlexBox>
+													<Button
+														enabled="{=
+															!!${newTempPollinationInput>/florescencePlantName} 
+															&amp;&amp; !!${newTempPollinationInput>/pollenDonorPlantName} 
+															&amp;&amp; ${newTempPollinationInput>/florescenceStatus} === 'flowering' 
+														}"
+														text="{i18n>AppView.Preview}"
+														type="Emphasized"
+														press=".onPressAddAsPollinationPreview"
+													/>
+												</FlexBox>
+											</HBox>
 										</VBox>
 									</f:content>
 								</f:Card>
@@ -401,6 +412,14 @@
 													}"
 													design="StatusIconHidden"
 													class="sapUiTinyMarginEnd"
+												/>
+												<GenericTag
+													visible="{= (!!${newPollinationsModel>count}) }"
+													text="{newPollinationsModel>count} fl."
+													tooltip="{newPollinationsModel>count} flower(s)"
+													design="StatusIconHidden"
+													class="sapUiTinyMarginEnd"
+													status="Warning"
 												/>
 											</HBox>
 											<HBox>
@@ -532,6 +551,14 @@
 												}"
 												design="StatusIconHidden"
 												class="sapUiTinyMarginEnd"
+											/>
+											<GenericTag
+												visible="{= (!!${ongoingPollinationsModel>count}) }"
+												text="{ongoingPollinationsModel>count} fl."
+												tooltip="{ongoingPollinationsModel>count} flower(s)"
+												design="StatusIconHidden"
+												class="sapUiTinyMarginEnd"
+												status="Warning"
 											/>
 										</HBox>
 									</VBox>
