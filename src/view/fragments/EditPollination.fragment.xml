@@ -122,6 +122,15 @@
 									/>
 								</items>
 							</SegmentedButton>
+							<StepInput
+								description="Flowers"
+								max="4"
+								min="1"
+								required="true"
+								textAlign="Center"
+								width="11rem"
+								value="{editPollinationInput>/count}"
+							/>
 							<HBox
 								alignItems="Center"
 								class="sapUiTinyMarginBottom"
