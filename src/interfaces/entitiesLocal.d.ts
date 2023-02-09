@@ -1,5 +1,5 @@
 import { BActiveFlorescence, BOngoingPollination } from "./entities";
-import { FlorescenceStatus, LFlorescenceStatus } from "./enums";
+import { FlorescenceStatus, FlorescenceStatus } from "./enums";
 
 /**
  * @namespace pollination.ui.interfaces.entitiesLocal
@@ -52,7 +52,7 @@ export interface LIdToFragmentMap {
 export interface LNewFlorescenceInputData {
 plant_id: int|undefined;
 plant_name: string|undefined,
-florescence_status: LFlorescenceStatus;
+florescence_status: FlorescenceStatus;
 inflorescence_appearance_date: string|undefined,
 comment: string|undefined,
 }

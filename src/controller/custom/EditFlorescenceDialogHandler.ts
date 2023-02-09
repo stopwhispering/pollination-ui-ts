@@ -12,6 +12,7 @@ import Util from "./Util";
 import Event from "sap/ui/base/Event";
 import ColorPalettePopover from "sap/m/ColorPalettePopover";
 import MessageToast from "sap/m/MessageToast";
+import { FlorescenceStatus } from "pollination/ui/interfaces/enums";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -117,7 +118,10 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 
 	public onPressSubmitEditFlorescence(oEvent: Event) {
 		var oEditedFlorescence = <LEditFlorescenceInput>this._oEditedFlorescenceModel.getData();
+		this._submitEditedFlorescence(oEditedFlorescence)
+	}
 
+	private _submitEditedFlorescence(oEditedFlorescence: LEditFlorescenceInput){
 		// the inputs are bound to the model and might update undefined values to default values
 		// we need to set them back to undefined
 		if (!oEditedFlorescence.branches_count_known) {
@@ -159,12 +163,14 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 
 		// depending on florescence status, we might set some dates to undefined
 		// todo better validate and cancel with message
-		if (oEditedFlorescence.florescence_status === "inflorescence_appeared") {
+		if (oEditedFlorescence.florescence_status === FlorescenceStatus.INFLORESCENCE_APPEARED) {
 			oEditedFlorescence.first_flower_opening_date = undefined;
 			oEditedFlorescence.last_flower_closing_date = undefined;
-		} else if (oEditedFlorescence.florescence_status === "flowering") {
+		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.FLOWERING) {
 			oEditedFlorescence.last_flower_closing_date = undefined;
-		} else if (oEditedFlorescence.florescence_status === "finished") {
+		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.FINISHED) {
+			throw new Error("Cannot edit finished florescence");
+		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.ABORTED) {
 			// nothing to do
 		} else {
 			throw new Error("Unknown florescence status: " + oEditedFlorescence.florescence_status);
@@ -226,5 +232,23 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		oEditedFlorescence[color_property] = sColor;
 		oEditedFlorescenceModel.updateBindings(false);
 	}
+	onPressAbortFlorescence(oEvent: Event) {
+		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
+		const oEditedFlorescenceInput = <LEditFlorescenceInput>oEditFlorescenceModel.getData();
+		oEditedFlorescenceInput.florescence_status = FlorescenceStatus.ABORTED;
+		this._askToAbortFlorescence(oEditedFlorescenceInput);
+	}
 
+	private _askToAbortFlorescence(oEditedFlorescenceInput: LEditFlorescenceInput): void {
+		MessageBox.confirm("Really set Florescence aborted? This cannot be undone.",
+			{ onClose: this._onConfirmAbortFlorescence.bind(this, oEditedFlorescenceInput) }
+		);
+	}
+
+	private _onConfirmAbortFlorescence(oEditedFlorescenceInput: LEditFlorescenceInput, sAction: string): void {
+		if (sAction === "OK")
+			this._submitEditedFlorescence(oEditedFlorescenceInput);
+		else 
+            return;  // do nothing
+	}
 }

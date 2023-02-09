@@ -11,10 +11,11 @@ export enum PollinationStatus {
   UNKNOWN = 'unknown',
 }
 
-export enum LFlorescenceStatus {
+export enum FlorescenceStatus {
   INFLORESCENCE_APPEARED = 'inflorescence_appeared',
   FLOWERING = 'flowering',
   FINISHED = 'finished',
+  ABORTED = 'aborted',
 }
 
 export type BFloweringState = "inflorescence_growing" | "flowering" | "seeds_ripening" | "not_flowering";

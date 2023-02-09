@@ -2,7 +2,7 @@
  * @namespace pollination.ui.interfaces.entities
  */
 
-import { BFloweringState } from "./enums";
+import { FlorescenceStatus, BFloweringState } from "./enums";
 
 // from other modules
 export interface BMessage {
@@ -12,13 +12,13 @@ export interface BMessage {
     description?: string;
   }
 export type BMessageType = "Information" | "None" | "Success" | "Warning" | "Error" | "Debug";
-export type BFlorescenceStatus = "inflorescence_appeared" | "flowering" | "finished"
+// export type FlorescenceStatus = "inflorescence_appeared" | "flowering" | "finished" | "aborted";
 // auto-generated via pydantic-2-ts
 export interface BActiveFlorescence {
   id: number;
   plant_id: number;
   plant_name: string;
-  florescence_status: BFlorescenceStatus;
+  florescence_status: FlorescenceStatus;
   inflorescence_appearance_date?: string;
   comment?: string;
   branches_count?: number;

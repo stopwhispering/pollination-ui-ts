@@ -320,6 +320,12 @@
 		</content>
 		<buttons>
 			<Button
+				text="Set Aborted"
+				icon="sap-icon://sys-cancel"
+				press=".onPressAbortFlorescence"
+				type="Critical"
+			/>
+			<Button
 				text="{i18n>EditFlorescenceFragment.Delete}"
 				icon="sap-icon://delete"
 				press=".onPressDeleteFlorescence"

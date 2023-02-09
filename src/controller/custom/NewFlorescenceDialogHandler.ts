@@ -1,6 +1,6 @@
 import { BPlantForNewFlorescence, BResultsPlantsForNewFlorescence, FRequestNewFlorescence } from "pollination/ui/interfaces/entities";
 import { LNewFlorescenceInputData } from "pollination/ui/interfaces/entitiesLocal";
-import { LFlorescenceStatus } from "pollination/ui/interfaces/enums";
+import { FlorescenceStatus } from "pollination/ui/interfaces/enums";
 import Dialog from "sap/m/Dialog";
 import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
@@ -33,7 +33,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 		var oNewFlorescence: LNewFlorescenceInputData = {
 			plant_id: undefined,
 			plant_name: undefined,
-			florescence_status: LFlorescenceStatus.INFLORESCENCE_APPEARED,
+			florescence_status: FlorescenceStatus.INFLORESCENCE_APPEARED,
 			inflorescence_appearance_date: undefined,
 			comment: undefined
 		}
