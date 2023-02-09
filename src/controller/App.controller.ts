@@ -17,7 +17,7 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField from "sap/m/SearchField";
-import { BActiveFlorescence, BOngoingPollination, BPotentialPollenDonor, BResultsPotentialPollenDonors, FRequestNewPollination } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import PollinationToSeedProbabilityModelTrainer from "./custom/PollinationToSeedProbabilityModelTrainer";
 import Util from "./custom/Util";
@@ -64,7 +64,7 @@ export default class App extends BaseController {
 		this._oSettingsHandler.loadSettings();
 
 		// initialize model with ongoing  pollinations in the database and it's handler
-		const oPollinationModel = new JSONModel(<BOngoingPollination[]>[]);
+		const oPollinationModel = new JSONModel(<PollinationRead[]>[]);
 		this.getView().setModel(oPollinationModel, "ongoingPollinationsModel");
 		this._oPollinationsHandler = new PollinationsHandler(oPollinationModel);
 		this._oPollinationsHandler.loadPollinations();
@@ -121,8 +121,8 @@ export default class App extends BaseController {
 
 		this._oTemporaryPollinationsHandler.setPollenDonorPlant(oPollenDonor);
 		// this._new_temp_pollination.pollenDonorPlantName = pollenDonor.plant_name;
-		// this._new_temp_pollination.pollenDonorPlantId = pollenDonor.plant_id;
-		// this._new_temp_pollination.pollenType = pollenDonor.pollen_type;
+		// this._new_temp_pollination.pollen_donor_plant_id = pollenDonor.plant_id;
+		// this._new_temp_pollination.pollen_type = pollenDonor.pollen_type;
 		// var onewTempPollinationInput = this.getView().getModel("newTempPollinationInput");
 		// (<JSONModel>onewTempPollinationInput).updateBindings(false);
 	}
@@ -176,7 +176,7 @@ export default class App extends BaseController {
 	public onColorSelect(oEvent: Event) {
 		const sColor = oEvent.getParameter('value');
 		this._oTemporaryPollinationsHandler.setLabelColorRGB(sColor)
-		// this._new_temp_pollination.labelColorRgb = oEvent.getParameter('value');
+		// this._new_temp_pollination.label_color_rgb = oEvent.getParameter('value');
 		// var onewTempPollinationInput = <JSONModel>this.getView().getModel("newTempPollinationInput");
 		// onewTempPollinationInput.updateBindings(false);
 	}
@@ -209,7 +209,7 @@ export default class App extends BaseController {
 	public onPressSaveNewPollinationButton(oEvent: Event) {
 		const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel")
 		const oControl = <Control>oEvent.getSource()
-		const oPollination = <FRequestNewPollination>oControl.getBindingContext("newPollinationsModel")!.getObject();
+		const oPollination = <PollinationCreate>oControl.getBindingContext("newPollinationsModel")!.getObject();
 		this._oUnsavedPollinationsHandler.savePollination(oPollination)
 
 	}
@@ -245,7 +245,7 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onPressEditOngoingPollination(oEvent: Event): void {
 		const oSettingsModel = <JSONModel>this.getView().getModel("settingsModel");
-		const oOngoingPollination = <BOngoingPollination>(<Button>oEvent.getSource()).getBindingContext("ongoingPollinationsModel")!.getObject();
+		const oOngoingPollination = <PollinationRead>(<Button>oEvent.getSource()).getBindingContext("ongoingPollinationsModel")!.getObject();
 		const oPollinationModel = <JSONModel>this.getView().getModel("ongoingPollinationsModel");
 
 		const oEditPollinationDialogHandler = new EditPollinationDialogHandler(oSettingsModel, this._oActiveFlorescencesHandler, this._oPollinationsHandler);

@@ -252,9 +252,9 @@
 												/>
 												<Input
 													id="pollenDonorPlantNameInput"
-													value="{newTempPollinationInput>/pollenDonorPlantId} {newTempPollinationInput>/pollenDonorPlantName}"
+													value="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
 													editable="false"
-													tooltip="{newTempPollinationInput>/pollenDonorPlantId} {newTempPollinationInput>/pollenDonorPlantName}"
+													tooltip="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
 												/>
 											</VBox>
 											<HBox
@@ -268,16 +268,16 @@
 													displayFormat="yyyy-MM-dd HH:mm"
 													valueFormat="yyyy-MM-dd HH:mm"
 													value="{
-														path: 'newTempPollinationInput>/pollinationTimestamp'
+														path: 'newTempPollinationInput>/pollination_timestamp'
 													}"
 													placeholder="Enter Date"
 												/>
 												<GenericTag
 													text="{
-														path: 'newTempPollinationInput>/pollenType'
+														path: 'newTempPollinationInput>/pollen_type'
 													}"
 													design="StatusIconHidden"
-													status="{= (${newTempPollinationInput>/pollenType} === 'fresh' ? 'Success' : 'Information') }"
+													status="{= (${newTempPollinationInput>/pollen_type} === 'fresh' ? 'Success' : 'Information') }"
 												/>
 											</HBox>
 											<SegmentedButton
@@ -314,7 +314,7 @@
 													<core:Icon
 														src="sap-icon://color-fill"
 														color="{
-															path: 'newTempPollinationInput>/labelColorRgb'
+															path: 'newTempPollinationInput>/label_color_rgb'
 														}"
 														size="3rem"
 													>
@@ -364,18 +364,18 @@
 											gridGap="0.5rem"
 										/>
 									</f:customLayout>
-									<f:GridListItem highlight="{= (${newPollinationsModel>pollenType} === 'fresh' ? 'Success' : 'Information') }">
+									<f:GridListItem highlight="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
 										<VBox class="sapUiSmallMargin">
 											<HBox>
 												<FormattedText
 													htmlText="&lt;strong&gt;{
-														path: 'newPollinationsModel>seedCapsulePlantId'
+														path: 'newPollinationsModel>seed_capsule_plant_id'
 													}&lt;/strong&gt; 
 														{
 														path: 'newPollinationsModel>seedCapsulePlantName'
 													} &lt;strong&gt;☓&lt;/strong&gt; 
 														&lt;strong&gt;{
-														path: 'newPollinationsModel>pollenDonorPlantId'
+														path: 'newPollinationsModel>pollen_donor_plant_id'
 													}&lt;/strong&gt; 
 														{
 														path: 'newPollinationsModel>pollenDonorPlantName'
@@ -392,7 +392,7 @@
 											</HBox>
 											<GenericTag
 												text="{
-													path: 'newPollinationsModel>pollinationTimestamp'
+													path: 'newPollinationsModel>pollination_timestamp'
 												}"
 												design="StatusIconHidden"
 												class="sapUiTinyMarginEnd"
@@ -400,10 +400,10 @@
 											<HBox>
 												<GenericTag
 													text="{
-														path: 'newPollinationsModel>pollenType'
+														path: 'newPollinationsModel>pollen_type'
 													}"
 													design="StatusIconHidden"
-													status="{= (${newPollinationsModel>pollenType} === 'fresh' ? 'Success' : 'Information') }"
+													status="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
 													class="sapUiTinyMarginEnd"
 												/>
 												<GenericTag
@@ -426,11 +426,11 @@
 												<core:Icon
 													src="sap-icon://color-fill"
 													color="{
-														path: 'newPollinationsModel>labelColorRgb'
+														path: 'newPollinationsModel>label_color_rgb'
 													}"
 													size="3rem"
 													tooltip="{
-														path: 'newPollinationsModel>labelColorRgb'
+														path: 'newPollinationsModel>label_color_rgb'
 													}"
 												>
 													<core:layoutData>

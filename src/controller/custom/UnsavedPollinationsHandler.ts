@@ -2,7 +2,7 @@ import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
 import { Florescence, LUnsavedPollination } from "pollination/ui/interfaces/entitiesLocal";
-import { FRequestNewPollination } from "pollination/ui/interfaces/entities";
+import { PollinationCreate } from "pollination/ui/interfaces/entities";
 import PollinationsHandler from "./PollinationsHandler";
 import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 
@@ -38,7 +38,7 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
-	public savePollination(oPollination: FRequestNewPollination) {
+	public savePollination(oPollination: PollinationCreate) {
 		$.ajax({
 			url: Util.getServiceUrl('pollinations'),
 			data: JSON.stringify(oPollination),
@@ -79,7 +79,7 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 			var pollination = this._aUnsavedPollinations[i];
 			// if (this._new_temp_pollination.florescenceId === pollination.florescenceId) {
 			if (florescence.id === pollination.florescenceId) {
-				var iIndex = availabeColorsRgb.indexOf(pollination.labelColorRgb);
+				var iIndex = availabeColorsRgb.indexOf(pollination.label_color_rgb);
 				if (iIndex >= 0) {
 					availabeColorsRgb.splice(iIndex, 1);
 				}

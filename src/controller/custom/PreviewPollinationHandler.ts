@@ -21,7 +21,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oUnsavedPollinationsHandler = oUnsavedPollinationsHandler;
 		
 		this._oNewTempPollination = {
-			pollinationTimestamp: Util.format_timestamp(new Date()),
+			pollination_timestamp: Util.format_timestamp(new Date()),
 			location: 'indoor_led',
 			count: 1,
 		}
@@ -41,13 +41,13 @@ export default class PreviewPollinationHandler extends ManagedObject {
 
 	public setPollenDonorPlant(oPollenDonor: BPotentialPollenDonor){
 		this._oNewTempPollination.pollenDonorPlantName = oPollenDonor.plant_name;
-		this._oNewTempPollination.pollenDonorPlantId = oPollenDonor.plant_id;
-		this._oNewTempPollination.pollenType = oPollenDonor.pollen_type;
+		this._oNewTempPollination.pollen_donor_plant_id = oPollenDonor.plant_id;
+		this._oNewTempPollination.pollen_type = oPollenDonor.pollen_type;
 		this._oNewTempPollinationInputModel.updateBindings(false);
 	}
 
 	public setLabelColorRGB(sColor: string){
-		this._oNewTempPollination.labelColorRgb = sColor;
+		this._oNewTempPollination.label_color_rgb = sColor;
 		this._oNewTempPollinationInputModel.updateBindings(false);
 	}
 
@@ -62,15 +62,15 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oNewTempPollination.florescencePlantId = undefined;
 		this._oNewTempPollination.florescenceStatus = undefined;
 		this._oNewTempPollination.availableColorsRgb = ['transparent', 'black'];  // technically required placeholders
-		this._oNewTempPollination.labelColorRgb = "transparent";
+		this._oNewTempPollination.label_color_rgb = "transparent";
 		// (<JSONModel>this.getView().getModel('newTempPollinationInput')).updateBindings(false);
 		this._oNewTempPollinationInputModel.updateBindings(false);
 	}
 
 	public resetTempPollinationPollen() {
 		this._oNewTempPollination.pollenDonorPlantName = undefined;
-		this._oNewTempPollination.pollenDonorPlantId = undefined;
-		this._oNewTempPollination.pollenType = undefined;
+		this._oNewTempPollination.pollen_donor_plant_id = undefined;
+		this._oNewTempPollination.pollen_type = undefined;
 		// (<JSONModel>this.getView().getModel('newTempPollinationInput')).updateBindings(false);
 		this._oNewTempPollinationInputModel.updateBindings(false);
 	}
@@ -92,7 +92,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 				return;
 		}
 
-		if (!this._oNewTempPollination.labelColorRgb || this._oNewTempPollination.labelColorRgb === '' || this._oNewTempPollination.labelColorRgb === 'transparent') {
+		if (!this._oNewTempPollination.label_color_rgb || this._oNewTempPollination.label_color_rgb === '' || this._oNewTempPollination.label_color_rgb === 'transparent') {
 			MessageToast.show('Choose Color first.')
 			return;
 		}
@@ -101,22 +101,22 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		const oNewPollination = <LUnsavedPollination>{
 			florescenceId: this._oNewTempPollination.florescenceId,
 			seedCapsulePlantName: oFlorescence.plant_name,
-			seedCapsulePlantId: oFlorescence.plant_id,
+			seed_capsule_plant_id: oFlorescence.plant_id,
 			pollenDonorPlantName: oPollenDonor.plant_name,
-			pollenDonorPlantId: oPollenDonor.plant_id,
-			pollenType: this._oNewTempPollination.pollenType,
-			pollinationTimestamp: this._oNewTempPollination.pollinationTimestamp,  // '%Y-%m-%d %H:%M' without seconds
+			pollen_donor_plant_id: oPollenDonor.plant_id,
+			pollen_type: this._oNewTempPollination.pollen_type,
+			pollination_timestamp: this._oNewTempPollination.pollination_timestamp,  // '%Y-%m-%d %H:%M' without seconds
 			location: this._oNewTempPollination.location,
 			locationText: locationText,
 			count: this._oNewTempPollination.count,
-			labelColorRgb: this._oNewTempPollination.labelColorRgb
+			label_color_rgb: this._oNewTempPollination.label_color_rgb
 		}
 		this._oUnsavedPollinationsHandler.addPollination(oNewPollination);
 		// this._new_pollinations.push(oNewPollination);
 		// (<JSONModel>this.getView().getModel("newPollinationsModel")).updateBindings(false);
 
 		// remove label color from available colors for this florescence
-		this._oNewTempPollination.labelColorRgb = 'transparent';
+		this._oNewTempPollination.label_color_rgb = 'transparent';
 		this._oNewTempPollination.availableColorsRgb = this._oUnsavedPollinationsHandler.getAvailableColors(oFlorescence);
 		this._oNewTempPollinationInputModel.updateBindings(false);
 

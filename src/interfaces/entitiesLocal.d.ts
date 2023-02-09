@@ -1,11 +1,11 @@
-import { BActiveFlorescence, BOngoingPollination } from "./entities";
+import { BActiveFlorescence, PollinationRead } from "./entities";
 import { FlorescenceStatus, FlorescenceStatus } from "./enums";
 
 /**
  * @namespace pollination.ui.interfaces.entitiesLocal
  */
 export interface LUnsavedPollination {
-    pollinationTimestamp: string;
+    pollination_timestamp: string;
     location: string;
     count: 1;
     florescenceId?: int;
@@ -13,10 +13,10 @@ export interface LUnsavedPollination {
     florescencePlantId?: int;
     florescenceStatus?: string;
     availableColorsRgb?: string[];
-    labelColorRgb?: string;
+    label_color_rgb?: string;
     pollenDonorPlantName?: string;
-    pollenDonorPlantId?: int;
-    pollenType?: string;
+    pollen_donor_plant_id?: int;
+    pollen_type?: string;
 }
 
 export interface Florescence {
@@ -57,7 +57,7 @@ inflorescence_appearance_date: string|undefined,
 comment: string|undefined,
 }
 
-export interface LEditPollinationInput extends BOngoingPollination{
+export interface LEditPollinationInput extends PollinationRead{
     // used for model "editPollinationInput"
     pollination_timestamp_known: boolean;
     harvest_date_known: boolean;

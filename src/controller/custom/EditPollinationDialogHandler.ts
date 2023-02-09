@@ -9,7 +9,7 @@ import Util from "./Util";
 import Event from "sap/ui/base/Event";
 import Dialog from "sap/m/Dialog";
 import Control from "sap/ui/core/Control";
-import { BOngoingPollination } from "pollination/ui/interfaces/entities";
+import { PollinationRead } from "pollination/ui/interfaces/entities";
 import { LEditPollinationInput } from "pollination/ui/interfaces/entitiesLocal";
 import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import PollinationsHandler from "./PollinationsHandler";
@@ -36,7 +36,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
         this._oPollinationsHandler = oPollinationsHandler;
     }
 
-	public openDialogEditOngoingPollination(oPollination: BOngoingPollination, oViewToAddTo: View): void {  // TODO: add type for oPollination
+	public openDialogEditOngoingPollination(oPollination: PollinationRead, oViewToAddTo: View): void {  // TODO: add type for oPollination
 		// clone ongoing pollination object for manipulation in the dialog
 		// add some control attributes to allow for usage of sliders and keeping undefined values
 		var oEditedPollination: LEditPollinationInput = JSON.parse(JSON.stringify(oPollination));

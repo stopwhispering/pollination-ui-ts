@@ -33,7 +33,7 @@ export interface BActiveFlorescence {
   last_flower_closing_date?: string;
   available_colors_rgb: string[];
 }
-export interface BOngoingPollination {
+export interface PollinationRead {
   seed_capsule_plant_id: number;
   seed_capsule_plant_name: string;
   pollen_donor_plant_id: number;
@@ -105,7 +105,7 @@ export interface BResultsActiveFlorescences {
 export interface BResultsOngoingPollinations {
   action: string;
   message?: BMessage;
-  ongoingPollinationCollection: BOngoingPollination[];
+  ongoingPollinationCollection: PollinationRead[];
 }
 export interface BResultsPlantsForNewFlorescence {
   plantsForNewFlorescenceCollection: BPlantForNewFlorescence[];
@@ -186,13 +186,13 @@ export interface FRequestNewFlorescence {
   inflorescence_appearance_date?: string;
   comment?: string;
 }
-export interface FRequestNewPollination {
+export interface PollinationCreate {
   florescenceId: number;
-  seedCapsulePlantId: number;
-  pollenDonorPlantId: number;
-  pollenType: string;
-  pollinationTimestamp: string;
-  labelColorRgb: string;
+  seed_capsule_plant_id: number;
+  pollen_donor_plant_id: number;
+  pollen_type: string;
+  pollination_timestamp: string;
+  label_color_rgb: string;
   location: string;
   count: number;
 }
