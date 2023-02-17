@@ -216,6 +216,11 @@
 										tooltip="Different color on beginning and corolla mouth section"
 										key="ovary_mouth"
 									/>
+									<SegmentedButtonItem
+										text="Striped"
+										tooltip="Striped color"
+										key="striped"
+									/>
 								</items>
 							</SegmentedButton>
 						</HBox>
