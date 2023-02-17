@@ -169,7 +169,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.FLOWERING) {
 			oEditedFlorescence.last_flower_closing_date = undefined;
 		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.FINISHED) {
-			throw new Error("Cannot edit finished florescence");
+			// nothing to do
 		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.ABORTED) {
 			// nothing to do
 		} else {
