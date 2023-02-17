@@ -136,7 +136,7 @@ export interface BResultsRetrainingPollinationToSeedsModel {
     mean_f1_score: float;
 }
 
-export type FlowerColorDifferentiation = "top_bottom" | "ovary_mouth" | "uniform";
+export type FlowerColorDifferentiation = "top_bottom" | "ovary_mouth" | "striped" | "uniform";
 export type StigmaPosition = "exserted" | "mouth" | "inserted" | "deeply_inserted";
 
 export interface FRequestEditedFlorescence {

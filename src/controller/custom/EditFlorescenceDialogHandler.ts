@@ -155,6 +155,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 			oEditedFlorescence.flower_color_second = undefined;
 		}
 		if ((oEditedFlorescence.flower_colors_differentiation === "top_bottom" || 
+			oEditedFlorescence.flower_colors_differentiation === "striped" ||
 			oEditedFlorescence.flower_colors_differentiation === "ovary_mouth")
 			&& !oEditedFlorescence.flower_color_second) {
 			MessageToast.show("Please pick second flower color");

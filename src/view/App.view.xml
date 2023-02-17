@@ -16,7 +16,7 @@
 			<customHeader>
 				<f:ShellBar
 					title="{i18n>AppView.Intitle}"
-					homeIcon='././img/bee_favicon.svg'
+					homeIcon="././img/bee_favicon.svg"
 				>
 					<!-- homeIcon="{:= Helper.resolvePath('./img/bee_favicon.svg') }" -->
 					<f:additionalContent>
@@ -104,14 +104,44 @@
 														class="sapUiTinyMarginBegin"
 														width="2rem"
 													/>
-													<FormattedText
-														htmlText="{
-															parts: ['currentFlorescencesModel>inflorescence_appearance_date', 'currentFlorescencesModel>first_flower_opening_date', 'currentFlorescencesModel>last_flower_closing_date', 'currentFlorescencesModel>florescence_status'],
-															formatter: '.formatter.html_for_active_florescence_dates'
-														}"
-														tooltip="Inflorescence appeared: {currentFlorescencesModel>inflorescence_appearance_date}, First flower opens: {currentFlorescencesModel>first_flower_opening_date}, Last flower closed: {currentFlorescencesModel>last_flower_closing_date}"
-														width="3.5rem"
-													/>
+													<VBox alignItems="Center">
+														<FormattedText
+															htmlText="{
+																parts: ['currentFlorescencesModel>inflorescence_appearance_date', 'currentFlorescencesModel>first_flower_opening_date', 'currentFlorescencesModel>last_flower_closing_date', 'currentFlorescencesModel>florescence_status'],
+																formatter: '.formatter.html_for_active_florescence_dates'
+															}"
+															tooltip="Inflorescence appeared: {currentFlorescencesModel>inflorescence_appearance_date}, First flower opens: {currentFlorescencesModel>first_flower_opening_date}, Last flower closed: {currentFlorescencesModel>last_flower_closing_date}"
+															width="3.5rem"
+														/>
+														<HBox visible="{=
+															!!${currentFlorescencesModel>flower_color} || !!${currentFlorescencesModel>flower_color_second}
+														}">
+															<core:Icon
+																visible="{= 
+																	!!${currentFlorescencesModel>flower_color}
+																}"
+																src="sap-icon://color-fill"
+																color="{currentFlorescencesModel>flower_color}"
+																size="0.7rem"
+															>
+																<core:layoutData>
+																	<FlexItemData growFactor="1"/>
+																</core:layoutData>
+															</core:Icon>
+															<core:Icon
+																visible="{= 
+																	!!${currentFlorescencesModel>flower_color_second}
+																}"
+																src="sap-icon://color-fill"
+																color="{currentFlorescencesModel>flower_color_second}"
+																size="0.7rem"
+															>
+																<core:layoutData>
+																	<FlexItemData growFactor="1"/>
+																</core:layoutData>
+															</core:Icon>
+														</HBox>
+													</VBox>
 												</HBox>
 												<Button
 													class="tinyButton"
