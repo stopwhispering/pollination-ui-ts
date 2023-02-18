@@ -151,7 +151,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		}
 	}
 
-	public onPressSubmitEditPollination(setFinished: boolean) {
+	public async onPressSubmitEditPollination(setFinished: boolean) {
 		var oEditedPollination = this._oEditPollinationInputModel.getData();
 
 		// the inputs are bound to the model and might update undefined values to default values
@@ -170,51 +170,28 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 
 		// todo validate status with certain inputs and cancel with message
 
-		var oEditedPollinationJson = JSON.stringify(oEditedPollination);
-		$.ajax({
-			url: Util.getServiceUrl('pollinations/' + oEditedPollination.id),
-			data: oEditedPollinationJson,
-			context: this,
-			async: true,
-			type: 'PUT',
-			contentType: 'application/json'
-		})
-			.done(this._onDonePutPollination)
-			.fail(Util.onFail.bind(this, 'Update pollination'))
-	}
-
-	private _onDonePutPollination() {
+		await Util.put(Util.getServiceUrl('pollinations/' + oEditedPollination.id), oEditedPollination);
 		this._oEditPollinationDialog.close();
 
         this._oActiveFlorescencesHandler.loadFlorescences();
         this._oPollinationsHandler.loadPollinations();
 	}
 
-	public onPressDeletePollination(oEvent: Event) {
+	public async onPressDeletePollination(oEvent: Event) {
 		var pollination_id = this._oEditPollinationInputModel.getData().id;
 		MessageBox.confirm("Really delete Pollination? This cannot be undone.",
 			{ onClose: this._onConfirmDeletePollination.bind(this, pollination_id) }
 		);
 	}
 
-	private _onConfirmDeletePollination(pollination_id: int, sAction: string) {
+	private async _onConfirmDeletePollination(pollination_id: int, sAction: string) {
 		if (sAction === "OK") 
-			this._deletePollination(pollination_id);
+			await this._deletePollination(pollination_id);
 	}
 
-	private _deletePollination(pollination_id: int) {
-		$.ajax({
-			url: Util.getServiceUrl('pollinations/' + pollination_id),
-			context: this,
-			async: true,
-			type: 'DELETE',
-			contentType: 'application/json'
-		})
-			.done(this._onDoneDeletePollination)
-			.fail(Util.onFail.bind(this, 'Delete pollination'))
-	}
+	private async _deletePollination(pollination_id: int) {
 
-	private _onDoneDeletePollination() {
+		await Util.del(Util.getServiceUrl('pollinations/' + pollination_id));
 		this._oEditPollinationDialog.close();
 
         this._oActiveFlorescencesHandler.loadFlorescences();

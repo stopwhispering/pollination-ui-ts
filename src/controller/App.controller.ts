@@ -17,12 +17,11 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField from "sap/m/SearchField";
-import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import PollinationToSeedProbabilityModelTrainer from "./custom/PollinationToSeedProbabilityModelTrainer";
 import Util from "./custom/Util";
 import NewFlorescenceDialogHandler from "./custom/NewFlorescenceDialogHandler";
-import Input from "sap/m/Input";
 import PollinationsHandler from "./custom/PollinationsHandler";
 import PreviewPollinationHandler from "./custom/PreviewPollinationHandler";
 import SettingsHandler from "./custom/SettingsHandler";
@@ -49,7 +48,7 @@ export default class App extends BaseController {
 	private _oEditFlorescenceDialogHandler: EditFlorescenceDialogHandler;  // lazy loaded
 	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
 
-	public onInit(): void {
+	public onInit() {
 
 		this.getView().setModel(new JSONModel({
 			// isMobile: Device.browser.mobile,
@@ -89,30 +88,22 @@ export default class App extends BaseController {
 
 	}
 
-	public onSelectionChangedCurrentFlorescence(oEvent: Event) {
+	public async onSelectionChangedCurrentFlorescence(oEvent: Event) {
 		var florescence: Florescence = oEvent.getParameter('listItem').getBindingContext('currentFlorescencesModel').getObject();
-		// var plant_id = florescence.id;
-		$.ajax({
-			url: Util.getServiceUrl('potential_pollen_donors/' + florescence.id),
-			data: {},
-			context: this,
-			async: true
-		})
-			.done(this._onDoneLoadPotentialPollenDonors)
-			.fail(Util.onFail.bind(this, 'Load potential pollen donors'))
 
 		// set selected florescence plant in new pollination temp model
 		this._oTemporaryPollinationsHandler.setFlorescencePlant(florescence);
-		// this._new_temp_pollination.florescencePlantName = florescence.plant_name;
-		// this._new_temp_pollination.florescencePlantId = florescence.plant_id;
-		// this._new_temp_pollination.florescenceId = florescence.id;
-		// this._new_temp_pollination.florescenceStatus = florescence.florescence_status;  // for enabling/disabling preview button
 
 		// update the available colors for the florescence
 		const aAvailableColors: string[] = this._oUnsavedPollinationsHandler.getAvailableColors(florescence);
 		this._oTemporaryPollinationsHandler.setAvailableColors(aAvailableColors);
-		// this._new_temp_pollination.availableColorsRgb = this._getAvailableColors(florescence);
-		// (<JSONModel>this.getView().getModel("newTempPollinationInput")).updateBindings(false);
+
+		const oResults = <BResultsPotentialPollenDonors> await Util.get(Util.getServiceUrl('potential_pollen_donors/' + florescence.id));
+		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potentialPollenDonorCollection;
+		var oModel = new JSONModel(aPotentialPollenDonors);
+		this.getView().setModel(oModel, "potentialPollenDonorsModel");
+
+		this._oTemporaryPollinationsHandler.resetTempPollinationPollen();
 	}
 
 	public onSelectionChangedPollenDonor(oEvent: Event) {
@@ -125,14 +116,6 @@ export default class App extends BaseController {
 		// this._new_temp_pollination.pollen_type = pollenDonor.pollen_type;
 		// var onewTempPollinationInput = this.getView().getModel("newTempPollinationInput");
 		// (<JSONModel>onewTempPollinationInput).updateBindings(false);
-	}
-
-	private _onDoneLoadPotentialPollenDonors(result: BResultsPotentialPollenDonors) {
-		const aPotentialPollenDonors = <BPotentialPollenDonor[]>result.potentialPollenDonorCollection
-		var oModel = new JSONModel(aPotentialPollenDonors);
-		this.getView().setModel(oModel, "potentialPollenDonorsModel");
-
-		this._oTemporaryPollinationsHandler.resetTempPollinationPollen();
 	}
 
 	public getPollenTypeGroup(oContext: Context) {
@@ -206,11 +189,11 @@ export default class App extends BaseController {
 		// this._deleteNewPollination(oNewPollination);
 	}
 
-	public onPressSaveNewPollinationButton(oEvent: Event) {
+	public async onPressSaveNewPollinationButton(oEvent: Event) {
 		// const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel")
 		const oControl = <Control>oEvent.getSource()
 		const oPollination = <PollinationCreate>oControl.getBindingContext("newPollinationsModel")!.getObject();
-		this._oUnsavedPollinationsHandler.savePollination(oPollination)
+		await this._oUnsavedPollinationsHandler.savePollination(oPollination)
 
 	}
 
@@ -256,22 +239,7 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		pollen containers maintenance
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onPressOpenPollenContainersMaintenance(oEvent: Event) {
-		// query pollen containers from backend and open dialog for maintenance
-		$.ajax({
-			url: Util.getServiceUrl('pollen_containers'),
-			context: this,
-			async: true,
-			contentType: 'application/json'
-		})
-			.done(this._onDoneGetPollenContainers)
-			.fail(Util.onFail.bind(this, 'Get pollen containers'))
-
-		// // open dialog
-		// this.applyToFragment('maintainPollenContainers',(o)=>{
-		// 	o.open();			
-		// } undefined)
-
+	public async onPressOpenPollenContainersMaintenance(oEvent: Event) {
 		// open dialog
 		var oView = this.getView();
 		if (!this.byId('maintainPollenContainers')) {
@@ -286,13 +254,13 @@ export default class App extends BaseController {
 		} else {
 			(<Dialog>this.byId('maintainPollenContainers')).open();
 		}
-
-	}
-
-	private _onDoneGetPollenContainers(result: any) {
-		var oModel = new JSONModel(result);
+		
+		// query pollen containers from backend and open dialog for maintenance
+		const oResult = <BResultsPollenContainers> await Util.get(Util.getServiceUrl('pollen_containers'));
+		var oModel = new JSONModel(oResult);
 		oModel.setSizeLimit(2000);
 		this.getView().setModel(oModel, "pollenContainersModel");
+
 	}
 
 	public onAfterClosemaintainPollenContainers(oEvent: Event) {
@@ -301,7 +269,7 @@ export default class App extends BaseController {
 		this.getView().getModel("pollenContainersModel").destroy();
 	}
 
-	public onPressSubmitPollenContainers(oEvent: Event) {
+	public async onPressSubmitPollenContainers(oEvent: Event) {
 		var oPollenContainersModel = <JSONModel>this.getView().getModel("pollenContainersModel");
 		var oPollenContainersFull = oPollenContainersModel.getData();
 
@@ -310,24 +278,10 @@ export default class App extends BaseController {
 			"pollenContainerCollection": oPollenContainersFull.pollenContainerCollection
 		}
 
-		var oPollenContainersJson = JSON.stringify(oPollenContainers);
-		$.ajax({
-			url: Util.getServiceUrl('pollen_containers'),
-			data: oPollenContainersJson,
-			context: this,
-			async: true,
-			type: 'POST',
-			contentType: 'application/json'
-		})
-			.done(this._onDonePutPollenContainers)
-			.fail(Util.onFail.bind(this, 'Maintained Pollen Containers'))
-	}
-
-	private _onDonePutPollenContainers() {
+		await Util.post(Util.getServiceUrl('pollen_containers'), oPollenContainers);
 		this.applyToFragment('maintainPollenContainers', (o: Dialog) => {
 			o.close();
 		}, undefined);
-
 		this._oActiveFlorescencesHandler.loadFlorescences();
 	}
 
@@ -392,14 +346,14 @@ export default class App extends BaseController {
 	//      the probability of an attempted pollination 
 	//   	to make it into seeds stage
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
-		new PollinationToSeedProbabilityModelTrainer().triggerRetrain();
+	public async onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
+		await new PollinationToSeedProbabilityModelTrainer().triggerRetrain();
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Open dialog displaying flowering plants history in tabular format
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	onPressOpenFloweringPlantsTable(oEvent: Event) {
+	public onPressOpenFloweringPlantsTable(oEvent: Event) {
 		if (!this._oFlowerHistoryHandler){
 			this._oFlowerHistoryHandler = new FlowerHistoryHandler();
 		}

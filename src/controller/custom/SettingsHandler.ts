@@ -1,4 +1,4 @@
-import { BResultsSettings } from "pollination/ui/interfaces/entities";
+import { SettingsRead } from "pollination/ui/interfaces/entities";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
@@ -13,27 +13,14 @@ export default class SettingsHandler extends ManagedObject {
     public constructor(oSettingsModel: JSONModel) {  
         super();
         this._oSettingsModel = oSettingsModel;
-		const oSettings = <BResultsSettings>{};
+		const oSettings = <SettingsRead>{};
 		this._oSettingsModel.setData(oSettings);
     }
 
-	public loadSettings(): void {
-		$.ajax({
-			url: Util.getServiceUrl('pollinations/settings'),
-			data: {},
-			context: this,
-			async: true
-		})
-			.done(this._onDoneLoadSettings)
-			.fail(Util.onFail.bind(this, 'Load settings'))
+	public async loadSettings() {
+		const oSettings = <SettingsRead> await Util.get(Util.getServiceUrl('pollinations/settings'));
+        this._oSettingsModel.setData(oSettings);
 	}
-
-	private _onDoneLoadSettings(result: BResultsSettings): void {
-        this._oSettingsModel.setData(result);
-		// var oModel = new JSONModel(result);
-		// this.getView().setModel(oModel, "settingsModel");
-	}
-
-
+	
 
 }

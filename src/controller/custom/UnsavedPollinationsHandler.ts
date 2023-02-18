@@ -37,17 +37,14 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
-	public savePollination(oPollination: PollinationCreate) {
-		$.ajax({
-			url: Util.getServiceUrl('pollinations'),
-			data: JSON.stringify(oPollination),
-			context: this,
-			async: true,
-			type: 'POST',
-			contentType: 'application/json'
-		})
-			.done(this._onDonePostNewPollination.bind(this, oPollination))
-			.fail(Util.onFail.bind(this, 'Save new pollinations'))
+	public async savePollination(oPollination: PollinationCreate) {
+		const oSavedPollination = <LUnsavedPollination> await Util.post(Util.getServiceUrl('pollinations'), oPollination);
+
+		// having posted a new pollination, re-read the ongoing pollinations list
+		await this._oPollinationsHandler.loadPollinations();
+
+		// remove saved new pollination from new pollinations model 
+		this.removePollination(oSavedPollination);
 	}
 
 	public addPollination(oPollination: LUnsavedPollination) {
@@ -55,17 +52,6 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
-	private _onDonePostNewPollination(oPollination: LUnsavedPollination) {
-		// having posted a new pollination, re-read the ongoing pollinations list
-		this._oPollinationsHandler.loadPollinations();
-
-		// also re-read the active florescences list
-		// this._oActiveFlorescencesHandler.loadFlorescences();
-
-		// remove saved new pollination from new pollinations model 
-		this.removePollination(oPollination);
-	}
-	
 	public getAvailableColors(florescence: Florescence): string[] {
 		// determine available colors based on the colors we received from backend for the currently selected
 		// florescence and the colors we already used for unsaved pollinations 

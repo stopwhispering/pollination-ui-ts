@@ -63,32 +63,21 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 	}
 
 
-	private _askToDeleteFlorescence(iFlorescenceId: int): void {
+	private async _askToDeleteFlorescence(iFlorescenceId: int) {
 		MessageBox.confirm("Really delete Florescence? This cannot be undone.",
 			{ onClose: this._onConfirmDeleteFlorescence.bind(this, iFlorescenceId) }
 		);
 	}
 
-	private _onConfirmDeleteFlorescence(iFlorescenceId: int, sAction: string): void {
+	private _onConfirmDeleteFlorescence(iFlorescenceId: int, sAction: string) {
 		if (sAction === "OK")
 			this._deleteFlorescence(iFlorescenceId);
 		else 
             return;  // do nothing
 	}
 
-	private _deleteFlorescence(iFlorescenceId: int) {
-		$.ajax({
-			url: Util.getServiceUrl('florescences/' + iFlorescenceId),
-			context: this,
-			async: true,
-			type: 'DELETE',
-			contentType: 'application/json'
-		})
-			.done(this._cbDoneDeleteFlorescence)
-			.fail(Util.onFail.bind(this, 'Delete florescences'))
-	}
-
-	private _cbDoneDeleteFlorescence() {
+	private async _deleteFlorescence(iFlorescenceId: int) {
+		await Util.del(Util.getServiceUrl('florescences/' + iFlorescenceId));
 		this._oEditFlorescenceDialog.close();
 		this._oActiveFlorescencesHandler.loadFlorescences();
 	}
@@ -121,7 +110,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		this._submitEditedFlorescence(oEditedFlorescence)
 	}
 
-	private _submitEditedFlorescence(oEditedFlorescence: LEditFlorescenceInput){
+	private async _submitEditedFlorescence(oEditedFlorescence: LEditFlorescenceInput){
 		// the inputs are bound to the model and might update undefined values to default values
 		// we need to set them back to undefined
 		if (!oEditedFlorescence.branches_count_known) {
@@ -177,23 +166,11 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 			throw new Error("Unknown florescence status: " + oEditedFlorescence.florescence_status);
 		}
 
-		var oEditedFlorescenceJson = JSON.stringify(oEditedFlorescence);
-		$.ajax({
-			url: Util.getServiceUrl('active_florescences/' + oEditedFlorescence.id),
-			data: oEditedFlorescenceJson,
-			context: this,
-			async: true,
-			type: 'PUT',
-			contentType: 'application/json'
-		})
-			.done(this._onDonePutFlorescence)
-			.fail(Util.onFail.bind(this, 'Update florescence'))
-	}
-
-	private _onDonePutFlorescence() {
+		await Util.put(Util.getServiceUrl('active_florescences/' + oEditedFlorescence.id), oEditedFlorescence)
 		this._oEditFlorescenceDialog.close();
 		this._oActiveFlorescencesHandler.loadFlorescences();
 	}
+
 	onCancelDialog(oEvent: Event) {
 		this._oEditFlorescenceDialog.close();
 	}
@@ -248,7 +225,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 
 	private _onConfirmAbortFlorescence(oEditedFlorescenceInput: LEditFlorescenceInput, sAction: string): void {
 		if (sAction === "OK")
-			this._submitEditedFlorescence(oEditedFlorescenceInput);
+		 	this._submitEditedFlorescence(oEditedFlorescenceInput);
 		else 
             return;  // do nothing
 	}

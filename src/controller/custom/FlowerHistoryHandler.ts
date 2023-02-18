@@ -27,25 +27,20 @@ export default class FlowerHistoryHandler extends ManagedObject {
 		super();
 	}
 
-	public openDialog(oViewToAddTo: View): void {
+	public async openDialog(oViewToAddTo: View) {
 		Fragment.load({
 			name: "pollination.ui.view.fragments.FlowerHistory",
 			id: oViewToAddTo.getId(),
 			controller: this,
-		}).then((oControl: Control | Control[]) => {
+		}).then( async (oControl: Control | Control[]) => {
 			this._oFlowerHistoryDialog = <Dialog>oControl;
 			oViewToAddTo.addDependent(this._oFlowerHistoryDialog);
 			this._oFlowerHistoryList = <Table>oViewToAddTo.byId("flowerHistoryList");
 			this._oFlowerHistoryDialog.open();
 
-			$.ajax({
-				url: Util.getServiceUrl('flower_history'),
-				context: this,
-				async: true,
-				contentType: 'application/json'
-			})
-				.done(this._onDoneGetFlowerHistory)
-				.fail(Util.onFail.bind(this, 'Get flower history'))
+			const oResult = <BResultsFlowerHistory> await Util.get(Util.getServiceUrl('flower_history'))
+			this._populateFlowerHistory(oResult);
+
 		});
 	}
 
@@ -102,7 +97,7 @@ export default class FlowerHistoryHandler extends ManagedObject {
 		return oFlexBox;
 	}
 
-	private _onDoneGetFlowerHistory(oResults: BResultsFlowerHistory): void {
+	private _populateFlowerHistory(oResults: BResultsFlowerHistory): void {
 		// create a column for each month in the flower history (in addition to the plant name as left-most column)
 		this._oFlowerHistoryList.removeAllColumns();
 		this._oFlowerHistoryList.addColumn(this._createPlantHeaderColumn());

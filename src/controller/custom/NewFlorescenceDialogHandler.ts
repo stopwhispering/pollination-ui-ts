@@ -29,7 +29,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 	public openDialogNewActiveFlorescence(oViewToAddTo: View): void {
 		// open dialog to add a new florescence
 		// create input model
-		// trigger ajax call to get plants for new florescence to be displayed in select
+		// trigger fetch call to get plants for new florescence to be displayed in select
 		var oNewFlorescence: LNewFlorescenceInputData = {
 			plant_id: undefined,
 			plant_name: undefined,
@@ -43,39 +43,21 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			name: "pollination.ui.view.fragments.NewActiveFlorescence",
 			id: oViewToAddTo.getId(),
 			controller: this,
-		}).then((oControl: Control | Control[]) => {
+		}).then(async (oControl: Control | Control[]) => {
 			this._oNewFlorescenceDialog = <Dialog>oControl;
 			oViewToAddTo.addDependent(this._oNewFlorescenceDialog);
 			this._oNewFlorescenceDialog.setModel(this._oNewFlorescenceModel, "newFlorescenceModel");
 			this._oNewFlorescenceDialog.open();
 
-			$.ajax({
-				url: Util.getServiceUrl('plants_for_new_florescence'),
-				context: this,
-				async: true,
-				contentType: 'application/json'
-			})
-				.done(this._onDoneGetPlantsForNewFlorescence)
-				.fail(Util.onFail.bind(this, 'Get plants for new florescence dialog'))
+			const oResults: BResultsPlantsForNewFlorescence = await Util.get(Util.getServiceUrl('plants_for_new_florescence'));
+			const aPlants: BPlantForNewFlorescence[] = oResults.plantsForNewFlorescenceCollection;
+			var oPlantsModel = new JSONModel(aPlants);
+			oPlantsModel.setSizeLimit(2000);
+			this._oNewFlorescenceDialog.setModel(oPlantsModel, "plantsForNewFlorescenceModel");
 		});
 	}
 
-	private _onDoneGetPlantsForNewFlorescence(oResults: BResultsPlantsForNewFlorescence): void {
-		const aPlants: BPlantForNewFlorescence[] = oResults.plantsForNewFlorescenceCollection;
-		var oPlantsModel = new JSONModel(aPlants);
-		oPlantsModel.setSizeLimit(2000);
-		this._oNewFlorescenceDialog.setModel(oPlantsModel, "plantsForNewFlorescenceModel");
-	}
-
-
-	private _cbDonePostNewFlorescence(): void {
-		// having created a new active florescence in the backend, we close the 
-		// new-floresecence-dialog and reload the active florescences
-		this._oNewFlorescenceDialog.close();
-		this._oActiveFlorescencesHandler.loadFlorescences();
-	}
-
-	public onPressSubmitNewFlorescence(oEvent: Event): void {
+	public async onPressSubmitNewFlorescence(oEvent: Event) {
 		// var oNewFlorescenceModel = <JSONModel>oNewFlorescenceDialog.getModel("newFlorescenceModel");
 		const oNewFlorescence: LNewFlorescenceInputData = this._oNewFlorescenceModel.getData();
 		const oNewFlorescenceRequest: FRequestNewFlorescence = {
@@ -84,16 +66,10 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			inflorescence_appearance_date: oNewFlorescence.inflorescence_appearance_date,
 			comment: oNewFlorescence.comment
 		}
-		$.ajax({
-			url: Util.getServiceUrl('active_florescences'),
-			data: JSON.stringify(oNewFlorescenceRequest),
-			context: this,
-			async: true,
-			type: 'POST',
-			contentType: 'application/json'
-		})
-			.done(this._cbDonePostNewFlorescence)
-			.fail(Util.onFail.bind(this, 'Create new florescence'))
+
+		await Util.post(Util.getServiceUrl('active_florescences'), oNewFlorescenceRequest);
+		this._oNewFlorescenceDialog.close();
+		await this._oActiveFlorescencesHandler.loadFlorescences();
 	}
 
 	public onAfterCloseNewActiveFlorescence(oEvent: Event) {

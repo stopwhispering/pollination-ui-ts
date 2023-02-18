@@ -12,24 +12,17 @@ import { BResultsRetrainingPollinationToSeedsModel } from "pollination/ui/interf
  */
 export default class PollinationToSeedProbabilityModelTrainer extends ManagedObject {
 
-	public triggerRetrain() {
-		$.ajax({
-			url: Util.getServiceUrl('retrain_probability_pollination_to_seed_model'),
-			context: this,
-			async: true,
-			type: 'POST',
-			contentType: 'application/json'
-		})
-			.done(this._cbDoneRetrain)
-			.fail(Util.onFail.bind(this, 'Retrain Pollination Model'))
-	}
+	public async triggerRetrain() {
+        const oResult = <BResultsRetrainingPollinationToSeedsModel> await Util.post(Util.getServiceUrl('retrain_probability_pollination_to_seed_model'));
+        this._openResponseDialog(oResult.model, oResult.mean_f1_score);
+    }
 
-	private _cbDoneRetrain(result: BResultsRetrainingPollinationToSeedsModel) {
+    private _openResponseDialog(model: string, mean_f1_score: float) {
         const oSuccessMessageDialog = new Dialog({
             type: DialogType.Message,
             title: "Success",
             state: ValueState.Success,
-            content: new Text({ text: "Trained Model: " + result.model + "\n" + "Mean F1 Score: " + result.mean_f1_score }),
+            content: new Text({ text: "Trained Model: " + model + "\n" + "Mean F1 Score: " + mean_f1_score }),
             beginButton: new Button({
                 type: ButtonType.Emphasized,
                 text: "OK",
@@ -39,5 +32,6 @@ export default class PollinationToSeedProbabilityModelTrainer extends ManagedObj
             })
         });
         oSuccessMessageDialog.open();
-	}
+    }
+
 }

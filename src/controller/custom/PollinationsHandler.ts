@@ -16,28 +16,9 @@ export default class PollinationsHandler extends ManagedObject {
 		this._oPollinationModel = oPollinationModel;
     }
 
-	public loadPollinations(): void {
-
-		$.ajax({
-			url: Util.getServiceUrl('ongoing_pollinations'),
-			data: {},
-			context: this,
-			async: true
-		})
-			.done(this._onDoneLoadOngoingPollinations)
-			.fail(Util.onFail.bind(this, 'Load ongoing pollinations'))
-	}
-
-	private _onDoneLoadOngoingPollinations(result: BResultsOngoingPollinations) {
-		const aOngoingPollinations = <PollinationRead[]>result.ongoingPollinationCollection;
+	public async loadPollinations() {
+		const oResult = <BResultsOngoingPollinations> await Util.get(Util.getServiceUrl('ongoing_pollinations'));
+		const aOngoingPollinations = <PollinationRead[]>oResult.ongoingPollinationCollection;
 		this._oPollinationModel.setData(aOngoingPollinations);
-
-		// var oModelOngoingPollinations = <JSONModel>this.getView().getModel("ongoingPollinationsModel");
-		// if (!oModelOngoingPollinations) {
-		// 	var oModelOngoingPollinations = new JSONModel(result.ongoingPollinationCollection);
-		// 	this.getView().setModel(oModelOngoingPollinations, "ongoingPollinationsModel");
-		// } else {
-		// 	(<JSONModel>oModelOngoingPollinations).setData(result.ongoingPollinationCollection);
-		// }
 	}
 }

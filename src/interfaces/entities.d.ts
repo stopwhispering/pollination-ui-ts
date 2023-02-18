@@ -125,9 +125,8 @@ export interface BResultsPotentialPollenDonors {
   message?: BMessage;
   potentialPollenDonorCollection: BPotentialPollenDonor[];
 }
-export interface BResultsSettings {
+export interface SettingsRead {
   colors: string[];
-  pollination_status: BPollinationStatus[];
 }
 
 
