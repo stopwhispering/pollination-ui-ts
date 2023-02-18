@@ -207,7 +207,7 @@ export default class App extends BaseController {
 	}
 
 	public onPressSaveNewPollinationButton(oEvent: Event) {
-		const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel")
+		// const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel")
 		const oControl = <Control>oEvent.getSource()
 		const oPollination = <PollinationCreate>oControl.getBindingContext("newPollinationsModel")!.getObject();
 		this._oUnsavedPollinationsHandler.savePollination(oPollination)

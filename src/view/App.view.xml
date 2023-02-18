@@ -280,12 +280,24 @@
 													editable="false"
 													tooltip="{newTempPollinationInput>/florescencePlantId} {newTempPollinationInput>/florescencePlantName}"
 												/>
-												<Input
-													id="pollenDonorPlantNameInput"
-													value="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
-													editable="false"
-													tooltip="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
-												/>
+												<HBox>
+													<Input
+														id="pollenDonorPlantNameInput"
+														value="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
+														editable="false"
+														tooltip="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
+													/>
+													<Switch
+														state="{newTempPollinationInput>/goodPollenQuality}"
+														customTextOn="+"
+														customTextOff="-"
+														tooltip="Pollen Quality: Good / Bad"
+													>
+														<layoutData>
+															<FlexItemData growFactor="1"/>
+														</layoutData>
+													</Switch>
+												</HBox>
 											</VBox>
 											<HBox
 												justifyContent="SpaceBetween"
@@ -310,12 +322,13 @@
 													status="{= (${newTempPollinationInput>/pollen_type} === 'fresh' ? 'Success' : 'Information') }"
 												/>
 											</HBox>
+											<!-- <HBox> -->
 											<SegmentedButton
 												selectedKey="{
 													path: 'newTempPollinationInput>/location'
 												}"
 												class="sapUiTinyMarginBottom"
-												width="17rem"
+												width="14rem"
 											>
 												<items>
 													<SegmentedButtonItem
@@ -332,6 +345,7 @@
 													/>
 												</items>
 											</SegmentedButton>
+											<!-- </HBox> -->
 											<HBox>
 												<ColorPalette
 													id="newTempPollinationColorPalette"
@@ -420,13 +434,23 @@
 													press=".onPressDeleteNewPollinationButton"
 												/>
 											</HBox>
-											<GenericTag
-												text="{
-													path: 'newPollinationsModel>pollination_timestamp'
-												}"
-												design="StatusIconHidden"
-												class="sapUiTinyMarginEnd"
-											/>
+											<HBox>
+												<GenericTag
+													text="{
+														path: 'newPollinationsModel>pollination_timestamp'
+													}"
+													design="StatusIconHidden"
+													class="sapUiTinyMarginEnd"
+												/>
+												<GenericTag
+													visible="{= (!!${newPollinationsModel>count}) }"
+													text="{newPollinationsModel>count} fl."
+													tooltip="{newPollinationsModel>count} flower(s)"
+													design="StatusIconHidden"
+													class="sapUiTinyMarginEnd"
+													status="Warning"
+												/>
+											</HBox>
 											<HBox>
 												<GenericTag
 													text="{
@@ -444,12 +468,17 @@
 													class="sapUiTinyMarginEnd"
 												/>
 												<GenericTag
-													visible="{= (!!${newPollinationsModel>count}) }"
-													text="{newPollinationsModel>count} fl."
-													tooltip="{newPollinationsModel>count} flower(s)"
+													text="{=
+														${newPollinationsModel>goodPollenQuality} ? 'Good' : 'Bad'
+													}"
+													tooltip="{=
+														${newPollinationsModel>goodPollenQuality} ? 'Pollen Quality: Good' : 'Pollen Quality: Bad'
+													}"
 													design="StatusIconHidden"
 													class="sapUiTinyMarginEnd"
-													status="Warning"
+													status="{=
+														${newPollinationsModel>goodPollenQuality} ? 'Success' : 'Warning'
+													}"
 												/>
 											</HBox>
 											<HBox>
@@ -566,7 +595,7 @@
 												class="sapUiTinyMarginBottom"
 											/>
 										</HBox>
-										<HBox>
+										<HBox wrap="Wrap">
 											<GenericTag
 												text="{
 													path: 'ongoingPollinationsModel>pollen_type'
@@ -584,11 +613,20 @@
 											/>
 											<GenericTag
 												visible="{= (!!${ongoingPollinationsModel>count}) }"
-												text="{ongoingPollinationsModel>count} fl."
+												text="{ongoingPollinationsModel>count}"
 												tooltip="{ongoingPollinationsModel>count} flower(s)"
 												design="StatusIconHidden"
 												class="sapUiTinyMarginEnd"
 												status="Warning"
+											/>
+											<GenericTag
+												text="{ongoingPollinationsModel>pollen_quality}"
+												tooltip="Pollen Quality: {ongoingPollinationsModel>pollen_quality}"
+												design="StatusIconHidden"
+												class="sapUiTinyMarginEnd"
+												status="{=
+													${ongoingPollinationsModel>goodPollenQuality} ? 'Success' : 'Warning'
+												}"
 											/>
 										</HBox>
 									</VBox>

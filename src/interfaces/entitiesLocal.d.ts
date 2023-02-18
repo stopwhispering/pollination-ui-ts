@@ -1,4 +1,4 @@
-import { BActiveFlorescence, PollinationRead } from "./entities";
+import { BActiveFlorescence, PollenQuality, PollinationRead } from "./entities";
 import { FlorescenceStatus, FlorescenceStatus } from "./enums";
 
 /**
@@ -17,6 +17,8 @@ export interface LUnsavedPollination {
     pollenDonorPlantName?: string;
     pollen_donor_plant_id?: int;
     pollen_type?: string;
+    goodPollenQuality?: boolean;  // not saved to backend
+    pollen_quality: PollenQuality;  // mapped from goodPollenQuality
 }
 
 export interface Florescence {

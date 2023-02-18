@@ -24,6 +24,8 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			pollination_timestamp: Util.format_timestamp(new Date()),
 			location: 'indoor_led',
 			count: 1,
+			goodPollenQuality: true,
+			pollen_quality: 'good',
 		}
 		this._oNewTempPollinationInputModel.setData(this._oNewTempPollination);
 		this.resetTempPollinationFlorescence();
@@ -63,6 +65,8 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oNewTempPollination.florescenceStatus = undefined;
 		this._oNewTempPollination.availableColorsRgb = ['transparent', 'black'];  // technically required placeholders
 		this._oNewTempPollination.label_color_rgb = "transparent";
+		this._oNewTempPollination.pollen_quality = 'good';
+		this._oNewTempPollination.goodPollenQuality = true;
 		// (<JSONModel>this.getView().getModel('newTempPollinationInput')).updateBindings(false);
 		this._oNewTempPollinationInputModel.updateBindings(false);
 	}
@@ -109,7 +113,8 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			location: this._oNewTempPollination.location,
 			locationText: locationText,
 			count: this._oNewTempPollination.count,
-			label_color_rgb: this._oNewTempPollination.label_color_rgb
+			label_color_rgb: this._oNewTempPollination.label_color_rgb,
+			pollen_quality: this._oNewTempPollination.goodPollenQuality ? 'good' : 'bad',
 		}
 		this._oUnsavedPollinationsHandler.addPollination(oNewPollination);
 		// this._new_pollinations.push(oNewPollination);

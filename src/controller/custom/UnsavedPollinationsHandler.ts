@@ -4,7 +4,6 @@ import Util from "./Util";
 import { Florescence, LUnsavedPollination } from "pollination/ui/interfaces/entitiesLocal";
 import { PollinationCreate } from "pollination/ui/interfaces/entities";
 import PollinationsHandler from "./PollinationsHandler";
-import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 
 
 /**

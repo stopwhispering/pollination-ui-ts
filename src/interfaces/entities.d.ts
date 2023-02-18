@@ -186,8 +186,12 @@ export interface FRequestNewFlorescence {
   inflorescence_appearance_date?: string;
   comment?: string;
 }
+
+export type PollenQuality = "good" | "bad" | "unknown";
+
 export interface PollinationCreate {
   florescenceId: number;
+  pollen_quality: PollenQuality;
   seed_capsule_plant_id: number;
   pollen_donor_plant_id: number;
   pollen_type: string;
@@ -196,6 +200,7 @@ export interface PollinationCreate {
   location: string;
   count: number;
 }
+
 export interface FRequestPollenContainers {
   pollenContainerCollection: FBPollenContainer[];
 }
