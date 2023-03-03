@@ -469,15 +469,13 @@
 												/>
 												<GenericTag
 													text="{=
-														${newPollinationsModel>goodPollenQuality} ? 'good' : 'bad'
+														${newPollinationsModel>pollen_quality}
 													}"
-													tooltip="{=
-														${newPollinationsModel>goodPollenQuality} ? 'Pollen Quality: Good' : 'Pollen Quality: Bad'
-													}"
+													tooltip="Pollen Quality: {newPollinationsModel>pollen_quality}"
 													design="StatusIconHidden"
 													class="sapUiTinyMarginEnd"
 													status="{=
-														${newPollinationsModel>goodPollenQuality} ? 'Success' : 'Warning'
+														${newPollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
 													}"
 												/>
 											</HBox>
@@ -625,7 +623,7 @@
 												design="StatusIconHidden"
 												class="sapUiTinyMarginEnd"
 												status="{=
-													${ongoingPollinationsModel>goodPollenQuality} ? 'Success' : 'Warning'
+													${ongoingPollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
 												}"
 											/>
 										</HBox>
