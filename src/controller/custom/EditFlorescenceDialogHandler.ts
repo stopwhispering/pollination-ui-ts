@@ -37,9 +37,9 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		const oEditedFlorescence: LEditFlorescenceInput = JSON.parse(JSON.stringify(oCurrentFlorescence));  // todo entity
 		oEditedFlorescence.flowers_count_known = !!oEditedFlorescence.flowers_count
 		oEditedFlorescence.branches_count_known = !!oEditedFlorescence.branches_count
-		oEditedFlorescence.inflorescence_appearance_date_known = !!oEditedFlorescence.inflorescence_appearance_date
-		oEditedFlorescence.first_flower_opening_date_known = !!oEditedFlorescence.first_flower_opening_date
-		oEditedFlorescence.last_flower_closing_date_known = !!oEditedFlorescence.last_flower_closing_date
+		oEditedFlorescence.inflorescence_appeared_at_known = !!oEditedFlorescence.inflorescence_appeared_at
+		oEditedFlorescence.first_flower_opened_at_known = !!oEditedFlorescence.first_flower_opened_at
+		oEditedFlorescence.last_flower_closed_at_known = !!oEditedFlorescence.last_flower_closed_at
 
 		oEditedFlorescence.perianth_size_known = (!!oEditedFlorescence.perianth_length && !!oEditedFlorescence.perianth_diameter);
 		oEditedFlorescence.flower_colors_known = !!oEditedFlorescence.flower_color;
@@ -99,7 +99,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		this._oEditFlorescenceDialog.destroy();		
 	}
 
-	public onPressEditFlorescenceSetToday(sDateField: "inflorescence_appearance_date" | "first_flower_opening_date" | "last_flower_closing_date") {
+	public onPressEditFlorescenceSetToday(sDateField: "inflorescence_appeared_at" | "first_flower_opened_at" | "last_flower_closed_at") {
 		const oEditedFlorescence = <LEditFlorescenceInput>this._oEditedFlorescenceModel.getData();
 		oEditedFlorescence[sDateField] = Util.getToday();  // e.g. '2022-11-17';
 		this._oEditedFlorescenceModel.updateBindings(false);
@@ -119,14 +119,14 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		if (!oEditedFlorescence.flowers_count_known) {
 			oEditedFlorescence.flowers_count = undefined;
 		}
-		if (!oEditedFlorescence.inflorescence_appearance_date_known) {
-			oEditedFlorescence.inflorescence_appearance_date = undefined;
+		if (!oEditedFlorescence.inflorescence_appeared_at_known) {
+			oEditedFlorescence.inflorescence_appeared_at = undefined;
 		}
-		if (!oEditedFlorescence.first_flower_opening_date_known) {
-			oEditedFlorescence.first_flower_opening_date = undefined;
+		if (!oEditedFlorescence.first_flower_opened_at_known) {
+			oEditedFlorescence.first_flower_opened_at = undefined;
 		}
-		if (!oEditedFlorescence.last_flower_closing_date_known) {
-			oEditedFlorescence.last_flower_closing_date = undefined;
+		if (!oEditedFlorescence.last_flower_closed_at_known) {
+			oEditedFlorescence.last_flower_closed_at = undefined;
 		}
 		if (!oEditedFlorescence.perianth_size_known) {
 			oEditedFlorescence.perianth_length = undefined;
@@ -154,10 +154,10 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		// depending on florescence status, we might set some dates to undefined
 		// todo better validate and cancel with message
 		if (oEditedFlorescence.florescence_status === FlorescenceStatus.INFLORESCENCE_APPEARED) {
-			oEditedFlorescence.first_flower_opening_date = undefined;
-			oEditedFlorescence.last_flower_closing_date = undefined;
+			oEditedFlorescence.first_flower_opened_at = undefined;
+			oEditedFlorescence.last_flower_closed_at = undefined;
 		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.FLOWERING) {
-			oEditedFlorescence.last_flower_closing_date = undefined;
+			oEditedFlorescence.last_flower_closed_at = undefined;
 		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.FINISHED) {
 			// nothing to do
 		} else if (oEditedFlorescence.florescence_status === FlorescenceStatus.ABORTED) {

@@ -12,7 +12,7 @@
         
             <List
                 items="{ 
-                    path: 'pollenContainersModel>/pollenContainerCollection',
+                    path: 'pollenContainersModel>/pollen_container_collection',
                     sorter: [{ path: 'genus',
                                descending: 'true',
                                group: '.getGenusGroup' }]
@@ -51,7 +51,7 @@
                 <ComboBox
                     id="newPlantPollenContainer"
                     items="{
-                        path: 'pollenContainersModel>/plantsWithoutPollenContainerCollection',
+                        path: 'pollenContainersModel>/plants_without_pollen_container_collection',
                         sorter: { path: 'plant_name' }
                     }"
                     class="sapUiTinyMarginEnd"

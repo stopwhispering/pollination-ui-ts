@@ -34,7 +34,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			plant_id: undefined,
 			plant_name: undefined,
 			florescence_status: FlorescenceStatus.INFLORESCENCE_APPEARED,
-			inflorescence_appearance_date: undefined,
+			inflorescence_appeared_at: undefined,
 			comment: undefined
 		}
 		this._oNewFlorescenceModel = new JSONModel(oNewFlorescence);
@@ -50,7 +50,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			this._oNewFlorescenceDialog.open();
 
 			const oResults: BResultsPlantsForNewFlorescence = await Util.get(Util.getServiceUrl('plants_for_new_florescence'));
-			const aPlants: BPlantForNewFlorescence[] = oResults.plantsForNewFlorescenceCollection;
+			const aPlants: BPlantForNewFlorescence[] = oResults.plants_for_new_florescence_collection;
 			var oPlantsModel = new JSONModel(aPlants);
 			oPlantsModel.setSizeLimit(2000);
 			this._oNewFlorescenceDialog.setModel(oPlantsModel, "plantsForNewFlorescenceModel");
@@ -63,7 +63,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 		const oNewFlorescenceRequest: FRequestNewFlorescence = {
 			plant_id: oNewFlorescence.plant_id!,  // can't click submit without selecting a plant before
 			florescence_status: oNewFlorescence.florescence_status,
-			inflorescence_appearance_date: oNewFlorescence.inflorescence_appearance_date,
+			inflorescence_appeared_at: oNewFlorescence.inflorescence_appeared_at,
 			comment: oNewFlorescence.comment
 		}
 
@@ -84,7 +84,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 	
 	onPressNewFlorescenceSetToday(oEvent: Event) {
 		const oNewFlorescence = <LNewFlorescenceInputData>this._oNewFlorescenceModel.getData();
-		oNewFlorescence.inflorescence_appearance_date = Util.getToday();  // e.g. '2022-11-17';
+		oNewFlorescence.inflorescence_appeared_at = Util.getToday();  // e.g. '2022-11-17';
 		this._oNewFlorescenceModel.updateBindings(false);
 	}
 }

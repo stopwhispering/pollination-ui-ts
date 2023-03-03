@@ -99,7 +99,7 @@ export default class App extends BaseController {
 		this._oTemporaryPollinationsHandler.setAvailableColors(aAvailableColors);
 
 		const oResults = <BResultsPotentialPollenDonors> await Util.get(Util.getServiceUrl('potential_pollen_donors/' + florescence.id));
-		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potentialPollenDonorCollection;
+		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potential_pollen_donor_collection;
 		var oModel = new JSONModel(aPotentialPollenDonors);
 		this.getView().setModel(oModel, "potentialPollenDonorsModel");
 
@@ -275,7 +275,7 @@ export default class App extends BaseController {
 
 		//we only send the pollen containers, not the list of plants that have none
 		var oPollenContainers = {
-			"pollenContainerCollection": oPollenContainersFull.pollenContainerCollection
+			"pollen_container_collection": oPollenContainersFull.pollen_container_collection
 		}
 
 		await Util.post(Util.getServiceUrl('pollen_containers'), oPollenContainers);
@@ -308,11 +308,11 @@ export default class App extends BaseController {
 
 		// insert into pollen containers list
 		var oPollenContainersModel = <JSONModel>this.getView().getModel("pollenContainersModel");
-		var aPollenContainers = oPollenContainersModel.getData().pollenContainerCollection;
+		var aPollenContainers = oPollenContainersModel.getData().pollen_container_collection;
 		aPollenContainers.push(oNewPollenContainerItem);
 
 		// remove from plants list without pollen containers
-		var aPlantsWithoutPollenContainers = oPollenContainersModel.getData().plantsWithoutPollenContainerCollection;
+		var aPlantsWithoutPollenContainers = oPollenContainersModel.getData().plants_without_pollen_container_collection;
 		var iIndex = aPlantsWithoutPollenContainers.indexOf(oPlant);
 		aPlantsWithoutPollenContainers.splice(iIndex, 1);
 

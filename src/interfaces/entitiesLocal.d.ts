@@ -55,7 +55,7 @@ export interface LNewFlorescenceInputData {
 plant_id: int|undefined;
 plant_name: string|undefined,
 florescence_status: FlorescenceStatus;
-inflorescence_appearance_date: string|undefined,
+inflorescence_appeared_at: string|undefined,
 comment: string|undefined,
 }
 
@@ -69,9 +69,9 @@ export interface LEditFlorescenceInput extends BActiveFlorescence{
     // used for model "editedFlorescenceModel"
     flowers_count_known: boolean;
     branches_count_known: boolean;
-    inflorescence_appearance_date_known: boolean;
-    first_flower_opening_date_known: boolean;
-    last_flower_closing_date_known: boolean;
+    inflorescence_appeared_at_known: boolean;
+    first_flower_opened_at_known: boolean;
+    last_flower_closed_at_known: boolean;
 
     perianth_size_known: boolean;
     flower_colors_known: boolean;

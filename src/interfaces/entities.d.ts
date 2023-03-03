@@ -18,7 +18,7 @@ export interface BActiveFlorescence {
   plant_id: number;
   plant_name: string;
   florescence_status: FlorescenceStatus;
-  inflorescence_appearance_date?: string;
+  inflorescence_appeared_at?: string;
   comment?: string;
   branches_count?: number;
   flowers_count?: number;
@@ -28,8 +28,8 @@ export interface BActiveFlorescence {
   flower_color_second?: string;
   flower_colors_differentiation?: FlowerColorDifferentiation;
   stigma_position?: StigmaPosition;
-  first_flower_opening_date?: string;
-  last_flower_closing_date?: string;
+  first_flower_opened_at?: string;
+  last_flower_closed_at?: string;
   available_colors_rgb: string[];
 }
 export interface PollinationRead {
@@ -99,18 +99,18 @@ export interface BPotentialPollenDonor {
 export interface BResultsActiveFlorescences {
   action: string;
   message?: BMessage;
-  activeFlorescenceCollection: BActiveFlorescence[];
+  active_florescence_collection: BActiveFlorescence[];
 }
 export interface BResultsOngoingPollinations {
   action: string;
   message?: BMessage;
-  ongoingPollinationCollection: PollinationRead[];
+  ongoing_pollination_collection: PollinationRead[];
 }
 export interface BResultsPlantsForNewFlorescence {
-  plantsForNewFlorescenceCollection: BPlantForNewFlorescence[];
+  plants_for_new_florescence_collection: BPlantForNewFlorescence[];
 }
 export interface BResultsPollenContainers {
-  pollenContainerCollection: FBPollenContainer[];
+  pollen_container_collection: FBPollenContainer[];
   plantsWithoutPollenContainerCollection: BPlantWithoutPollenContainer[];
 }
 export interface FBPollenContainer {
@@ -122,7 +122,7 @@ export interface FBPollenContainer {
 export interface BResultsPotentialPollenDonors {
   action: string;
   message?: BMessage;
-  potentialPollenDonorCollection: BPotentialPollenDonor[];
+  potential_pollen_donor_collection: BPotentialPollenDonor[];
 }
 export interface SettingsRead {
   colors: string[];
@@ -142,7 +142,7 @@ export interface FRequestEditedFlorescence {
   plant_id: number;
   plant_name: string;
   florescence_status: string;
-  inflorescence_appearance_date?: string;
+  inflorescence_appeared_at?: string;
   comment?: string;
   branches_count?: number;
   flowers_count?: number;
@@ -152,8 +152,8 @@ export interface FRequestEditedFlorescence {
   flower_color_second?: string;
   flower_colors_differentiation?: FlowerColorDifferentiation;
   stigma_position?: StigmaPosition;
-  first_flower_opening_date?: string;
-  last_flower_closing_date?: string;
+  first_flower_opened_at?: string;
+  last_flower_closed_at?: string;
 }
 export interface FRequestEditedPollination {
   id: number;
@@ -181,7 +181,7 @@ export interface FRequestEditedPollination {
 export interface FRequestNewFlorescence {
   plant_id: number;
   florescence_status: string;
-  inflorescence_appearance_date?: string;
+  inflorescence_appeared_at?: string;
   comment?: string;
 }
 
@@ -199,7 +199,7 @@ export interface PollinationCreate {
 }
 
 export interface FRequestPollenContainers {
-  pollenContainerCollection: FBPollenContainer[];
+  pollen_container_collection: FBPollenContainer[];
 }
 
 

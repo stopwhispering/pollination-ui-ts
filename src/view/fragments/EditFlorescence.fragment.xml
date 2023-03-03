@@ -39,10 +39,10 @@
 					<VBox class="sapUiSmallMarginEnd">
 						<Label text="Inflorescence appeared at"/>
 						<HBox>
-							<CheckBox selected="{editedFlorescenceModel>/inflorescence_appearance_date_known}"/>
+							<CheckBox selected="{editedFlorescenceModel>/inflorescence_appeared_at_known}"/>
 							<MaskInput
-								enabled="{editedFlorescenceModel>/inflorescence_appearance_date_known}"
-								value="{editedFlorescenceModel>/inflorescence_appearance_date}"
+								enabled="{editedFlorescenceModel>/inflorescence_appeared_at_known}"
+								value="{editedFlorescenceModel>/inflorescence_appeared_at}"
 								mask="9999-99-99"
 								width="6rem"
 								class="sapUiTinyMarginEnd"
@@ -50,8 +50,8 @@
 							<Button
 								icon="sap-icon://calendar"
 								type="Transparent"
-								enabled="{editedFlorescenceModel>/inflorescence_appearance_date_known}"
-								press=".onPressEditFlorescenceSetToday('inflorescence_appearance_date')"
+								enabled="{editedFlorescenceModel>/inflorescence_appeared_at_known}"
+								press=".onPressEditFlorescenceSetToday('inflorescence_appeared_at')"
 							/>
 						</HBox>
 					</VBox>
@@ -74,11 +74,11 @@
 								enabled="{= (${editedFlorescenceModel>/florescence_status} === 'flowering' 
 										|| ${editedFlorescenceModel>/florescence_status} === 'finished')
 								}"
-								selected="{editedFlorescenceModel>/first_flower_opening_date_known}"
+								selected="{editedFlorescenceModel>/first_flower_opened_at_known}"
 							/>
 							<MaskInput
-								enabled="{editedFlorescenceModel>/first_flower_opening_date_known}"
-								value="{editedFlorescenceModel>/first_flower_opening_date}"
+								enabled="{editedFlorescenceModel>/first_flower_opened_at_known}"
+								value="{editedFlorescenceModel>/first_flower_opened_at}"
 								mask="9999-99-99"
 								width="6rem"
 								class="sapUiTinyMarginEnd"
@@ -86,8 +86,8 @@
 							<Button
 								icon="sap-icon://calendar"
 								type="Transparent"
-								enabled="{editedFlorescenceModel>/first_flower_opening_date_known}"
-								press=".onPressEditFlorescenceSetToday('first_flower_opening_date')"
+								enabled="{editedFlorescenceModel>/first_flower_opened_at_known}"
+								press=".onPressEditFlorescenceSetToday('first_flower_opened_at')"
 							/>
 						</HBox>
 					</VBox>
@@ -304,11 +304,11 @@
 					<HBox class="sapUiSmallMarginBottom">
 						<CheckBox
 							enabled="{= ${editedFlorescenceModel>/florescence_status} === 'finished'}"
-							selected="{editedFlorescenceModel>/last_flower_closing_date_known}"
+							selected="{editedFlorescenceModel>/last_flower_closed_at_known}"
 						/>
 						<MaskInput
-							enabled="{editedFlorescenceModel>/last_flower_closing_date_known}"
-							value="{editedFlorescenceModel>/last_flower_closing_date}"
+							enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
+							value="{editedFlorescenceModel>/last_flower_closed_at}"
 							mask="9999-99-99"
 							width="6rem"
 							class="sapUiTinyMarginEnd"
@@ -316,8 +316,8 @@
 						<Button
 							icon="sap-icon://calendar"
 							type="Transparent"
-							enabled="{editedFlorescenceModel>/last_flower_closing_date_known}"
-							press=".onPressEditFlorescenceSetToday('last_flower_closing_date')"
+							enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
+							press=".onPressEditFlorescenceSetToday('last_flower_closed_at')"
 						/>
 					</HBox>
 				</VBox>

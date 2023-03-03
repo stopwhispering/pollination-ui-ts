@@ -47,7 +47,7 @@
                         <HBox>
                             <MaskInput 
                                 id="inpInflorescenceAppearedAt"
-                                value="{newFlorescenceModel>/inflorescence_appearance_date}"
+                                value="{newFlorescenceModel>/inflorescence_appeared_at}"
                                 mask="9999-99-99" 
                                 width="9rem"
                                 class="sapUiTinyMarginEnd"  />

@@ -20,7 +20,7 @@ export default class ActiveFlorescencesHandler extends ManagedObject {
 
 	public async loadFlorescences() {
 		const oResult = <BResultsActiveFlorescences> await Util.get(Util.getServiceUrl('active_florescences'));
-		const aActiveFlorescences: BActiveFlorescence[] = oResult.activeFlorescenceCollection;
+		const aActiveFlorescences: BActiveFlorescence[] = oResult.active_florescence_collection;
 		this._oFlorescenceModel.setData(aActiveFlorescences);
 		this._oTemporaryPollinationsHandler.resetTempPollinationFlorescence();
 	}

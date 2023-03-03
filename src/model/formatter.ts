@@ -55,17 +55,17 @@ export default class formatter extends ManagedObject {
         return '<span style="color:' + color + '">' + text + '</span>';
     }
 
-    html_for_active_florescence_dates(inflorescence_appearance_date: string, first_flower_opening_date: string, last_flower_closing_date: string, florescence_status: FlorescenceStatus) {
+    html_for_active_florescence_dates(inflorescence_appeared_at: string, first_flower_opened_at: string, last_flower_closed_at: string, florescence_status: FlorescenceStatus) {
         // dates in format '%Y-%m-%d', e.g. '2022-11-16'
         switch (florescence_status) {
             case "inflorescence_appeared":
-                var text = (inflorescence_appearance_date ? '🙢 ' + inflorescence_appearance_date.substr(5, 5) : '');
+                var text = (inflorescence_appeared_at ? '🙢 ' + inflorescence_appeared_at.substr(5, 5) : '');
                 break;
             case "flowering":
-                var text = (first_flower_opening_date ? '✽ ' + first_flower_opening_date.substr(5, 5) : '');
+                var text = (first_flower_opened_at ? '✽ ' + first_flower_opened_at.substr(5, 5) : '');
                 break;
             case "finished":
-                var text = (last_flower_closing_date ? '۰ ' + last_flower_closing_date.substr(5, 5) : '');
+                var text = (last_flower_closed_at ? '۰ ' + last_flower_closed_at.substr(5, 5) : '');
                 break;
             default:
                 throw new Error("Unknown florescence status: " + florescence_status);

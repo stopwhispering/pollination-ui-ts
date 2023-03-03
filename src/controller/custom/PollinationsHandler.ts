@@ -18,7 +18,7 @@ export default class PollinationsHandler extends ManagedObject {
 
 	public async loadPollinations() {
 		const oResult = <BResultsOngoingPollinations> await Util.get(Util.getServiceUrl('ongoing_pollinations'));
-		const aOngoingPollinations = <PollinationRead[]>oResult.ongoingPollinationCollection;
+		const aOngoingPollinations = <PollinationRead[]>oResult.ongoing_pollination_collection;
 		this._oPollinationModel.setData(aOngoingPollinations);
 	}
 }

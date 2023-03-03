@@ -64,7 +64,7 @@
 												descending: false,
 												group: '.getFlorescenceStatusGroup'
 											}, {
-												path: 'first_flower_opening_date',
+												path: 'first_flower_opened_at',
 												descending: true
 											}]
 										}"
@@ -107,10 +107,10 @@
 													<VBox alignItems="Center">
 														<FormattedText
 															htmlText="{
-																parts: ['currentFlorescencesModel>inflorescence_appearance_date', 'currentFlorescencesModel>first_flower_opening_date', 'currentFlorescencesModel>last_flower_closing_date', 'currentFlorescencesModel>florescence_status'],
+																parts: ['currentFlorescencesModel>inflorescence_appeared_at', 'currentFlorescencesModel>first_flower_opened_at', 'currentFlorescencesModel>last_flower_closed_at', 'currentFlorescencesModel>florescence_status'],
 																formatter: '.formatter.html_for_active_florescence_dates'
 															}"
-															tooltip="Inflorescence appeared: {currentFlorescencesModel>inflorescence_appearance_date}, First flower opens: {currentFlorescencesModel>first_flower_opening_date}, Last flower closed: {currentFlorescencesModel>last_flower_closing_date}"
+															tooltip="Inflorescence appeared: {currentFlorescencesModel>inflorescence_appeared_at}, First flower opens: {currentFlorescencesModel>first_flower_opened_at}, Last flower closed: {currentFlorescencesModel>last_flower_closed_at}"
 															width="3.5rem"
 														/>
 														<HBox visible="{=
