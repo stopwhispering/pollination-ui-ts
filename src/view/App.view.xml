@@ -469,7 +469,7 @@
 												/>
 												<GenericTag
 													text="{=
-														${newPollinationsModel>goodPollenQuality} ? 'Good' : 'Bad'
+														${newPollinationsModel>goodPollenQuality} ? 'good' : 'bad'
 													}"
 													tooltip="{=
 														${newPollinationsModel>goodPollenQuality} ? 'Pollen Quality: Good' : 'Pollen Quality: Bad'

@@ -11,7 +11,6 @@ export interface BMessage {
     additionalText?: string;
     description?: string;
   }
-export type BMessageType = "Information" | "None" | "Success" | "Warning" | "Error" | "Debug";
 // export type FlorescenceStatus = "inflorescence_appeared" | "flowering" | "finished" | "aborted";
 // auto-generated via pydantic-2-ts
 export interface BActiveFlorescence {
@@ -186,7 +185,6 @@ export interface FRequestNewFlorescence {
   comment?: string;
 }
 
-export type PollenQuality = "good" | "bad" | "unknown";
 
 export interface PollinationCreate {
   florescenceId: number;

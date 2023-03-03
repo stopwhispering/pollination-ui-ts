@@ -5,6 +5,7 @@ import { Florescence, LUnsavedPollination } from "pollination/ui/interfaces/enti
 import { BActiveFlorescence, BPotentialPollenDonor } from "pollination/ui/interfaces/entities";
 import MessageToast from "sap/m/MessageToast";
 import UnsavedPollinationsHandler from "./UnsavedPollinationsHandler";
+import { PollenQuality } from "pollination/ui/interfaces/enums";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -25,7 +26,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			location: 'indoor_led',
 			count: 1,
 			goodPollenQuality: true,
-			pollen_quality: 'good',
+			pollen_quality: PollenQuality.GOOD,
 		}
 		this._oNewTempPollinationInputModel.setData(this._oNewTempPollination);
 		this.resetTempPollinationFlorescence();
@@ -65,7 +66,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oNewTempPollination.florescenceStatus = undefined;
 		this._oNewTempPollination.availableColorsRgb = ['transparent', 'black'];  // technically required placeholders
 		this._oNewTempPollination.label_color_rgb = "transparent";
-		this._oNewTempPollination.pollen_quality = 'good';
+		this._oNewTempPollination.pollen_quality = PollenQuality.GOOD;
 		this._oNewTempPollination.goodPollenQuality = true;
 		// (<JSONModel>this.getView().getModel('newTempPollinationInput')).updateBindings(false);
 		this._oNewTempPollinationInputModel.updateBindings(false);
@@ -114,7 +115,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			locationText: locationText,
 			count: this._oNewTempPollination.count,
 			label_color_rgb: this._oNewTempPollination.label_color_rgb,
-			pollen_quality: this._oNewTempPollination.goodPollenQuality ? 'good' : 'bad',
+			pollen_quality: this._oNewTempPollination.goodPollenQuality ? PollenQuality.GOOD : PollenQuality.BAD,
 		}
 		this._oUnsavedPollinationsHandler.addPollination(oNewPollination);
 		// this._new_pollinations.push(oNewPollination);
