@@ -22,7 +22,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oUnsavedPollinationsHandler = oUnsavedPollinationsHandler;
 		
 		this._oNewTempPollination = {
-			pollination_timestamp: Util.format_timestamp(new Date()),
+			pollinated_at: Util.format_timestamp(new Date()),
 			location: 'indoor_led',
 			count: 1,
 			goodPollenQuality: true,
@@ -110,7 +110,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			pollenDonorPlantName: oPollenDonor.plant_name,
 			pollen_donor_plant_id: oPollenDonor.plant_id,
 			pollen_type: this._oNewTempPollination.pollen_type,
-			pollination_timestamp: this._oNewTempPollination.pollination_timestamp,  // '%Y-%m-%d %H:%M' without seconds
+			pollinated_at: this._oNewTempPollination.pollinated_at,  // '%Y-%m-%d %H:%M' without seconds
 			location: this._oNewTempPollination.location,
 			locationText: locationText,
 			count: this._oNewTempPollination.count,

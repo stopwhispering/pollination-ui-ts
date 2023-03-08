@@ -5,7 +5,8 @@ import { FlorescenceStatus, FlorescenceStatus } from "./enums";
  * @namespace pollination.ui.interfaces.entitiesLocal
  */
 export interface LUnsavedPollination {
-    pollination_timestamp: string;
+    // pollination_timestamp: string;
+    pollinated_at: string;
     location: string;
     count: 1;
     florescenceId?: int;
@@ -61,7 +62,8 @@ comment: string|undefined,
 
 export interface LEditPollinationInput extends PollinationRead{
     // used for model "editPollinationInput"
-    pollination_timestamp_known: boolean;
+    // pollination_timestamp_known: boolean;
+    pollinated_at_known: boolean;
     harvest_date_known: boolean;
 }
 

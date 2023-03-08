@@ -37,7 +37,7 @@ export interface PollinationRead {
   seed_capsule_plant_name: string;
   pollen_donor_plant_id: number;
   pollen_donor_plant_name: string;
-  pollination_timestamp?: string;
+  pollinated_at?: string;
   pollen_type: string;
   location?: string;
   count?: number;
@@ -159,7 +159,7 @@ export interface FRequestEditedPollination {
   id: number;
   seed_capsule_plant_id: number;
   pollen_donor_plant_id: number;
-  pollination_timestamp?: string;
+  pollinated_at?: string;
   pollen_type: string;
   location?: string;
   count: number;
@@ -192,7 +192,7 @@ export interface PollinationCreate {
   seed_capsule_plant_id: number;
   pollen_donor_plant_id: number;
   pollen_type: string;
-  pollination_timestamp: string;
+  pollinated_at: string;
   label_color_rgb: string;
   location: string;
   count: number;

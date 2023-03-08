@@ -210,7 +210,7 @@ export default class App extends BaseController {
 				new Filter("pollen_donor_plant_name", FilterOperator.Contains, sQuery),
 				new Filter("seed_capsule_plant_id", FilterOperator.EQ, sQuery),
 				new Filter("pollen_donor_plant_id", FilterOperator.EQ, sQuery),
-				new Filter("pollination_timestamp", FilterOperator.Contains, sQuery),
+				new Filter("pollinated_at", FilterOperator.Contains, sQuery),
 				new Filter("pollen_type", FilterOperator.Contains, sQuery),
 			], false);
 			aFilters.push(filter);

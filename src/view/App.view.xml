@@ -310,7 +310,7 @@
 													displayFormat="yyyy-MM-dd HH:mm"
 													valueFormat="yyyy-MM-dd HH:mm"
 													value="{
-														path: 'newTempPollinationInput>/pollination_timestamp'
+														path: 'newTempPollinationInput>/pollinated_at'
 													}"
 													placeholder="Enter Date"
 												/>
@@ -437,7 +437,7 @@
 											<HBox>
 												<GenericTag
 													text="{
-														path: 'newPollinationsModel>pollination_timestamp'
+														path: 'newPollinationsModel>pollinated_at'
 													}"
 													design="StatusIconHidden"
 													class="sapUiTinyMarginEnd"
@@ -565,7 +565,7 @@
 											</core:Icon>
 											<FlexBox>
 												<GenericTag
-													text="{= (!!${ongoingPollinationsModel>pollination_timestamp} ? ${ongoingPollinationsModel>pollination_timestamp} : 'unknown date') }"
+													text="{= (!!${ongoingPollinationsModel>pollinated_at} ? ${ongoingPollinationsModel>pollinated_at} : 'unknown date') }"
 													design="StatusIconHidden"
 													class="sapUiTinyMarginEnd"
 												/>

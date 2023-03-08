@@ -40,7 +40,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		// clone ongoing pollination object for manipulation in the dialog
 		// add some control attributes to allow for usage of sliders and keeping undefined values
 		var oEditedPollination: LEditPollinationInput = JSON.parse(JSON.stringify(oPollination));
-		oEditedPollination.pollination_timestamp_known = !!oEditedPollination.pollination_timestamp
+		oEditedPollination.pollinated_at_known = !!oEditedPollination.pollinated_at
 		oEditedPollination.harvest_date_known = !!oEditedPollination.harvest_date
 
 		// open dialog
@@ -156,8 +156,8 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 
 		// the inputs are bound to the model and might update undefined values to default values
 		// we need to set them back to undefined
-		if (!oEditedPollination.pollination_timestamp_known) {
-			oEditedPollination.pollination_timestamp = undefined;
+		if (!oEditedPollination.pollinated_at_known) {
+			oEditedPollination.pollinated_at = undefined;
 		}
 		if (!oEditedPollination.harvest_date_known) {
 			oEditedPollination.harvest_date = undefined;

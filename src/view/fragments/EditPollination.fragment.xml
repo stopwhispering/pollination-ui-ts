@@ -58,10 +58,10 @@
 						<VBox>
 							<Label text="{i18n>EditPollinationFragment.PollinationAt}"/>
 							<HBox class="sapUiTinyMarginBottom">
-								<CheckBox selected="{editPollinationInput>/pollination_timestamp_known}"/>
+								<CheckBox selected="{editPollinationInput>/pollinated_at_known}"/>
 								<MaskInput
-									enabled="{editPollinationInput>/pollination_timestamp_known}"
-									value="{editPollinationInput>/pollination_timestamp}"
+									enabled="{editPollinationInput>/pollinated_at_known}"
+									value="{editPollinationInput>/pollinated_at}"
 									mask="9999-99-99 99:99"
 									width="8.5rem"
 								/>
