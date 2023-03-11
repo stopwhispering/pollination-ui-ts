@@ -130,9 +130,12 @@ export default class Util extends ManagedObject {
 
 	public static format_timestamp(d: Date): string {
 		// convert date object to 'yyyy-MM-dd HH:mm' formatted string
-		var iso = d.toISOString();  // '2022-11-15T22:29:30.457Z'
-		var formatted = iso.replace('T', ' ').substring(0, 16);  // '2022-11-15 22:29'
-		return formatted
+		// javascript Date with timezones and string formatting is 
+		// a total mess, so we don't use toISOString() or getTImezoneOffset() etc.
+		// but instead format manually
+		const sDate = d.getFullYear().toString() + '-' + d.getMonth().toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0")
+		const sTime = d.getHours().toString().padStart(2, "0") + ':' + d.getMinutes().toString().padStart(2, "0")
+		return sDate + ' ' + sTime;
 	}
 
 	public static getToday(): any {
