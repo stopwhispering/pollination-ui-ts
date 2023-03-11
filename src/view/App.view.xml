@@ -6,7 +6,8 @@
 	xmlns:card="sap.f.cards"
 	xmlns:grid="sap.ui.layout.cssgrid"
 	core:require="{
-		Helper: 'pollination/ui/util/Helper'
+		Helper: 'pollination/ui/util/Helper',
+		addMouseOverDelegate: 'pollination/ui/util/addMouseOverDelegate'
 	}"
 	controllerName="pollination.ui.controller.App"
 	displayBlock="true"
@@ -79,11 +80,19 @@
 										<CustomListItem>
 											<HBox>
 												<HBox>
-													<Text
-														text="{currentFlorescencesModel>plant_id}"
-														class="sapUiTinyMarginBegin"
-														width="1.6rem"
-													/>
+													<VBox>
+														<Text
+															text="{currentFlorescencesModel>plant_id}"
+															class="sapUiTinyMarginBegin"
+															width="1.6rem"
+														/>
+														<Button
+															class="tinyButton sapUiTinyMarginBegin"
+															icon="sap-icon://edit"
+															type="Transparent"
+															press=".onPressEditActiveFlorescence"
+														/>
+													</VBox>
 													<Text
 														text="{=
 															${currentFlorescencesModel>plant_name} + 
@@ -143,12 +152,26 @@
 														</HBox>
 													</VBox>
 												</HBox>
-												<Button
-													class="tinyButton"
+												<Avatar
+													id="idAvatar"
+													displaySize="XS"
+													showBorder="true"
+													initials="{= ${currentFlorescencesModel>plant_name}.substr(0,2) }"
+													src="{
+														path: 'currentFlorescencesModel>plant_preview_image_id',
+														formatter: '.formatter.getImageUrlAvatarXS'
+													}"
+													tooltip="{
+														path: 'currentFlorescencesModel>plant_preview_image_id',
+														formatter: 'addMouseOverDelegate'
+													}"
+													displayShape="Square"
+												/>
+												<!-- <Button
 													icon="sap-icon://edit"
 													type="Transparent"
 													press=".onPressEditActiveFlorescence"
-												/>
+												/> -->
 											</HBox>
 										</CustomListItem>
 									</List>

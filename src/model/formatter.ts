@@ -1,4 +1,5 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
+import Util from "../controller/custom/Util";
 import { FlorescenceStatus, PollinationStatus } from "../interfaces/enums";
 
 /**
@@ -71,6 +72,12 @@ export default class formatter extends ManagedObject {
                 throw new Error("Unknown florescence status: " + florescence_status);
         }
         return text;
+    }
+
+    getImageUrlAvatarXS(image_id: int | undefined){
+        if(!image_id)
+            return undefined;
+        return Util.getImageUrl(image_id, 'rem', 2, 2);
     }
 
     html_for_pollination_probability(probability_pollination_to_seed: float) {

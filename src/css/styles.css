@@ -10,3 +10,23 @@
 .seedsRipeningColor {
     background-color: #f1c232;
 }
+
+/* .sapMBtnIcon {
+    width: 2.125rem;
+    font-size: 0.6rem;
+    line-height: 2.125rem;
+} */
+/* sapMBtnIcon */
+.tinyButton.sapMBtn {
+    height: 1.65rem; /* default: 2.75rem; */
+}
+.tinyButton .sapMBtnInner {
+    height: 1.35rem; /* default: 2.25rem; */
+    min-width: 1.35rem; /* default: 2.25rem; */
+    width: 1.35rem /* no default; */
+}
+.tinyButton .sapMBtnIcon {
+    /* height: 5rem; */
+    font-size: 0.6rem; /* default: 1rem; */
+    line-height: 1.275rem; /* default: 2.125rem; */
+}

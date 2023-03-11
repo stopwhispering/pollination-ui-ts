@@ -10,6 +10,21 @@ export default class Util extends ManagedObject {
 	public static getServiceUrl(sUrl: string) {
 		return Constants.base_url + sUrl;
 	}
+	
+	public static getImageUrl(image_id: int, size_type?: string, width?: float, height?: float): string | undefined {
+		if (!size_type) {
+			var path = 'image/' + image_id.toString();
+		} else if (size_type !== 'rem' && size_type != 'px') {
+			console.log('Bad size type: ' + size_type);
+			return undefined;
+		} else {
+			var width_px = (size_type === 'px') ? width : Math.round(width! * 16);
+			var height_px = (size_type === 'px') ? height : Math.round(height! * 16);
+			path = 'image/' + image_id.toString() + '?width=' + width_px + '&height=' + height_px;
+		}
+
+		return this.getServiceUrl(path);
+	}
 
 	private async http<T>(
 		request: RequestInfo

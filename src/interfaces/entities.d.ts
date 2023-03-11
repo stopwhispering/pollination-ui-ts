@@ -17,6 +17,7 @@ export interface BActiveFlorescence {
   id: number;
   plant_id: number;
   plant_name: string;
+  plant_preview_image_id: number | undefined;
   florescence_status: FlorescenceStatus;
   inflorescence_appeared_at?: string;
   comment?: string;

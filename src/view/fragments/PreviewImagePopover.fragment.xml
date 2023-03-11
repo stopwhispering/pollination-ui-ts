@@ -1,0 +1,27 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Popover
+		placement="Auto"
+		showHeader="false"
+		horizontalScrolling="false"
+		verticalScrolling="false"
+		id="popoverPopupImage"
+		contentWidth="290px"
+		>
+		<VBox>
+		<Label 
+    		text="[{preview_image_model>/plant_id}] {preview_image_model>/plant_name}"
+			wrapping="true"
+			/>
+
+    	<Image 
+			id="idHoverImage"
+    		press=".onClickImage"
+			src="{preview_image_model>/plant_preview_image_url}"
+			/>
+		</VBox>
+
+    </Popover>
+</core:FragmentDefinition>

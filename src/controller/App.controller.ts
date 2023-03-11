@@ -32,6 +32,9 @@ import ListItemBase from "sap/m/ListItemBase";
 import UnsavedPollinationsHandler from "./custom/UnsavedPollinationsHandler";
 import EditPollinationDialogHandler from "./custom/EditPollinationDialogHandler";
 import FlowerHistoryHandler from "./custom/FlowerHistoryHandler";
+import Avatar from "sap/m/Avatar";
+import Popover from "sap/m/Popover";
+import PreviewImagePopoverHandler from "./custom/PreviewImagePopoverHandler";
 
 /**
  * @namespace pollination.ui.controller
@@ -47,6 +50,7 @@ export default class App extends BaseController {
 	private _oNewFlorescenceDialogHandler: NewFlorescenceDialogHandler;  // lazy loaded
 	private _oEditFlorescenceDialogHandler: EditFlorescenceDialogHandler;  // lazy loaded
 	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
+	private _oPreviewImagePopoverHandler: PreviewImagePopoverHandler
 
 	public onInit() {
 
@@ -358,5 +362,28 @@ export default class App extends BaseController {
 			this._oFlowerHistoryHandler = new FlowerHistoryHandler();
 		}
 		this._oFlowerHistoryHandler.openDialog(this.getView());
+	}
+
+	
+	//////////////////////////////////////////////////////////
+	// Preview Image Popup Handlers
+	//////////////////////////////////////////////////////////
+	public onHoverImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
+		// apply _onHoverImageShow function to popover
+		const oBindingContext = oAvatar.getBindingContext('currentFlorescencesModel')!;
+		const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
+		if (!oFlorescence.plant_preview_image_id)
+			return;
+
+		if (!this._oPreviewImagePopoverHandler)
+			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler()
+		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView(), oAvatar, oFlorescence );
+	}
+
+	// todo get rid of this, move to ImagePreviewPopoverHandler
+	public onHoverAwayFromImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
+		// const oPopover = <Popover>this.byId('popoverPopupImage');
+		// oPopover.close();
+		this._oPreviewImagePopoverHandler.close();
 	}
 }
