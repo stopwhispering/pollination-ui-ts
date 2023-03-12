@@ -9,7 +9,7 @@ export interface LUnsavedPollination {
     pollinated_at: string;
     location: string;
     count: 1;
-    florescenceId?: int;
+    florescence_id?: int;
     florescencePlantName?: string;
     florescencePlantId?: int;
     florescenceStatus?: string;

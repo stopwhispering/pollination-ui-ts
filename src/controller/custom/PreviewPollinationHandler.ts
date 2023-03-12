@@ -36,7 +36,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 	public setFlorescencePlant(oFlorescence: Florescence){
 		this._oNewTempPollination.florescencePlantName = oFlorescence.plant_name;
 		this._oNewTempPollination.florescencePlantId = oFlorescence.plant_id;
-		this._oNewTempPollination.florescenceId = oFlorescence.id;
+		this._oNewTempPollination.florescence_id = oFlorescence.id;
 		this._oNewTempPollination.florescenceStatus = oFlorescence.florescence_status;  // for enabling/disabling preview button
 		this._oNewTempPollinationInputModel
 		this._oNewTempPollinationInputModel.updateBindings(false);
@@ -60,7 +60,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 	}
 
 	public resetTempPollinationFlorescence() {
-		this._oNewTempPollination.florescenceId = undefined;  // todo entity
+		this._oNewTempPollination.florescence_id = undefined;  // todo entity
 		this._oNewTempPollination.florescencePlantName = undefined;
 		this._oNewTempPollination.florescencePlantId = undefined;
 		this._oNewTempPollination.florescenceStatus = undefined;
@@ -104,7 +104,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 
 		// add new pollination to unsaved pollinations
 		const oNewPollination = <LUnsavedPollination>{
-			florescenceId: this._oNewTempPollination.florescenceId,
+			florescence_id: this._oNewTempPollination.florescence_id,
 			seedCapsulePlantName: oFlorescence.plant_name,
 			seed_capsule_plant_id: oFlorescence.plant_id,
 			pollenDonorPlantName: oPollenDonor.plant_name,

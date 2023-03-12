@@ -86,14 +86,11 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
 		const oEditedFlorescence = <LEditFlorescenceInput>oEditFlorescenceModel.getData()
 		const iFlorescenceId = oEditedFlorescence.id;
-		// const iFlorescenceId = (<JSONModel>this.getView().getModel("editedFlorescenceModel")).getData().id;
-		// const oDialogEditFlorescence = <Dialog>this.byId('editFlorescence');
 		this._askToDeleteFlorescence(iFlorescenceId);
 	}
 
 	public onAfterCloseEditFlorescenceDialog(oEvent: Event) {
 		// destroy model and fragment, works for both regular closing and hitting ESC
-		// const oDialog = <Dialog>oEvent.getSource();
 		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
 		oEditFlorescenceModel.destroy();
 		this._oEditFlorescenceDialog.destroy();		

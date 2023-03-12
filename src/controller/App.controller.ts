@@ -17,7 +17,7 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField from "sap/m/SearchField";
-import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import PollinationToSeedProbabilityModelTrainer from "./custom/PollinationToSeedProbabilityModelTrainer";
 import Util from "./custom/Util";
@@ -275,10 +275,10 @@ export default class App extends BaseController {
 
 	public async onPressSubmitPollenContainers(oEvent: Event) {
 		var oPollenContainersModel = <JSONModel>this.getView().getModel("pollenContainersModel");
-		var oPollenContainersFull = oPollenContainersModel.getData();
+		var oPollenContainersFull = <BResultsPollenContainers>oPollenContainersModel.getData();
 
 		//we only send the pollen containers, not the list of plants that have none
-		var oPollenContainers = {
+		var oPollenContainers: FRequestPollenContainers = {
 			"pollen_container_collection": oPollenContainersFull.pollen_container_collection
 		}
 

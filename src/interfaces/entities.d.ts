@@ -111,13 +111,19 @@ export interface BResultsPlantsForNewFlorescence {
   plants_for_new_florescence_collection: BPlantForNewFlorescence[];
 }
 export interface BResultsPollenContainers {
-  pollen_container_collection: FBPollenContainer[];
+  pollen_container_collection: PollenContainerRead[];
   plantsWithoutPollenContainerCollection: BPlantWithoutPollenContainer[];
 }
-export interface FBPollenContainer {
+export interface PollenContainerRead {
   plant_id: number;
   plant_name: string;
   genus?: string;
+  count_stored_pollen_containers: number;
+}
+export interface PollenContainerCreateUpdate {
+  plant_id: number;
+  // plant_name: string;
+  // genus?: string;
   count_stored_pollen_containers: number;
 }
 export interface BResultsPotentialPollenDonors {
@@ -188,7 +194,7 @@ export interface FRequestNewFlorescence {
 
 
 export interface PollinationCreate {
-  florescenceId: number;
+  florescence_id: number;
   pollen_quality: PollenQuality;
   seed_capsule_plant_id: number;
   pollen_donor_plant_id: number;
@@ -200,11 +206,8 @@ export interface PollinationCreate {
 }
 
 export interface FRequestPollenContainers {
-  pollen_container_collection: FBPollenContainer[];
+  pollen_container_collection: PollenContainerCreateUpdate[];
 }
-
-
-
 
 export interface BFloweringPeriodState {
   month: string;

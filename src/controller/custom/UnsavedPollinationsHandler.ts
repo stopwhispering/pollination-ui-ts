@@ -62,8 +62,7 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		// remove colors from unsaved pollinations
 		for (var i = 0; i < this._aUnsavedPollinations.length; i++) {
 			var pollination = this._aUnsavedPollinations[i];
-			// if (this._new_temp_pollination.florescenceId === pollination.florescenceId) {
-			if (florescence.id === pollination.florescenceId) {
+			if (florescence.id === pollination.florescence_id) {
 				var iIndex = availabeColorsRgb.indexOf(pollination.label_color_rgb);
 				if (iIndex >= 0) {
 					availabeColorsRgb.splice(iIndex, 1);
