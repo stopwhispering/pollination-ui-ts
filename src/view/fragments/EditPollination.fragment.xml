@@ -129,8 +129,23 @@
 								required="true"
 								textAlign="Center"
 								width="11rem"
-								value="{editPollinationInput>/count}"
+								value="{editPollinationInput>/count_attempted}"
 							/>
+							<HBox class="sapUiTinyMarginBottom">
+								<CheckBox 
+									selected="{editPollinationInput>/count_pollinated_known}"
+									tooltip="Count Pollinations known"/>
+								<StepInput
+									description="Pollinated"
+									enabled="{editPollinationInput>/count_pollinated_known}"
+									max="4"
+									min="1"
+									required="true"
+									textAlign="Center"
+									width="14rem"
+									value="{editPollinationInput>/count_pollinated}"
+								/>
+							</HBox>
 							<HBox
 								alignItems="Center"
 								class="sapUiTinyMarginBottom"
@@ -160,6 +175,21 @@
 						key="icon_tab_seed_details"
 					>
 						<VBox>
+							<HBox class="sapUiTinyMarginBottom">
+								<CheckBox 
+									selected="{editPollinationInput>/count_capsules_known}"
+									tooltip="Count Capsules known"/>
+								<StepInput
+									description="Capsules"
+									enabled="{editPollinationInput>/count_capsules_known}"
+									max="4"
+									min="1"
+									required="true"
+									textAlign="Center"
+									width="14rem"
+									value="{editPollinationInput>/count_capsules}"
+								/>
+							</HBox>
 							<HBox class="sapUiTinyMarginBottom">
 								<VBox>
 									<Label text="{i18n>EditPollinationFragment.Capsule}"/>

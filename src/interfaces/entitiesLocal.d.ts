@@ -8,7 +8,7 @@ export interface LUnsavedPollination {
     // pollination_timestamp: string;
     pollinated_at: string;
     location: string;
-    count: 1;
+    count_attempted: 1;
     florescence_id?: int;
     florescencePlantName?: string;
     florescencePlantId?: int;
@@ -65,6 +65,8 @@ export interface LEditPollinationInput extends PollinationRead{
     // pollination_timestamp_known: boolean;
     pollinated_at_known: boolean;
     harvest_date_known: boolean;
+    count_pollinated_known: boolean;
+    count_capsules_known: boolean;
 }
 
 export interface LEditFlorescenceInput extends BActiveFlorescence{

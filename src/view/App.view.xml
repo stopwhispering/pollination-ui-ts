@@ -466,9 +466,9 @@
 													class="sapUiTinyMarginEnd"
 												/>
 												<GenericTag
-													visible="{= (!!${newPollinationsModel>count}) }"
-													text="{newPollinationsModel>count} fl."
-													tooltip="{newPollinationsModel>count} flower(s)"
+													visible="{= (!!${newPollinationsModel>count_attempted}) }"
+													text="{newPollinationsModel>count_attempted} fl."
+													tooltip="{newPollinationsModel>count_attempted} flower(s)"
 													design="StatusIconHidden"
 													class="sapUiTinyMarginEnd"
 													status="Warning"
@@ -633,9 +633,9 @@
 												class="sapUiTinyMarginEnd"
 											/>
 											<GenericTag
-												visible="{= (!!${ongoingPollinationsModel>count}) }"
-												text="{ongoingPollinationsModel>count}"
-												tooltip="{ongoingPollinationsModel>count} flower(s)"
+												visible="{= (!!${ongoingPollinationsModel>count_attempted}) }"
+												text="{ongoingPollinationsModel>count_attempted}"
+												tooltip="{ongoingPollinationsModel>count_attempted} flower(s)"
 												design="StatusIconHidden"
 												class="sapUiTinyMarginEnd"
 												status="Warning"

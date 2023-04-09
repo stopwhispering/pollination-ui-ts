@@ -41,7 +41,9 @@ export interface PollinationRead {
   pollinated_at?: string;
   pollen_type: string;
   location?: string;
-  count?: number;
+  count_attempted?: number;
+  count_pollinated?: number;
+  count_capsules?: number;
   location_text: string;
   label_color_rgb: string;
   id: number;
@@ -59,6 +61,31 @@ export interface PollinationRead {
   first_seeds_sown?: number;
   first_seeds_germinated?: number;
   germination_rate?: number;
+}
+export interface PollinationUpdate {
+  seed_capsule_plant_id: number;
+  pollen_donor_plant_id: number;
+  pollen_type: PollenType;
+  pollinated_at: string;
+  label_color_rgb: string;
+  location: Location;
+  count_attempted: number;
+  count_pollinated?: number;
+  count_capsules?: number;
+  id: number;
+  pollination_status: PollinationStatus;
+  ongoing: boolean;
+  harvest_date?: string;
+  seed_capsule_length?: number;
+  seed_capsule_width?: number;
+  seed_length?: number;
+  seed_width?: number;
+  seed_count?: number;
+  seed_capsule_description?: string;
+  seed_description?: string;
+  days_until_first_germination?: number;
+  first_seeds_sown?: number;
+  first_seeds_germinated?: number;
 }
 export interface BPlantForNewFlorescence {
   plant_id: number;
@@ -162,29 +189,6 @@ export interface FRequestEditedFlorescence {
   first_flower_opened_at?: string;
   last_flower_closed_at?: string;
 }
-export interface FRequestEditedPollination {
-  id: number;
-  seed_capsule_plant_id: number;
-  pollen_donor_plant_id: number;
-  pollinated_at?: string;
-  pollen_type: string;
-  location?: string;
-  count: number;
-  label_color_rgb: string;
-  pollination_status: string;
-  ongoing: boolean;
-  harvest_date?: string;
-  seed_capsule_length?: number;
-  seed_capsule_width?: number;
-  seed_length?: number;
-  seed_width?: number;
-  seed_count?: number;
-  seed_capsule_description?: string;
-  seed_description?: string;
-  days_until_first_germination?: number;
-  first_seeds_sown?: number;
-  first_seeds_germinated?: number;
-}
 export interface FRequestNewFlorescence {
   plant_id: number;
   florescence_status: string;
@@ -202,7 +206,7 @@ export interface PollinationCreate {
   pollinated_at: string;
   label_color_rgb: string;
   location: string;
-  count: number;
+  count_attempted: number;
 }
 
 export interface FRequestPollenContainers {

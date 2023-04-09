@@ -40,8 +40,10 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		// clone ongoing pollination object for manipulation in the dialog
 		// add some control attributes to allow for usage of sliders and keeping undefined values
 		var oEditedPollination: LEditPollinationInput = JSON.parse(JSON.stringify(oPollination));
-		oEditedPollination.pollinated_at_known = !!oEditedPollination.pollinated_at
-		oEditedPollination.harvest_date_known = !!oEditedPollination.harvest_date
+		oEditedPollination.pollinated_at_known = !!oEditedPollination.pollinated_at;
+		oEditedPollination.harvest_date_known = !!oEditedPollination.harvest_date;
+		oEditedPollination.count_pollinated_known = !!oEditedPollination.count_pollinated;
+		oEditedPollination.count_capsules_known = !!oEditedPollination.count_capsules;
 
 		// open dialog
         Fragment.load({
@@ -152,7 +154,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 	}
 
 	public async onPressSubmitEditPollination(setFinished: boolean) {
-		var oEditedPollination = this._oEditPollinationInputModel.getData();
+		var oEditedPollination: LEditPollinationInput = this._oEditPollinationInputModel.getData();
 
 		// the inputs are bound to the model and might update undefined values to default values
 		// we need to set them back to undefined
@@ -161,6 +163,12 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		}
 		if (!oEditedPollination.harvest_date_known) {
 			oEditedPollination.harvest_date = undefined;
+		}
+		if (!oEditedPollination.count_pollinated_known) {
+			oEditedPollination.count_pollinated = undefined;
+		}
+		if (!oEditedPollination.count_capsules_known) {
+			oEditedPollination.count_capsules = undefined;
 		}
 
 		// set finished if confirmed

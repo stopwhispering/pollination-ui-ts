@@ -24,7 +24,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oNewTempPollination = {
 			pollinated_at: Util.format_timestamp(new Date()),
 			location: 'indoor_led',
-			count: 1,
+			count_attempted: 1,
 			goodPollenQuality: true,
 			pollen_quality: PollenQuality.GOOD,
 		}
@@ -113,7 +113,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			pollinated_at: this._oNewTempPollination.pollinated_at,  // '%Y-%m-%d %H:%M' without seconds
 			location: this._oNewTempPollination.location,
 			locationText: locationText,
-			count: this._oNewTempPollination.count,
+			count_pollinated: this._oNewTempPollination.count_pollinated,
 			label_color_rgb: this._oNewTempPollination.label_color_rgb,
 			pollen_quality: this._oNewTempPollination.goodPollenQuality ? PollenQuality.GOOD : PollenQuality.BAD,
 		}
