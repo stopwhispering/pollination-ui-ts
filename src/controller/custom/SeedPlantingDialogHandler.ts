@@ -1,24 +1,16 @@
-import { BPlantForNewFlorescence, BPollinationAttempt, BResultsPlantsForNewFlorescence, FRequestNewFlorescence, LSeedPlantingInputData, PollinationRead, SeedPlantingCreate, SeedPlantingRead, SeedPlantingUpdate, SoilWithCountRead } from "pollination/ui/interfaces/entities";
-import { LNewFlorescenceInputData } from "pollination/ui/interfaces/entitiesLocal";
-import { FlorescenceStatus } from "pollination/ui/interfaces/enums";
+import { LSeedPlantingInputData, PollinationRead, SeedPlantingCreate, SeedPlantingRead, SeedPlantingUpdate, SoilWithCountRead } from "pollination/ui/interfaces/entities";
 import Dialog from "sap/m/Dialog";
 import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
-import Control from "sap/ui/core/Control";
 import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import Util from "./Util";
 import Event from "sap/ui/base/Event";
 import ActiveSeedPlantingsHandler from "./ActiveSeedPlantingsHandler";
 import Button from "sap/m/Button";
 import ListItem from "sap/ui/core/ListItem";
 import MessageToast from "sap/m/MessageToast";
-import { ButtonType, DialogType } from "sap/m/library";
-import Label from "sap/m/Label";
-import TextArea from "sap/m/TextArea";
-import Input from "sap/m/Input";
 import SegmentedButton from "sap/m/SegmentedButton";
 
 /**

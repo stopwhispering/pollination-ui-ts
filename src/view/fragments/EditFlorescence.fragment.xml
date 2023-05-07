@@ -253,12 +253,6 @@
 								}"
 								class="sapUiTinyMarginEnd"
 							/>
-							<!-- <Input
-								enabled="{editedFlorescenceModel>/flower_colors_known}"
-								value="{editedFlorescenceModel>/flower_color_second}"
-								width="4rem"
-								class="sapUiTinyMarginEnd"
-							/> -->
 						</HBox>
 					</HBox>
 				</VBox>

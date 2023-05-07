@@ -39,7 +39,19 @@
   "ui5": {
     "dependencies": [
       "ui5-middleware-livereload"
-    ]
+    ],
+    "ui5parser": {
+			"ui5version": "1.104.0",
+			"excludeFolderPatterns": ["**/resources/**", "**/dist/**", "**/node_modules/**", "**/webapp/**"],
+			"dataSource": "https://ui5.sap.com/",
+			"rejectUnauthorized": false,
+      "libsToLoad": [
+				"sap.m",
+				"sap.f",
+				"sap.ui.core",
+				"sap.ui.layout"
+			]
+    }
   },
   "bugs": {
     "url": "https://github.com/SAP-samples/ui5-typescript-helloworld/issues"

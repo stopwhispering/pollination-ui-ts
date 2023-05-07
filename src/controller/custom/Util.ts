@@ -1,7 +1,6 @@
 import Constants from "pollination/ui/Constants";
 import MessageToast from "sap/m/MessageToast";
 import ManagedObject from "sap/ui/base/ManagedObject";
-import Event from "sap/ui/base/Event";
 
 /**
  * @namespace pollination.ui.controller.custom

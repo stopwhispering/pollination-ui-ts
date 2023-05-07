@@ -68,7 +68,6 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oNewTempPollination.label_color_rgb = "transparent";
 		this._oNewTempPollination.pollen_quality = PollenQuality.GOOD;
 		this._oNewTempPollination.goodPollenQuality = true;
-		// (<JSONModel>this.getView().getModel('newTempPollinationInput')).updateBindings(false);
 		this._oNewTempPollinationInputModel.updateBindings(false);
 	}
 
@@ -76,7 +75,6 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		this._oNewTempPollination.pollenDonorPlantName = undefined;
 		this._oNewTempPollination.pollen_donor_plant_id = undefined;
 		this._oNewTempPollination.pollen_type = undefined;
-		// (<JSONModel>this.getView().getModel('newTempPollinationInput')).updateBindings(false);
 		this._oNewTempPollinationInputModel.updateBindings(false);
 	}
 
@@ -114,13 +112,10 @@ export default class PreviewPollinationHandler extends ManagedObject {
 			location: this._oNewTempPollination.location,
 			locationText: locationText,
 			count_attempted: this._oNewTempPollination.count_attempted,
-			// count_pollinated: this._oNewTempPollination.count_pollinated,
 			label_color_rgb: this._oNewTempPollination.label_color_rgb,
 			pollen_quality: this._oNewTempPollination.goodPollenQuality ? PollenQuality.GOOD : PollenQuality.BAD,
 		}
 		this._oUnsavedPollinationsHandler.addPollination(oNewPollination);
-		// this._new_pollinations.push(oNewPollination);
-		// (<JSONModel>this.getView().getModel("newPollinationsModel")).updateBindings(false);
 
 		// remove label color from available colors for this florescence
 		this._oNewTempPollination.label_color_rgb = 'transparent';

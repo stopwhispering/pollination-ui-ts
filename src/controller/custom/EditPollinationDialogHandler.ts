@@ -98,24 +98,6 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		this._oEditPollinationInputModel.updateBindings(false);
 	}
 
-	public onChangeInputCalcGerminationRate(oEvent: Event) {
-		// upon changing # seeds sown or # seeds germinated, re-calculates germination rate
-
-		// apply our default validator for int input
-		this.onChangeInputPreventNonInt(oEvent);
-
-		// get values and calculate germination rate
-		var iSeedsSown = this._oEditPollinationInputModel.getProperty("/first_seeds_sown");
-		var iSeedsGerminated = this._oEditPollinationInputModel.getProperty("/first_seeds_germinated");
-		if (iSeedsSown && iSeedsGerminated) {
-			var fGerminationRate = iSeedsGerminated / iSeedsSown * 100;
-			var iGerminationRate = Math.round(fGerminationRate);
-			this._oEditPollinationInputModel.setProperty("/germination_rate", iGerminationRate);
-		}
-		this._oEditPollinationInputModel.updateBindings(false);
-
-	}
-
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Edit pollination handlers
 	/////////////////////////////////////////////////////////////////////////////////////////////////////	

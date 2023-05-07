@@ -1,7 +1,6 @@
-import { ActiveSeedPlantingsResult, BActiveFlorescence, BResultsActiveFlorescences, PollinationRead, SeedPlantingCreate, SeedPlantingPlantNameProposal, SeedPlantingRead, SeedPlantingUpdate } from "pollination/ui/interfaces/entities";
+import { PollinationRead, SeedPlantingCreate, SeedPlantingPlantNameProposal, SeedPlantingRead, SeedPlantingUpdate } from "pollination/ui/interfaces/entities";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import TemporaryPollinationsHandler from "./PreviewPollinationHandler";
 import Util from "./Util";
 import PollinationsHandler from "./PollinationsHandler";
 
@@ -10,21 +9,12 @@ import PollinationsHandler from "./PollinationsHandler";
  */
 export default class ActiveSeedPlantingsHandler extends ManagedObject {
 
-	// private _oSeedPlantingsModel: JSONModel;
 	private _oPollinationsHandler: PollinationsHandler;
 
 	public constructor(oSeedPlantingsModel: JSONModel, oPollinationsHandler: PollinationsHandler) {
 		super();
-		// this._oSeedPlantingsModel = oSeedPlantingsModel;
 		this._oPollinationsHandler = oPollinationsHandler;
 	}
-
-	// public async loadActiveSeedPlantings() {
-	// 	const oResult = <ActiveSeedPlantingsResult> await Util.get(Util.getServiceUrl('active_seed_plantings'));
-	// 	const aActiveSeedPlantings: SeedPlantingRead[] = oResult.active_seed_planting_collection;
-	// 	this._oSeedPlantingsModel.setData(aActiveSeedPlantings);
-	// 	this._oSeedPlantingsModel.updateBindings(false);
-	// }
 
 	public async createNewPlantForSeedPlanting(oSeedPlanting: SeedPlantingRead, sPlantName: string): Promise<PollinationRead[]>{
 		await Util.post(Util.getServiceUrl('seed_plantings' + '/' + oSeedPlanting.id + '/plants'), {plant_name: sPlantName});

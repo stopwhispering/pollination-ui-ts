@@ -2,7 +2,6 @@ import { BPlantForNewFlorescence, BResultsPlantsForNewFlorescence, FRequestNewFl
 import { LNewFlorescenceInputData } from "pollination/ui/interfaces/entitiesLocal";
 import { FlorescenceStatus } from "pollination/ui/interfaces/enums";
 import Dialog from "sap/m/Dialog";
-import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Control from "sap/ui/core/Control";
 import Fragment from "sap/ui/core/Fragment";

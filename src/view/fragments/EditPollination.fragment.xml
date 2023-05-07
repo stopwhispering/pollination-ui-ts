@@ -262,55 +262,6 @@
 							</VBox>
 						</VBox>
 					</IconTabFilter>
-					<!-- <IconTabFilter
-						text="Germination Details"
-						enabled="{= ${editPollinationInput>/pollination_status} === 'germinated' }"
-						key="icon_tab_seed_details"
-					>
-						<VBox class="sapUiTinyMarginBottom">
-							<Label text="{i18n>EditPollinationFragment.DaysUntilFirstSeedGerminated}"/>
-							<Input
-								value="{editPollinationInput>/days_until_first_germination}"
-								width="3rem"
-								change=".onChangeInputPreventNonInt"
-							/>
-						</VBox>
-						<VBox>
-							<HBox>
-								<VBox>
-									<HBox>
-										<VBox
-											class="sapUiTinyMarginEnd"
-											width="6rem"
-										>
-											<Label text="{i18n>EditPollinationFragment.SeedsSown}"/>
-											<Input
-												value="{editPollinationInput>/first_seeds_sown}"
-												change=".onChangeInputCalcGerminationRate"
-											/>
-										</VBox>
-										<VBox
-											class="sapUiSmallMarginEnd"
-											width="6rem"
-										>
-											<Label text="{i18n>EditPollinationFragment.Germinated}"/>
-											<Input
-												value="{editPollinationInput>/first_seeds_germinated}"
-												change=".onChangeInputCalcGerminationRate"
-											/>
-										</VBox>
-										<VBox width="6rem">
-											<Label text="{i18n>EditPollinationFragment.GermRate}"/>
-											<Input
-												value="{editPollinationInput>/germination_rate} %"
-												editable="false"
-											/>
-										</VBox>
-									</HBox>
-								</VBox>
-							</HBox>
-						</VBox>
-					</IconTabFilter> -->
 				</items>
 			</IconTabBar>
 		</content>

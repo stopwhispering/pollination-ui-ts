@@ -33,7 +33,6 @@ import UnsavedPollinationsHandler from "./custom/UnsavedPollinationsHandler";
 import EditPollinationDialogHandler from "./custom/EditPollinationDialogHandler";
 import FlowerHistoryHandler from "./custom/FlowerHistoryHandler";
 import Avatar from "sap/m/Avatar";
-import Popover from "sap/m/Popover";
 import PreviewImagePopoverHandler from "./custom/PreviewImagePopoverHandler";
 import ActiveSeedPlantingsHandler from "./custom/ActiveSeedPlantingsHandler";
 import NewSeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
@@ -81,9 +80,7 @@ export default class App extends BaseController {
 		// initialize empty model for new pollinations that were not saved, yet
 		var oUnsavedPollinationsModel = new JSONModel([]);  // date type LUnsavedPollination[]
 		this.getView().setModel(oUnsavedPollinationsModel, "newPollinationsModel");
-		this._oUnsavedPollinationsHandler = new UnsavedPollinationsHandler(oUnsavedPollinationsModel, this._oPollinationsHandler, 
-			// this._oActiveFlorescencesHandler
-			);		
+		this._oUnsavedPollinationsHandler = new UnsavedPollinationsHandler(oUnsavedPollinationsModel, this._oPollinationsHandler);		
 
 		// initialize empty model for new temporary pollination (added to the new pollinations by add button)
 		var oTemporaryPollinationModel = new JSONModel();  // todo entity
@@ -100,7 +97,6 @@ export default class App extends BaseController {
 		const oSeedPlantingsModel = new JSONModel();  // data type SeedPlantingRead[]
 		this.getView().setModel(oSeedPlantingsModel, "seedPlantingsModel");
 		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
-		// this._oActiveSeedPlantingsHandler.loadActiveSeedPlantings();
 
 	}
 
@@ -127,11 +123,6 @@ export default class App extends BaseController {
 		const oPollenDonor = <BPotentialPollenDonor>oListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
 
 		this._oTemporaryPollinationsHandler.setPollenDonorPlant(oPollenDonor);
-		// this._new_temp_pollination.pollenDonorPlantName = pollenDonor.plant_name;
-		// this._new_temp_pollination.pollen_donor_plant_id = pollenDonor.plant_id;
-		// this._new_temp_pollination.pollen_type = pollenDonor.pollen_type;
-		// var onewTempPollinationInput = this.getView().getModel("newTempPollinationInput");
-		// (<JSONModel>onewTempPollinationInput).updateBindings(false);
 	}
 
 	public getPollenTypeGroup(oContext: Context) {
@@ -176,9 +167,6 @@ export default class App extends BaseController {
 	public onColorSelect(oEvent: Event) {
 		const sColor = oEvent.getParameter('value');
 		this._oTemporaryPollinationsHandler.setLabelColorRGB(sColor)
-		// this._new_temp_pollination.label_color_rgb = oEvent.getParameter('value');
-		// var onewTempPollinationInput = <JSONModel>this.getView().getModel("newTempPollinationInput");
-		// onewTempPollinationInput.updateBindings(false);
 	}
 
 	public onPressAddAsPollinationPreview(oEvent: Event) {
@@ -187,10 +175,6 @@ export default class App extends BaseController {
 		const oSelectedFlorescenceListItem = <ListItemBase>oActiveFlorescencesList.getSelectedItem(); // todo entity
 		const oFlorescence = <BActiveFlorescence>oSelectedFlorescenceListItem.getBindingContext('currentFlorescencesModel')!.getObject()
 		
-		// if (!oSelectedFlorescenceListItem) {
-		// 	MessageToast.show('Please select a florescence.')
-		// 	return;
-		// }		
 		const oPollenDonorList = <List>this.getView().byId('potentialPollenDonorsList');
 		var oSelectedPollenDonorListItem = <ListItemBase>oPollenDonorList.getSelectedItem();
 		var oSelectedPollenDonor = <BPotentialPollenDonor>oSelectedPollenDonorListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
@@ -203,11 +187,9 @@ export default class App extends BaseController {
 	public onPressDeleteNewPollinationButton(oEvent: Event) {
 		const oUnsavedPollination = <LUnsavedPollination>(<Button>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();  // todo Type
 		this._oUnsavedPollinationsHandler.removePollination(oUnsavedPollination);
-		// this._deleteNewPollination(oNewPollination);
 	}
 
 	public async onPressSaveNewPollinationButton(oEvent: Event) {
-		// const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel")
 		const oControl = <Control>oEvent.getSource()
 		const oPollination = <PollinationCreate>oControl.getBindingContext("newPollinationsModel")!.getObject();
 		await this._oUnsavedPollinationsHandler.savePollination(oPollination)
@@ -220,7 +202,6 @@ export default class App extends BaseController {
 		var aFilters = [];
 		var sQuery = (<SearchField>oEvent.getSource()).getValue();
 		if (sQuery && sQuery.length > 0) {
-			// var filter = new Filter("seed_capsule_plant_name", FilterOperator.Contains, sQuery);
 			// filter on multiple fields, connected with OR
 			var filter = new Filter([
 				new Filter("seed_capsule_plant_name", FilterOperator.Contains, sQuery),
@@ -381,7 +362,6 @@ export default class App extends BaseController {
 		
 	}
 
-
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		retraining the model that predicts
 	//      the probability of an attempted pollination 
@@ -401,7 +381,6 @@ export default class App extends BaseController {
 		this._oFlowerHistoryHandler.openDialog(this.getView());
 	}
 
-	
 	//////////////////////////////////////////////////////////
 	// Preview Image Popup Handlers
 	//////////////////////////////////////////////////////////
@@ -419,8 +398,6 @@ export default class App extends BaseController {
 
 	// todo get rid of this, move to ImagePreviewPopoverHandler
 	public onHoverAwayFromImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
-		// const oPopover = <Popover>this.byId('popoverPopupImage');
-		// oPopover.close();
 		this._oPreviewImagePopoverHandler.close();
 	}
 }
