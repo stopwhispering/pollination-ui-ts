@@ -17,7 +17,7 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField from "sap/m/SearchField";
-import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers, SeedPlantingRead } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import PollinationToSeedProbabilityModelTrainer from "./custom/PollinationToSeedProbabilityModelTrainer";
 import Util from "./custom/Util";
@@ -35,6 +35,10 @@ import FlowerHistoryHandler from "./custom/FlowerHistoryHandler";
 import Avatar from "sap/m/Avatar";
 import Popover from "sap/m/Popover";
 import PreviewImagePopoverHandler from "./custom/PreviewImagePopoverHandler";
+import ActiveSeedPlantingsHandler from "./custom/ActiveSeedPlantingsHandler";
+import NewSeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
+import CustomListItem from "sap/m/CustomListItem";
+import SeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 
 /**
  * @namespace pollination.ui.controller
@@ -45,10 +49,12 @@ export default class App extends BaseController {
 	private _oTemporaryPollinationsHandler: PreviewPollinationHandler;
 	private _oSettingsHandler: SettingsHandler;
 	private _oActiveFlorescencesHandler: ActiveFlorescencesHandler;
+	private _oActiveSeedPlantingsHandler: ActiveSeedPlantingsHandler;
 	private _oPollinationsHandler: PollinationsHandler;
 	private _oUnsavedPollinationsHandler: UnsavedPollinationsHandler;
 	private _oNewFlorescenceDialogHandler: NewFlorescenceDialogHandler;  // lazy loaded
 	private _oEditFlorescenceDialogHandler: EditFlorescenceDialogHandler;  // lazy loaded
+	private _oSeedPlantingDialogHandler: SeedPlantingDialogHandler;  // lazy loaded
 	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
 	private _oPreviewImagePopoverHandler: PreviewImagePopoverHandler
 
@@ -89,6 +95,12 @@ export default class App extends BaseController {
 		this.getView().setModel(oFlorescenceModel, "currentFlorescencesModel");
 		this._oActiveFlorescencesHandler = new ActiveFlorescencesHandler(oFlorescenceModel, this._oTemporaryPollinationsHandler);
 		this._oActiveFlorescencesHandler.loadFlorescences();
+
+		// initialize active seed planting model and it's handler
+		const oSeedPlantingsModel = new JSONModel();  // data type SeedPlantingRead[]
+		this.getView().setModel(oSeedPlantingsModel, "seedPlantingsModel");
+		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
+		// this._oActiveSeedPlantingsHandler.loadActiveSeedPlantings();
 
 	}
 
@@ -144,7 +156,8 @@ export default class App extends BaseController {
 		const orderMapping: any = {
 			'ATTEMPT': 1,
 			'SEED_CAPSULE': 2,
-			'GERMINATED': 3
+			'SEED': 3,
+			'GERMINATED': 4
 		};
 		const scoreA = orderMapping[a];
 		const scoreB = orderMapping[b];
@@ -344,6 +357,30 @@ export default class App extends BaseController {
 		}
 		this._oNewFlorescenceDialogHandler.openDialogNewActiveFlorescence(this.getView());
 	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 		handlers for seed plantings
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public onPressAddSeedPlanting(oEvent: Event) {
+		// open the dialog to add a new seed planting
+		const oButton = <Button>oEvent.getSource();
+		const oPollination = <PollinationRead> oButton.getBindingContext('ongoingPollinationsModel')!.getObject();
+		if (!this._oSeedPlantingDialogHandler){
+			this._oSeedPlantingDialogHandler = new NewSeedPlantingDialogHandler(this._oActiveSeedPlantingsHandler);
+		}
+		this._oSeedPlantingDialogHandler.openDialogForNewSeedPlanting(this.getView(), oPollination);
+	}
+
+	public onPressUpdateSeedPlanting(oEvent: Event) {
+		const oListItem = <CustomListItem>oEvent.getParameter('listItem');
+		const oSeedPlanting = <SeedPlantingRead>oListItem.getBindingContext('ongoingPollinationsModel')!.getObject();
+		if (!this._oSeedPlantingDialogHandler){
+			this._oSeedPlantingDialogHandler = new NewSeedPlantingDialogHandler(this._oActiveSeedPlantingsHandler);
+		}
+		this._oSeedPlantingDialogHandler.openDialogForUpdateSeedPlanting(this.getView(), oSeedPlanting);
+		
+	}
+
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		retraining the model that predicts

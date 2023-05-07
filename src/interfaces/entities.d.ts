@@ -57,10 +57,12 @@ export interface PollinationRead {
   seed_count?: number;
   seed_capsule_description?: string;
   seed_description?: string;
-  days_until_first_germination?: number;
-  first_seeds_sown?: number;
-  first_seeds_germinated?: number;
-  germination_rate?: number;
+  // days_until_first_germination?: number;
+  // first_seeds_sown?: number;
+  // first_seeds_germinated?: number;
+  // germination_rate?: number;
+
+  seed_plantings: SeedPlantingRead[];
 }
 export interface PollinationUpdate {
   seed_capsule_plant_id: number;
@@ -83,9 +85,9 @@ export interface PollinationUpdate {
   seed_count?: number;
   seed_capsule_description?: string;
   seed_description?: string;
-  days_until_first_germination?: number;
-  first_seeds_sown?: number;
-  first_seeds_germinated?: number;
+  // days_until_first_germination?: number;
+  // first_seeds_sown?: number;
+  // first_seeds_germinated?: number;
 }
 export interface BPlantForNewFlorescence {
   plant_id: number;
@@ -102,7 +104,7 @@ export interface BPollinationAttempt {
   pollination_status: string;
   pollination_at?: string;
   harvest_at?: string;
-  germination_rate?: number;
+  // germination_rate?: number;
   ongoing: boolean;
 }
 export interface BPollinationResultingPlant {
@@ -229,4 +231,98 @@ export interface BResultsFlowerHistory {
   message: BMessage;
   plants: BPlantFlowerHistory[];
   months: string[];
+}
+
+export type SeedPlantingStatus = "planted" | "germinated" | "abandoned";
+
+export interface SeedPlantingBase {
+  status: SeedPlantingStatus;
+  pollination_id?: int; 
+  comment?: string;
+  sterilized: boolean;
+  soaked: boolean;
+  covered: boolean;
+  planted_on: Date;
+  count_planted: int;
+  soil_id: int;
+}
+
+export interface SeedPlantingRead extends SeedPlantingBase{
+  id: int;
+  count_germinated?: int;
+  germinated_first_on?: Date;
+  seed_capsule_plant_name: string;
+  pollen_donor_plant_name: string;
+  soil_name: string;
+
+  plants: PlantEssentials[];
+}
+
+export interface SeedPlantingCreate extends SeedPlantingBase {
+}
+
+export interface LSeedPlantingInputData extends SeedPlantingBase {
+  soil_id?: int;
+  soil_name?: string;
+}
+
+export interface SeedPlantingUpdate extends SeedPlantingBase {
+  id: int;
+  count_germinated: int | None;
+  germinated_first_on: Date | None;
+}
+
+export interface ActiveSeedPlantingsResult {
+  active_seed_planting_collection: SeedPlantingRead[];
+  action: string;
+  message: BMessage;
+}
+
+export interface SoilBase {
+  id: int;
+  soil_name: string;
+  mix: string;
+  description?: string;
+}
+
+export interface SoilWithCountRead extends SoilBase{
+  plants_count: int;
+}
+
+export interface ShortPlant{
+  id: int;
+  plant_name: string;
+  active: boolean;
+}
+
+export interface PlantBase{
+  plant_name: string;
+  field_number: string | None;
+  geographic_origin: string | None;
+  nursery_source: string | None;
+  propagation_type: FBPropagationType | None;
+  active: boolean;
+  cancellation_reason: FBCancellationReason | None;
+  cancellation_date: Date | None;
+  generation_notes: string | None;
+  taxon_id: int | None;
+
+  parent_plant: ShortPlant | None;
+  parent_plant_pollen: ShortPlant | None;
+  plant_notes: string | None;
+  preview_image_id: int | None;
+
+  tags: FBPlantTag[];
+
+  seed_planting_id: int | None;
+}
+
+export interface PlantEssentials{
+  id: int;
+  plant_name: string;
+  full_botanical_html_name: string | None;
+}
+
+export interface SeedPlantingPlantNameProposal{
+  plant_name_proposal: string;
 }

@@ -1,0 +1,222 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+ 
+    <Dialog 
+    	title='Add Seed Planting'
+		class="sapUiContentPadding"
+		afterClose=".onAfterClose">
+ 
+	    <content>
+            <VBox>
+
+
+			<SegmentedButton
+                id="sbStatus"
+                enabled="false"
+				selectedKey="{
+					path: 'seedPlantingModel>/status'
+				}"
+				class="sapUiTinyMarginBottom"
+				items="{
+					path: 'local>/seedPlantingStatusCollcetion'
+				}"
+			>
+				<items>
+					<SegmentedButtonItem
+						text="{local>text}"
+						key="{local>key}"
+						enabled="{local>enabled}"
+						tooltip="{local>tooltip}"
+					/>
+				</items>
+			</SegmentedButton>
+
+                <VBox>
+                    <Label 
+                        text="Planted on"/>
+                    <DatePicker
+                        width="11rem"
+                        displayFormat="yyyy-MM-dd"
+                        valueFormat="yyyy-MM-dd"
+                        value="{
+                            path: 'seedPlantingModel>/planted_on'
+                        }"
+                    />
+                </VBox>
+                <VBox>
+                    <Label 
+                        text="Number of seeds planted"/>
+                    <Slider
+                        value="{seedPlantingModel>/count_planted}"
+                        inputsAsTooltips="true"
+                        enableTickmarks="true"
+                        min="1"
+                        max="15"
+                        width="18rem"
+                    />
+                </VBox>
+
+                <HBox>
+                    <CheckBox
+                        text="Sterilized (Chinosol)"
+                        selected="{seedPlantingModel>/sterilized}"
+                    />
+                    <CheckBox
+                        text="Soaked in water"
+                        selected="{seedPlantingModel>/soaked}"
+                    />
+                    <CheckBox
+                        text="Covered"
+                        tooltip="Covered in plastic foil or zip bag to keep humidity"
+                        selected="{seedPlantingModel>/covered}"
+                    />
+                </HBox>
+                
+                <VBox>
+                    <TextArea
+                        value="{seedPlantingModel>/comment}"
+                        maxLength="110"
+                        width="95%"
+                        placeholder="(Comment)"
+                    />
+                </VBox>
+                
+                <HBox>
+                    <VBox>
+                        <Label text="Soil"/>
+                        <Input
+                            editable="false"
+                            class="sapUiSmallMarginEnd"
+                            width="7rem"
+                            value="{seedPlantingModel>/soil_name}"
+                            placeholder="(set soil)"
+                        />
+                    </VBox>
+                    <ScrollContainer
+                        height="9rem"
+                        width="12rem"
+                        vertical="true"
+                        horizontal="false"
+                        focusable="true"
+                    >
+                        <List
+                            id="soilsList"
+                            items="{
+                                path: 'soilsModel>/',
+                                sorter: [{
+                                    path: 'florescence_status',
+                                    descending: false,
+                                    group: '.getFlorescenceStatusGroup'
+                                }, {
+                                    path: 'first_flower_opened_at',
+                                    descending: true
+                                }]
+                            }"
+                            mode="SingleSelectMaster"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            showNoData="false"
+                            showSeparators="Inner"
+                            selectionChange=".onSelectSoil"
+                            class="sapUiSmallMarginEnd"
+                        >
+                            <CustomListItem>
+                                <Label 
+                                    text="{soilsModel>soil_name}" />
+                            </CustomListItem>
+                        </List> 
+                    </ScrollContainer>
+                </HBox>
+            </VBox>
+
+            <VBox
+                visible="{= ${seedPlantingModel>/status} === 'germinated'}"
+            >
+                <html:hr></html:hr>
+
+                <VBox>
+                    <Label 
+                        text="Germinated on"/>
+                    <DatePicker
+                        width="11rem"
+                        displayFormat="yyyy-MM-dd"
+                        valueFormat="yyyy-MM-dd"
+                        value="{
+                            path: 'seedPlantingModel>/germinated_first_on'
+                        }"
+                    />
+                </VBox>
+                <VBox>
+                    <Label 
+                        text="Number of seeds germinated"/>
+                    <Slider
+                        value="{seedPlantingModel>/count_germinated}"
+                        inputsAsTooltips="true"
+                        enableTickmarks="true"
+                        min="1"
+                        max="{seedPlantingModel>/count_planted}"
+                        width="18rem"
+                    />
+                </VBox>
+
+                <List
+                    headerText="Plants"
+                    items="{
+                        path: 'seedPlantingModel>/plants'
+                    }"
+                    showSeparators="Inner"
+                    class="sapUiSmallMarginEnd">
+                    <CustomListItem>
+                        <Label 
+                            text="{seedPlantingModel>id}"
+                            class="sapUiTinyMarginEnd" />
+                        <Label 
+                            text="{seedPlantingModel>plant_name}" />
+                    </CustomListItem>
+                </List>
+                <Button
+                    id="btnNewPlant"
+                    visible="false"
+                    text="New Plant"
+                    icon="sap-icon://add"
+                    press=".onPressNewPlant"
+                    type="Success"
+                />
+            </VBox>
+
+		</content>
+
+
+        <buttons>
+			<Button
+                id="btnDeleteSeedPlanting"
+                visible="false"
+				text="Delete"
+				icon="sap-icon://delete"
+				press=".onPressDelete"
+				type="Negative"
+			/>
+
+			<Button
+                id="btnSaveNewSeedPlanting"
+                visible="false"
+				type="Emphasized"
+				text="Create"
+				press=".onPressSaveNew"/>
+
+			<Button
+                id="btnUpdateSeedPlanting"
+                visible="false"
+				type="Emphasized"
+				text="Update"
+				press=".onPressUpdate"/>
+		
+			<Button
+				text="Cancel"
+				press=".onCancel"/>
+		
+        </buttons>				
+    </Dialog>
+</core:FragmentDefinition>

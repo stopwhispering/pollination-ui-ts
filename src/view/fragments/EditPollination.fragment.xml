@@ -262,7 +262,7 @@
 							</VBox>
 						</VBox>
 					</IconTabFilter>
-					<IconTabFilter
+					<!-- <IconTabFilter
 						text="Germination Details"
 						enabled="{= ${editPollinationInput>/pollination_status} === 'germinated' }"
 						key="icon_tab_seed_details"
@@ -310,9 +310,7 @@
 								</VBox>
 							</HBox>
 						</VBox>
-						<!-- </HBox>
-					<VBox/> -->
-					</IconTabFilter>
+					</IconTabFilter> -->
 				</items>
 			</IconTabBar>
 		</content>

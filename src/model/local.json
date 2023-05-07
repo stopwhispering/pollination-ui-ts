@@ -3,6 +3,11 @@
 		{"key": "attempt", 	"text": "Attempt", "enabled": true, "tooltip": "Attempted Pollination"},
 		{"key": "seed_capsule",  "text": "Capsule", "enabled": true, "tooltip": "Seed Capsule is developing"},
 		{"key": "seed",	"text": "Seed", "enabled": true, "tooltip": "Seeds have been harvested"},
-        {"key": "germinated", "text": "Germinated", "enabled": true, "tooltip": "First plants has germinated"}
+        {"key": "germinated", "text": "Germinated", "enabled": false, "tooltip": "Auto-Set when seed is planted and germinated"}
+	],
+	"seedPlantingStatusCollcetion": [
+		{"key": "planted", 	"text": "Planted", "enabled": true, "tooltip": "Planted"},
+		{"key": "germinated",  "text": "Germinated", "enabled": true, "tooltip": "Germinated"},
+		{"key": "abandoned",	"text": "Abandoned", "enabled": true, "tooltip": "Abandoned"}
 	]
 }

@@ -74,7 +74,7 @@ export default class PreviewImagePopoverHandler extends ManagedObject {
     }
 
     public close(): void {
-        if(this._oImagePreviewPopover.isOpen())
+        if(this._oImagePreviewPopover && this._oImagePreviewPopover.isOpen())
             this._oImagePreviewPopover.close();
     }
 
