@@ -100,6 +100,7 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 			MessageToast.show("Please select a soil");
 			return;	
 		}
+		await this._oActiveSeedPlantingsHandler.saveNewSeedPlanting(oNewSeedPlanting);
 		this._oDialog.close();
 	}
 

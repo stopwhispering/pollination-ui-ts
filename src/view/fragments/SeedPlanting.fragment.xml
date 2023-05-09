@@ -48,14 +48,21 @@
                 <VBox>
                     <Label 
                         text="Number of seeds planted"/>
-                    <Slider
-                        value="{seedPlantingModel>/count_planted}"
-                        inputsAsTooltips="true"
-                        enableTickmarks="true"
-                        min="1"
-                        max="15"
-                        width="18rem"
-                    />
+                    <HBox>
+                        <Slider
+                            value="{seedPlantingModel>/count_planted}"
+                            inputsAsTooltips="true"
+                            enableTickmarks="true"
+                            min="1"
+                            max="15"
+                            width="18rem"
+                        />
+                        <Input
+                            value="{seedPlantingModel>/count_planted}"
+                            enabled="false"
+                            width="3rem"
+                        />
+                    </HBox>
                 </VBox>
 
                 <HBox>
@@ -89,7 +96,7 @@
                         <Input
                             editable="false"
                             class="sapUiSmallMarginEnd"
-                            width="7rem"
+                            width="12rem"
                             value="{seedPlantingModel>/soil_name}"
                             placeholder="(set soil)"
                         />
@@ -151,14 +158,21 @@
                 <VBox>
                     <Label 
                         text="Number of seeds germinated"/>
-                    <Slider
-                        value="{seedPlantingModel>/count_germinated}"
-                        inputsAsTooltips="true"
-                        enableTickmarks="true"
-                        min="1"
-                        max="{seedPlantingModel>/count_planted}"
-                        width="18rem"
-                    />
+                    <HBox>
+                        <Slider
+                            value="{seedPlantingModel>/count_germinated}"
+                            inputsAsTooltips="true"
+                            enableTickmarks="true"
+                            min="1"
+                            max="{seedPlantingModel>/count_planted}"
+                            width="18rem"
+                        />
+                        <Input
+                            value="{seedPlantingModel>/count_germinated}"
+                            enabled="false"
+                            width="3rem"
+                        />
+                    </HBox>
                 </VBox>
 
                 <List

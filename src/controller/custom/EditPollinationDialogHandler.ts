@@ -57,14 +57,14 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 			oViewToAddTo.setModel(this._oEditPollinationInputModel, "editPollinationInput");
 			this._oEditPollinationDialog.open();
 
-            // depending on pollination status, open the correct initial icon tab bar tab
-            const oIconTabBar = <IconTabBar>oViewToAddTo.byId('editPollinationIconTabBar');
-            if (oEditedPollination.pollination_status === "seed")
-                oIconTabBar.setSelectedKey("icon_tab_seed_details");
-            else if (oEditedPollination.pollination_status === "germinated")
-                    oIconTabBar.setSelectedKey("icon_tab_germination_details");
-            else
-                oIconTabBar.setSelectedKey("icon_tab_pollination_details");
+            // // depending on pollination status, open the correct initial icon tab bar tab
+            // const oIconTabBar = <IconTabBar>oViewToAddTo.byId('editPollinationIconTabBar');
+            // if (oEditedPollination.pollination_status === "seed")
+            //     oIconTabBar.setSelectedKey("icon_tab_seed_details");
+            // else if (oEditedPollination.pollination_status === "germinated")
+            //         oIconTabBar.setSelectedKey("icon_tab_germination_details");
+            // else
+            //     oIconTabBar.setSelectedKey("icon_tab_pollination_details");
 		});
 	}
 
