@@ -103,6 +103,7 @@ export default class PreviewPollinationHandler extends ManagedObject {
 		// add new pollination to unsaved pollinations
 		const oNewPollination = <LUnsavedPollination>{
 			florescence_id: this._oNewTempPollination.florescence_id,
+			florescence_comment: oFlorescence.comment,
 			seedCapsulePlantName: oFlorescence.plant_name,
 			seed_capsule_plant_id: oFlorescence.plant_id,
 			pollenDonorPlantName: oPollenDonor.plant_name,

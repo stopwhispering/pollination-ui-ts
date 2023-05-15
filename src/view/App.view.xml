@@ -435,21 +435,30 @@
 									<f:GridListItem highlight="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
 										<VBox class="sapUiSmallMargin">
 											<HBox>
-												<FormattedText
-													htmlText="&lt;strong&gt;{
-														path: 'newPollinationsModel>seed_capsule_plant_id'
-													}&lt;/strong&gt; 
-														{
-														path: 'newPollinationsModel>seedCapsulePlantName'
-													} &lt;strong&gt;☓&lt;/strong&gt; 
-														&lt;strong&gt;{
-														path: 'newPollinationsModel>pollen_donor_plant_id'
-													}&lt;/strong&gt; 
-														{
-														path: 'newPollinationsModel>pollenDonorPlantName'
-													}"
-													class="sapUiTinyMarginBottom"
-												/>
+												<VBox>
+													<FormattedText
+														htmlText="&lt;strong&gt;{
+															path: 'newPollinationsModel>seed_capsule_plant_id'
+														}&lt;/strong&gt; 
+															{
+															path: 'newPollinationsModel>seedCapsulePlantName'
+														} &lt;strong&gt;☓&lt;/strong&gt; 
+															&lt;strong&gt;{
+															path: 'newPollinationsModel>pollen_donor_plant_id'
+														}&lt;/strong&gt; 
+															{
+															path: 'newPollinationsModel>pollenDonorPlantName'
+														}"
+														class="sapUiTinyMarginBottom"
+													/>
+													<Label
+														visible="{=
+															!!${newPollinationsModel>florescence_comment}
+														}"
+														text="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
+														tooltip="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
+													/>
+												</VBox>
 												<Button
 													id="BadgedButton"
 													class="sapUiTinyMarginBeginEnd"
@@ -607,7 +616,7 @@
 												press=".onPressEditOngoingPollination"
 											/>
 										</HBox>
-										<HBox>
+										<VBox>
 											<FormattedText
 												htmlText="&lt;strong&gt;{
 													path: 'ongoingPollinationsModel>seed_capsule_plant_id'
@@ -623,7 +632,14 @@
 												}"
 												class="sapUiTinyMarginBottom"
 											/>
-										</HBox>
+											<Label
+												visible="{=
+													!!${ongoingPollinationsModel>florescence_comment}
+												}"
+												text="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
+												tooltip="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
+											/>
+										</VBox>
 										<HBox wrap="Wrap">
 											<GenericTag
 												text="{
@@ -721,7 +737,7 @@
 												press=".onPressEditOngoingPollination"
 											/>
 										</HBox>
-										<HBox>
+										<VBox>
 											<FormattedText
 												htmlText="&lt;strong&gt;{
 													path: 'ongoingPollinationsModel>seed_capsule_plant_id'
@@ -737,7 +753,14 @@
 												}"
 												class="sapUiTinyMarginBottom"
 											/>
-										</HBox>
+											<Label
+												visible="{=
+													!!${ongoingPollinationsModel>florescence_comment}
+												}"
+												text="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
+												tooltip="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
+											/>
+										</VBox>
 										<HBox wrap="Wrap">
 											<GenericTag
 												text="{

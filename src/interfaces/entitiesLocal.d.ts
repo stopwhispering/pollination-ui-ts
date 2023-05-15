@@ -9,10 +9,11 @@ export interface LUnsavedPollination {
     pollinated_at: string;
     location: string;
     count_attempted: 1;
-    florescence_id?: int;
+    florescence_id: int;
     florescencePlantName?: string;
     florescencePlantId?: int;
     florescenceStatus?: string;
+    florescence_comment?: string;
     availableColorsRgb?: string[];
     label_color_rgb?: string;
     pollenDonorPlantName?: string;

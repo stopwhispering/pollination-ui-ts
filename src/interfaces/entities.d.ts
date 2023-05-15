@@ -45,6 +45,8 @@ export interface PollinationRead {
   count_pollinated?: number;
   count_capsules?: number;
   location_text: string;
+  florescence_id: number;
+  florescence_comment?: string;
   label_color_rgb: string;
   id: number;
   pollination_status: string;
