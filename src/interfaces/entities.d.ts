@@ -17,6 +17,8 @@ export interface BActiveFlorescence {
   id: number;
   plant_id: number;
   plant_name: string;
+  plant_self_pollinates?: boolean;
+  self_pollinated?: boolean;
   plant_preview_image_id: number | undefined;
   florescence_status: FlorescenceStatus;
   inflorescence_appeared_at?: string;
@@ -70,6 +72,7 @@ export interface PollinationUpdate {
   seed_capsule_plant_id: number;
   pollen_donor_plant_id: number;
   pollen_type: PollenType;
+  self_pollinated?: boolean;
   pollinated_at: string;
   label_color_rgb: string;
   location: Location;

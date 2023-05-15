@@ -293,28 +293,42 @@
 						</SegmentedButton>
 					</HBox>
 				</VBox>
-				<VBox>
-					<Label text="Last flower closed at"/>
-					<HBox class="sapUiSmallMarginBottom">
+				<HBox justifyContent="SpaceBetween">
+					<VBox>
+						<Label text="Last flower closed at"/>
+						<HBox class="sapUiSmallMarginBottom">
+							<CheckBox
+								enabled="{= ${editedFlorescenceModel>/florescence_status} === 'finished'}"
+								selected="{editedFlorescenceModel>/last_flower_closed_at_known}"
+							/>
+							<MaskInput
+								enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
+								value="{editedFlorescenceModel>/last_flower_closed_at}"
+								mask="9999-99-99"
+								width="6rem"
+								class="sapUiTinyMarginEnd"
+							/>
+							<Button
+								icon="sap-icon://calendar"
+								type="Transparent"
+								enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
+								press=".onPressEditFlorescenceSetToday('last_flower_closed_at')"
+							/>
+						</HBox>
+					</VBox>
+					<VBox>
 						<CheckBox
-							enabled="{= ${editedFlorescenceModel>/florescence_status} === 'finished'}"
-							selected="{editedFlorescenceModel>/last_flower_closed_at_known}"
+							text="Self-pollinated"
+							selected="{editedFlorescenceModel>/self_pollinated}"
 						/>
-						<MaskInput
-							enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
-							value="{editedFlorescenceModel>/last_flower_closed_at}"
-							mask="9999-99-99"
-							width="6rem"
-							class="sapUiTinyMarginEnd"
+						<CheckBox
+							enabled="false"
+							text="Plant self-pollinates"
+							tooltip="Plant had self-pollinated flowers before"
+							selected="{editedFlorescenceModel>/plant_self_pollinates}"
 						/>
-						<Button
-							icon="sap-icon://calendar"
-							type="Transparent"
-							enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
-							press=".onPressEditFlorescenceSetToday('last_flower_closed_at')"
-						/>
-					</HBox>
-				</VBox>
+					</VBox>
+				</HBox>
 			</VBox>
 		</content>
 		<buttons>
