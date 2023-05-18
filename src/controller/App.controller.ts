@@ -137,7 +137,14 @@ export default class App extends BaseController {
 
 	public getPollinationStatusGroup(oContext: Context) {
 		// we can't change order here, only format the group text
-		return oContext.getProperty('pollination_status').toUpperCase().replace('_', ' ');
+		const oPollination = <PollinationRead>oContext.getProperty('');
+		const sPollinationStatus = oPollination.pollination_status.toUpperCase().replace('_', ' ');
+		const sCapsulePlantName = oPollination.seed_capsule_plant_name.toUpperCase();
+		if (!!oPollination.florescence_comment){
+			return sPollinationStatus + ' (' + sCapsulePlantName + ') - ' + oPollination.florescence_comment;
+		}
+		// return oContext.getProperty('pollination_status').toUpperCase().replace('_', ' ');
+		return sPollinationStatus + ' (' + sCapsulePlantName + ')';
 	}
 
 	public getPollinationStatusComparator(a: string, b: string) {
