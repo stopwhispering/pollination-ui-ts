@@ -8,7 +8,8 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	core:require="{
 		Helper: 'pollination/ui/util/Helper',
-		addMouseOverDelegate: 'pollination/ui/util/addMouseOverDelegate'
+		addMouseOverDelegate: 'pollination/ui/util/addMouseOverDelegate',
+		addMouseOverDelegatePollenDonor: 'pollination/ui/util/addMouseOverDelegatePollenDonor'
 	}"
 	controllerName="pollination.ui.controller.App"
 	displayBlock="true"
@@ -154,7 +155,6 @@
 													</VBox>
 												</HBox>
 												<Avatar
-													id="idAvatar"
 													displaySize="XS"
 													showBorder="true"
 													initials="{= ${currentFlorescencesModel>plant_name}.substr(0,2) }"
@@ -211,6 +211,20 @@
 											<HBox>
 												<!-- <CheckBox selected="{completed}"  /> -->
 												<HBox justifyContent="Center">
+													<Avatar
+														displaySize="XS"
+														showBorder="true"
+														initials="{= ${potentialPollenDonorsModel>plant_name}.substr(0,2) }"
+														src="{
+															path: 'potentialPollenDonorsModel>plant_preview_image_id',
+															formatter: '.formatter.getImageUrlAvatarXS'
+														}"
+														tooltip="{
+															path: 'potentialPollenDonorsModel>plant_preview_image_id',
+															formatter: 'addMouseOverDelegatePollenDonor'
+														}"
+														displayShape="Square"
+													/>
 													<Text
 														text="{potentialPollenDonorsModel>plant_id}"
 														class="sapUiTinyMarginBegin"
@@ -231,11 +245,12 @@
 														class="sapUiTinyMarginBeginEnd"
 													/>
 													<HBox
-														width="4.5rem"
+														width="5.5rem"
 														items="{
 															path: 'potentialPollenDonorsModel>pollination_attempts',
 															templateShareable: false
 														}"
+														
 													>
 														<CustomListItem>
 															<FormattedText
@@ -815,7 +830,8 @@
 													sorter: [{ path: 'planted_on',
 															descending: 'false'},
 															{ path: 'id',
-															descending: 'false'}]
+															descending: 'false'}],
+													templateShareable:false
 													}"
 												mode="SingleSelectMaster"
 												growing="true"
@@ -882,7 +898,8 @@
 													<List
 														showNoData="false"
 														items="{
-															path: 'ongoingPollinationsModel>plants'
+															path: 'ongoingPollinationsModel>plants',
+															templateShareable:false
 														}"
 														showSeparators="Inner"
 														class="sapUiSmallMarginBeginEnd">

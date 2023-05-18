@@ -403,6 +403,18 @@ export default class App extends BaseController {
 		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView(), oAvatar, oFlorescence );
 	}
 
+	public onHoverImagePollenDonor(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
+		// apply _onHoverImageShow function to popover
+		const oBindingContext = oAvatar.getBindingContext('potentialPollenDonorsModel')!;
+		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
+		if (!oPollenDonor.plant_preview_image_id)
+			return;
+
+		if (!this._oPreviewImagePopoverHandler)
+			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler()
+		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView(), oAvatar, oPollenDonor );
+	}
+
 	// todo get rid of this, move to ImagePreviewPopoverHandler
 	public onHoverAwayFromImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
 		this._oPreviewImagePopoverHandler.close();
