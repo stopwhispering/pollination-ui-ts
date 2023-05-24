@@ -569,15 +569,18 @@
 								id="ongoingPollinationsList"
 								items="{
 									path: 'ongoingPollinationsModel>/',
-									sorter: [{
-										path: 'pollination_status',
-										descending: false,
-										group: '.getPollinationStatusGroup',
-										comparator: '.getPollinationStatusComparator'
-									}, {
-										path: 'seed_capsule_plant_name',
-										descending: true
-									}],
+									sorter: [
+										{
+											path: 'pollination_status',
+											descending: false,
+											group: '.getPollinationStatusGroup'
+										}, {
+											path: 'seed_capsule_plant_id'
+										}, {
+											path: 'florescence_id'
+										}
+									],
+									groupHeaderFactory: '.getGroupHeader',
 									filters : [
 										{ path : 'pollination_status', operator : 'EQ', value1 : 'attempt'},
 										{ path : 'pollination_status', operator : 'EQ', value1 : 'seed_capsule'}
@@ -701,9 +704,8 @@
 									path: 'ongoingPollinationsModel>/',
 									sorter: [{
 										path: 'pollination_status',
-										descending: false,
-										group: '.getPollinationStatusGroup',
-										comparator: '.getPollinationStatusComparator'
+										descending: true,
+										group: '.getPollinationStatusGroup'
 									}, {
 										path: 'seed_capsule_plant_name',
 										descending: true

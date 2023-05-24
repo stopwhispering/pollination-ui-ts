@@ -38,6 +38,7 @@ import ActiveSeedPlantingsHandler from "./custom/ActiveSeedPlantingsHandler";
 import NewSeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 import CustomListItem from "sap/m/CustomListItem";
 import SeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
+import GroupHeaderListItem from "sap/m/GroupHeaderListItem";
 
 /**
  * @namespace pollination.ui.controller
@@ -140,32 +141,45 @@ export default class App extends BaseController {
 		const oPollination = <PollinationRead>oContext.getProperty('');
 		const sPollinationStatus = oPollination.pollination_status.toUpperCase().replace('_', ' ');
 		const sCapsulePlantName = oPollination.seed_capsule_plant_name.toUpperCase();
+		let sGroup: string;
 		if (!!oPollination.florescence_comment){
-			return sPollinationStatus + ' (' + sCapsulePlantName + ') - ' + oPollination.florescence_comment;
-		}
-		// return oContext.getProperty('pollination_status').toUpperCase().replace('_', ' ');
-		return sPollinationStatus + ' (' + sCapsulePlantName + ')';
-	}
-
-	public getPollinationStatusComparator(a: string, b: string) {
-		//receives the results of getPollinationStatusGroup for two items as inputs
-		//return numbered output for custom sorting
-		//cf sap.ui.model.Sorter.defaultComparator
-		const orderMapping: any = {
-			'ATTEMPT': 1,
-			'SEED_CAPSULE': 2,
-			'SEED': 3,
-			'GERMINATED': 4
-		};
-		const scoreA = orderMapping[a];
-		const scoreB = orderMapping[b];
-
-		if (scoreA < scoreB) {
-			return -1;
+			sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ') - ' + oPollination.florescence_comment;
 		} else {
-			return 1;
+			// return oContext.getProperty('pollination_status').toUpperCase().replace('_', ' ');
+			sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ')';
 		}
+		
+		return {
+			key: sGroup,
+		};
+
+	}	
+
+	public getGroupHeader(oGroup) {
+		return new GroupHeaderListItem({
+			title : oGroup.key
+		})
 	}
+
+	// public getPollinationStatusComparator(a: string, b: string) {
+	// 	//receives the results of getPollinationStatusGroup for two items as inputs
+	// 	//return numbered output for custom sorting
+	// 	//cf sap.ui.model.Sorter.defaultComparator
+	// 	const orderMapping: any = {
+	// 		'ATTEMPT': 1,
+	// 		'SEED_CAPSULE': 2,
+	// 		'SEED': 3,
+	// 		'GERMINATED': 4
+	// 	};
+	// 	const scoreA = orderMapping[a];
+	// 	const scoreB = orderMapping[b];
+
+	// 	if (scoreA < scoreB) {
+	// 		return -1;
+	// 	} else {
+	// 		return 1;
+	// 	}
+	// }
 
 	public getGenusGroup(oContext: Context) {
 		return oContext.getProperty('genus');
