@@ -210,11 +210,10 @@ export default class App extends BaseController {
 		this._oUnsavedPollinationsHandler.removePollination(oUnsavedPollination);
 	}
 
-	public async onPressSaveNewPollinationButton(oEvent: Event) {
+	public onPressSaveNewPollinationButton(oEvent: Event) {
 		const oControl = <Control>oEvent.getSource()
 		const oPollination = <PollinationCreate>oControl.getBindingContext("newPollinationsModel")!.getObject();
-		await this._oUnsavedPollinationsHandler.savePollination(oPollination)
-
+		this._oUnsavedPollinationsHandler.savePollination(oPollination)
 	}
 
 

@@ -33,18 +33,22 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 
 	public removePollination(oPollination: LUnsavedPollination) {
 		var index = this._aUnsavedPollinations.indexOf(oPollination);
+		if (index < 0) {
+			throw new Error('Pollination not found in unsaved pollinations');
+		}
 		this._aUnsavedPollinations.splice(index, 1);
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
 	public async savePollination(oPollination: PollinationCreate) {
-		const oSavedPollination = <LUnsavedPollination> await Util.post(Util.getServiceUrl('pollinations'), oPollination);
+		// const oSavedPollination = <LUnsavedPollination> await Util.post(Util.getServiceUrl('pollinations'), oPollination);
+		Util.post(Util.getServiceUrl('pollinations'), oPollination);
 
 		// having posted a new pollination, re-read the ongoing pollinations list
-		await this._oPollinationsHandler.loadPollinations();
+		this._oPollinationsHandler.loadPollinations();
 
 		// remove saved new pollination from new pollinations model 
-		this.removePollination(oSavedPollination);
+		this.removePollination(oPollination);
 	}
 
 	public addPollination(oPollination: LUnsavedPollination) {
