@@ -29,12 +29,12 @@
 							press=".onPressOpenFloweringPlantsTable"
 						/>
 						<OverflowToolbarButton
-							icon="sap-icon://shortcut"
+							icon="sap-icon://custom/flower"
 							tooltip="{i18n>AppView.NewFlorescence}"
 							press=".onPressNewActiveFlorescence"
 						/>
 						<OverflowToolbarButton
-							icon="sap-icon://fridge"
+							icon="sap-icon://custom/pollen"
 							tooltip="{i18n>AppView.MaintainPollenContainers}"
 							press=".onPressOpenPollenContainersMaintenance"
 						/>
@@ -410,7 +410,7 @@
 											<HBox justifyContent="SpaceBetween">
 												<StepInput
 													description="Flowers"
-													max="4"
+													max="9"
 													min="1"
 													required="true"
 													textAlign="Center"

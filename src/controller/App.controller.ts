@@ -39,6 +39,7 @@ import NewSeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 import CustomListItem from "sap/m/CustomListItem";
 import SeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 import GroupHeaderListItem from "sap/m/GroupHeaderListItem";
+import IconPool from "sap/ui/core/IconPool";
 
 /**
  * @namespace pollination.ui.controller
@@ -59,6 +60,11 @@ export default class App extends BaseController {
 	private _oPreviewImagePopoverHandler: PreviewImagePopoverHandler
 
 	public onInit() {
+
+
+		// IconPool.addIcon("flower", "custom", "icomoon", "e900");
+		// IconPool.addIcon("pollen", "custom", "icomoon", "e901");
+
 
 		this.getView().setModel(new JSONModel({
 			// isMobile: Device.browser.mobile,
