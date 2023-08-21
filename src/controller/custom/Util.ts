@@ -103,7 +103,8 @@ export default class Util extends ManagedObject {
 		// javascript Date with timezones and string formatting is 
 		// a total mess, so we don't use toISOString() or getTImezoneOffset() etc.
 		// but instead format manually
-		const sDate = d.getFullYear().toString() + '-' + d.getMonth().toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0")
+		// note: getMonth() returns month zero-based!
+		const sDate = d.getFullYear().toString() + '-' + (d.getMonth()+1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0")
 		const sTime = d.getHours().toString().padStart(2, "0") + ':' + d.getMinutes().toString().padStart(2, "0")
 		return sDate + ' ' + sTime;
 	}
