@@ -45,6 +45,9 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		oEditedPollination.count_pollinated_known = !!oEditedPollination.count_pollinated;
 		oEditedPollination.count_capsules_known = !!oEditedPollination.count_capsules;
 
+		oEditedPollination.count_pollinated = oEditedPollination.count_pollinated || 0;
+		
+
 		// open dialog
         Fragment.load({
             name: "pollination.ui.view.fragments.EditPollination",

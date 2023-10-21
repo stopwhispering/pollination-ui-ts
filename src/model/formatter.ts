@@ -1,6 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Util from "../controller/custom/Util";
 import { FlorescenceStatus, PollinationStatus } from "../interfaces/enums";
+import { BPollinationAttempt } from "../interfaces/entities";
 
 /**
  * @namespace pollination.ui.model
@@ -25,35 +26,59 @@ export default class formatter extends ManagedObject {
     }
 
     public html_for_pollination_status_indicator(pollination_status: PollinationStatus, ongoing: boolean, reverse: boolean) {
-        if (ongoing) {
-            var color = '#BB0000';  // dark red, equal to sap.ui.core.MessageType.Error
-        } else {
-            switch (pollination_status) {
-                // case "attempt":
-                case PollinationStatus.ATTEMPT:
-                    var color = '#FFE599';  // beige
-                    break;
-                // case "seed_capsule":
-                case PollinationStatus.SEED_CAPSULE:
-                    color = "#9FC5E8";  // blue
-                    break;
-                // case "seed":
-                case PollinationStatus.SEED:
-                    color = "#BF9000";  // orange
-                    break;
-                // case "germinated":
-                case PollinationStatus.GERMINATED:
-                    color = "#00AB41";  // green
-                    break;
-                case PollinationStatus.UNKNOWN:
-                    color = "#FF0000";  // red
-                    break;
-                default:
-                    throw new Error("Unknown pollination status: " + pollination_status);
-            }
+        switch (pollination_status) {
+            // case "attempt":
+            case PollinationStatus.ATTEMPT:
+                var color = '#BB0000';  // red
+                var icon = '🖌';
+                break;
+            // case "seed_capsule":
+            case PollinationStatus.SEED_CAPSULE:
+                color = '#BB0000';  // red
+                icon = '⬮';
+                break;
+            // case "seed":
+            case PollinationStatus.SEED:
+                color = "#362312";  // brown
+                icon = '⋮';
+                break;
+            // case "germinated":
+            case PollinationStatus.GERMINATED:
+                color = "#006400";  // green
+                icon = '𖥸';
+                break;
+            case PollinationStatus.UNKNOWN:
+                color = "#FFA500";  // orange
+                icon = '⚠';
+                break;
+            default:
+                throw new Error("Unknown pollination status: " + pollination_status);
         }
-        var text = (reverse ? '(⬤)' : '⬤');
+        if (ongoing && pollination_status != PollinationStatus.GERMINATED) {
+            var color = '#D6B85A';  // yellow
+        }
+        const text = (reverse ? '(' + icon + ')' : icon);
+        // var text = (reverse ? '(' + icon + ')' : '⬤');
         return '<span style="color:' + color + '">' + text + '</span>';
+    }
+
+    public tooltip_for_pollination_status_indicator(
+        pollination_attempt: BPollinationAttempt) {
+
+            
+// status: {potentialPollenDonorsModel>pollination_status}, pollinated: {potentialPollenDonorsModel>pollination_at}, harvested: {potentialPollenDonorsModel>harvest_at}
+
+        if (pollination_attempt.ongoing) {
+            var msg = 'Ongoing';
+        } else {
+            msg = 'Finished';
+        }
+
+        msg += ' / Status "' + pollination_attempt.pollination_status + '"';
+
+        msg += ' / Pollination on ' + pollination_attempt.pollination_at;
+
+        return msg;
     }
 
     html_for_active_florescence_dates(inflorescence_appeared_at: string, first_flower_opened_at: string, last_flower_closed_at: string, florescence_status: FlorescenceStatus) {

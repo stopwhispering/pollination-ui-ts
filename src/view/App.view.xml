@@ -258,10 +258,16 @@
 																	parts: ['potentialPollenDonorsModel>pollination_status', 'potentialPollenDonorsModel>ongoing', 'potentialPollenDonorsModel>reverse'],
 																	formatter: '.formatter.html_for_pollination_status_indicator'
 																}"
-																tooltip="status: {potentialPollenDonorsModel>pollination_status}, pollinated: {potentialPollenDonorsModel>pollination_at}, harvested: {potentialPollenDonorsModel>harvest_at}"
-															/>
+																tooltip="{
+																	parts: [
+																	'potentialPollenDonorsModel>'],
+																	formatter: '.formatter.tooltip_for_pollination_status_indicator'
+																}"
+																/>
 														</CustomListItem>
 													</HBox>
+													<!-- tooltip="status: {potentialPollenDonorsModel>pollination_status}, pollinated: {potentialPollenDonorsModel>pollination_at}, harvested: {potentialPollenDonorsModel>harvest_at}" -->
+															
 													<!-- visible="{= ${potentialPollenDonorsModel>pollen_type} === 'frozen' }" -->
 													<FormattedText
 														width="4.5rem"

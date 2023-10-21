@@ -151,7 +151,7 @@
 						<StepInput
 							description="Pollinated"
 							enabled="{editPollinationInput>/count_pollinated_known}"
-							max="4"
+							max="{editPollinationInput>/count_attempted}"
 							min="1"
 							required="true"
 							textAlign="Center"
