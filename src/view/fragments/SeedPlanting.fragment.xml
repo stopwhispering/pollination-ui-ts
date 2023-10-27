@@ -20,7 +20,7 @@
 				}"
 				class="sapUiTinyMarginBottom"
 				items="{
-					path: 'local>/seedPlantingStatusCollcetion'
+					path: 'local>/seedPlantingStatusCollection'
 				}"
 			>
 				<items>
@@ -54,7 +54,7 @@
                             inputsAsTooltips="true"
                             enableTickmarks="true"
                             min="1"
-                            max="15"
+                            max="25"
                             width="18rem"
                         />
                         <Input

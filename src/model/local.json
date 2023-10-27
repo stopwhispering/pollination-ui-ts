@@ -5,7 +5,7 @@
 		{"key": "seed",	"text": "Seed", "enabled": true, "tooltip": "Seeds have been harvested"},
         {"key": "germinated", "text": "Germinated", "enabled": false, "tooltip": "Auto-Set when seed is planted and germinated"}
 	],
-	"seedPlantingStatusCollcetion": [
+	"seedPlantingStatusCollection": [
 		{"key": "planted", 	"text": "Planted", "enabled": true, "tooltip": "Planted"},
 		{"key": "germinated",  "text": "Germinated", "enabled": true, "tooltip": "Germinated"},
 		{"key": "abandoned",	"text": "Abandoned", "enabled": true, "tooltip": "Abandoned"}
