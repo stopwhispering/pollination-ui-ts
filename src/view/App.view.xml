@@ -13,6 +13,7 @@
 	}"
 	controllerName="pollination.ui.controller.App"
 	displayBlock="true"
+
 >
 	<App>
 		<Page>
@@ -26,7 +27,7 @@
 						<OverflowToolbarButton
 							icon="sap-icon://excel-attachment"
 							tooltip="Open Flowering Plants Table"
-							press=".onPressOpenFloweringPlantsTable"
+							press=".onOverflowToolbarButtonPressOpenFlowerHistory"
 						/>
 						<OverflowToolbarButton
 							icon="sap-icon://custom/flower"
@@ -577,13 +578,13 @@
 									path: 'ongoingPollinationsModel>/',
 									sorter: [
 										{
+											path: 'seed_capsule_plant_id',
+											group: '.getSeedCapsulePlantGroup'
+										}, {
+											path: 'pollinated_at'
+										}, {
 											path: 'pollination_status',
-											descending: false,
-											group: '.getPollinationStatusGroup'
-										}, {
-											path: 'seed_capsule_plant_id'
-										}, {
-											path: 'florescence_id'
+											descending: false
 										}
 									],
 									groupHeaderFactory: '.getGroupHeader',
@@ -610,7 +611,19 @@
 										gridGap="0.5rem"
 									/>
 								</f:customLayout>
-								<f:GridListItem highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
+
+								<f:GridListItem 
+									highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
+									class="ongoingPollinationStatus">
+								
+									<f:customData>
+										<core:CustomData 
+											xmlns:core="sap.ui.core" 
+											key="pollination_status" 
+											value="{ongoingPollinationsModel>pollination_status}" 
+											writeToDom="true"/>
+									</f:customData>
+
 									<VBox class="sapUiSmallMargin">
 										<HBox alignItems="Center">
 											<core:Icon
@@ -627,6 +640,10 @@
 													<FlexItemData growFactor="1"/>
 												</core:layoutData>
 											</core:Icon>
+											<!-- <Label
+												text="🖌"
+											>
+											</Label> -->
 											<FlexBox>
 												<GenericTag
 													text="{= (!!${ongoingPollinationsModel>pollinated_at} ? ${ongoingPollinationsModel>pollinated_at} : 'unknown date') }"

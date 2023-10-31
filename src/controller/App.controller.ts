@@ -161,6 +161,21 @@ export default class App extends BaseController {
 
 	}	
 
+	public getSeedCapsulePlantGroup(oContext: Context) {
+		// we can't change order here, only format the group text
+		const oPollination = <PollinationRead>oContext.getProperty('');
+		let sFlorescence: string;
+		if (!!oPollination.florescence_comment){
+			sFlorescence = oPollination.seed_capsule_plant_name.toUpperCase() + ' [' + oPollination.florescence_comment + ']';
+		} else {
+			sFlorescence = oPollination.seed_capsule_plant_name.toUpperCase();
+		}
+		const sGroup = oPollination.seed_capsule_plant_id + ' ' + sFlorescence;
+		return {
+			key: sGroup,
+		};
+	}	
+
 	public getGroupHeader(oGroup) {
 		return new GroupHeaderListItem({
 			title : oGroup.key
@@ -400,7 +415,7 @@ export default class App extends BaseController {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Open dialog displaying flowering plants history in tabular format
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onPressOpenFloweringPlantsTable(oEvent: Event) {
+	public onOverflowToolbarButtonPressOpenFlowerHistory(oEvent: Event) {
 		if (!this._oFlowerHistoryHandler){
 			this._oFlowerHistoryHandler = new FlowerHistoryHandler();
 		}

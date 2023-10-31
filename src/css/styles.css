@@ -11,6 +11,18 @@
     background-color: #f1c232;
 }
 
+/* .ongoingPollinationStatus {
+  background-color: aliceblue;
+} */
+
+.ongoingPollinationStatus[data-pollination_status='attempt'] {
+  background-color: rgb(220, 223, 225);  
+}
+
+.ongoingPollinationStatus[data-pollination_status='seed_capsule'] {
+  background-color: #dfbfa5;
+}
+
 /* .sapMBtnIcon {
     width: 2.125rem;
     font-size: 0.6rem;
