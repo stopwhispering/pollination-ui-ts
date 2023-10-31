@@ -578,8 +578,10 @@
 									path: 'ongoingPollinationsModel>/',
 									sorter: [
 										{
-											path: 'seed_capsule_plant_id',
+											path: 'seed_capsule_plant_name',
 											group: '.getSeedCapsulePlantGroup'
+										}, {
+											path: 'florescence_id'
 										}, {
 											path: 'pollinated_at'
 										}, {
