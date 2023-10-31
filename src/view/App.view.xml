@@ -902,13 +902,13 @@
 															class="sapUiTinyMarginBegin">
 														<CheckBox
 															text="Sterilized"
-															tooltip="Sterilized (e.g. with Chinosol)"
+															tooltip="Sterilized Soil or sterilized seed (e.g. with Chinosol)"
 															displayOnly="true"
 															selected="{ongoingPollinationsModel>sterilized}"
 														/>
 														<CheckBox
 															text="Soaked"
-															tooltip="Soaked in water"
+															tooltip="Seed soaked in water"
 															displayOnly="true"
 															selected="{ongoingPollinationsModel>soaked}"
 														/>
