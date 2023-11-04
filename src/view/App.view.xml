@@ -627,7 +627,7 @@
 									</f:customData>
 
 									<VBox class="sapUiSmallMargin">
-										<HBox alignItems="Center">
+										<HBox alignItems="Start">
 											<core:Icon
 												src="sap-icon://color-fill"
 												color="{
@@ -646,18 +646,27 @@
 												text="🖌"
 											>
 											</Label> -->
-											<FlexBox>
+											<VBox>
 												<GenericTag
 													text="{= (!!${ongoingPollinationsModel>pollinated_at} ? ${ongoingPollinationsModel>pollinated_at} : 'unknown date') }"
 													design="StatusIconHidden"
 													class="sapUiTinyMarginEnd"
 												/>
-											</FlexBox>
+												<ProgressIndicator
+													class="sapUiSmallMarginBottom"
+													displayValue="{ongoingPollinationsModel>current_ripening_days} / {ongoingPollinationsModel>predicted_ripening_days}"
+													percentValue="{= (${ongoingPollinationsModel>current_ripening_days} / ${ongoingPollinationsModel>predicted_ripening_days}) * 100 }"
+													visible="{= !!${ongoingPollinationsModel>predicted_ripening_days} }"
+													state="{= (${ongoingPollinationsModel>current_ripening_days} > ${ongoingPollinationsModel>predicted_ripening_days}) ? 'Error' : 'None' }" 
+													/>
+											</VBox>
+											<!-- <FlexBox> -->
 											<Button
 												icon="sap-icon://edit"
 												type="Transparent"
 												press=".onPressEditOngoingPollination"
 											/>
+											<!-- </FlexBox> -->
 										</HBox>
 										<VBox>
 											<FormattedText

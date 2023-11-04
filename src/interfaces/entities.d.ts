@@ -46,6 +46,7 @@ export interface PollinationRead {
   count_attempted?: number;
   count_pollinated?: number;
   count_capsules?: number;
+  predicted_ripening_days: number;
   location_text: string;
   florescence_id: number;
   florescence_comment?: string;
