@@ -5,24 +5,29 @@ import Text from "sap/m/Text";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import { ValueState } from "sap/ui/core/library";
 import Util from "pollination/ui/controller/custom/Util";
-import { BResultsRetrainingPollinationToSeedsModel } from "pollination/ui/interfaces/entities";
+import { BResultsRetraining, BResultsRetrainingPollinationToSeedsModel, BResultsRetrainingRipeningDays } from "pollination/ui/interfaces/entities";
 
 /**
  * @namespace pollination.ui.controller.custom
  */
-export default class PollinationToSeedProbabilityModelTrainer extends ManagedObject {
+export default class MLModelTrainer extends ManagedObject {
 
-	public async triggerRetrain() {
+	public async triggerRetrainPollinationProbabilityModel() {
         const oResult = <BResultsRetrainingPollinationToSeedsModel> await Util.post(Util.getServiceUrl('retrain_probability_pollination_to_seed_model'));
-        this._openResponseDialog(oResult.model, oResult.mean_f1_score);
+        this._openResponseDialog(oResult);
     }
 
-    private _openResponseDialog(model: string, mean_f1_score: float) {
+	public async triggerRetrainRipeningDaysModel() {
+        const oResult = <BResultsRetrainingRipeningDays> await Util.post(Util.getServiceUrl('retrain_ripening_days'));
+        this._openResponseDialog(oResult);
+    }
+
+    private _openResponseDialog(oResult: BResultsRetraining) {
         const oSuccessMessageDialog = new Dialog({
             type: DialogType.Message,
             title: "Success",
             state: ValueState.Success,
-            content: new Text({ text: "Trained Model: " + model + "\n" + "Mean F1 Score: " + mean_f1_score }),
+            content: new Text({ text: "Trained Model: " + oResult.model + "\n" + oResult.metric_name + ": " + oResult.metric_value }),
             beginButton: new Button({
                 type: ButtonType.Emphasized,
                 text: "OK",

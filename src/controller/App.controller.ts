@@ -19,7 +19,7 @@ import ListBinding from "sap/ui/model/ListBinding";
 import SearchField from "sap/m/SearchField";
 import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers, SeedPlantingRead } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
-import PollinationToSeedProbabilityModelTrainer from "./custom/PollinationToSeedProbabilityModelTrainer";
+import MLModelTrainer from "./custom/MLModelTrainer";
 import Util from "./custom/Util";
 import NewFlorescenceDialogHandler from "./custom/NewFlorescenceDialogHandler";
 import PollinationsHandler from "./custom/PollinationsHandler";
@@ -409,7 +409,11 @@ export default class App extends BaseController {
 	//   	to make it into seeds stage
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	public async onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
-		await new PollinationToSeedProbabilityModelTrainer().triggerRetrain();
+		await new MLModelTrainer().triggerRetrainPollinationProbabilityModel();
+	}
+
+	public async onPressRetrainRipeningDaysModel(oEvent: Event){
+		await new MLModelTrainer().triggerRetrainRipeningDaysModel();
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////

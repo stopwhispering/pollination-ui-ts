@@ -172,10 +172,13 @@ export interface SettingsRead {
 }
 
 
-export interface BResultsRetrainingPollinationToSeedsModel {
+export interface BResultsRetraining{
+    metric_name: string;
+    metric_value: float;
     model: string;
-    mean_f1_score: float;
 }
+export interface BResultsRetrainingPollinationToSeedsModel extends BResultsRetraining{}
+export interface BResultsRetrainingRipeningDays extends BResultsRetraining{}
 
 export type FlowerColorDifferentiation = "top_bottom" | "ovary_mouth" | "striped" | "uniform";
 export type StigmaPosition = "exserted" | "mouth" | "inserted" | "deeply_inserted";

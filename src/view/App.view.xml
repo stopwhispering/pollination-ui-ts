@@ -44,6 +44,11 @@
 							tooltip="{i18n>AppView.ReTrainProbabilityModelPollinationToSeed}"
 							press=".onPressRetrainProbabilityModelPollinationToSeed"
 						/>
+						<OverflowToolbarButton
+							icon="sap-icon://e-learning"
+							tooltip="Re-Train Ripening Days Model"
+							press=".onPressRetrainRipeningDaysModel"
+						/>
 					</f:additionalContent>
 				</f:ShellBar>
 			</customHeader>
