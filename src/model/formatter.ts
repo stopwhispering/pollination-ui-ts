@@ -134,8 +134,8 @@ export default class formatter extends ManagedObject {
 
     ellipsize(text1: string, text2: string, text3: string) {
         let text = text1 + ' ' + (text2 || '') + ' ' + (text3 || '');
-        if (text.length > 41) {
-            text = text.substring(0, 38) + '…';
+        if (text.length > 38) {
+            text = text.substring(0, 35) + '…';
         }
         return text;
     }
