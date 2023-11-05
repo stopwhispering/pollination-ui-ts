@@ -145,18 +145,17 @@ export default class App extends BaseController {
 	public getPollinationStatusGroup(oContext: Context) {
 		// we can't change order here, only format the group text
 		const oPollination = <PollinationRead>oContext.getProperty('');
-		const sPollinationStatus = oPollination.pollination_status.toUpperCase().replace('_', ' ');
+		// const sPollinationStatus = oPollination.pollination_status.toUpperCase().replace('_', ' ');
 		const sCapsulePlantName = oPollination.seed_capsule_plant_name.toUpperCase();
-		let sGroup: string;
-		if (!!oPollination.florescence_comment){
-			sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ') - ' + oPollination.florescence_comment;
-		} else {
-			// return oContext.getProperty('pollination_status').toUpperCase().replace('_', ' ');
-			sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ')';
-		}
+		// let sGroup: string;
+		// if (!!oPollination.florescence_comment){
+		// 	sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ') - ' + oPollination.florescence_comment;
+		// } else {
+		// 	// return oContext.getProperty('pollination_status').toUpperCase().replace('_', ' ');
+		// 	sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ')';
+		// }
 		
-		// todo
-		sGroup = sCapsulePlantName;
+		const sGroup = oPollination.seed_capsule_plant_id + ' ' + sCapsulePlantName;
 
 		return {
 			key: sGroup,
