@@ -173,9 +173,10 @@ export interface SettingsRead {
 
 
 export interface BResultsRetraining{
+    model: string;
+    estimator: string;
     metric_name: string;
     metric_value: float;
-    model: string;
 }
 export interface BResultsRetrainingPollinationToSeedsModel extends BResultsRetraining{}
 export interface BResultsRetrainingRipeningDays extends BResultsRetraining{}

@@ -27,7 +27,10 @@ export default class MLModelTrainer extends ManagedObject {
             type: DialogType.Message,
             title: "Success",
             state: ValueState.Success,
-            content: new Text({ text: "Trained Model: " + oResult.model + "\n" + oResult.metric_name + ": " + oResult.metric_value }),
+            content: new Text({ text: "Trained Model: " 
+                                + oResult.model + "\n" 
+                                + oResult.estimator + "\n"
+                                + oResult.metric_name + ": " + oResult.metric_value }),
             beginButton: new Button({
                 type: ButtonType.Emphasized,
                 text: "OK",
