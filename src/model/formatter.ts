@@ -120,4 +120,23 @@ export default class formatter extends ManagedObject {
         }
         return '<span style="color:' + color + '">' + probability_pollination_to_seed + '%</span>';
     }
+
+    seed_ripening_progress_indicator_state(current_ripening_days: int, predicted_ripening_days: int){
+        if (current_ripening_days>predicted_ripening_days){
+            return 'Error';
+        } else if (current_ripening_days/predicted_ripening_days > 0.85){
+            return 'Warning';
+        } else {
+            return 'None';
+        }
+        
+    }
+
+    ellipsize(text1: string, text2: string, text3: string) {
+        let text = text1 + ' ' + (text2 || '') + ' ' + (text3 || '');
+        if (text.length > 48) {
+            text = text.substring(0, 45) + '…';
+        }
+        return text;
+    }
 }

@@ -662,7 +662,13 @@
 													displayValue="{ongoingPollinationsModel>current_ripening_days} / {ongoingPollinationsModel>predicted_ripening_days}"
 													percentValue="{= (${ongoingPollinationsModel>current_ripening_days} / ${ongoingPollinationsModel>predicted_ripening_days}) * 100 }"
 													visible="{= !!${ongoingPollinationsModel>predicted_ripening_days} }"
-													state="{= (${ongoingPollinationsModel>current_ripening_days} > ${ongoingPollinationsModel>predicted_ripening_days}) ? 'Error' : 'None' }" 
+													
+													
+													state="{
+														parts: ['ongoingPollinationsModel>current_ripening_days', 'ongoingPollinationsModel>predicted_ripening_days'],
+														formatter: '.formatter.seed_ripening_progress_indicator_state'
+													}"
+													
 													/>
 											</VBox>
 											<!-- <FlexBox> -->
@@ -689,13 +695,13 @@
 												}"
 												class="sapUiTinyMarginBottom"
 											/>
-											<Label
+											<!-- <Label
 												visible="{=
 													!!${ongoingPollinationsModel>florescence_comment}
 												}"
 												text="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
 												tooltip="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
-											/>
+											/> -->
 										</VBox>
 										<HBox wrap="Wrap">
 											<GenericTag
@@ -742,12 +748,12 @@
 								items="{
 									path: 'ongoingPollinationsModel>/',
 									sorter: [{
-										path: 'pollination_status',
+										path: 'seed_capsule_plant_name',
 										descending: true,
 										group: '.getPollinationStatusGroup'
 									}, {
-										path: 'seed_capsule_plant_name',
-										descending: true
+										path: 'harvest_date',
+										descending: false
 									}],
 									filters : [
 										{ path : 'pollination_status', operator : 'EQ', value1 : 'seed'},
@@ -758,7 +764,7 @@
 							>
 								<f:customLayout>
 									<grid:GridBasicLayout
-										gridTemplateColumns="repeat(auto-fit, minmax(32rem, 32rem)
+										gridTemplateColumns="repeat(auto-fit, minmax(23rem, 23rem)
 											)"
 										gridGap="0.5rem"
 									/>
@@ -894,14 +900,10 @@
 																text="{ongoingPollinationsModel>soil_name}" 
 																tooltip="{ongoingPollinationsModel>soil_name} (Soil ID {ongoingPollinationsModel>soil_id})" 
 																class="sapUiTinyMarginBottom"/>
-															<Label 
-																text="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germ." 
-																tooltip="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germinated"
-																class="sapUiTinyMarginBottom"/>
-														</VBox>
+														<!-- </VBox>
 														<VBox
 															width="11rem"
-															class="sapUiTinyMarginBegin">
+															class="sapUiTinyMarginBegin"> -->
 															<Label 
 																text="Status: {ongoingPollinationsModel>status}" 
 																tooltip="Status: {ongoingPollinationsModel>status}" 
@@ -911,6 +913,10 @@
 																text="{ongoingPollinationsModel>comment}" 
 																tooltip="{ongoingPollinationsModel>comment}" 
 																width="6rem"/>
+															<!-- <Label 
+																text="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germ." 
+																tooltip="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germinated"
+																class="sapUiTinyMarginBottom"/> -->
 														</VBox>
 														<VBox
 															class="sapUiTinyMarginBegin">
@@ -945,12 +951,23 @@
 														showSeparators="Inner"
 														class="sapUiSmallMarginBeginEnd">
 														<CustomListItem>
-															<Label 
+															
+															<GenericTag
+																text="{
+																	parts: ['ongoingPollinationsModel>id', 'ongoingPollinationsModel>plant_name'],
+																	formatter: '.formatter.ellipsize'
+																}"
+																tooltip="{ongoingPollinationsModel>id} {ongoingPollinationsModel>plant_name}"
+																design="StatusIconHidden"
+																status="Success"
+																class="sapUiTinyMarginEnd"
+															/>
+															<!-- <Label
 																text="{ongoingPollinationsModel>id}"
 																class="sapUiTinyMarginEnd" />
-															<Label 
+															<Label
 																text="{ongoingPollinationsModel>plant_name}"
-																tooltip="{ongoingPollinationsModel>plant_name}" />
+																tooltip="{ongoingPollinationsModel>plant_name}" /> -->
 														</CustomListItem>
 													</List>
 

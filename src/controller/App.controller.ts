@@ -155,6 +155,9 @@ export default class App extends BaseController {
 			sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ')';
 		}
 		
+		// todo
+		sGroup = sCapsulePlantName;
+
 		return {
 			key: sGroup,
 		};
