@@ -939,7 +939,6 @@
 																	percentValue="{= (${ongoingPollinationsModel>current_germination_days} / ${ongoingPollinationsModel>predicted_germination_days}) * 100 }"
 																	visible="{= !!${ongoingPollinationsModel>predicted_germination_days} }"
 																	
-																	
 																	state="{
 																		parts: ['ongoingPollinationsModel>current_germination_days', 'ongoingPollinationsModel>predicted_germination_days'],
 																		formatter: '.formatter.germination_progress_indicator_state'
@@ -949,10 +948,23 @@
 																	/>
 															</VBox>
 
-															<!-- <Label 
-																text="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germ." 
-																tooltip="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germinated"
-																class="sapUiTinyMarginBottom"/> -->
+															<VBox
+																visible="{= ${ongoingPollinationsModel>status} === 'germinated' }"
+															>
+																<Label 
+																	text="{= 'Germinated after ' + ${ongoingPollinationsModel>germination_days}.toString() + ' days' }"
+																	wrapping="true"/>
+															</VBox>
+															
+
+															<VBox
+																visible="{= ${ongoingPollinationsModel>status} === 'abandoned' }"
+															>
+																<Label 
+																	text="{= 'Abandoned after ' + ${ongoingPollinationsModel>germination_days}.toString() + ' days' }"
+																	wrapping="true"/>
+															</VBox>
+
 														</VBox>
 														<VBox
 															class="sapUiTinyMarginBegin">
