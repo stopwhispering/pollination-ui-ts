@@ -49,6 +49,16 @@
 							tooltip="Re-Train Ripening Days Model"
 							press=".onPressRetrainRipeningDaysModel"
 						/>
+						<OverflowToolbarButton
+							icon="sap-icon://toaster-down"
+							tooltip="Re-Train Germination Days Model"
+							press=".onPressRetrainGerminationDaysModel"
+						/>
+						<OverflowToolbarButton
+							icon="sap-icon://appear-offline"
+							tooltip="Re-Train Germination Probability Model"
+							press=".onPressRetrainGerminationProbabilityModel"
+						/>
 					</f:additionalContent>
 				</f:ShellBar>
 			</customHeader>

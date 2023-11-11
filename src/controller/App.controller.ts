@@ -417,6 +417,14 @@ export default class App extends BaseController {
 	public async onPressRetrainRipeningDaysModel(oEvent: Event){
 		await new MLModelTrainer().triggerRetrainRipeningDaysModel();
 	}
+
+	public async onPressRetrainGerminationDaysModel(oEvent: Event){
+		await new MLModelTrainer().triggerRetrainGerminationDaysModel();
+	}
+
+	public async onPressRetrainGerminationProbabilityModel(oEvent: Event){
+		await new MLModelTrainer().triggerRetrainGerminationProbabilityModel();
+	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Open dialog displaying flowering plants history in tabular format

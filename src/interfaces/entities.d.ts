@@ -180,6 +180,8 @@ export interface BResultsRetraining{
 }
 export interface BResultsRetrainingPollinationToSeedsModel extends BResultsRetraining{}
 export interface BResultsRetrainingRipeningDays extends BResultsRetraining{}
+export interface BResultsRetrainingGerminationDays extends BResultsRetraining{}
+export interface BResultsRetrainingGerminationProbability extends BResultsRetraining{}
 
 export type FlowerColorDifferentiation = "top_bottom" | "ovary_mouth" | "striped" | "uniform";
 export type StigmaPosition = "exserted" | "mouth" | "inserted" | "deeply_inserted";
