@@ -924,26 +924,31 @@
 																visible="{= !!${ongoingPollinationsModel>comment} }"
 																tooltip="{ongoingPollinationsModel>comment}" 
 																width="6rem"/>
-															<Label 
-																text="{= 'Predicted\n Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
-																tooltip="{= 'Predicted Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
-																width="6rem"
-																wrapping="true"/>
-																
-															<ProgressIndicator
-																class="sapUiSmallMarginBottom"
-																displayValue="{ongoingPollinationsModel>current_germination_days} / {ongoingPollinationsModel>predicted_germination_days}"
-																percentValue="{= (${ongoingPollinationsModel>current_germination_days} / ${ongoingPollinationsModel>predicted_germination_days}) * 100 }"
-																visible="{= !!${ongoingPollinationsModel>predicted_germination_days} }"
-																
-																
-																state="{
-																	parts: ['ongoingPollinationsModel>current_germination_days', 'ongoingPollinationsModel>predicted_germination_days'],
-																	formatter: '.formatter.germination_progress_indicator_state'
-																}"
-																tooltip="{= 'Current Days: ' + ${ongoingPollinationsModel>current_germination_days}.toString() + ' Days \n' + 
-																'Predicted Days: ' + ${ongoingPollinationsModel>predicted_germination_days}.toString() + ' Days \n' }"																	
-																/>
+
+															<HBox
+																visible="{= ${ongoingPollinationsModel>status} === 'planted' }"
+															>
+																<Label 
+																	text="{= 'Predicted\n Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
+																	tooltip="{= 'Predicted Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
+																	width="6rem"
+																	wrapping="true"/>
+																	
+																<ProgressIndicator
+																	class="sapUiSmallMarginBottom"
+																	displayValue="{ongoingPollinationsModel>current_germination_days} / {ongoingPollinationsModel>predicted_germination_days}"
+																	percentValue="{= (${ongoingPollinationsModel>current_germination_days} / ${ongoingPollinationsModel>predicted_germination_days}) * 100 }"
+																	visible="{= !!${ongoingPollinationsModel>predicted_germination_days} }"
+																	
+																	
+																	state="{
+																		parts: ['ongoingPollinationsModel>current_germination_days', 'ongoingPollinationsModel>predicted_germination_days'],
+																		formatter: '.formatter.germination_progress_indicator_state'
+																	}"
+																	tooltip="{= 'Current Days: ' + ${ongoingPollinationsModel>current_germination_days}.toString() + ' Days \n' + 
+																	'Predicted Days: ' + ${ongoingPollinationsModel>predicted_germination_days}.toString() + ' Days \n' }"																	
+																	/>
+															</HBox>
 
 															<!-- <Label 
 																text="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germ." 
