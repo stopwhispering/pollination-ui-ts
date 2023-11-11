@@ -122,14 +122,23 @@ export default class formatter extends ManagedObject {
     }
 
     seed_ripening_progress_indicator_state(current_ripening_days: int, predicted_ripening_days: int){
-        if (current_ripening_days>predicted_ripening_days){
+        if (current_ripening_days/predicted_ripening_days > 1.15){
             return 'Error';
-        } else if (current_ripening_days/predicted_ripening_days > 0.85){
+        } else if (current_ripening_days/predicted_ripening_days > 0.95){
             return 'Warning';
         } else {
             return 'None';
         }
-        
+    }
+
+    germination_progress_indicator_state(current_germination_days: int, predicted_germination_days: int){
+        if (current_germination_days/predicted_germination_days > 1.25){
+            return 'Error';
+        } else if (current_germination_days/predicted_germination_days > 0.95){
+            return 'Warning';
+        } else {
+            return 'None';
+        }
     }
 
     ellipsize(text1: string, text2: string, text3: string) {

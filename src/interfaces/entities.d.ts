@@ -266,6 +266,10 @@ export interface SeedPlantingRead extends SeedPlantingBase{
   pollen_donor_plant_name: string;
   soil_name: string;
 
+  predicted_germination_probability: int;  // 0-100
+  predicted_germination_days: int;
+  current_germination_days: int;
+
   plants: PlantEssentials[];
 }
 
