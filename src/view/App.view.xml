@@ -925,13 +925,12 @@
 																tooltip="{ongoingPollinationsModel>comment}" 
 																width="6rem"/>
 
-															<HBox
+															<VBox
 																visible="{= ${ongoingPollinationsModel>status} === 'planted' }"
 															>
 																<Label 
-																	text="{= 'Predicted\n Succ.: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
+																	text="{= 'Pred. Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
 																	tooltip="{= 'Predicted Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
-																	width="6rem"
 																	wrapping="true"/>
 																	
 																<ProgressIndicator
@@ -948,7 +947,7 @@
 																	tooltip="{= 'Current Days: ' + ${ongoingPollinationsModel>current_germination_days}.toString() + ' Days \n' + 
 																	'Predicted Days: ' + ${ongoingPollinationsModel>predicted_germination_days}.toString() + ' Days \n' }"																	
 																	/>
-															</HBox>
+															</VBox>
 
 															<!-- <Label 
 																text="{ongoingPollinationsModel>count_germinated}/{ongoingPollinationsModel>count_planted} seeds germ." 
