@@ -929,7 +929,7 @@
 																visible="{= ${ongoingPollinationsModel>status} === 'planted' }"
 															>
 																<Label 
-																	text="{= 'Predicted\n Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
+																	text="{= 'Predicted\n Succ.: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
 																	tooltip="{= 'Predicted Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
 																	width="6rem"
 																	wrapping="true"/>
