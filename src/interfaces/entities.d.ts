@@ -228,22 +228,6 @@ export interface FRequestPollenContainers {
   pollen_container_collection: PollenContainerCreateUpdate[];
 }
 
-export interface FlowerHistoryMonth {
-  month: string;
-  flowering_state: BFloweringState;
-}
-
-export interface FlowerHistoryYear {
-  year: string;
-  months: FlowerHistoryMonth[];
-}
-
-export interface FlowerHistoryPlant {
-  plant_id: int;
-  plant_name: string;
-  years: FlowerHistoryYear[];
-}
-
 export interface FlowerHistoryRow {
   plant_id: int
   plant_name: string
@@ -265,7 +249,6 @@ export interface FlowerHistoryRow {
 export interface FlowerHistory {
   action: string;
   message: BMessage;
-  plants: FlowerHistoryPlant[];  //todo remove
   rows: FlowerHistoryRow[];
 }
 
