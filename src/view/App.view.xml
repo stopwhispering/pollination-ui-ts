@@ -39,7 +39,7 @@
 							tooltip="{i18n>AppView.MaintainPollenContainers}"
 							press=".onPressOpenPollenContainersMaintenance"
 						/>
-						<OverflowToolbarButton
+						<!-- <OverflowToolbarButton
 							icon="sap-icon://e-learning"
 							tooltip="{i18n>AppView.ReTrainProbabilityModelPollinationToSeed}"
 							press=".onPressRetrainProbabilityModelPollinationToSeed"
@@ -58,6 +58,11 @@
 							icon="sap-icon://appear-offline"
 							tooltip="Re-Train Germination Probability Model"
 							press=".onPressRetrainGerminationProbabilityModel"
+						/> -->
+						<OverflowToolbarButton
+							icon="sap-icon://e-learning"
+							tooltip="Retrain Machine Learning Models"
+							press=".onPressOpenRetrainModelMenu"
 						/>
 					</f:additionalContent>
 				</f:ShellBar>

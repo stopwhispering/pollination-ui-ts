@@ -40,6 +40,8 @@ import CustomListItem from "sap/m/CustomListItem";
 import SeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 import GroupHeaderListItem from "sap/m/GroupHeaderListItem";
 import IconPool from "sap/ui/core/IconPool";
+import RetrainModelMenuHandler from "./custom/RetrainModelMenuHandler";
+import OverflowToolbarButton from "sap/m/OverflowToolbarButton";
 
 /**
  * @namespace pollination.ui.controller
@@ -58,6 +60,7 @@ export default class App extends BaseController {
 	private _oSeedPlantingDialogHandler: SeedPlantingDialogHandler;  // lazy loaded
 	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
 	private _oPreviewImagePopoverHandler: PreviewImagePopoverHandler
+	private _oRetrainModelMenuHandler: RetrainModelMenuHandler;
 
 	public onInit() {
 
@@ -405,26 +408,26 @@ export default class App extends BaseController {
 		
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 		retraining the model that predicts
-	//      the probability of an attempted pollination 
-	//   	to make it into seeds stage
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	public async onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
-		await new MLModelTrainer().triggerRetrainPollinationProbabilityModel();
-	}
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////
+	// // 		retraining the model that predicts
+	// //      the probability of an attempted pollination 
+	// //   	to make it into seeds stage
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////
+	// public async onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
+	// 	await new MLModelTrainer().triggerRetrainPollinationProbabilityModel();
+	// }
 
-	public async onPressRetrainRipeningDaysModel(oEvent: Event){
-		await new MLModelTrainer().triggerRetrainRipeningDaysModel();
-	}
+	// public async onPressRetrainRipeningDaysModel(oEvent: Event){
+	// 	await new MLModelTrainer().triggerRetrainRipeningDaysModel();
+	// }
 
-	public async onPressRetrainGerminationDaysModel(oEvent: Event){
-		await new MLModelTrainer().triggerRetrainGerminationDaysModel();
-	}
+	// public async onPressRetrainGerminationDaysModel(oEvent: Event){
+	// 	await new MLModelTrainer().triggerRetrainGerminationDaysModel();
+	// }
 
-	public async onPressRetrainGerminationProbabilityModel(oEvent: Event){
-		await new MLModelTrainer().triggerRetrainGerminationProbabilityModel();
-	}
+	// public async onPressRetrainGerminationProbabilityModel(oEvent: Event){
+	// 	await new MLModelTrainer().triggerRetrainGerminationProbabilityModel();
+	// }
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Open dialog displaying flowering plants history in tabular format
@@ -466,5 +469,13 @@ export default class App extends BaseController {
 	// todo get rid of this, move to ImagePreviewPopoverHandler
 	public onHoverAwayFromImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
 		this._oPreviewImagePopoverHandler.close();
+	}
+	onPressOpenRetrainModelMenu(oEvent: Event) {
+		const oButton = <OverflowToolbarButton>oEvent.getSource();
+
+		if (!this._oRetrainModelMenuHandler){
+			this._oRetrainModelMenuHandler = new RetrainModelMenuHandler();
+		}
+		this._oRetrainModelMenuHandler.openRetrainModelMenu(this.getView(), oButton);
 	}
 }
