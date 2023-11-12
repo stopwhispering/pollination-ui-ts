@@ -4,7 +4,7 @@
   /* outline: thick solid #00ff00; */
 }
 
-.inflorescenceColor {
+/* .inflorescenceColor {
     background-color: #fde9d9;
 }
 
@@ -14,11 +14,31 @@
 
 .seedsRipeningColor {
     background-color: #f1c232;
+} */
+
+
+
+
+.flowering_state_cell[data-flowering_state='flowering'] {
+  background-color: #e26b0a;
 }
 
-/* .ongoingPollinationStatus {
-  background-color: aliceblue;
+.flowering_state_cell[data-flowering_state='seeds_ripening'] {
+  background-color: #f1c232;
+}
+
+.flowering_state_cell[data-flowering_state='inflorescence_growing'] {
+  background-color: #fde9d9;
+}
+
+/* //todo remove
+.flowering_state_cell[data-flowering_state='not_flowering'] {
+  background-color: #fde9d9;  
 } */
+
+
+
+
 
 .ongoingPollinationStatus[data-pollination_status='attempt'] {
   background-color: rgb(220, 223, 225);  

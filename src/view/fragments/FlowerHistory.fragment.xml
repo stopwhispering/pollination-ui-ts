@@ -1,19 +1,322 @@
-<c:FragmentDefinition
+<core:FragmentDefinition
 	xmlns="sap.m"
-	xmlns:c="sap.ui.core"
+	xmlns:core="sap.ui.core"
 >
 	<Dialog
 		title="Flower History"
 		class="sapUiContentPadding sapUiSizeCompact	"
 		afterClose=".onAfterCloseFlowerHistory"
-		contentWidth="95%"
+		contentWidth="60rem"
 	>
 		<content>
 			<Table
 				id="flowerHistoryList"
+				items="{flower_history>/rows}"
 				sticky="ColumnHeaders"
 			>
+
+				<columns>
+					<Column
+						width="16rem"
+						mergeDuplicates="true"
+					>
+						<header>
+							<Label
+								text="Plant"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column width="6rem">
+						<header>
+							<Label
+								text="Year"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="01"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="02"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="03"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="04"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="05"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="06"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="07"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="08"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="09"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="10"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="11"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Label
+								text="12"
+								textAlign="Center"
+							/>
+						</header>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text text="{flower_history>plant_name}" />
+							<Text text="{flower_history>year}" />
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_01}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_01}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_02}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_02}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_03}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_03}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_04}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_04}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_05}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_05}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_06}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_06}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_07}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_07}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_08}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_08}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_09}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_09}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_10}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_10}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_11}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_11}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+							<FlexBox
+								class="flowering_state_cell"
+								tooltip="{flower_history>month_12}"
+							>
+								<Label class="flowering_state_cell" />
+								<customData>
+									<core:CustomData
+										xmlns:core="sap.ui.core"
+										key="flowering_state"
+										value="{flower_history>month_12}"
+										writeToDom="true"
+									/>
+								</customData>
+							</FlexBox>
+						</cells>
+					</ColumnListItem>
+				</items>
 			</Table>
 		</content>
+
+		<endButton>
+			<Button
+				text="Close"
+				press=".onPressCloseFlowerHistory"/>
+		</endButton>
+
 	</Dialog>
-</c:FragmentDefinition>
+</core:FragmentDefinition>

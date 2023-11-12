@@ -228,24 +228,6 @@ export interface FRequestPollenContainers {
   pollen_container_collection: PollenContainerCreateUpdate[];
 }
 
-export interface BFloweringPeriodState {
-  month: string;
-  flowering_state: BFloweringState;
-}
-
-export interface BPlantFlowerHistory {
-  plant_id: number;
-  plant_name: string;
-  periods: BFloweringPeriodState[];
-}
-
-export interface BResultsFlowerHistory {  //todo remove
-  action: string;
-  message: BMessage;
-  plants: BPlantFlowerHistory[];
-  months: string[];
-}
-
 export interface FlowerHistoryMonth {
   month: string;
   flowering_state: BFloweringState;
@@ -262,10 +244,29 @@ export interface FlowerHistoryPlant {
   years: FlowerHistoryYear[];
 }
 
+export interface FlowerHistoryRow {
+  plant_id: int
+  plant_name: string
+  year: string
+  month_01: BFloweringState
+  month_02: BFloweringState
+  month_03: BFloweringState
+  month_04: BFloweringState
+  month_05: BFloweringState
+  month_06: BFloweringState
+  month_07: BFloweringState
+  month_08: BFloweringState
+  month_09: BFloweringState
+  month_10: BFloweringState
+  month_11: BFloweringState
+  month_12: BFloweringState
+}
+
 export interface FlowerHistory {
   action: string;
   message: BMessage;
-  plants: FlowerHistoryPlant[];
+  plants: FlowerHistoryPlant[];  //todo remove
+  rows: FlowerHistoryRow[];
 }
 
 export type SeedPlantingStatus = "planted" | "germinated" | "abandoned";
