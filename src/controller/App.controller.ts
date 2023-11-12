@@ -408,27 +408,6 @@ export default class App extends BaseController {
 		
 	}
 
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////
-	// // 		retraining the model that predicts
-	// //      the probability of an attempted pollination 
-	// //   	to make it into seeds stage
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////
-	// public async onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
-	// 	await new MLModelTrainer().triggerRetrainPollinationProbabilityModel();
-	// }
-
-	// public async onPressRetrainRipeningDaysModel(oEvent: Event){
-	// 	await new MLModelTrainer().triggerRetrainRipeningDaysModel();
-	// }
-
-	// public async onPressRetrainGerminationDaysModel(oEvent: Event){
-	// 	await new MLModelTrainer().triggerRetrainGerminationDaysModel();
-	// }
-
-	// public async onPressRetrainGerminationProbabilityModel(oEvent: Event){
-	// 	await new MLModelTrainer().triggerRetrainGerminationProbabilityModel();
-	// }
-	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Open dialog displaying flowering plants history in tabular format
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
