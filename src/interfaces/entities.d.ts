@@ -239,11 +239,33 @@ export interface BPlantFlowerHistory {
   periods: BFloweringPeriodState[];
 }
 
-export interface BResultsFlowerHistory {
+export interface BResultsFlowerHistory {  //todo remove
   action: string;
   message: BMessage;
   plants: BPlantFlowerHistory[];
   months: string[];
+}
+
+export interface FlowerHistoryMonth {
+  month: string;
+  flowering_state: BFloweringState;
+}
+
+export interface FlowerHistoryYear {
+  year: string;
+  months: FlowerHistoryMonth[];
+}
+
+export interface FlowerHistoryPlant {
+  plant_id: int;
+  plant_name: string;
+  years: FlowerHistoryYear[];
+}
+
+export interface FlowerHistory {
+  action: string;
+  message: BMessage;
+  plants: FlowerHistoryPlant[];
 }
 
 export type SeedPlantingStatus = "planted" | "germinated" | "abandoned";

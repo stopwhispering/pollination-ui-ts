@@ -1,4 +1,9 @@
 
+.flowerHistoryCurrentMonth {
+  background-color: #f9ebe1;
+  /* outline: thick solid #00ff00; */
+}
+
 .inflorescenceColor {
     background-color: #fde9d9;
 }

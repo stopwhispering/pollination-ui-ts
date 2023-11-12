@@ -11,6 +11,7 @@
 		<content>
 			<Table
 				id="flowerHistoryList"
+				sticky="ColumnHeaders"
 			>
 			</Table>
 		</content>

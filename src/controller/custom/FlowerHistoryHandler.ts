@@ -1,4 +1,4 @@
-import { BFloweringPeriodState, BPlantFlowerHistory, BResultsFlowerHistory } from "pollination/ui/interfaces/entities";
+import { BFloweringPeriodState, BPlantFlowerHistory, BResultsFlowerHistory, FlowerHistory, FlowerHistoryMonth, FlowerHistoryPlant, FlowerHistoryYear } from "pollination/ui/interfaces/entities";
 import Dialog from "sap/m/Dialog";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
@@ -47,41 +47,38 @@ export default class FlowerHistoryHandler extends ManagedObject {
 	private _createPlantHeaderColumn(): Column{
 		return new Column({
 			width: "5rem",
+			mergeDuplicates: true,
 			header: new Label({
 				text: 'Plant',
 				textAlign: TextAlign.Center,
 				wrapping: true,
-			})
+			},)
 		});
 	}
 
 	private _createPeriodHeaderColumn(sMonth: string): Column{
-		const oHeaderVBox = new VBox();
-		if (sMonth.endsWith('01')){
-			oHeaderVBox.addItem(new Label({
-				text: sMonth.substring(2, 4),
-				textAlign: TextAlign.Center,
-			}));
-		} else {
-			oHeaderVBox.addItem(new Label({
-				text: "",
-				textAlign: TextAlign.Center,
-			}));
-		}
-		oHeaderVBox.addItem(new Label({
-			text: sMonth.substring(5, 7),
-			textAlign: TextAlign.Center,
-		}));
+		const sCurrentMonth = new Date().toISOString().substring(5, 7);
 		return new Column({
 			width: "1rem",
-			header: new VBox({
-				items: [oHeaderVBox]
+			styleClass: sCurrentMonth == sMonth ? "flowerHistoryCurrentMonth": "",
+			header: new Label({
+				text: sMonth,
+				textAlign: TextAlign.Center,
+				})
+		})		
+	}
+
+	private _createYearHeaderColumn(): Column{
+		return new Column({
+			width: "1.5rem",
+			header: new Label({
+				text: "Year",
+				textAlign: TextAlign.Center,
 			})
-			
 		});
 	}
 
-	private _createPeriodCell(oPeriodState: BFloweringPeriodState): Control{
+	private _createPeriodCell(oPeriodState: FlowerHistoryMonth): Control{
 		const oFlexBox = new FlexBox({items: [new Label()]});
 		if (oPeriodState.flowering_state === "flowering"){
 			oFlexBox.addStyleClass("floweringColor");
@@ -97,31 +94,37 @@ export default class FlowerHistoryHandler extends ManagedObject {
 		return oFlexBox;
 	}
 
-	private _populateFlowerHistory(oResults: BResultsFlowerHistory): void {
+	private _populateFlowerHistory(oResults: FlowerHistory): void {
 		// create a column for each month in the flower history (in addition to the plant name as left-most column)
 		this._oFlowerHistoryList.removeAllColumns();
 		this._oFlowerHistoryList.addColumn(this._createPlantHeaderColumn());
+		this._oFlowerHistoryList.addColumn(this._createYearHeaderColumn());
 
-		for (let i = 0; i < oResults.months.length; i++) {
-			const sMonth = oResults.months[i];
+		for (let i = 1; i < 13; i++) {
+			const sMonth = i.toString().padStart(2, '0');
 			this._oFlowerHistoryList.addColumn(this._createPeriodHeaderColumn(sMonth));
 		};
 
+		// one row per plant and year
+		oResults.plants.forEach(oFlowerHistoryPlant => {
 
-		for (let i = 0; i < oResults.plants.length; i++) {
-			const oPlantHistory: BPlantFlowerHistory = oResults.plants[i];
+			oFlowerHistoryPlant.years.forEach(oFlowerHistoryYear => {
 
-			const oPlantNameCell = new Text({ text: oPlantHistory.plant_name });
-			const aCells: Control[] = [oPlantNameCell];
-			for (let j = 0; j < oPlantHistory.periods.length; j++) {
-				const oPeriod: BFloweringPeriodState = oPlantHistory.periods[j];
-				aCells.push(this._createPeriodCell(oPeriod));
-			}
-			const oListItem = new ColumnListItem({
-				cells: aCells,
-			});
-			this._oFlowerHistoryList.addItem(oListItem);
-		}
+				const aCells: Control[] = []
+				aCells.push(new Text({ text: oFlowerHistoryPlant.plant_name }));
+				aCells.push(new Text({ text: oFlowerHistoryYear.year }));
+	
+				for (let j = 0; j < oFlowerHistoryYear.months.length; j++) {
+					const oFlowerHistoryMonth: FlowerHistoryMonth = oFlowerHistoryYear.months[j];
+					aCells.push(this._createPeriodCell(oFlowerHistoryMonth));
+				}
+
+				const oListItem = new ColumnListItem({
+					cells: aCells,
+				});
+				this._oFlowerHistoryList.addItem(oListItem);
+			})
+		})
 	}
 
 	onAfterCloseFlowerHistory(oEvent: Event) {

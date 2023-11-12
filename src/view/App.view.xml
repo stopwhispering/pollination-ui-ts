@@ -39,26 +39,7 @@
 							tooltip="{i18n>AppView.MaintainPollenContainers}"
 							press=".onPressOpenPollenContainersMaintenance"
 						/>
-						<!-- <OverflowToolbarButton
-							icon="sap-icon://e-learning"
-							tooltip="{i18n>AppView.ReTrainProbabilityModelPollinationToSeed}"
-							press=".onPressRetrainProbabilityModelPollinationToSeed"
-						/>
-						<OverflowToolbarButton
-							icon="sap-icon://e-learning"
-							tooltip="Re-Train Ripening Days Model"
-							press=".onPressRetrainRipeningDaysModel"
-						/>
-						<OverflowToolbarButton
-							icon="sap-icon://toaster-down"
-							tooltip="Re-Train Germination Days Model"
-							press=".onPressRetrainGerminationDaysModel"
-						/>
-						<OverflowToolbarButton
-							icon="sap-icon://appear-offline"
-							tooltip="Re-Train Germination Probability Model"
-							press=".onPressRetrainGerminationProbabilityModel"
-						/> -->
+						
 						<OverflowToolbarButton
 							icon="sap-icon://e-learning"
 							tooltip="Retrain Machine Learning Models"
