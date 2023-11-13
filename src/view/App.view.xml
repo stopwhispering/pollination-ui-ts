@@ -13,7 +13,6 @@
 	}"
 	controllerName="pollination.ui.controller.App"
 	displayBlock="true"
-
 >
 	<App>
 		<Page>
@@ -39,7 +38,6 @@
 							tooltip="{i18n>AppView.MaintainPollenContainers}"
 							press=".onPressOpenPollenContainersMaintenance"
 						/>
-						
 						<OverflowToolbarButton
 							icon="sap-icon://e-learning"
 							tooltip="Retrain Machine Learning Models"
@@ -120,7 +118,12 @@
 													<VBox alignItems="Center">
 														<FormattedText
 															htmlText="{
-																parts: ['currentFlorescencesModel>inflorescence_appeared_at', 'currentFlorescencesModel>first_flower_opened_at', 'currentFlorescencesModel>last_flower_closed_at', 'currentFlorescencesModel>florescence_status'],
+																parts: [
+																	'currentFlorescencesModel>inflorescence_appeared_at',
+																	'currentFlorescencesModel>first_flower_opened_at',
+																	'currentFlorescencesModel>last_flower_closed_at',
+																	'currentFlorescencesModel>florescence_status'
+																],
 																formatter: '.formatter.html_for_active_florescence_dates'
 															}"
 															tooltip="Inflorescence appeared: {currentFlorescencesModel>inflorescence_appeared_at}, First flower opens: {currentFlorescencesModel>first_flower_opened_at}, Last flower closed: {currentFlorescencesModel>last_flower_closed_at}"
@@ -138,7 +141,7 @@
 																size="0.7rem"
 															>
 																<core:layoutData>
-																	<FlexItemData growFactor="1"/>
+																	<FlexItemData growFactor="1" />
 																</core:layoutData>
 															</core:Icon>
 															<core:Icon
@@ -150,7 +153,7 @@
 																size="0.7rem"
 															>
 																<core:layoutData>
-																	<FlexItemData growFactor="1"/>
+																	<FlexItemData growFactor="1" />
 																</core:layoutData>
 															</core:Icon>
 														</HBox>
@@ -179,7 +182,7 @@
 										</CustomListItem>
 									</List>
 									<layoutData>
-										<FlexItemData growFactor="1"/>
+										<FlexItemData growFactor="1" />
 									</layoutData>
 								</ScrollContainer>
 								<ScrollContainer
@@ -252,24 +255,25 @@
 															path: 'potentialPollenDonorsModel>pollination_attempts',
 															templateShareable: false
 														}"
-														
 													>
 														<CustomListItem>
 															<FormattedText
 																htmlText="{
-																	parts: ['potentialPollenDonorsModel>pollination_status', 'potentialPollenDonorsModel>ongoing', 'potentialPollenDonorsModel>reverse'],
+																	parts: [
+																		'potentialPollenDonorsModel>pollination_status',
+																		'potentialPollenDonorsModel>ongoing',
+																		'potentialPollenDonorsModel>reverse'
+																	],
 																	formatter: '.formatter.html_for_pollination_status_indicator'
 																}"
 																tooltip="{
-																	parts: [
-																	'potentialPollenDonorsModel>'],
+																	parts: ['potentialPollenDonorsModel>'],
 																	formatter: '.formatter.tooltip_for_pollination_status_indicator'
 																}"
-																/>
+															/>
 														</CustomListItem>
 													</HBox>
 													<!-- tooltip="status: {potentialPollenDonorsModel>pollination_status}, pollinated: {potentialPollenDonorsModel>pollination_at}, harvested: {potentialPollenDonorsModel>harvest_at}" -->
-															
 													<!-- visible="{= ${potentialPollenDonorsModel>pollen_type} === 'frozen' }" -->
 													<FormattedText
 														width="4.5rem"
@@ -301,146 +305,16 @@
 										</CustomListItem>
 									</List>
 									<layoutData>
-										<FlexItemData growFactor="2"/>
+										<FlexItemData growFactor="2" />
 									</layoutData>
 								</ScrollContainer>
 							</HBox>
 							<HBox>
-								<f:Card
-									class="sapUiMediumMargin"
-									width="300px"
-								>
-									<f:header>
-										<card:Header
-											title="New pollination attempt"
-											subtitle="Plant: {newTempPollinationInput>/florescencePlantName}"
-											iconSrc="sap-icon://add"
-											iconBackgroundColor="Accent5"
-										/>
-									</f:header>
-									<f:content>
-										<VBox class="sapUiSmallMargin">
-											<VBox class="sapUiTinyMarginBottom">
-												<Input
-													id="florescencePlantNameInput"
-													value="{newTempPollinationInput>/florescencePlantId} {newTempPollinationInput>/florescencePlantName}"
-													editable="false"
-													tooltip="{newTempPollinationInput>/florescencePlantId} {newTempPollinationInput>/florescencePlantName}"
-												/>
-												<HBox>
-													<Input
-														id="pollenDonorPlantNameInput"
-														value="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
-														editable="false"
-														tooltip="{newTempPollinationInput>/pollen_donor_plant_id} {newTempPollinationInput>/pollenDonorPlantName}"
-													/>
-													<Switch
-														state="{newTempPollinationInput>/goodPollenQuality}"
-														customTextOn="+"
-														customTextOff="-"
-														tooltip="Pollen Quality: Good / Bad"
-													>
-														<layoutData>
-															<FlexItemData growFactor="1"/>
-														</layoutData>
-													</Switch>
-												</HBox>
-											</VBox>
-											<HBox
-												justifyContent="SpaceBetween"
-												alignItems="Center"
-												class="sapUiTinyMarginBottom"
-											>
-												<DateTimePicker
-													width="11rem"
-													id="newTempPollinationDateTimePicker"
-													displayFormat="yyyy-MM-dd HH:mm"
-													valueFormat="yyyy-MM-dd HH:mm"
-													value="{
-														path: 'newTempPollinationInput>/pollinated_at'
-													}"
-													placeholder="Enter Date"
-													showCurrentTimeButton="true"
-												/>
-												<GenericTag
-													text="{
-														path: 'newTempPollinationInput>/pollen_type'
-													}"
-													design="StatusIconHidden"
-													status="{= (${newTempPollinationInput>/pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-												/>
-											</HBox>
-											<!-- <HBox> -->
-											<SegmentedButton
-												selectedKey="{
-													path: 'newTempPollinationInput>/location'
-												}"
-												class="sapUiTinyMarginBottom"
-												width="14rem"
-											>
-												<items>
-													<SegmentedButtonItem
-														text="{i18n>AppView.Indoor}"
-														key="indoor"
-													/>
-													<SegmentedButtonItem
-														text="{i18n>AppView.IndoorLED}"
-														key="indoor_led"
-													/>
-													<SegmentedButtonItem
-														text="{i18n>AppView.Outdoor}"
-														key="outdoor"
-													/>
-												</items>
-											</SegmentedButton>
-											<!-- </HBox> -->
-											<HBox>
-												<ColorPalette
-													id="newTempPollinationColorPalette"
-													colorSelect=".onColorSelect"
-													colors="{
-														path: 'newTempPollinationInput>/availableColorsRgb'
-													}"
-												/>
-												<FlexBox alignItems="Center">
-													<core:Icon
-														src="sap-icon://color-fill"
-														color="{
-															path: 'newTempPollinationInput>/label_color_rgb'
-														}"
-														size="3rem"
-													>
-														<core:layoutData>
-															<FlexItemData growFactor="1"/>
-														</core:layoutData>
-													</core:Icon>
-												</FlexBox>
-											</HBox>
-											<HBox justifyContent="SpaceBetween">
-												<StepInput
-													description="Flowers"
-													max="9"
-													min="1"
-													required="true"
-													textAlign="Center"
-													value="{newTempPollinationInput>/count_attempted}"
-												/>
-												<FlexBox>
-													<Button
-														enabled="{=
-															!!${newTempPollinationInput>/florescencePlantName} 
-															&amp;&amp; !!${newTempPollinationInput>/pollenDonorPlantName} 
-															&amp;&amp; ${newTempPollinationInput>/florescenceStatus} === 'flowering' 
-														}"
-														text="{i18n>AppView.Preview}"
-														type="Emphasized"
-														press=".onPressAddAsPollinationPreview"
-													/>
-												</FlexBox>
-											</HBox>
-										</VBox>
-									</f:content>
-								</f:Card>
+								<core:Fragment
+									fragmentName="pollination.ui.view.embedded.NewPollination"
+									type="XML"
+								/>
+								
 								<f:GridList
 									id="newPollinationsList"
 									headerText="New Pollinations (not saved, yet)"
@@ -548,7 +422,7 @@
 													}"
 												>
 													<core:layoutData>
-														<FlexItemData growFactor="1"/>
+														<FlexItemData growFactor="1" />
 													</core:layoutData>
 												</core:Icon>
 												<Button
@@ -565,37 +439,40 @@
 										<!-- </List> -->
 									</f:GridListItem>
 									<f:layoutData>
-										<FlexItemData growFactor="1"/>
+										<FlexItemData growFactor="1" />
 									</f:layoutData>
 								</f:GridList>
 								<!-- </HBox> -->
 							</HBox>
-							
-							<html:hr></html:hr>
-							
+							<html:hr>
+							</html:hr>
 							<f:GridList
 								headerText="Ongoing Pollinations"
 								id="ongoingPollinationsList"
 								items="{
 									path: 'ongoingPollinationsModel>/',
-									sorter: [
-										{
-											path: 'seed_capsule_plant_name',
-											group: '.getSeedCapsulePlantGroup'
-										}, {
-											path: 'florescence_id'
-										}, {
-											path: 'pollinated_at'
-										}, {
-											path: 'pollination_status',
-											descending: false
-										}
-									],
+									sorter: [{
+										path: 'seed_capsule_plant_name',
+										group: '.getSeedCapsulePlantGroup'
+									}, {
+										path: 'florescence_id'
+									}, {
+										path: 'pollinated_at'
+									}, {
+										path: 'pollination_status',
+										descending: false
+									}],
 									groupHeaderFactory: '.getGroupHeader',
-									filters : [
-										{ path : 'pollination_status', operator : 'EQ', value1 : 'attempt'},
-										{ path : 'pollination_status', operator : 'EQ', value1 : 'seed_capsule'}
-									], and: false								
+									filters: [{
+										path: 'pollination_status',
+										operator: 'EQ',
+										value1: 'attempt'
+									}, {
+										path: 'pollination_status',
+										operator: 'EQ',
+										value1: 'seed_capsule'
+									}],
+									and: false
 								}"
 								class="sapUiResponsiveContentPadding"
 							>
@@ -615,24 +492,24 @@
 										gridGap="0.5rem"
 									/>
 								</f:customLayout>
-
-								<f:GridListItem 
+								<f:GridListItem
 									highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-									class="formatByOngoing ongoingPollinationStatus">
-								
+									class="formatByOngoing ongoingPollinationStatus"
+								>
 									<f:customData>
-										<core:CustomData 
-											xmlns:core="sap.ui.core" 
-											key="pollination_status" 
-											value="{ongoingPollinationsModel>pollination_status}" 
-											writeToDom="true"/>
-										<core:CustomData 
-											xmlns:core="sap.ui.core" 
-											key="is_ongoing" 
-											value="{= ${ongoingPollinationsModel>ongoing}.toString() }" 
-											writeToDom="true"/>
+										<core:CustomData
+											xmlns:core="sap.ui.core"
+											key="pollination_status"
+											value="{ongoingPollinationsModel>pollination_status}"
+											writeToDom="true"
+										/>
+										<core:CustomData
+											xmlns:core="sap.ui.core"
+											key="is_ongoing"
+											value="{= ${ongoingPollinationsModel>ongoing}.toString() }"
+											writeToDom="true"
+										/>
 									</f:customData>
-
 									<VBox class="sapUiSmallMargin">
 										<HBox alignItems="Start">
 											<core:Icon
@@ -646,7 +523,7 @@
 												}"
 											>
 												<core:layoutData>
-													<FlexItemData growFactor="1"/>
+													<FlexItemData growFactor="1" />
 												</core:layoutData>
 											</core:Icon>
 											<!-- <Label
@@ -664,14 +541,14 @@
 													displayValue="{ongoingPollinationsModel>current_ripening_days} / {ongoingPollinationsModel>predicted_ripening_days}"
 													percentValue="{= (${ongoingPollinationsModel>current_ripening_days} / ${ongoingPollinationsModel>predicted_ripening_days}) * 100 }"
 													visible="{= !!${ongoingPollinationsModel>predicted_ripening_days} }"
-													
-													
 													state="{
-														parts: ['ongoingPollinationsModel>current_ripening_days', 'ongoingPollinationsModel>predicted_ripening_days'],
+														parts: [
+															'ongoingPollinationsModel>current_ripening_days',
+															'ongoingPollinationsModel>predicted_ripening_days'
+														],
 														formatter: '.formatter.seed_ripening_progress_indicator_state'
 													}"
-													
-													/>
+												/>
 											</VBox>
 											<!-- <FlexBox> -->
 											<Button
@@ -736,10 +613,8 @@
 									</VBox>
 								</f:GridListItem>
 							</f:GridList>
-
-							<html:hr></html:hr>
-
-
+							<html:hr>
+							</html:hr>
 							<f:GridList
 								items="{
 									path: 'ongoingPollinationsModel>/',
@@ -751,10 +626,16 @@
 										path: 'harvest_date',
 										descending: false
 									}],
-									filters : [
-										{ path : 'pollination_status', operator : 'EQ', value1 : 'seed'},
-										{ path : 'pollination_status', operator : 'EQ', value1 : 'germinated'}
-									], and: false
+									filters: [{
+										path: 'pollination_status',
+										operator: 'EQ',
+										value1: 'seed'
+									}, {
+										path: 'pollination_status',
+										operator: 'EQ',
+										value1: 'germinated'
+									}],
+									and: false
 								}"
 								class="sapUiResponsiveContentPadding"
 							>
@@ -779,7 +660,7 @@
 												}"
 											>
 												<core:layoutData>
-													<FlexItemData growFactor="1"/>
+													<FlexItemData growFactor="1" />
 												</core:layoutData>
 											</core:Icon>
 											<FlexBox>
@@ -853,12 +734,12 @@
 												}"
 											/>
 										</HBox>
-
 										<VBox>
 											<HBox
 												class="sapUiSmallMarginTop"
-												justifyContent="SpaceBetween">
-												<Title text="Seed Plantings"/>
+												justifyContent="SpaceBetween"
+											>
+												<Title text="Seed Plantings" />
 												<Button
 													icon="sap-icon://add"
 													tooltip="Add Seed Planting"
@@ -866,16 +747,18 @@
 													press=".onPressAddSeedPlanting"
 												/>
 											</HBox>
-
 											<List
-												items="{ 
+												items="{
 													path: 'ongoingPollinationsModel>seed_plantings/',
-													sorter: [{ path: 'planted_on',
-															descending: 'false'},
-															{ path: 'id',
-															descending: 'false'}],
-													templateShareable:false
-													}"
+													sorter: [{
+														path: 'planted_on',
+														descending: 'false'
+													}, {
+														path: 'id',
+														descending: 'false'
+													}],
+													templateShareable: false
+												}"
 												mode="SingleSelectMaster"
 												growing="true"
 												growingScrollToLoad="true"
@@ -887,105 +770,100 @@
 													<HBox>
 														<VBox
 															width="11rem"
-															class="sapUiTinyMarginBegin">
-															<Label 
-																text="Planted on {ongoingPollinationsModel>planted_on}" 
-																tooltip="Planted on {ongoingPollinationsModel>planted_on} (SeedPlanting ID {ongoingPollinationsModel>id})" 
-																class="sapUiTinyMarginBottom"/>
-															<Label 
-																text="{ongoingPollinationsModel>soil_name}" 
-																tooltip="{ongoingPollinationsModel>soil_name} (Soil ID {ongoingPollinationsModel>soil_id})" 
-																class="sapUiTinyMarginBottom"/>
-														<!-- </VBox>
+															class="sapUiTinyMarginBegin"
+														>
+															<Label
+																text="Planted on {ongoingPollinationsModel>planted_on}"
+																tooltip="Planted on {ongoingPollinationsModel>planted_on} (SeedPlanting ID {ongoingPollinationsModel>id})"
+																class="sapUiTinyMarginBottom"
+															/>
+															<Label
+																text="{ongoingPollinationsModel>soil_name}"
+																tooltip="{ongoingPollinationsModel>soil_name} (Soil ID {ongoingPollinationsModel>soil_id})"
+																class="sapUiTinyMarginBottom"
+															/>
+															<!-- </VBox>
 														<VBox
 															width="11rem"
 															class="sapUiTinyMarginBegin"> -->
-															<Label 
-																text="Status: {ongoingPollinationsModel>status}" 
-																tooltip="Status: {ongoingPollinationsModel>status}" 
+															<Label
+																text="Status: {ongoingPollinationsModel>status}"
+																tooltip="Status: {ongoingPollinationsModel>status}"
 																design="Bold"
-																class="sapUiTinyMarginBottom"/>
-															<Label 
-																text="{ongoingPollinationsModel>comment}" 
+																class="sapUiTinyMarginBottom"
+															/>
+															<Label
+																text="{ongoingPollinationsModel>comment}"
 																visible="{= !!${ongoingPollinationsModel>comment} }"
-																tooltip="{ongoingPollinationsModel>comment}" 
-																width="6rem"/>
-
-															<VBox
-																visible="{= ${ongoingPollinationsModel>status} === 'planted' }"
-															>
-																<Label 
+																tooltip="{ongoingPollinationsModel>comment}"
+																width="6rem"
+															/>
+															<VBox visible="{= ${ongoingPollinationsModel>status} === 'planted' }">
+																<Label
 																	text="{= 'Pred. Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
 																	tooltip="{= 'Predicted Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
-																	wrapping="true"/>
-																	
+																	wrapping="true"
+																/>
 																<ProgressIndicator
 																	class="sapUiSmallMarginBottom"
 																	displayValue="{ongoingPollinationsModel>current_germination_days} / {ongoingPollinationsModel>predicted_germination_days}"
 																	percentValue="{= (${ongoingPollinationsModel>current_germination_days} / ${ongoingPollinationsModel>predicted_germination_days}) * 100 }"
 																	visible="{= !!${ongoingPollinationsModel>predicted_germination_days} }"
-																	
 																	state="{
-																		parts: ['ongoingPollinationsModel>current_germination_days', 'ongoingPollinationsModel>predicted_germination_days'],
+																		parts: [
+																			'ongoingPollinationsModel>current_germination_days',
+																			'ongoingPollinationsModel>predicted_germination_days'
+																		],
 																		formatter: '.formatter.germination_progress_indicator_state'
 																	}"
 																	tooltip="{= 'Current Days: ' + ${ongoingPollinationsModel>current_germination_days}.toString() + ' Days \n' + 
-																	'Predicted Days: ' + ${ongoingPollinationsModel>predicted_germination_days}.toString() + ' Days \n' }"																	
-																	/>
+																		'Predicted Days: ' + ${ongoingPollinationsModel>predicted_germination_days}.toString() + ' Days \n' }"
+																/>
 															</VBox>
-
-															<VBox
-																visible="{= ${ongoingPollinationsModel>status} === 'germinated' }"
-															>
-																<Label 
+															<VBox visible="{= ${ongoingPollinationsModel>status} === 'germinated' }">
+																<Label
 																	text="{= 'Germinated after ' + ${ongoingPollinationsModel>germination_days}.toString() + ' days' }"
-																	wrapping="true"/>
+																	wrapping="true"
+																/>
 															</VBox>
-															
-
-															<VBox
-																visible="{= ${ongoingPollinationsModel>status} === 'abandoned' }"
-															>
-																<Label 
+															<VBox visible="{= ${ongoingPollinationsModel>status} === 'abandoned' }">
+																<Label
 																	text="{= 'Abandoned after ' + ${ongoingPollinationsModel>germination_days}.toString() + ' days' }"
-																	wrapping="true"/>
+																	wrapping="true"
+																/>
 															</VBox>
-
 														</VBox>
-														<VBox
-															class="sapUiTinyMarginBegin">
-														<CheckBox
-															text="Sterilized"
-															tooltip="Sterilized Soil or sterilized seed (e.g. with Chinosol)"
-															displayOnly="true"
-															selected="{ongoingPollinationsModel>sterilized}"
-														/>
-														<CheckBox
-															text="Soaked"
-															tooltip="Seed soaked in water"
-															displayOnly="true"
-															selected="{ongoingPollinationsModel>soaked}"
-														/>
-														<CheckBox
-															text="Covered"
-															tooltip="Covered"
-															displayOnly="true"
-															selected="{ongoingPollinationsModel>covered}"
-														/>
+														<VBox class="sapUiTinyMarginBegin">
+															<CheckBox
+																text="Sterilized"
+																tooltip="Sterilized Soil or sterilized seed (e.g. with Chinosol)"
+																displayOnly="true"
+																selected="{ongoingPollinationsModel>sterilized}"
+															/>
+															<CheckBox
+																text="Soaked"
+																tooltip="Seed soaked in water"
+																displayOnly="true"
+																selected="{ongoingPollinationsModel>soaked}"
+															/>
+															<CheckBox
+																text="Covered"
+																tooltip="Covered"
+																displayOnly="true"
+																selected="{ongoingPollinationsModel>covered}"
+															/>
 														</VBox>
 													</HBox>
-
-
 													<List
 														showNoData="false"
 														items="{
 															path: 'ongoingPollinationsModel>plants',
-															templateShareable:false
+															templateShareable: false
 														}"
 														showSeparators="Inner"
-														class="sapUiSmallMarginBeginEnd">
+														class="sapUiSmallMarginBeginEnd"
+													>
 														<CustomListItem>
-															
 															<GenericTag
 																text="{
 																	parts: ['ongoingPollinationsModel>id', 'ongoingPollinationsModel>plant_name'],
@@ -1004,16 +882,12 @@
 																tooltip="{ongoingPollinationsModel>plant_name}" /> -->
 														</CustomListItem>
 													</List>
-
 												</CustomListItem>
 											</List>
-
-
 										</VBox>
 									</VBox>
 								</f:GridListItem>
 							</f:GridList>
-
 						</VBox>
 					</f:content>
 				</f:DynamicPage>
