@@ -617,13 +617,18 @@
 
 								<f:GridListItem 
 									highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-									class="ongoingPollinationStatus">
+									class="formatByOngoing ongoingPollinationStatus">
 								
 									<f:customData>
 										<core:CustomData 
 											xmlns:core="sap.ui.core" 
 											key="pollination_status" 
 											value="{ongoingPollinationsModel>pollination_status}" 
+											writeToDom="true"/>
+										<core:CustomData 
+											xmlns:core="sap.ui.core" 
+											key="is_ongoing" 
+											value="{= ${ongoingPollinationsModel>ongoing}.toString() }" 
 											writeToDom="true"/>
 									</f:customData>
 
@@ -669,6 +674,7 @@
 											</VBox>
 											<!-- <FlexBox> -->
 											<Button
+												visible="{= !!${ongoingPollinationsModel>ongoing} }"
 												icon="sap-icon://edit"
 												type="Transparent"
 												press=".onPressEditOngoingPollination"
@@ -691,13 +697,6 @@
 												}"
 												class="sapUiTinyMarginBottom"
 											/>
-											<!-- <Label
-												visible="{=
-													!!${ongoingPollinationsModel>florescence_comment}
-												}"
-												text="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
-												tooltip="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
-											/> -->
 										</VBox>
 										<HBox wrap="Wrap">
 											<GenericTag

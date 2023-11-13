@@ -1,8 +1,4 @@
 
-.flowerHistoryCurrentMonth {
-  background-color: #f9ebe1;
-  /* outline: thick solid #00ff00; */
-}
 
 /* .inflorescenceColor {
     background-color: #fde9d9;
@@ -17,8 +13,7 @@
 } */
 
 
-
-
+/* Flower History */
 .flowering_state_cell[data-flowering_state='flowering'] {
   background-color: #e26b0a;
 }
@@ -31,6 +26,11 @@
   background-color: #fde9d9;
 }
 
+.flowerHistoryCurrentMonth {
+  background-color: #f9ebe1;
+  /* outline: thick solid #00ff00; */
+}
+
 /* //todo remove
 .flowering_state_cell[data-flowering_state='not_flowering'] {
   background-color: #fde9d9;  
@@ -39,6 +39,7 @@
 
 
 
+/* Pollination Boxes */
 
 .ongoingPollinationStatus[data-pollination_status='attempt'] {
   background-color: rgb(220, 223, 225);  
@@ -46,6 +47,22 @@
 
 .ongoingPollinationStatus[data-pollination_status='seed_capsule'] {
   background-color: #dfbfa5;
+}
+
+.formatByOngoing[data-is_ongoing="false"] {
+  /* boolean somehow does not work, as a workaround, we convert to string in the app.view  */
+  background-color: #a4a1a2;
+  background: repeating-linear-gradient(
+    45deg,
+    #bec6f9,
+    #bec6f9 10px,
+    rgb(232, 233, 239) 10px,
+    rgb(232, 233, 239) 20px
+  );
+  /* width: 2.125rem;
+  font-size: 0.6rem;
+  line-height: 2.125rem; */
+  /* color:aqua; */
 }
 
 /* .sapMBtnIcon {
