@@ -360,6 +360,7 @@
 														path: 'newTempPollinationInput>/pollinated_at'
 													}"
 													placeholder="Enter Date"
+													showCurrentTimeButton="true"
 												/>
 												<GenericTag
 													text="{
