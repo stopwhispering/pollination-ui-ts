@@ -89,3 +89,10 @@ export interface LPreviewImage{
     plant_preview_image_id: int,
     plant_preview_image_url: string
 }
+
+export interface StateModelData{
+    seed_capsule_selected: boolean,
+    pollen_donor_selected: boolean,
+    include_ongoing_pollinations: boolean,
+    include_finished_pollinations: boolean,
+}

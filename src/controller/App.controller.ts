@@ -6,7 +6,7 @@ import MessageToast from "sap/m/MessageToast";
 import FilterOperator from "sap/ui/model/FilterOperator";
 import Filter from "sap/ui/model/Filter";
 import Fragment from "sap/ui/core/Fragment";
-import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination } from "../interfaces/entitiesLocal";
+import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData } from "../interfaces/entitiesLocal";
 import Dialog from "sap/m/Dialog";
 import List from "sap/m/List";
 import formatter from "../model/formatter";
@@ -39,6 +39,7 @@ import GroupHeaderListItem from "sap/m/GroupHeaderListItem";
 import RetrainModelMenuHandler from "./custom/RetrainModelMenuHandler";
 import OverflowToolbarButton from "sap/m/OverflowToolbarButton";
 import ScrollContainer from "sap/m/ScrollContainer";
+import FilterSettingsDialogHandler from "./custom/FilterSettingsDialogHandler";
 
 /**
  * @namespace pollination.ui.controller
@@ -57,6 +58,7 @@ export default class App extends BaseController {
 	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
 	private _oPreviewImagePopoverHandler: PreviewImagePopoverHandler
 	private _oRetrainModelMenuHandler: RetrainModelMenuHandler;
+	private _oFilterSettingsDialogHandler: FilterSettingsDialogHandler;
 
 	public onInit() {
 
@@ -70,6 +72,14 @@ export default class App extends BaseController {
 			isMobile: browser.mobile
 		}), "view");
 
+		const oStateModelDefaultData: StateModelData = {
+			seed_capsule_selected: false,
+			pollen_donor_selected: false,
+			include_ongoing_pollinations: true,
+			include_finished_pollinations: false,
+		}
+		const oStateModel = new JSONModel(oStateModelDefaultData);
+		this.getView().setModel(oStateModel, "state");
 
 		// initialize settings model and it's handler (available colors and pollination status)
 		const oSettingsModel = new JSONModel(); // data type BResultsSettings
@@ -80,7 +90,7 @@ export default class App extends BaseController {
 		// initialize model with ongoing  pollinations in the database and it's handler
 		const oPollinationModel = new JSONModel(<PollinationRead[]>[]);
 		this.getView().setModel(oPollinationModel, "ongoingPollinationsModel");
-		this._oPollinationsHandler = new PollinationsHandler(oPollinationModel);
+		this._oPollinationsHandler = new PollinationsHandler(oPollinationModel, oStateModel);
 		this._oPollinationsHandler.loadPollinations();
 
 		// initialize empty model for new pollinations that were not saved, yet
@@ -99,10 +109,7 @@ export default class App extends BaseController {
 		this.getView().setModel(oSeedPlantingsModel, "seedPlantingsModel");
 		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
 
-		const oStateModel = new JSONModel({'seed_capsule_selected': false,
-											'pollen_donor_selected': false});
-		this.getView().setModel(oStateModel, "state");
-
+		this._oFilterSettingsDialogHandler = new FilterSettingsDialogHandler(oStateModel, this._oPollinationsHandler);
 	}
 
 	public async onSelectionChangedCurrentFlorescence(oEvent: Event) {
@@ -485,5 +492,8 @@ export default class App extends BaseController {
 		// update state model to have add button enabled if both florescence and pollen donor are selected
 		const oStateModel = <JSONModel>this.getView().getModel("state");
 		oStateModel.setProperty('/pollen_donor_selected', true);
+	}
+	onPressOpenFilterSettings(oEvent: Event) {
+		this._oFilterSettingsDialogHandler.openFilterSettingsDialog(this.getView());
 	}
 }

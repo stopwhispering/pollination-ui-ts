@@ -42,6 +42,11 @@
 							tooltip="Retrain Machine Learning Models"
 							press=".onPressOpenRetrainModelMenu"
 						/>
+						<OverflowToolbarButton
+							icon="sap-icon://settings"
+							tooltip="Settings and Filter"
+							press=".onPressOpenFilterSettings"
+						/>
 					</f:additionalContent>
 				</f:ShellBar>
 			</customHeader>
@@ -172,11 +177,6 @@
 													}"
 													displayShape="Square"
 												/>
-												<!-- <Button
-													icon="sap-icon://edit"
-													type="Transparent"
-													press=".onPressEditActiveFlorescence"
-												/> -->
 											</HBox>
 										</CustomListItem>
 									</List>
@@ -187,7 +187,7 @@
 								<!-- <FlexBox> -->
 								<ScrollContainer
 									height="18rem"
-									width="40rem"
+									width="38rem"
 									class="sapUiSmallMarginEnd"
 									vertical="true"
 									horizontal="false"
@@ -547,7 +547,7 @@
 							>
 								<f:customLayout>
 									<grid:GridBasicLayout
-										gridTemplateColumns="repeat(auto-fit, minmax(20rem, 20rem)
+										gridTemplateColumns="repeat(auto-fit, minmax(20rem, 21rem)
 											)"
 										gridGap="0.5rem"
 									/>

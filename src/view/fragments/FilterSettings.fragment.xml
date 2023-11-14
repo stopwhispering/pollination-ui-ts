@@ -1,0 +1,17 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm=".onConfirmSettings">
+		<filterItems>
+			<ViewSettingsFilterItem text="Pollinations" key="pollinations">
+				<items>
+					<ViewSettingsItem text="Current Pollinations" 
+						selected="{filterSettingsInput>/ongoing_pollinations}" />
+					<ViewSettingsItem text="Finished Pollinations" 
+						selected="{filterSettingsInput>/finished_pollinations}" />
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

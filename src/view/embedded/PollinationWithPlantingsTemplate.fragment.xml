@@ -29,6 +29,7 @@
 				</FlexBox>
 				<Button
 					icon="sap-icon://edit"
+					visible="{= !!${ongoingPollinationsModel>ongoing} }"
 					type="Transparent"
 					press=".onPressEditOngoingPollination"
 				/>
