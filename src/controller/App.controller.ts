@@ -228,8 +228,13 @@ export default class App extends BaseController {
 			aFilters.push(filter);
 		}
 
-		// update list binding
+		// update list binding for upper gridList
 		var oList = <GridList>this.byId("ongoingPollinationsList");
+		var oBinding = <ListBinding>oList.getBinding("items");
+		oBinding.filter(aFilters, "Application");
+
+		// update list binding for lower gridList
+		var oList = <GridList>this.byId("pollinationsWithPlantingsList");
 		var oBinding = <ListBinding>oList.getBinding("items");
 		oBinding.filter(aFilters, "Application");
 	}

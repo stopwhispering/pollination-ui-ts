@@ -383,7 +383,7 @@
 								<f:headerToolbar>
 									<Toolbar style="Clear">
 										<SearchField
-											placeholder="Filter Ongoing Pollinations by Plant Name, Plant ID, Pollen Type, or Pollination Date"
+											placeholder="Filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
 											liveChange=".onLiveChangeOngoingPollinationsFilter"
 											width="100%"
 										/>
@@ -522,6 +522,7 @@
 								<!-- @ui5ignore -->
 							</html:hr>
 							<f:GridList
+								id="pollinationsWithPlantingsList"
 								items="{
 									path: 'ongoingPollinationsModel>/',
 									sorter: [{
