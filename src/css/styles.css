@@ -42,7 +42,7 @@
 /* Pollination Boxes */
 
 .ongoingPollinationStatus[data-pollination_status='attempt'] {
-  background-color: rgb(220, 223, 225);  
+  background-color: rgb(220, 223, 225);
 }
 
 .ongoingPollinationStatus[data-pollination_status='seed_capsule'] {
@@ -63,6 +63,37 @@
   font-size: 0.6rem;
   line-height: 2.125rem; */
   /* color:aqua; */
+}
+
+.formatBySeedPlantingStatus[data-seed_planting_status="planted"] {
+  background-color: rgb(220, 223, 225);
+  border-radius: 5px;
+  border: 2px solid #d3d3d3;
+  padding: 5px;
+  margin-block-end: 0.3rem;
+}
+
+.formatBySeedPlantingStatus[data-seed_planting_status="germinated"] {
+  background-color: #dbf9db;
+  border-radius: 5px;
+  border: 2px solid #d3d3d3;
+  padding: 5px;
+  margin-block-end: 0.3rem;
+}
+
+.formatBySeedPlantingStatus[data-seed_planting_status="abandoned"] {
+  background-color: #a4a1a2;
+  background: repeating-linear-gradient(
+    45deg,
+    #bec6f9,
+    #bec6f9 10px,
+    rgb(232, 233, 239) 10px,
+    rgb(232, 233, 239) 20px
+  );
+  border-radius: 5px;
+  border: 2px solid #d3d3d3;
+  padding: 5px;
+  margin-block-end: 0.3rem;
 }
 
 /* .sapMBtnIcon {
