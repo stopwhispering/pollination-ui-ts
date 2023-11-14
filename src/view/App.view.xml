@@ -192,6 +192,7 @@
 									vertical="true"
 									horizontal="false"
 									focusable="true"
+									id="potentialPollenDonorsScrollContainer"
 								>
 									<List
 										id="potentialPollenDonorsList"

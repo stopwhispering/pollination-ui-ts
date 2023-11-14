@@ -38,6 +38,7 @@ import SeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 import GroupHeaderListItem from "sap/m/GroupHeaderListItem";
 import RetrainModelMenuHandler from "./custom/RetrainModelMenuHandler";
 import OverflowToolbarButton from "sap/m/OverflowToolbarButton";
+import ScrollContainer from "sap/m/ScrollContainer";
 
 /**
  * @namespace pollination.ui.controller
@@ -107,10 +108,17 @@ export default class App extends BaseController {
 	public async onSelectionChangedCurrentFlorescence(oEvent: Event) {
 		var florescence: Florescence = oEvent.getParameter('listItem').getBindingContext('currentFlorescencesModel').getObject();
 
+		// set scrollcontainer busy, not list, to have the busy indicator in the middle of the scrollcontainer
+		const oPotentialPollenDonorsScrollContainer = <ScrollContainer>this.byId('potentialPollenDonorsScrollContainer');
+		oPotentialPollenDonorsScrollContainer.setBusyIndicatorDelay(0);
+		oPotentialPollenDonorsScrollContainer.setBusy(true);
+
 		const oResults = <BResultsPotentialPollenDonors> await Util.get(Util.getServiceUrl('potential_pollen_donors/' + florescence.id));
 		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potential_pollen_donor_collection;
 		var oModel = new JSONModel(aPotentialPollenDonors);
 		this.getView().setModel(oModel, "potentialPollenDonorsModel");
+		
+		oPotentialPollenDonorsScrollContainer.setBusy(false);
 
 		// update state model to have add button enabled if both florescence and pollen donor are selected
 		const oStateModel = <JSONModel>this.getView().getModel("state");
