@@ -149,5 +149,4 @@ export default class formatter extends ManagedObject {
         }
         return text;
     }
-    }
 }
