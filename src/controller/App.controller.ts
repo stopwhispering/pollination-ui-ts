@@ -98,6 +98,10 @@ export default class App extends BaseController {
 		this.getView().setModel(oSeedPlantingsModel, "seedPlantingsModel");
 		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
 
+		const oStateModel = new JSONModel({'seed_capsule_selected': false,
+											'pollen_donor_selected': false});
+		this.getView().setModel(oStateModel, "state");
+
 	}
 
 	public async onSelectionChangedCurrentFlorescence(oEvent: Event) {
@@ -107,6 +111,11 @@ export default class App extends BaseController {
 		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potential_pollen_donor_collection;
 		var oModel = new JSONModel(aPotentialPollenDonors);
 		this.getView().setModel(oModel, "potentialPollenDonorsModel");
+
+		// update state model to have add button enabled if both florescence and pollen donor are selected
+		const oStateModel = <JSONModel>this.getView().getModel("state");
+		oStateModel.setProperty('/pollen_donor_selected', false);
+		oStateModel.setProperty('/seed_capsule_selected', true);
 	}
 
 
@@ -462,5 +471,11 @@ export default class App extends BaseController {
 		const oUnsavedPollination = <LUnsavedPollination>(<Control>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();
 		oUnsavedPollination.pollinated_at = Util.format_timestamp(new Date());
 		(<JSONModel>this.getView().getModel("newPollinationsModel")).updateBindings(false);
+	}
+	
+	onSelectionChangedPotentialPollenDonor(oEvent: Event) {
+		// update state model to have add button enabled if both florescence and pollen donor are selected
+		const oStateModel = <JSONModel>this.getView().getModel("state");
+		oStateModel.setProperty('/pollen_donor_selected', true);
 	}
 }

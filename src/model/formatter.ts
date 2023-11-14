@@ -2,6 +2,7 @@ import ManagedObject from "sap/ui/base/ManagedObject";
 import Util from "../controller/custom/Util";
 import { FlorescenceStatus, PollinationStatus } from "../interfaces/enums";
 import { BPollinationAttempt } from "../interfaces/entities";
+import List from "sap/m/List";
 
 /**
  * @namespace pollination.ui.model
@@ -147,5 +148,6 @@ export default class formatter extends ManagedObject {
             text = text.substring(0, 35) + '…';
         }
         return text;
+    }
     }
 }

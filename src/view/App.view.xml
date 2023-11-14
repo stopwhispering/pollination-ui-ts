@@ -208,6 +208,7 @@
 										growingScrollToLoad="true"
 										showNoData="false"
 										showSeparators="Inner"
+										selectionChange=".onSelectionChangedPotentialPollenDonor"
 									>
 										<CustomListItem highlight="{=
 											(${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 'None') 
@@ -307,10 +308,16 @@
 								</ScrollContainer>
 								<!-- </FlexBox> -->
 							</HBox>
+							<HBox 
+								width="32rem"
+								justifyContent="End">
 							<Button
 								icon="sap-icon://add"
+								enabled="{= !!${state>/seed_capsule_selected} &amp;&amp; !!${state>/pollen_donor_selected} }"
+								class="sapUiSmallMarginTop"
 								press=".onPressAddNewPreviewPollination"
 							/>
+							</HBox>
 							<HBox>
 								<f:GridList
 									id="newPollinationsList"
