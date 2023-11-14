@@ -1,4 +1,4 @@
-import { BActiveFlorescence } from "pollination/ui/interfaces/entities";
+import { BActiveFlorescence, BPotentialPollenDonor } from "pollination/ui/interfaces/entities";
 import formatter from "pollination/ui/model/formatter";
 import Popover from "sap/m/Popover";
 import ManagedObject from "sap/ui/base/ManagedObject";
@@ -23,7 +23,7 @@ export default class PreviewImagePopoverHandler extends ManagedObject {
         super();
     }
 
-    public openPreviewImagePopover(oAttachTo: View, oOpenBy: Control, oFlorescence: BActiveFlorescence
+    public openPreviewImagePopover(oAttachTo: View, oOpenBy: Control, oFlorescence: BActiveFlorescence | BPotentialPollenDonor
     ): void {
         // the popup is closed when hovering away. However, we can't destroy it upon closing as
         // hovering to another hover area happens too fast and would result in duplicate id errors.
@@ -40,7 +40,7 @@ export default class PreviewImagePopoverHandler extends ManagedObject {
             this._oImagePreviewPopover.openBy(oOpenBy, true);
     }
 
-    private _initializeFragment(oAttachTo: View, oOpenBy: Control, oFlorescence: BActiveFlorescence): void{
+    private _initializeFragment(oAttachTo: View, oOpenBy: Control, oFlorescence: BActiveFlorescence | BPotentialPollenDonor): void{
         Fragment.load({
             name: "pollination.ui.view.fragments.PreviewImagePopover",
             id: oAttachTo.getId(),
@@ -53,7 +53,7 @@ export default class PreviewImagePopoverHandler extends ManagedObject {
         });
     }
 
-    private _attach_data(oFlorescence: BActiveFlorescence): void {
+    private _attach_data(oFlorescence: BActiveFlorescence | BPotentialPollenDonor): void {
         const oPreviewImageData: LPreviewImage = {
             plant_id: oFlorescence.plant_id,
             plant_name: oFlorescence.plant_name,

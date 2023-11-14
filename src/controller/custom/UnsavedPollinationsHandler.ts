@@ -1,9 +1,10 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
-import { Florescence, LUnsavedPollination } from "pollination/ui/interfaces/entitiesLocal";
-import { PollinationCreate } from "pollination/ui/interfaces/entities";
+import { LUnsavedPollination } from "pollination/ui/interfaces/entitiesLocal";
+import { BActiveFlorescence, BPotentialPollenDonor, PollinationCreate } from "pollination/ui/interfaces/entities";
 import PollinationsHandler from "./PollinationsHandler";
+import { PollenQuality } from "pollination/ui/interfaces/enums";
 
 
 /**
@@ -40,15 +41,27 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
-	public async savePollination(oPollination: PollinationCreate) {
-		// const oSavedPollination = <LUnsavedPollination> await Util.post(Util.getServiceUrl('pollinations'), oPollination);
-		Util.post(Util.getServiceUrl('pollinations'), oPollination);
+	public async savePollination(oUnsavedPollination: LUnsavedPollination) {
+		// map all attributes from LUnsavedPollination to PollinationCreate
+		const oPollination: PollinationCreate = {
+			florescence_id: oUnsavedPollination.florescence_id,
+			pollen_quality: oUnsavedPollination.goodPollenQuality ? PollenQuality.GOOD : PollenQuality.BAD,
+			seed_capsule_plant_id: oUnsavedPollination.seed_capsule_plant_id,
+			pollen_donor_plant_id: oUnsavedPollination.pollen_donor_plant_id,
+			pollen_type: oUnsavedPollination.pollen_type!,
+			pollinated_at: oUnsavedPollination.pollinated_at,
+			label_color_rgb: oUnsavedPollination.label_color_rgb!,
+			location: oUnsavedPollination.location,
+			count_attempted: oUnsavedPollination.count_attempted,
+		}
+
+		await Util.post(Util.getServiceUrl('pollinations'), oPollination);
 
 		// having posted a new pollination, re-read the ongoing pollinations list
 		this._oPollinationsHandler.loadPollinations();
 
 		// remove saved new pollination from new pollinations model 
-		this.removePollination(oPollination);
+		this.removePollination(oUnsavedPollination);
 	}
 
 	public addPollination(oPollination: LUnsavedPollination) {
@@ -56,24 +69,27 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
-	public getAvailableColors(florescence: Florescence): string[] {
-		// determine available colors based on the colors we received from backend for the currently selected
-		// florescence and the colors we already used for unsaved pollinations 
+	public preview(oFlorescence: BActiveFlorescence, oPollenDonor: BPotentialPollenDonor) {
 
-		// clone available colors from those we received from backend so we don't modify the original below
-		var availabeColorsRgb = JSON.parse(JSON.stringify(florescence.available_colors_rgb));
-
-		// remove colors from unsaved pollinations
-		for (var i = 0; i < this._aUnsavedPollinations.length; i++) {
-			var pollination = this._aUnsavedPollinations[i];
-			if (florescence.id === pollination.florescence_id) {
-				var iIndex = availabeColorsRgb.indexOf(pollination.label_color_rgb);
-				if (iIndex >= 0) {
-					availabeColorsRgb.splice(iIndex, 1);
-				}
-			}
+		// create unsaved pollination using mainly default values
+		const oNewPollination: LUnsavedPollination = {
+			florescence_id: oFlorescence.id,
+			florescence_comment: oFlorescence.comment,
+			seedCapsulePlantName: oFlorescence.plant_name,
+			seed_capsule_plant_id: oFlorescence.plant_id,
+			pollenDonorPlantName: oPollenDonor.plant_name,
+			pollen_donor_plant_id: oPollenDonor.plant_id,
+			pollen_type: oPollenDonor.pollen_type,
+			
+			// defaults
+			pollinated_at: Util.format_timestamp(new Date()),
+			location: 'indoor',  // todo enum
+			count_attempted: 1,
+			label_color_rgb: "transparent",
+			// pollen_quality: PollenQuality.GOOD,
+			goodPollenQuality: true,  // not saved to backend but used to determine pollen_quality
 		}
-		return availabeColorsRgb;
+		this.addPollination(oNewPollination);
 	}
 
 }

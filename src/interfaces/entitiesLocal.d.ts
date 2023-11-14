@@ -5,22 +5,20 @@ import { FlorescenceStatus, FlorescenceStatus } from "./enums";
  * @namespace pollination.ui.interfaces.entitiesLocal
  */
 export interface LUnsavedPollination {
-    // pollination_timestamp: string;
     pollinated_at: string;
     location: string;
     count_attempted: 1;
     florescence_id: int;
-    florescencePlantName?: string;
-    florescencePlantId?: int;
-    florescenceStatus?: string;
+    seedCapsulePlantName: string;
+    seed_capsule_plant_id: int;
+    // florescenceStatus: string;
     florescence_comment?: string;
-    availableColorsRgb?: string[];
     label_color_rgb?: string;
-    pollenDonorPlantName?: string;
-    pollen_donor_plant_id?: int;
-    pollen_type?: string;
-    goodPollenQuality?: boolean;  // not saved to backend
-    pollen_quality: PollenQuality;  // mapped from goodPollenQuality
+    pollenDonorPlantName: string;
+    pollen_donor_plant_id: int;
+    pollen_type: string;
+    goodPollenQuality: boolean;  // not saved to backend
+    // pollen_quality: PollenQuality;  // mapped from goodPollenQuality when saving
 }
 
 export interface Florescence {
@@ -54,11 +52,11 @@ export interface LIdToFragmentMap {
   }
 
 export interface LNewFlorescenceInputData {
-plant_id: int|undefined;
-plant_name: string|undefined,
-florescence_status: FlorescenceStatus;
-inflorescence_appeared_at: string|undefined,
-comment: string|undefined,
+    plant_id: int|undefined;
+    plant_name: string|undefined,
+    florescence_status: FlorescenceStatus;
+    inflorescence_appeared_at: string|undefined,
+    comment: string|undefined,
 }
 
 export interface LEditPollinationInput extends PollinationRead{

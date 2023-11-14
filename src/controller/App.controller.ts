@@ -19,15 +19,12 @@ import ListBinding from "sap/ui/model/ListBinding";
 import SearchField from "sap/m/SearchField";
 import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers, SeedPlantingRead } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
-import MLModelTrainer from "./custom/MLModelTrainer";
 import Util from "./custom/Util";
 import NewFlorescenceDialogHandler from "./custom/NewFlorescenceDialogHandler";
 import PollinationsHandler from "./custom/PollinationsHandler";
-import PreviewPollinationHandler from "./custom/PreviewPollinationHandler";
 import SettingsHandler from "./custom/SettingsHandler";
 import ActiveFlorescencesHandler from "./custom/ActiveFlorescencesHandler";
 import EditFlorescenceDialogHandler from "./custom/EditFlorescenceDialogHandler";
-import ListItem from "sap/ui/core/ListItem";
 import ListItemBase from "sap/m/ListItemBase";
 import UnsavedPollinationsHandler from "./custom/UnsavedPollinationsHandler";
 import EditPollinationDialogHandler from "./custom/EditPollinationDialogHandler";
@@ -39,7 +36,6 @@ import NewSeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 import CustomListItem from "sap/m/CustomListItem";
 import SeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
 import GroupHeaderListItem from "sap/m/GroupHeaderListItem";
-import IconPool from "sap/ui/core/IconPool";
 import RetrainModelMenuHandler from "./custom/RetrainModelMenuHandler";
 import OverflowToolbarButton from "sap/m/OverflowToolbarButton";
 
@@ -49,7 +45,6 @@ import OverflowToolbarButton from "sap/m/OverflowToolbarButton";
 export default class App extends BaseController {
 
 	public formatter: formatter = new formatter();
-	private _oTemporaryPollinationsHandler: PreviewPollinationHandler;
 	private _oSettingsHandler: SettingsHandler;
 	private _oActiveFlorescencesHandler: ActiveFlorescencesHandler;
 	private _oActiveSeedPlantingsHandler: ActiveSeedPlantingsHandler;
@@ -92,15 +87,10 @@ export default class App extends BaseController {
 		this.getView().setModel(oUnsavedPollinationsModel, "newPollinationsModel");
 		this._oUnsavedPollinationsHandler = new UnsavedPollinationsHandler(oUnsavedPollinationsModel, this._oPollinationsHandler);		
 
-		// initialize empty model for new temporary pollination (added to the new pollinations by add button)
-		var oTemporaryPollinationModel = new JSONModel();  // todo entity
-		this.getView().setModel(oTemporaryPollinationModel, "newTempPollinationInput");
-		this._oTemporaryPollinationsHandler = new PreviewPollinationHandler(oTemporaryPollinationModel, this._oUnsavedPollinationsHandler)
-
 		// initialize active florescence model and it's handler (active florescences)
 		const oFlorescenceModel = new JSONModel();  // data type BActiveFlorescence[]
 		this.getView().setModel(oFlorescenceModel, "currentFlorescencesModel");
-		this._oActiveFlorescencesHandler = new ActiveFlorescencesHandler(oFlorescenceModel, this._oTemporaryPollinationsHandler);
+		this._oActiveFlorescencesHandler = new ActiveFlorescencesHandler(oFlorescenceModel);
 		this._oActiveFlorescencesHandler.loadFlorescences();
 
 		// initialize active seed planting model and it's handler
@@ -113,27 +103,12 @@ export default class App extends BaseController {
 	public async onSelectionChangedCurrentFlorescence(oEvent: Event) {
 		var florescence: Florescence = oEvent.getParameter('listItem').getBindingContext('currentFlorescencesModel').getObject();
 
-		// set selected florescence plant in new pollination temp model
-		this._oTemporaryPollinationsHandler.setFlorescencePlant(florescence);
-
-		// update the available colors for the florescence
-		const aAvailableColors: string[] = this._oUnsavedPollinationsHandler.getAvailableColors(florescence);
-		this._oTemporaryPollinationsHandler.setAvailableColors(aAvailableColors);
-
 		const oResults = <BResultsPotentialPollenDonors> await Util.get(Util.getServiceUrl('potential_pollen_donors/' + florescence.id));
 		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potential_pollen_donor_collection;
 		var oModel = new JSONModel(aPotentialPollenDonors);
 		this.getView().setModel(oModel, "potentialPollenDonorsModel");
-
-		this._oTemporaryPollinationsHandler.resetTempPollinationPollen();
 	}
 
-	public onSelectionChangedPollenDonor(oEvent: Event) {
-		const oListItem = <ListItem>oEvent.getParameter('listItem')
-		const oPollenDonor = <BPotentialPollenDonor>oListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
-
-		this._oTemporaryPollinationsHandler.setPollenDonorPlant(oPollenDonor);
-	}
 
 	public getPollenTypeGroup(oContext: Context) {
 		//grouper for Pollen Type
@@ -181,53 +156,14 @@ export default class App extends BaseController {
 		};
 	}	
 
-	public getGroupHeader(oGroup) {
+	public getGroupHeader(oGroup: any) {
 		return new GroupHeaderListItem({
 			title : oGroup.key
 		})
 	}
 
-	// public getPollinationStatusComparator(a: string, b: string) {
-	// 	//receives the results of getPollinationStatusGroup for two items as inputs
-	// 	//return numbered output for custom sorting
-	// 	//cf sap.ui.model.Sorter.defaultComparator
-	// 	const orderMapping: any = {
-	// 		'ATTEMPT': 1,
-	// 		'SEED_CAPSULE': 2,
-	// 		'SEED': 3,
-	// 		'GERMINATED': 4
-	// 	};
-	// 	const scoreA = orderMapping[a];
-	// 	const scoreB = orderMapping[b];
-
-	// 	if (scoreA < scoreB) {
-	// 		return -1;
-	// 	} else {
-	// 		return 1;
-	// 	}
-	// }
-
 	public getGenusGroup(oContext: Context) {
 		return oContext.getProperty('genus');
-	}
-
-	public onColorSelect(oEvent: Event) {
-		const sColor = oEvent.getParameter('value');
-		this._oTemporaryPollinationsHandler.setLabelColorRGB(sColor)
-	}
-
-	public onPressAddAsPollinationPreview(oEvent: Event) {
-		// get selected florescence and selected pollen donor
-		const oActiveFlorescencesList = <List>this.getView().byId('activeFlorescencesList');
-		const oSelectedFlorescenceListItem = <ListItemBase>oActiveFlorescencesList.getSelectedItem(); // todo entity
-		const oFlorescence = <BActiveFlorescence>oSelectedFlorescenceListItem.getBindingContext('currentFlorescencesModel')!.getObject()
-		
-		const oPollenDonorList = <List>this.getView().byId('potentialPollenDonorsList');
-		var oSelectedPollenDonorListItem = <ListItemBase>oPollenDonorList.getSelectedItem();
-		var oSelectedPollenDonor = <BPotentialPollenDonor>oSelectedPollenDonorListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
-		
-		this._oTemporaryPollinationsHandler.preview(oFlorescence, oSelectedPollenDonor)
-
 	}
 
 
@@ -238,8 +174,16 @@ export default class App extends BaseController {
 
 	public onPressSaveNewPollinationButton(oEvent: Event) {
 		const oControl = <Control>oEvent.getSource()
-		const oPollination = <PollinationCreate>oControl.getBindingContext("newPollinationsModel")!.getObject();
-		this._oUnsavedPollinationsHandler.savePollination(oPollination)
+		const oUnsavedPollination = <LUnsavedPollination>oControl.getBindingContext("newPollinationsModel")!.getObject();
+
+		if (!oUnsavedPollination.label_color_rgb 
+			|| oUnsavedPollination.label_color_rgb === '' 
+			|| oUnsavedPollination.label_color_rgb === 'transparent') {
+			MessageToast.show('Choose Color first.')
+			return;
+		}
+
+		this._oUnsavedPollinationsHandler.savePollination(oUnsavedPollination)
 	}
 
 
@@ -456,5 +400,67 @@ export default class App extends BaseController {
 			this._oRetrainModelMenuHandler = new RetrainModelMenuHandler();
 		}
 		this._oRetrainModelMenuHandler.openRetrainModelMenu(this.getView(), oButton);
+	}
+	onPressAddNewPreviewPollination(oEvent: Event) {
+		//add new unsaved pollination to the list
+		// get selected florescence and selected pollen donor
+		const oActiveFlorescencesList = <List>this.getView().byId('activeFlorescencesList');
+		const oSelectedFlorescenceListItem = <ListItemBase>oActiveFlorescencesList.getSelectedItem(); // todo entity
+		const oFlorescence = <BActiveFlorescence>oSelectedFlorescenceListItem.getBindingContext('currentFlorescencesModel')!.getObject()
+		
+		const oPollenDonorList = <List>this.getView().byId('potentialPollenDonorsList');
+		var oSelectedPollenDonorListItem = <ListItemBase>oPollenDonorList.getSelectedItem();
+		var oSelectedPollenDonor = <BPotentialPollenDonor>oSelectedPollenDonorListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
+		
+		// this._oTemporaryPollinationsHandler.preview(oFlorescence, oSelectedPollenDonor)
+		this._oUnsavedPollinationsHandler.preview(oFlorescence, oSelectedPollenDonor);
+	}
+
+	getAvailableColorsForUnsavedPollination(oUnsavedPollination: LUnsavedPollination){
+		const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel");
+		const aUnsavedPollinations: LUnsavedPollination[] = oUnsavedPollinationsModel.getData();
+
+		// get available colors for the florescence
+		const oFlorescenceModel = <JSONModel>this.getView().getModel("currentFlorescencesModel");
+		const aFlorescences = <BActiveFlorescence[]>oFlorescenceModel.getData();
+		const oFlorescence = aFlorescences.find((florescence) => {
+			return florescence.id === oUnsavedPollination.florescence_id;
+		});
+		if (!oFlorescence){
+			MessageToast.show('Florescence not found for unsaved pollination');
+			throw new Error('Florescence not found for unsaved pollination');
+		}
+		const aAvailableColors = JSON.parse(JSON.stringify(oFlorescence.available_colors_rgb));
+
+		// remove colors already used for other (not same) unsaved pollinations
+		aUnsavedPollinations.forEach((o) => {
+			if (o !== oUnsavedPollination 
+				&& o.florescence_id === oUnsavedPollination.florescence_id 
+				&& !!o.label_color_rgb){
+				const iIndex = aAvailableColors.indexOf(o.label_color_rgb);
+				if (iIndex >= 0){
+					aAvailableColors.splice(iIndex, 1);
+				}
+			}
+		});
+
+		return aAvailableColors;
+
+	}
+
+	public onColorSelect(oEvent: Event) {
+		const sColor = oEvent.getParameter('value');
+		const oUnsavedPollination = <LUnsavedPollination>(<Control>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();
+		oUnsavedPollination.label_color_rgb = sColor;
+
+		const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel");
+		oUnsavedPollinationsModel.updateBindings(true);  // have available colors in all other unsaved pollinations updated, too
+
+		// this._oUnsavedPollinationsHandler.setLabelColorRGB(sColor)
+	}
+	onPressSetNowButton(oEvent: Event) {
+		const oUnsavedPollination = <LUnsavedPollination>(<Control>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();
+		oUnsavedPollination.pollinated_at = Util.format_timestamp(new Date());
+		(<JSONModel>this.getView().getModel("newPollinationsModel")).updateBindings(false);
 	}
 }

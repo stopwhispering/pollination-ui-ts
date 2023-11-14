@@ -3,7 +3,6 @@
 	xmlns:core="sap.ui.core"
 	xmlns="sap.m"
 	xmlns:f="sap.f"
-	xmlns:card="sap.f.cards"
 	xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	core:require="{
@@ -208,7 +207,6 @@
 										growingScrollToLoad="true"
 										showNoData="false"
 										showSeparators="Inner"
-										selectionChange="onSelectionChangedPollenDonor"
 									>
 										<CustomListItem highlight="{=
 											(${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 'None') 
@@ -273,8 +271,6 @@
 															/>
 														</CustomListItem>
 													</HBox>
-													<!-- tooltip="status: {potentialPollenDonorsModel>pollination_status}, pollinated: {potentialPollenDonorsModel>pollination_at}, harvested: {potentialPollenDonorsModel>harvest_at}" -->
-													<!-- visible="{= ${potentialPollenDonorsModel>pollen_type} === 'frozen' }" -->
 													<FormattedText
 														width="4.5rem"
 														htmlText="{
@@ -309,15 +305,13 @@
 									</layoutData>
 								</ScrollContainer>
 							</HBox>
+							<Button icon="sap-icon://add" 
+								press=".onPressAddNewPreviewPollination" />
 							<HBox>
-								<core:Fragment
-									fragmentName="pollination.ui.view.embedded.NewPollination"
-									type="XML"
-								/>
-								
+
 								<f:GridList
 									id="newPollinationsList"
-									headerText="New Pollinations (not saved, yet)"
+									headerText="Unsaved Pollinations"
 									items="{
 										path: 'newPollinationsModel>/'
 									}"
@@ -325,126 +319,27 @@
 								>
 									<f:customLayout>
 										<grid:GridBasicLayout
-											gridTemplateColumns="repeat(auto-fit, minmax(16rem, 16rem)
+											gridTemplateColumns="repeat(auto-fit, minmax(16rem, 18rem)
 												)"
 											gridGap="0.5rem"
 										/>
 									</f:customLayout>
 									<f:GridListItem highlight="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
-										<VBox class="sapUiSmallMargin">
-											<HBox>
-												<VBox>
-													<FormattedText
-														htmlText="&lt;strong&gt;{
-															path: 'newPollinationsModel>seed_capsule_plant_id'
-														}&lt;/strong&gt; 
-															{
-															path: 'newPollinationsModel>seedCapsulePlantName'
-														} &lt;strong&gt;☓&lt;/strong&gt; 
-															&lt;strong&gt;{
-															path: 'newPollinationsModel>pollen_donor_plant_id'
-														}&lt;/strong&gt; 
-															{
-															path: 'newPollinationsModel>pollenDonorPlantName'
-														}"
-														class="sapUiTinyMarginBottom"
-													/>
-													<Label
-														visible="{=
-															!!${newPollinationsModel>florescence_comment}
-														}"
-														text="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
-														tooltip="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
-													/>
-												</VBox>
-												<Button
-													id="BadgedButton"
-													class="sapUiTinyMarginBeginEnd"
-													icon="sap-icon://delete"
-													type="Transparent"
-													press=".onPressDeleteNewPollinationButton"
-												/>
-											</HBox>
-											<HBox>
-												<GenericTag
-													text="{
-														path: 'newPollinationsModel>pollinated_at'
-													}"
-													design="StatusIconHidden"
-													class="sapUiTinyMarginEnd"
-												/>
-												<GenericTag
-													visible="{= (!!${newPollinationsModel>count_attempted}) }"
-													text="{newPollinationsModel>count_attempted} fl."
-													tooltip="{newPollinationsModel>count_attempted} flower(s)"
-													design="StatusIconHidden"
-													class="sapUiTinyMarginEnd"
-													status="Warning"
-												/>
-											</HBox>
-											<HBox>
-												<GenericTag
-													text="{
-														path: 'newPollinationsModel>pollen_type'
-													}"
-													design="StatusIconHidden"
-													status="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-													class="sapUiTinyMarginEnd"
-												/>
-												<GenericTag
-													text="{
-														path: 'newPollinationsModel>locationText'
-													}"
-													design="StatusIconHidden"
-													class="sapUiTinyMarginEnd"
-												/>
-												<GenericTag
-													text="{=
-														${newPollinationsModel>pollen_quality}
-													}"
-													tooltip="Pollen Quality: {newPollinationsModel>pollen_quality}"
-													design="StatusIconHidden"
-													class="sapUiTinyMarginEnd"
-													status="{=
-														${newPollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
-													}"
-												/>
-											</HBox>
-											<HBox>
-												<core:Icon
-													src="sap-icon://color-fill"
-													color="{
-														path: 'newPollinationsModel>label_color_rgb'
-													}"
-													size="3rem"
-													tooltip="{
-														path: 'newPollinationsModel>label_color_rgb'
-													}"
-												>
-													<core:layoutData>
-														<FlexItemData growFactor="1" />
-													</core:layoutData>
-												</core:Icon>
-												<Button
-													text="Save"
-													type="Emphasized"
-													press=".onPressSaveNewPollinationButton"
-												/>
-											</HBox>
-											<!-- </VBox> -->
-											<!-- </f:content> -->
-											<!-- </f:Card> -->
-										</VBox>
-										<!-- </CustomListItem> -->
-										<!-- </List> -->
+										
+											<core:Fragment
+												fragmentName="pollination.ui.view.embedded.UnsavedPollination"
+												type="XML"
+											/>
+
 									</f:GridListItem>
 									<f:layoutData>
 										<FlexItemData growFactor="1" />
 									</f:layoutData>
 								</f:GridList>
-								<!-- </HBox> -->
 							</HBox>
+							<!-- @ui5ignore -->
 							<html:hr>
+							<!-- @ui5ignore -->
 							</html:hr>
 							<f:GridList
 								headerText="Ongoing Pollinations"
@@ -613,7 +508,9 @@
 									</VBox>
 								</f:GridListItem>
 							</f:GridList>
+							<!-- @ui5ignore -->
 							<html:hr>
+							<!-- @ui5ignore -->
 							</html:hr>
 							<f:GridList
 								items="{
@@ -646,6 +543,7 @@
 										gridGap="0.5rem"
 									/>
 								</f:customLayout>
+
 								<f:GridListItem highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
 									<VBox class="sapUiSmallMargin">
 										<HBox alignItems="Center">
@@ -874,12 +772,6 @@
 																status="Success"
 																class="sapUiTinyMarginEnd"
 															/>
-															<!-- <Label
-																text="{ongoingPollinationsModel>id}"
-																class="sapUiTinyMarginEnd" />
-															<Label
-																text="{ongoingPollinationsModel>plant_name}"
-																tooltip="{ongoingPollinationsModel>plant_name}" /> -->
 														</CustomListItem>
 													</List>
 												</CustomListItem>
