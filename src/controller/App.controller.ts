@@ -110,6 +110,7 @@ export default class App extends BaseController {
 		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
 
 		this._oFilterSettingsDialogHandler = new FilterSettingsDialogHandler(oStateModel, this._oPollinationsHandler);
+	
 	}
 
 	public async onSelectionChangedCurrentFlorescence(oEvent: Event) {
@@ -228,15 +229,17 @@ export default class App extends BaseController {
 			aFilters.push(filter);
 		}
 
-		// update list binding for upper gridList
+		// update list binding for upper gridList (include static filter)
 		var oList = <GridList>this.byId("ongoingPollinationsList");
 		var oBinding = <ListBinding>oList.getBinding("items");
-		oBinding.filter(aFilters, "Application");
+		// to allow live-filtering without losing the static filters, we need to set the filter type to "Control"
+		// (static filter is of type "Application" by default which would override the live-filter)
+		oBinding.filter(aFilters, "Control");
 
-		// update list binding for lower gridList
+		// update list binding for lower gridList (include static filter)
 		var oList = <GridList>this.byId("pollinationsWithPlantingsList");
 		var oBinding = <ListBinding>oList.getBinding("items");
-		oBinding.filter(aFilters, "Application");
+		oBinding.filter(aFilters, "Control");
 	}
 
 
