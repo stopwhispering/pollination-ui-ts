@@ -52,7 +52,7 @@
 							<HBox alignItems="Start">
 								<ScrollContainer
 									height="18rem"
-									width="100%"
+									width="31rem"
 									vertical="true"
 									horizontal="false"
 									focusable="true"
@@ -184,9 +184,10 @@
 										<FlexItemData growFactor="1" />
 									</layoutData>
 								</ScrollContainer>
+								<!-- <FlexBox> -->
 								<ScrollContainer
 									height="18rem"
-									width="100%"
+									width="40rem"
 									class="sapUiSmallMarginEnd"
 									vertical="true"
 									horizontal="false"
@@ -304,11 +305,13 @@
 										<FlexItemData growFactor="2" />
 									</layoutData>
 								</ScrollContainer>
+								<!-- </FlexBox> -->
 							</HBox>
-							<Button icon="sap-icon://add" 
-								press=".onPressAddNewPreviewPollination" />
+							<Button
+								icon="sap-icon://add"
+								press=".onPressAddNewPreviewPollination"
+							/>
 							<HBox>
-
 								<f:GridList
 									id="newPollinationsList"
 									headerText="Unsaved Pollinations"
@@ -325,12 +328,10 @@
 										/>
 									</f:customLayout>
 									<f:GridListItem highlight="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
-										
-											<core:Fragment
-												fragmentName="pollination.ui.view.embedded.UnsavedPollination"
-												type="XML"
-											/>
-
+										<core:Fragment
+											fragmentName="pollination.ui.view.embedded.UnsavedPollination"
+											type="XML"
+										/>
 									</f:GridListItem>
 									<f:layoutData>
 										<FlexItemData growFactor="1" />
@@ -339,7 +340,7 @@
 							</HBox>
 							<!-- @ui5ignore -->
 							<html:hr>
-							<!-- @ui5ignore -->
+								<!-- @ui5ignore -->
 							</html:hr>
 							<f:GridList
 								headerText="Ongoing Pollinations"
@@ -510,7 +511,7 @@
 							</f:GridList>
 							<!-- @ui5ignore -->
 							<html:hr>
-							<!-- @ui5ignore -->
+								<!-- @ui5ignore -->
 							</html:hr>
 							<f:GridList
 								items="{
@@ -543,7 +544,6 @@
 										gridGap="0.5rem"
 									/>
 								</f:customLayout>
-
 								<f:GridListItem highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
 									<VBox class="sapUiSmallMargin">
 										<HBox alignItems="Center">
