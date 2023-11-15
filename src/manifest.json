@@ -40,7 +40,7 @@
 		},
 
 		"dependencies": {
-			"minUI5Version": "1.104.0",
+			"minUI5Version": "1.120.1",
 			"libs": {
 				"sap.ui.core": {},
 				"sap.ui.layout": {},
@@ -80,6 +80,9 @@
 			"css": [
 				{
 					"uri": "css/styles.css"
+				},
+				{	
+					"uri": "control/TrafficLight.css"
 				}
 			]
 		}

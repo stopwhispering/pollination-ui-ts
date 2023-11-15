@@ -1,0 +1,101 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    core:require="{
+        Helper: 'pollination/ui/util/Helper',
+        addMouseOverDelegate: 'pollination/ui/util/addMouseOverDelegate',
+        addMouseOverDelegatePollenDonor: 'pollination/ui/util/addMouseOverDelegatePollenDonor'
+    }"
+>
+    <CustomListItem highlight="{=
+        (${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 'None') 
+       }">
+        <HBox>
+            <!-- <CheckBox selected="{completed}"  /> -->
+            <HBox justifyContent="Center">
+                <Avatar
+                    displaySize="XS"
+                    showBorder="true"
+                    initials="{= ${potentialPollenDonorsModel>plant_name}.substr(0,2) }"
+                    src="{
+                        path: 'potentialPollenDonorsModel>plant_preview_image_id',
+                        formatter: '.formatter.getImageUrlAvatarXS'
+                    }"
+                    tooltip="{
+                        path: 'potentialPollenDonorsModel>plant_preview_image_id',
+                        formatter: 'addMouseOverDelegatePollenDonor'
+                    }"
+                    displayShape="Square"
+                />
+                <Text
+                    text="{potentialPollenDonorsModel>plant_id}"
+                    class="sapUiTinyMarginBegin"
+                    width="1.6rem"
+                />
+                <Text
+                    text="{potentialPollenDonorsModel>plant_name}"
+                    class="sapUiTinyMarginBeginEnd"
+                    width="16rem"
+                />
+                <FormattedText
+                    width="2.5rem"
+                    htmlText="{
+                        parts: ['potentialPollenDonorsModel>probability_pollination_to_seed'],
+                        formatter: '.formatter.html_for_pollination_probability'
+                    }"
+                    tooltip="{= ${potentialPollenDonorsModel>probability_pollination_to_seed}.toString() + '%' }"
+                    class="sapUiTinyMarginBeginEnd"
+                />
+                <HBox
+                    width="5.5rem"
+                    items="{
+                        path: 'potentialPollenDonorsModel>pollination_attempts',
+                        templateShareable: false
+                    }"
+                >
+                    <CustomListItem>
+                        <FormattedText
+                            htmlText="{
+                                parts: [
+                                    'potentialPollenDonorsModel>pollination_status',
+                                    'potentialPollenDonorsModel>ongoing',
+                                    'potentialPollenDonorsModel>reverse'
+                                ],
+                                formatter: '.formatter.html_for_pollination_status_indicator'
+                            }"
+                            tooltip="{
+                                parts: ['potentialPollenDonorsModel>'],
+                                formatter: '.formatter.tooltip_for_pollination_status_indicator'
+                            }"
+                        />
+                    </CustomListItem>
+                </HBox>
+                <FormattedText
+                    width="4.5rem"
+                    htmlText="{
+                        path: 'potentialPollenDonorsModel>count_stored_pollen_containers',
+                        formatter: '.formatter.html_for_count_stored_pollen_containers'
+                    }"
+                    tooltip="{= ${potentialPollenDonorsModel>count_stored_pollen_containers} +
+                        ' container(s) left' }"
+                    class="sapUiTinyMarginBeginEnd"
+                />
+                <HBox
+                    width="4.5rem"
+                    items="{
+                        path: 'potentialPollenDonorsModel>resulting_plants',
+                        templateShareable: false
+                    }"
+                >
+                    <CustomListItem>
+                        <Label
+                            text="{= (${potentialPollenDonorsModel>reverse} ? '(🌱)' : '🌱' ) }"
+                            tooltip="{= ${potentialPollenDonorsModel>plant_id} +
+                                ' '+ ${potentialPollenDonorsModel>plant_name} }"
+                        />
+                    </CustomListItem>
+                </HBox>
+            </HBox>
+        </HBox>
+    </CustomListItem>
+</core:FragmentDefinition>

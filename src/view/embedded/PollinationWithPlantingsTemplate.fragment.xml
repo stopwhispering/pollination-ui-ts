@@ -1,6 +1,7 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:f="sap.f"
+	xmlns:custom="pollination.ui.control"
 	xmlns:core="sap.ui.core"
 >
 	<f:GridListItem highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
@@ -166,11 +167,25 @@
 									/>
 
 									<VBox visible="{= ${ongoingPollinationsModel>status} === 'planted' }">
+										<HBox>
 										<Label
+											text='Pred. Success:'
+											class="sapUiTinyMarginEnd"
+											vAlign="Middle"
+										/>
+										<!-- <Label
 											text="{= 'Pred. Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
 											tooltip="{= 'Predicted Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
 											wrapping="true"
-										/>
+										/> -->
+										<custom:TrafficLight 
+											size="1.6rem" 
+											value="{ongoingPollinationsModel>predicted_germination_probability}" 
+											text="{ongoingPollinationsModel>predicted_germination_probability}%"
+											asc="false"
+											glimit="78" 
+											rlimit="69"/>
+										</HBox>
 										<ProgressIndicator
 											class="sapUiSmallMarginBottom"
 											displayValue="{ongoingPollinationsModel>current_germination_days} / {ongoingPollinationsModel>predicted_germination_days}"

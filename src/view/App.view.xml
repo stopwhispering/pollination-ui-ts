@@ -54,7 +54,13 @@
 				<f:DynamicPage>
 					<f:content>
 						<VBox width="100%">
-							<HBox alignItems="Start">
+							
+							<!-- <VBox> -->
+							<!-- <VBox> -->
+							<!-- <FlexBox> -->
+							<HBox alignItems="Start"
+								width="70rem"
+								class="florescenceAndPollinationBox">
 								<ScrollContainer
 									height="18rem"
 									width="31rem"
@@ -83,108 +89,15 @@
 										selectionChange="onSelectionChangedCurrentFlorescence"
 										class="sapUiSmallMarginEnd"
 									>
-										<CustomListItem>
-											<HBox>
-												<HBox>
-													<VBox>
-														<Text
-															text="{currentFlorescencesModel>plant_id}"
-															class="sapUiTinyMarginBegin"
-															width="1.6rem"
-														/>
-														<Button
-															class="tinyButton sapUiTinyMarginBegin"
-															icon="sap-icon://edit"
-															type="Transparent"
-															press=".onPressEditActiveFlorescence"
-														/>
-													</VBox>
-													<Text
-														text="{=
-															${currentFlorescencesModel>plant_name} + 
-															(!!${currentFlorescencesModel>comment} ? ' [' + ${currentFlorescencesModel>comment} + ']' : '')
-														}"
-														class="sapUiTinyMarginBegin"
-														width="16rem"
-													/>
-													<Text
-														text="⸙ {currentFlorescencesModel>branches_count}"
-														tooltip="{currentFlorescencesModel>branches_count} branch(es)"
-														class="sapUiTinyMarginBegin"
-														width="1.4rem"
-													/>
-													<Text
-														text="⁕ {currentFlorescencesModel>flowers_count}"
-														tooltip="{currentFlorescencesModel>flowers_count} flowers"
-														class="sapUiTinyMarginBegin"
-														width="2rem"
-													/>
-													<VBox alignItems="Center">
-														<FormattedText
-															htmlText="{
-																parts: [
-																	'currentFlorescencesModel>inflorescence_appeared_at',
-																	'currentFlorescencesModel>first_flower_opened_at',
-																	'currentFlorescencesModel>last_flower_closed_at',
-																	'currentFlorescencesModel>florescence_status'
-																],
-																formatter: '.formatter.html_for_active_florescence_dates'
-															}"
-															tooltip="Inflorescence appeared: {currentFlorescencesModel>inflorescence_appeared_at}, First flower opens: {currentFlorescencesModel>first_flower_opened_at}, Last flower closed: {currentFlorescencesModel>last_flower_closed_at}"
-															width="3.5rem"
-														/>
-														<HBox visible="{=
-															!!${currentFlorescencesModel>flower_color} || !!${currentFlorescencesModel>flower_color_second}
-														}">
-															<core:Icon
-																visible="{= 
-																	!!${currentFlorescencesModel>flower_color}
-																}"
-																src="sap-icon://color-fill"
-																color="{currentFlorescencesModel>flower_color}"
-																size="0.7rem"
-															>
-																<core:layoutData>
-																	<FlexItemData growFactor="1" />
-																</core:layoutData>
-															</core:Icon>
-															<core:Icon
-																visible="{= 
-																	!!${currentFlorescencesModel>flower_color_second}
-																}"
-																src="sap-icon://color-fill"
-																color="{currentFlorescencesModel>flower_color_second}"
-																size="0.7rem"
-															>
-																<core:layoutData>
-																	<FlexItemData growFactor="1" />
-																</core:layoutData>
-															</core:Icon>
-														</HBox>
-													</VBox>
-												</HBox>
-												<Avatar
-													displaySize="XS"
-													showBorder="true"
-													initials="{= ${currentFlorescencesModel>plant_name}.substr(0,2) }"
-													src="{
-														path: 'currentFlorescencesModel>plant_preview_image_id',
-														formatter: '.formatter.getImageUrlAvatarXS'
-													}"
-													tooltip="{
-														path: 'currentFlorescencesModel>plant_preview_image_id',
-														formatter: 'addMouseOverDelegate'
-													}"
-													displayShape="Square"
-												/>
-											</HBox>
-										</CustomListItem>
+										<core:Fragment
+											fragmentName="pollination.ui.view.embedded.FlorescenceInLeftListTemplate"
+											type="XML"
+										/>
 									</List>
 									<layoutData>
 										<FlexItemData growFactor="1" />
 									</layoutData>
 								</ScrollContainer>
-								<!-- <FlexBox> -->
 								<ScrollContainer
 									height="18rem"
 									width="38rem"
@@ -211,115 +124,34 @@
 										showSeparators="Inner"
 										selectionChange=".onSelectionChangedPotentialPollenDonor"
 									>
-										<CustomListItem highlight="{=
-											(${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 'None') 
-										}">
-											<HBox>
-												<!-- <CheckBox selected="{completed}"  /> -->
-												<HBox justifyContent="Center">
-													<Avatar
-														displaySize="XS"
-														showBorder="true"
-														initials="{= ${potentialPollenDonorsModel>plant_name}.substr(0,2) }"
-														src="{
-															path: 'potentialPollenDonorsModel>plant_preview_image_id',
-															formatter: '.formatter.getImageUrlAvatarXS'
-														}"
-														tooltip="{
-															path: 'potentialPollenDonorsModel>plant_preview_image_id',
-															formatter: 'addMouseOverDelegatePollenDonor'
-														}"
-														displayShape="Square"
-													/>
-													<Text
-														text="{potentialPollenDonorsModel>plant_id}"
-														class="sapUiTinyMarginBegin"
-														width="1.6rem"
-													/>
-													<Text
-														text="{potentialPollenDonorsModel>plant_name}"
-														class="sapUiTinyMarginBeginEnd"
-														width="16rem"
-													/>
-													<FormattedText
-														width="2.5rem"
-														htmlText="{
-															parts: ['potentialPollenDonorsModel>probability_pollination_to_seed'],
-															formatter: '.formatter.html_for_pollination_probability'
-														}"
-														tooltip="{= ${potentialPollenDonorsModel>probability_pollination_to_seed}.toString() + '%' }"
-														class="sapUiTinyMarginBeginEnd"
-													/>
-													<HBox
-														width="5.5rem"
-														items="{
-															path: 'potentialPollenDonorsModel>pollination_attempts',
-															templateShareable: false
-														}"
-													>
-														<CustomListItem>
-															<FormattedText
-																htmlText="{
-																	parts: [
-																		'potentialPollenDonorsModel>pollination_status',
-																		'potentialPollenDonorsModel>ongoing',
-																		'potentialPollenDonorsModel>reverse'
-																	],
-																	formatter: '.formatter.html_for_pollination_status_indicator'
-																}"
-																tooltip="{
-																	parts: ['potentialPollenDonorsModel>'],
-																	formatter: '.formatter.tooltip_for_pollination_status_indicator'
-																}"
-															/>
-														</CustomListItem>
-													</HBox>
-													<FormattedText
-														width="4.5rem"
-														htmlText="{
-															path: 'potentialPollenDonorsModel>count_stored_pollen_containers',
-															formatter: '.formatter.html_for_count_stored_pollen_containers'
-														}"
-														tooltip="{= ${potentialPollenDonorsModel>count_stored_pollen_containers} +
-															' container(s) left' }"
-														class="sapUiTinyMarginBeginEnd"
-													/>
-													<HBox
-														width="4.5rem"
-														items="{
-															path: 'potentialPollenDonorsModel>resulting_plants',
-															templateShareable: false
-														}"
-													>
-														<CustomListItem>
-															<Label
-																text="{= (${potentialPollenDonorsModel>reverse} ? '(🌱)' : '🌱' ) }"
-																tooltip="{= ${potentialPollenDonorsModel>plant_id} +
-																	' '+ ${potentialPollenDonorsModel>plant_name} }"
-															/>
-														</CustomListItem>
-													</HBox>
-												</HBox>
-											</HBox>
-										</CustomListItem>
+										<core:Fragment
+											fragmentName="pollination.ui.view.embedded.PollenInRightListTemplate"
+											type="XML"
+										/>
 									</List>
 									<layoutData>
 										<FlexItemData growFactor="2" />
 									</layoutData>
 								</ScrollContainer>
-								<!-- </FlexBox> -->
 							</HBox>
-							<HBox 
+							<!-- </FlexBox> -->
+							
+							<!-- </VBox> -->
+							<FlexBox
 								width="32rem"
-								justifyContent="End">
-							<Button
-								icon="sap-icon://add"
-								enabled="{= !!${state>/seed_capsule_selected} &amp;&amp; !!${state>/pollen_donor_selected} }"
-								class="sapUiSmallMarginTop"
-								press=".onPressAddNewPreviewPollination"
-							/>
-							</HBox>
-							<HBox>
+								justifyContent="End"
+							>
+								<Button
+									icon="sap-icon://add"
+									enabled="{= !!${state>/seed_capsule_selected} &amp;&amp; !!${state>/pollen_donor_selected} }"
+									class="sapUiSmallMarginTop"
+									press=".onPressAddNewPreviewPollination"
+								/>
+							</FlexBox>
+							
+							<!--  -->
+							<!-- Unsaved Pollinations, displayed only if there are any -->
+							<VBox visible="{= !!${newPollinationsModel>/}.length }">
 								<f:GridList
 									id="newPollinationsList"
 									headerText="Unsaved Pollinations"
@@ -345,11 +177,11 @@
 										<FlexItemData growFactor="1" />
 									</f:layoutData>
 								</f:GridList>
-							</HBox>
-							<!-- @ui5ignore -->
-							<html:hr>
 								<!-- @ui5ignore -->
-							</html:hr>
+								<html:hr>
+									<!-- @ui5ignore -->
+								</html:hr>
+							</VBox>
 							<f:GridList
 								headerText="Ongoing Pollinations"
 								id="ongoingPollinationsList"
@@ -553,12 +385,10 @@
 										gridGap="0.5rem"
 									/>
 								</f:customLayout>
-
 								<core:Fragment
 									fragmentName="pollination.ui.view.embedded.PollinationWithPlantingsTemplate"
 									type="XML"
 								/>
-								
 							</f:GridList>
 						</VBox>
 					</f:content>
