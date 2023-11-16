@@ -4,17 +4,17 @@
 	xmlns:custom="pollination.ui.control"
 	xmlns:core="sap.ui.core"
 >
-	<f:GridListItem highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
+	<f:GridListItem highlight="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
 		<VBox class="sapUiSmallMargin">
 			<HBox alignItems="Center">
 				<core:Icon
 					src="sap-icon://color-fill"
 					color="{
-						path: 'ongoingPollinationsModel>label_color_rgb'
+						path: 'pollinationsModel>label_color_rgb'
 					}"
 					size="3rem"
 					tooltip="{
-						path: 'ongoingPollinationsModel>label_color_rgb'
+						path: 'pollinationsModel>label_color_rgb'
 					}"
 				>
 					<core:layoutData>
@@ -23,14 +23,14 @@
 				</core:Icon>
 				<FlexBox>
 					<GenericTag
-						text="{= (!!${ongoingPollinationsModel>pollinated_at} ? ${ongoingPollinationsModel>pollinated_at} : 'unknown date') }"
+						text="{= (!!${pollinationsModel>pollinated_at} ? ${pollinationsModel>pollinated_at} : 'unknown date') }"
 						design="StatusIconHidden"
 						class="sapUiTinyMarginEnd"
 					/>
 				</FlexBox>
 				<Button
 					icon="sap-icon://edit"
-					visible="{= !!${ongoingPollinationsModel>ongoing} }"
+					visible="{= !!${pollinationsModel>ongoing} }"
 					type="Transparent"
 					press=".onPressEditOngoingPollination"
 				/>
@@ -38,58 +38,58 @@
 			<VBox>
 				<FormattedText
 					htmlText="&lt;strong&gt;{
-						path: 'ongoingPollinationsModel>seed_capsule_plant_id'
+						path: 'pollinationsModel>seed_capsule_plant_id'
 					}&lt;/strong&gt; 
 						{
-						path: 'ongoingPollinationsModel>seed_capsule_plant_name'
+						path: 'pollinationsModel>seed_capsule_plant_name'
 					} &lt;strong&gt;☓&lt;/strong&gt; 
 						&lt;strong&gt;{
-						path: 'ongoingPollinationsModel>pollen_donor_plant_id'
+						path: 'pollinationsModel>pollen_donor_plant_id'
 					}&lt;/strong&gt; 
 						{
-						path: 'ongoingPollinationsModel>pollen_donor_plant_name'
+						path: 'pollinationsModel>pollen_donor_plant_name'
 					}"
 					class="sapUiTinyMarginBottom"
 				/>
 				<Label
 					visible="{=
-						!!${ongoingPollinationsModel>florescence_comment}
+						!!${pollinationsModel>florescence_comment}
 					}"
-					text="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
-					tooltip="{ongoingPollinationsModel>florescence_id} ({ongoingPollinationsModel>florescence_comment})"
+					text="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
+					tooltip="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
 				/>
 			</VBox>
 			<HBox wrap="Wrap">
 				<GenericTag
 					text="{
-						path: 'ongoingPollinationsModel>pollen_type'
+						path: 'pollinationsModel>pollen_type'
 					}"
 					design="StatusIconHidden"
-					status="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
+					status="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
 					class="sapUiTinyMarginEnd"
 				/>
 				<GenericTag
 					text="{
-						path: 'ongoingPollinationsModel>location_text'
+						path: 'pollinationsModel>location_text'
 					}"
 					design="StatusIconHidden"
 					class="sapUiTinyMarginEnd"
 				/>
 				<GenericTag
-					visible="{= (!!${ongoingPollinationsModel>count_attempted}) }"
-					text="{ongoingPollinationsModel>count_attempted}"
-					tooltip="{ongoingPollinationsModel>count_attempted} flower(s)"
+					visible="{= (!!${pollinationsModel>count_attempted}) }"
+					text="{pollinationsModel>count_attempted}"
+					tooltip="{pollinationsModel>count_attempted} flower(s)"
 					design="StatusIconHidden"
 					class="sapUiTinyMarginEnd"
 					status="Warning"
 				/>
 				<GenericTag
-					text="{ongoingPollinationsModel>pollen_quality}"
-					tooltip="Pollen Quality: {ongoingPollinationsModel>pollen_quality}"
+					text="{pollinationsModel>pollen_quality}"
+					tooltip="Pollen Quality: {pollinationsModel>pollen_quality}"
 					design="StatusIconHidden"
 					class="sapUiTinyMarginEnd"
 					status="{=
-						${ongoingPollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
+						${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
 					}"
 				/>
 			</HBox>
@@ -108,7 +108,7 @@
 				</HBox>
 				<List
 					items="{
-						path: 'ongoingPollinationsModel>seed_plantings/',
+						path: 'pollinationsModel>seed_plantings/',
 						sorter: [{
 							path: 'planted_on',
 							descending: 'false'
@@ -131,7 +131,7 @@
 							<core:CustomData
 								xmlns:core="sap.ui.core"
 								key="seed_planting_status"
-								value="{ongoingPollinationsModel>status}"
+								value="{pollinationsModel>status}"
 								writeToDom="true"
 							/>
 						</customData>
@@ -143,30 +143,30 @@
 									class="sapUiTinyMarginBegin"
 								>
 									<Label
-										text="Planted on {ongoingPollinationsModel>planted_on}"
-										tooltip="Planted on {ongoingPollinationsModel>planted_on} (SeedPlanting ID {ongoingPollinationsModel>id})"
+										text="Planted on {pollinationsModel>planted_on}"
+										tooltip="Planted on {pollinationsModel>planted_on} (SeedPlanting ID {pollinationsModel>id})"
 										class="sapUiTinyMarginBottom"
 									/>
 									<Label
-										text="{ongoingPollinationsModel>soil_name}"
-										tooltip="{ongoingPollinationsModel>soil_name} (Soil ID {ongoingPollinationsModel>soil_id})"
+										text="{pollinationsModel>soil_name}"
+										tooltip="{pollinationsModel>soil_name} (Soil ID {pollinationsModel>soil_id})"
 										class="sapUiTinyMarginBottom"
 									/>
 
 									<Label
-										text="Status: {ongoingPollinationsModel>status}"
-										tooltip="Status: {ongoingPollinationsModel>status}"
+										text="Status: {pollinationsModel>status}"
+										tooltip="Status: {pollinationsModel>status}"
 										design="Bold"
 										class="sapUiTinyMarginBottom"
 									/>
 									<Label
-										text="{ongoingPollinationsModel>comment}"
-										visible="{= !!${ongoingPollinationsModel>comment} }"
-										tooltip="{ongoingPollinationsModel>comment}"
+										text="{pollinationsModel>comment}"
+										visible="{= !!${pollinationsModel>comment} }"
+										tooltip="{pollinationsModel>comment}"
 										width="6rem"
 									/>
 
-									<VBox visible="{= ${ongoingPollinationsModel>status} === 'planted' }">
+									<VBox visible="{= ${pollinationsModel>status} === 'planted' }">
 										<HBox>
 										<Label
 											text='Pred. Success:'
@@ -174,43 +174,43 @@
 											vAlign="Middle"
 										/>
 										<!-- <Label
-											text="{= 'Pred. Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
-											tooltip="{= 'Predicted Success: ' + ${ongoingPollinationsModel>predicted_germination_probability}.toString() + '%' }"
+											text="{= 'Pred. Success: ' + ${pollinationsModel>predicted_germination_probability}.toString() + '%' }"
+											tooltip="{= 'Predicted Success: ' + ${pollinationsModel>predicted_germination_probability}.toString() + '%' }"
 											wrapping="true"
 										/> -->
 										<custom:TrafficLight 
 											size="1.6rem" 
-											value="{ongoingPollinationsModel>predicted_germination_probability}" 
-											text="{ongoingPollinationsModel>predicted_germination_probability}%"
+											value="{pollinationsModel>predicted_germination_probability}" 
+											text="{pollinationsModel>predicted_germination_probability}%"
 											asc="false"
 											glimit="78" 
 											rlimit="69"/>
 										</HBox>
 										<ProgressIndicator
 											class="sapUiSmallMarginBottom"
-											displayValue="{ongoingPollinationsModel>current_germination_days} / {ongoingPollinationsModel>predicted_germination_days}"
-											percentValue="{= (${ongoingPollinationsModel>current_germination_days} / ${ongoingPollinationsModel>predicted_germination_days}) * 100 }"
-											visible="{= !!${ongoingPollinationsModel>predicted_germination_days} }"
+											displayValue="{pollinationsModel>current_germination_days} / {pollinationsModel>predicted_germination_days}"
+											percentValue="{= (${pollinationsModel>current_germination_days} / ${pollinationsModel>predicted_germination_days}) * 100 }"
+											visible="{= !!${pollinationsModel>predicted_germination_days} }"
 											state="{
 												parts: [
-													'ongoingPollinationsModel>current_germination_days',
-													'ongoingPollinationsModel>predicted_germination_days'
+													'pollinationsModel>current_germination_days',
+													'pollinationsModel>predicted_germination_days'
 												],
 												formatter: '.formatter.germination_progress_indicator_state'
 											}"
-											tooltip="{= 'Current Days: ' + ${ongoingPollinationsModel>current_germination_days}.toString() + ' Days \n' + 
-												'Predicted Days: ' + ${ongoingPollinationsModel>predicted_germination_days}.toString() + ' Days \n' }"
+											tooltip="{= 'Current Days: ' + ${pollinationsModel>current_germination_days}.toString() + ' Days \n' + 
+												'Predicted Days: ' + ${pollinationsModel>predicted_germination_days}.toString() + ' Days \n' }"
 										/>
 									</VBox>
-									<VBox visible="{= ${ongoingPollinationsModel>status} === 'germinated' }">
+									<VBox visible="{= ${pollinationsModel>status} === 'germinated' }">
 										<Label
-											text="{= 'Germinated after ' + ${ongoingPollinationsModel>germination_days}.toString() + ' days' }"
+											text="{= 'Germinated after ' + ${pollinationsModel>germination_days}.toString() + ' days' }"
 											wrapping="true"
 										/>
 									</VBox>
-									<VBox visible="{= ${ongoingPollinationsModel>status} === 'abandoned' }">
+									<VBox visible="{= ${pollinationsModel>status} === 'abandoned' }">
 										<Label
-											text="{= 'Abandoned after ' + ${ongoingPollinationsModel>germination_days}.toString() + ' days' }"
+											text="{= 'Abandoned after ' + ${pollinationsModel>germination_days}.toString() + ' days' }"
 											wrapping="true"
 										/>
 									</VBox>
@@ -220,26 +220,26 @@
 										text="Sterilized"
 										tooltip="Sterilized Soil or sterilized seed (e.g. with Chinosol)"
 										displayOnly="true"
-										selected="{ongoingPollinationsModel>sterilized}"
+										selected="{pollinationsModel>sterilized}"
 									/>
 									<CheckBox
 										text="Soaked"
 										tooltip="Seed soaked in water"
 										displayOnly="true"
-										selected="{ongoingPollinationsModel>soaked}"
+										selected="{pollinationsModel>soaked}"
 									/>
 									<CheckBox
 										text="Covered"
 										tooltip="Covered"
 										displayOnly="true"
-										selected="{ongoingPollinationsModel>covered}"
+										selected="{pollinationsModel>covered}"
 									/>
 								</VBox>
 							</HBox>
 							<List
 								showNoData="false"
 								items="{
-									path: 'ongoingPollinationsModel>plants',
+									path: 'pollinationsModel>plants',
 									templateShareable: false
 								}"
 								showSeparators="Inner"
@@ -248,10 +248,10 @@
 								<CustomListItem>
 									<GenericTag
 										text="{
-											parts: ['ongoingPollinationsModel>id', 'ongoingPollinationsModel>plant_name'],
+											parts: ['pollinationsModel>id', 'pollinationsModel>plant_name'],
 											formatter: '.formatter.ellipsize'
 										}"
-										tooltip="{ongoingPollinationsModel>id} {ongoingPollinationsModel>plant_name}"
+										tooltip="{pollinationsModel>id} {pollinationsModel>plant_name}"
 										design="StatusIconHidden"
 										status="Success"
 										class="sapUiTinyMarginEnd"

@@ -28,7 +28,7 @@ import ListItemBase from "sap/m/ListItemBase";
 import UnsavedPollinationsHandler from "./custom/UnsavedPollinationsHandler";
 import EditPollinationDialogHandler from "./custom/EditPollinationDialogHandler";
 import FlowerHistoryHandler from "./custom/FlowerHistoryHandler";
-import Avatar from "sap/m/Avatar";
+import Avatar, { Avatar$PressEvent } from "sap/m/Avatar";
 import PreviewImagePopoverHandler from "./custom/PreviewImagePopoverHandler";
 import ActiveSeedPlantingsHandler from "./custom/ActiveSeedPlantingsHandler";
 import NewSeedPlantingDialogHandler from "./custom/SeedPlantingDialogHandler";
@@ -409,10 +409,21 @@ export default class App extends BaseController {
 		const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
 		if (!oFlorescence.plant_preview_image_id)
 			return;
+			this._showPreviewImage(oAvatar, oFlorescence);
+	}
 
+	onPressFlorescencePreviewImage(oEvent: Avatar$PressEvent) {
+		const oBindingContext = oEvent.getSource().getBindingContext('currentFlorescencesModel')!;
+		const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
+		if (!oFlorescence.plant_preview_image_id)
+			return;
+			this._showPreviewImage(oEvent.getSource(), oFlorescence);
+	}
+
+	private _showPreviewImage(oOpenBy: Control, oObject: BActiveFlorescence | BPotentialPollenDonor): void {
 		if (!this._oPreviewImagePopoverHandler)
-			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler()
-		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView()!, oAvatar, oFlorescence );
+			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler(this.getView()!)
+		this._oPreviewImagePopoverHandler.openPreviewImagePopover(oOpenBy, oObject );
 	}
 
 	public onHoverImagePollenDonor(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
@@ -421,10 +432,15 @@ export default class App extends BaseController {
 		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
 		if (!oPollenDonor.plant_preview_image_id)
 			return;
+		this._showPreviewImage(oAvatar, oPollenDonor);
+	}
 
-		if (!this._oPreviewImagePopoverHandler)
-			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler()
-		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView()!, oAvatar, oPollenDonor );
+	onPressPollenPreviewImage(oEvent: Avatar$PressEvent) {
+		const oBindingContext = oEvent.getSource().getBindingContext('currentFlorescencesModel')!;
+		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
+		if (!oPollenDonor.plant_preview_image_id)
+			return;
+			this._showPreviewImage(oEvent.getSource(), oPollenDonor);
 	}
 
 	// todo get rid of this, move to ImagePreviewPopoverHandler

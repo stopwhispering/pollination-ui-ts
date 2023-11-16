@@ -185,7 +185,7 @@
 								headerText="Ongoing Pollinations"
 								id="ongoingPollinationsList"
 								items="{
-									path: 'ongoingPollinationsModel>/',
+									path: 'pollinationsModel>/',
 									sorter: [{
 										path: 'seed_capsule_plant_name',
 										group: '.getSeedCapsulePlantGroup'
@@ -227,126 +227,12 @@
 										gridGap="0.5rem"
 									/>
 								</f:customLayout>
-								<f:GridListItem
-									highlight="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-									class="formatByOngoing ongoingPollinationStatus"
-								>
-									<f:customData>
-										<core:CustomData
-											xmlns:core="sap.ui.core"
-											key="pollination_status"
-											value="{ongoingPollinationsModel>pollination_status}"
-											writeToDom="true"
-										/>
-										<core:CustomData
-											xmlns:core="sap.ui.core"
-											key="is_ongoing"
-											value="{= ${ongoingPollinationsModel>ongoing}.toString() }"
-											writeToDom="true"
-										/>
-									</f:customData>
-									<VBox class="sapUiSmallMargin">
-										<HBox alignItems="Start">
-											<core:Icon
-												src="sap-icon://color-fill"
-												color="{
-													path: 'ongoingPollinationsModel>label_color_rgb'
-												}"
-												size="3rem"
-												tooltip="{
-													path: 'ongoingPollinationsModel>label_color_rgb'
-												}"
-											>
-												<core:layoutData>
-													<FlexItemData growFactor="1" />
-												</core:layoutData>
-											</core:Icon>
-											<!-- <Label
-												text="🖌"
-											>
-											</Label> -->
-											<VBox>
-												<GenericTag
-													text="{= (!!${ongoingPollinationsModel>pollinated_at} ? ${ongoingPollinationsModel>pollinated_at} : 'unknown date') }"
-													design="StatusIconHidden"
-													class="sapUiTinyMarginEnd"
-												/>
-												<ProgressIndicator
-													class="sapUiSmallMarginBottom"
-													displayValue="{ongoingPollinationsModel>current_ripening_days} / {ongoingPollinationsModel>predicted_ripening_days}"
-													percentValue="{= (${ongoingPollinationsModel>current_ripening_days} / ${ongoingPollinationsModel>predicted_ripening_days}) * 100 }"
-													visible="{= !!${ongoingPollinationsModel>predicted_ripening_days} }"
-													state="{
-														parts: [
-															'ongoingPollinationsModel>current_ripening_days',
-															'ongoingPollinationsModel>predicted_ripening_days'
-														],
-														formatter: '.formatter.seed_ripening_progress_indicator_state'
-													}"
-												/>
-											</VBox>
-											<!-- <FlexBox> -->
-											<Button
-												visible="{= !!${ongoingPollinationsModel>ongoing} }"
-												icon="sap-icon://edit"
-												type="Transparent"
-												press=".onPressEditOngoingPollination"
-											/>
-											<!-- </FlexBox> -->
-										</HBox>
-										<VBox>
-											<FormattedText
-												htmlText="&lt;strong&gt;{
-													path: 'ongoingPollinationsModel>seed_capsule_plant_id'
-												}&lt;/strong&gt; 
-													{
-													path: 'ongoingPollinationsModel>seed_capsule_plant_name'
-												} &lt;strong&gt;☓&lt;/strong&gt; 
-													&lt;strong&gt;{
-													path: 'ongoingPollinationsModel>pollen_donor_plant_id'
-												}&lt;/strong&gt; 
-													{
-													path: 'ongoingPollinationsModel>pollen_donor_plant_name'
-												}"
-												class="sapUiTinyMarginBottom"
-											/>
-										</VBox>
-										<HBox wrap="Wrap">
-											<GenericTag
-												text="{
-													path: 'ongoingPollinationsModel>pollen_type'
-												}"
-												design="StatusIconHidden"
-												status="{= (${ongoingPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-												class="sapUiTinyMarginEnd"
-											/>
-											<GenericTag
-												text="{
-													path: 'ongoingPollinationsModel>location_text'
-												}"
-												design="StatusIconHidden"
-												class="sapUiTinyMarginEnd"
-											/>
-											<GenericTag
-												visible="{= (!!${ongoingPollinationsModel>count_attempted}) }"
-												text="{ongoingPollinationsModel>count_attempted}"
-												tooltip="{ongoingPollinationsModel>count_attempted} flower(s)"
-												design="StatusIconHidden"
-												class="sapUiTinyMarginEnd"
-												status="Warning"
-											/>
-											<GenericTag
-												text="{ongoingPollinationsModel>pollen_quality}"
-												tooltip="Pollen Quality: {ongoingPollinationsModel>pollen_quality}"
-												design="StatusIconHidden"
-												class="sapUiTinyMarginEnd"
-												status="{=
-													${ongoingPollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
-												}"
-											/>
-										</HBox>
-									</VBox>
-								</f:GridListItem>
+								
+								<core:Fragment
+									fragmentName="pollination.ui.view.embedded.PollinationAttemptTemplate"
+									type="XML"
+								/>
+
 							</f:GridList>
 							<!-- @ui5ignore -->
 							<html:hr>
@@ -355,7 +241,7 @@
 							<f:GridList
 								id="pollinationsWithPlantingsList"
 								items="{
-									path: 'ongoingPollinationsModel>/',
+									path: 'pollinationsModel>/',
 									sorter: [{
 										path: 'seed_capsule_plant_name',
 										descending: true,

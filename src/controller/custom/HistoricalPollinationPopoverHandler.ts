@@ -6,6 +6,7 @@ import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import BindingMode from "sap/ui/model/BindingMode";
+import formatter from "pollination/ui/model/formatter";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -15,6 +16,7 @@ export default class HistoricalPollinationPopoverHandler extends ManagedObject {
     private _oPopover: Popover;
     private _oView: View;
     private _oPopoverModel: JSONModel;
+	public formatter: formatter = new formatter();
 
     public constructor(oView: View) {
         super();
@@ -47,7 +49,9 @@ export default class HistoricalPollinationPopoverHandler extends ManagedObject {
 			controller: this,
 		});
         this._oView.addDependent(oPopover);
-        oPopover.setModel(this._oPopoverModel, 'popoverModel');
+        oPopover.setModel(this._oPopoverModel, 'pollinationsModel');
+        const oRootBindingContext = this._oPopoverModel.createBindingContext('/')!;
+        oPopover.setBindingContext(oRootBindingContext, 'pollinationsModel');
         return oPopover;
     }
 

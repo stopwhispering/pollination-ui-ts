@@ -6,57 +6,17 @@
 		placement="Auto"
 		showHeader="false"
 		horizontalScrolling="false"
-		verticalScrolling="false"
-		contentWidth="290px"
+		contentWidth="16rem"
 		>
 
-        <VBox>
-            <Label text="ongoing"/>
-            <Text text="{popoverModel>/ongoing}"/>
-        </VBox>
-        
-        <VBox>
-            <Label text="pollination_status"/>
-            <Label text="{popoverModel>/pollination_status}"/>
-        </VBox>
-        
-        <VBox>
-            <Label text="pollination_at"/>
-            <Text text="{popoverModel>/pollination_at}"/>
-        </VBox>
-        
-        <VBox>
-            <Label text="reverse"/>
-            <Text text="{popoverModel>/reverse}"/>
-        </VBox>
-<!-- 
-        <FormattedText
-                            htmlText="{
-                                parts: [
-                                    'popoverModel>/pollination_status',
-                                    'popoverModel>/ongoing',
-                                    'popoverModel>/reverse'
-                                ],
-                                formatter: '.formatter.html_for_pollination_status_indicator'
-                            }"
-                            tooltip="{
-                                parts: ['popoverModel>/'],
-                                formatter: '.formatter.tooltip_for_pollination_status_indicator'
-                            }"
-                        /> -->
-
-		<!-- <VBox>
-		<Label 
-    		text="[{preview_image_model>/plant_id}] {preview_image_model>/plant_name}"
-			wrapping="true"
-			/>
-
-    	<Image 
-			id="idHoverImage"
-    		press=".onClickImage"
-			src="{preview_image_model>/plant_preview_image_url}"
-			/>
-		</VBox> -->
+        <FlexBox
+            visible="{= ${pollinationsModel>/pollination_status} === 'attempt' || ${pollinationsModel>/pollination_status} === 'seed_capsule'  }"
+        >
+            <core:Fragment
+                fragmentName="pollination.ui.view.embedded.PollinationAttemptTemplate"
+                type="XML"
+            />
+        </FlexBox>
 
     </Popover>
 </core:FragmentDefinition>

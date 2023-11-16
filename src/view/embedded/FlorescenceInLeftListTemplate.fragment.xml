@@ -99,6 +99,7 @@
                     path: 'currentFlorescencesModel>plant_preview_image_id',
                     formatter: 'addMouseOverDelegate'
                 }"
+                press=".onPressFlorescencePreviewImage"
                 displayShape="Square"
             />
         </HBox>

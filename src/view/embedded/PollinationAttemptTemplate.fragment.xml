@@ -1,0 +1,129 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:core="sap.ui.core"
+>
+
+
+    <f:GridListItem
+        highlight="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
+        class="formatByOngoing ongoingPollinationStatus"
+    >
+        <f:customData>
+            <core:CustomData
+                xmlns:core="sap.ui.core"
+                key="pollination_status"
+                value="{pollinationsModel>pollination_status}"
+                writeToDom="true"
+            />
+            <core:CustomData
+                xmlns:core="sap.ui.core"
+                key="is_ongoing"
+                value="{= ${pollinationsModel>ongoing}.toString() }"
+                writeToDom="true"
+            />
+        </f:customData>
+        <VBox class="sapUiSmallMargin">
+            <HBox alignItems="Start">
+                <core:Icon
+                    src="sap-icon://color-fill"
+                    color="{
+                        path: 'pollinationsModel>label_color_rgb'
+                    }"
+                    size="3rem"
+                    tooltip="{
+                        path: 'pollinationsModel>label_color_rgb'
+                    }"
+                >
+                    <core:layoutData>
+                        <FlexItemData growFactor="1" />
+                    </core:layoutData>
+                </core:Icon>
+                <!-- <Label
+                    text="🖌"
+                >
+                </Label> -->
+                <VBox>
+                    <GenericTag
+                        text="{= (!!${pollinationsModel>pollinated_at} ? ${pollinationsModel>pollinated_at} : 'unknown date') }"
+                        design="StatusIconHidden"
+                        class="sapUiTinyMarginEnd"
+                    />
+                    <ProgressIndicator
+                        class="sapUiSmallMarginBottom"
+                        displayValue="{pollinationsModel>current_ripening_days} / {pollinationsModel>predicted_ripening_days}"
+                        percentValue="{= (${pollinationsModel>current_ripening_days} / ${pollinationsModel>predicted_ripening_days}) * 100 }"
+                        visible="{= !!${pollinationsModel>predicted_ripening_days} }"
+                        state="{
+                            parts: [
+                                'pollinationsModel>current_ripening_days',
+                                'pollinationsModel>predicted_ripening_days'
+                            ],
+                            formatter: '.formatter.seed_ripening_progress_indicator_state'
+                        }"
+                    />
+                </VBox>
+                <!-- <FlexBox> -->
+                <Button
+                    visible="{= !!${pollinationsModel>ongoing} }"
+                    icon="sap-icon://edit"
+                    type="Transparent"
+                    press=".onPressEditOngoingPollination"
+                />
+                <!-- </FlexBox> -->
+            </HBox>
+            <VBox>
+                <FormattedText
+                    htmlText="&lt;strong&gt;{
+                        path: 'pollinationsModel>seed_capsule_plant_id'
+                    }&lt;/strong&gt; 
+                        {
+                        path: 'pollinationsModel>seed_capsule_plant_name'
+                    } &lt;strong&gt;☓&lt;/strong&gt; 
+                        &lt;strong&gt;{
+                        path: 'pollinationsModel>pollen_donor_plant_id'
+                    }&lt;/strong&gt; 
+                        {
+                        path: 'pollinationsModel>pollen_donor_plant_name'
+                    }"
+                    class="sapUiTinyMarginBottom"
+                />
+            </VBox>
+            <HBox wrap="Wrap">
+                <GenericTag
+                    text="{
+                        path: 'pollinationsModel>pollen_type'
+                    }"
+                    design="StatusIconHidden"
+                    status="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
+                    class="sapUiTinyMarginEnd"
+                />
+                <GenericTag
+                    text="{
+                        path: 'pollinationsModel>location_text'
+                    }"
+                    design="StatusIconHidden"
+                    class="sapUiTinyMarginEnd"
+                />
+                <GenericTag
+                    visible="{= (!!${pollinationsModel>count_attempted}) }"
+                    text="{pollinationsModel>count_attempted}"
+                    tooltip="{pollinationsModel>count_attempted} flower(s)"
+                    design="StatusIconHidden"
+                    class="sapUiTinyMarginEnd"
+                    status="Warning"
+                />
+                <GenericTag
+                    text="{pollinationsModel>pollen_quality}"
+                    tooltip="Pollen Quality: {pollinationsModel>pollen_quality}"
+                    design="StatusIconHidden"
+                    class="sapUiTinyMarginEnd"
+                    status="{=
+                        ${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
+                    }"
+                />
+            </HBox>
+        </VBox>
+    </f:GridListItem>
+
+</core:FragmentDefinition>

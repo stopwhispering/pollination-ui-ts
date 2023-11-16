@@ -27,6 +27,7 @@
                         formatter: 'addMouseOverDelegatePollenDonor'
                     }"
                     displayShape="Square"
+                    press=".onPressPollenPreviewImage"
                 />
                 <Text
                     text="{potentialPollenDonorsModel>plant_id}"
@@ -61,34 +62,16 @@
                             pollinationStatus="{potentialPollenDonorsModel>pollination_status}"
                             ongoing="{potentialPollenDonorsModel>ongoing}"
                             reverse="{potentialPollenDonorsModel>reverse}"
-                            tooltip="{
-                                parts: ['potentialPollenDonorsModel>'],
-                                formatter: '.formatter.tooltip_for_pollination_status_indicator'
-                            }"
                             
                             size="1.6rem" 
-                            value="{ongoingPollinationsModel>predicted_germination_probability}" 
                             press=".pressHistoricalPollinationIndicator"
                             hover=".hoverHistoricalPollinationIndicator"
-                            hoverr=".hoverr"
                             />
 
-                        <!-- <FormattedText
-                            htmlText="{
-                                parts: [
-                                    'potentialPollenDonorsModel>pollination_status',
-                                    'potentialPollenDonorsModel>ongoing',
-                                    'potentialPollenDonorsModel>reverse'
-                                ],
-                                formatter: '.formatter.html_for_pollination_status_indicator'
-                            }"
-                            tooltip="{
-                                parts: ['potentialPollenDonorsModel>'],
-                                formatter: '.formatter.tooltip_for_pollination_status_indicator'
-                            }"
-                        /> -->
                     </CustomListItem>
                 </HBox>
+
+                <!-- todo move to popover above -->
                 <FormattedText
                     width="4.5rem"
                     htmlText="{

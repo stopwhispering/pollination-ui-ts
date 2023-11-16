@@ -16,20 +16,22 @@ import { Image$PressEvent } from "sap/m/Image";
 export default class PreviewImagePopoverHandler extends ManagedObject {
 
     private _oImagePreviewPopover: Popover;  // "popoverPopupImage"
+    private _oView: View;
 
     public formatter: formatter = new formatter();  // requires instant instantiation, otherwise formatter is not available in view
 
-    public constructor() {
+    public constructor(oView: View) {
         super();
+        this._oView = oView;
     }
 
-    public openPreviewImagePopover(oAttachTo: View, oOpenBy: Control, oFlorescence: BActiveFlorescence | BPotentialPollenDonor
+    public openPreviewImagePopover(oOpenBy: Control, oFlorescence: BActiveFlorescence | BPotentialPollenDonor
     ): void {
         // the popup is closed when hovering away. However, we can't destroy it upon closing as
         // hovering to another hover area happens too fast and would result in duplicate id errors.
         if(!this._oImagePreviewPopover){
             // first time opening
-            this._initializeFragment(oAttachTo, oOpenBy, oFlorescence);
+            this._initializeFragment(this._oView, oOpenBy, oFlorescence);
             return;
         }
 
