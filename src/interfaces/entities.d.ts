@@ -110,14 +110,9 @@ export interface BPollinationAttempt {
   pollination_status: string;
   pollination_at?: string;
   harvest_at?: string;
-  // germination_rate?: number;
   ongoing: boolean;
 }
-export interface BPollinationResultingPlant {
-  plant_id: number;
-  plant_name: string;
-  reverse: boolean;
-}
+
 export interface BPollinationStatus {
   key: string;
   text: string;
@@ -131,7 +126,6 @@ export interface BPotentialPollenDonor {
   already_ongoing_attempt: boolean;
   probability_pollination_to_seed?: number;
   pollination_attempts: BPollinationAttempt[];
-  resulting_plants: BPollinationResultingPlant[];
 }
 export interface BResultsActiveFlorescences {
   action: string;
