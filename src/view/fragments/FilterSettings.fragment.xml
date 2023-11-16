@@ -12,6 +12,12 @@
 						selected="{filterSettingsInput>/finished_pollinations}" />
 				</items>
 			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="Flower History" key="flower_history">
+				<items>
+					<ViewSettingsItem text="Inactive Plants" 
+						selected="{filterSettingsInput>/flower_history_include_inactive}" />
+				</items>
+			</ViewSettingsFilterItem>
 		</filterItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

@@ -16,9 +16,11 @@ export default class FlowerHistoryHandler extends ManagedObject {
 
 	private _oFlowerHistoryDialog: Dialog;
 	private _oFlowerHistoryList: Table;
+	private _oStateModel: JSONModel;
 
-	public constructor() {
+	public constructor(oStateModel: JSONModel) {
 		super();
+		this._oStateModel = oStateModel;
 	}
 
 	public async openDialog(oViewToAddTo: View) {
@@ -32,7 +34,9 @@ export default class FlowerHistoryHandler extends ManagedObject {
 			this._oFlowerHistoryList = <Table>oViewToAddTo.byId("flowerHistoryList");
 			this._oFlowerHistoryDialog.open();
 
-			const oFlowerHistory = <FlowerHistory> await Util.get(Util.getServiceUrl('flower_history'))
+			const flower_history_include_inactive = this._oStateModel.getProperty('/flower_history_include_inactive');
+			const sUrl = Util.getServiceUrl('flower_history?include_inactive_plants=' + flower_history_include_inactive);
+			const oFlowerHistory = <FlowerHistory> await Util.get(sUrl);
 			const oFlowerHistoryModel = new JSONModel(oFlowerHistory);
 			oFlowerHistoryModel.setSizeLimit(2000);
 			this._oFlowerHistoryDialog.setModel(oFlowerHistoryModel, "flower_history");

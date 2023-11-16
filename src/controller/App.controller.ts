@@ -83,6 +83,7 @@ export default class App extends BaseController {
 			pollen_donor_selected: false,
 			include_ongoing_pollinations: true,
 			include_finished_pollinations: false,
+			flower_history_include_inactive: false,
 		}
 		const oStateModel = new JSONModel(oStateModelDefaultData);
 		this.getView()!.setModel(oStateModel, "state");
@@ -395,7 +396,8 @@ export default class App extends BaseController {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onOverflowToolbarButtonPressOpenFlowerHistory(oEvent: Button$PressEvent) {
 		if (!this._oFlowerHistoryHandler){
-			this._oFlowerHistoryHandler = new FlowerHistoryHandler();
+			const oStateModel = <JSONModel>this.getView()!.getModel("state");
+			this._oFlowerHistoryHandler = new FlowerHistoryHandler(oStateModel);
 		}
 		this._oFlowerHistoryHandler.openDialog(this.getView()!);
 	}

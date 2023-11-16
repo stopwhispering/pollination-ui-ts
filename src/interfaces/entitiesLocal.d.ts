@@ -93,8 +93,11 @@ export interface LPreviewImage{
 export interface StateModelData{
     seed_capsule_selected: boolean,
     pollen_donor_selected: boolean,
+    
+    // filter settings dialog
     include_ongoing_pollinations: boolean,
     include_finished_pollinations: boolean,
+    flower_history_include_inactive: boolean,
 }
 
 export type LHoverAction = "on" | "out";
