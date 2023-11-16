@@ -1,6 +1,6 @@
 import { BActiveFlorescence } from "pollination/ui/interfaces/entities";
 import { LColorProperties, LEditFlorescenceInput } from "pollination/ui/interfaces/entitiesLocal";
-import Dialog from "sap/m/Dialog";
+import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Control from "sap/ui/core/Control";
@@ -9,10 +9,12 @@ import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import Util from "./Util";
-import Event from "sap/ui/base/Event";
 import ColorPalettePopover from "sap/m/ColorPalettePopover";
 import MessageToast from "sap/m/MessageToast";
 import { FlorescenceStatus } from "pollination/ui/interfaces/enums";
+import { Button$PressEvent } from "sap/m/Button";
+import { Icon$PressEvent } from "sap/ui/core/Icon";
+import { ColorPalette$ColorSelectEvent } from "sap/m/ColorPalette";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -82,14 +84,14 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		this._oActiveFlorescencesHandler.loadFlorescences();
 	}
 
-	public onPressDeleteFlorescence(oEvent: Event) {
+	public onPressDeleteFlorescence(oEvent: Button$PressEvent) {
 		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
 		const oEditedFlorescence = <LEditFlorescenceInput>oEditFlorescenceModel.getData()
 		const iFlorescenceId = oEditedFlorescence.id;
 		this._askToDeleteFlorescence(iFlorescenceId);
 	}
 
-	public onAfterCloseEditFlorescenceDialog(oEvent: Event) {
+	public onAfterCloseEditFlorescenceDialog(oEvent: Dialog$AfterCloseEvent) {
 		// destroy model and fragment, works for both regular closing and hitting ESC
 		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
 		oEditFlorescenceModel.destroy();
@@ -102,7 +104,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		this._oEditedFlorescenceModel.updateBindings(false);
 	}
 
-	public onPressSubmitEditFlorescence(oEvent: Event) {
+	public onPressSubmitEditFlorescence(oEvent: Button$PressEvent) {
 		var oEditedFlorescence = <LEditFlorescenceInput>this._oEditedFlorescenceModel.getData();
 		this._submitEditedFlorescence(oEditedFlorescence)
 	}
@@ -168,15 +170,15 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		this._oActiveFlorescencesHandler.loadFlorescences();
 	}
 
-	onCancelDialog(oEvent: Event) {
+	onCancelDialog(oEvent: Button$PressEvent) {
 		this._oEditFlorescenceDialog.close();
 	}
-	onFirstColorPress(oEvent: Event) {
+	onFirstColorPress(oEvent: Icon$PressEvent) {
 		const oSource: Control = <Control>oEvent.getSource();
 		this.openColorPalettePopover("flower_color", oSource)
 	}
 
-	onSecondColorPress(oEvent: Event) {
+	onSecondColorPress(oEvent: Icon$PressEvent) {
 		const oSource: Control = <Control>oEvent.getSource();
 		this.openColorPalettePopover("flower_color_second", oSource)
 	}
@@ -192,8 +194,8 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 	oColorPalettePopoverCustom.openBy(oSource);
 	}
 
-	private _handleColorSelect(oEditedFlorescenceModel: JSONModel, color_property: LColorProperties, oEvent: Event) {
-		let sColor = oEvent.getParameter('value');
+	private _handleColorSelect(oEditedFlorescenceModel: JSONModel, color_property: LColorProperties, oEvent: ColorPalette$ColorSelectEvent) {
+		let sColor = oEvent.getParameter('value')!;
 		
 		// color returns either a predefined color (only rgb hex codes, e.g. "#4ecdc4") or, if user picked 
 		// a custom color, a rgb components string like 'rgb(112,31,31)'. in the latter case, we need to convert
@@ -207,7 +209,7 @@ export default class EditFlorescenceDialogHandler extends ManagedObject {
 		oEditedFlorescence[color_property] = sColor;
 		oEditedFlorescenceModel.updateBindings(false);
 	}
-	onPressAbortFlorescence(oEvent: Event) {
+	onPressAbortFlorescence(oEvent: Button$PressEvent) {
 		const oEditFlorescenceModel = <JSONModel>this._oEditFlorescenceDialog.getModel('editedFlorescenceModel')
 		const oEditedFlorescenceInput = <LEditFlorescenceInput>oEditFlorescenceModel.getData();
 		oEditedFlorescenceInput.florescence_status = FlorescenceStatus.ABORTED;

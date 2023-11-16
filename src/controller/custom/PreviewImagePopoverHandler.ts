@@ -6,9 +6,9 @@ import Control from "sap/ui/core/Control";
 import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import Event from "sap/ui/base/Event";
 import Util from "./Util";
 import { LPreviewImage } from "pollination/ui/interfaces/entitiesLocal";
+import { Image$PressEvent } from "sap/m/Image";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -69,7 +69,7 @@ export default class PreviewImagePopoverHandler extends ManagedObject {
         return Util.getImageUrl(image_id, 'px', 288, 288)!;
     }
 
-    public onClickImage(oEvent: Event): void {
+    public onClickImage(oEvent: Image$PressEvent): void {
         this._oImagePreviewPopover.close();
     }
 

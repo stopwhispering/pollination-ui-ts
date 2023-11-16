@@ -24,7 +24,7 @@ export default class BaseController extends Controller {
             maintainPollenContainers: 'pollination.ui.view.fragments.MaintainPollenContainers',
         }
 
-        var oView = this.getView();
+        var oView = this.getView()!;
         if(oView.byId(sId)){
             fn(oView.byId(sId));
         } else {

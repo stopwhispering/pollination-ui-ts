@@ -1,19 +1,18 @@
-import Button from "sap/m/Button";
-import ColorPalettePopover from "sap/m/ColorPalettePopover";
+import Button, { Button$PressEvent } from "sap/m/Button";
+import ColorPalettePopover, { ColorPalettePopover$ColorSelectEvent } from "sap/m/ColorPalettePopover";
 import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
-import Event from "sap/ui/base/Event";
-import Dialog from "sap/m/Dialog";
+import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import Control from "sap/ui/core/Control";
 import { PollinationRead } from "pollination/ui/interfaces/entities";
 import { LEditPollinationInput } from "pollination/ui/interfaces/entitiesLocal";
 import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import PollinationsHandler from "./PollinationsHandler";
-import IconTabBar from "sap/m/IconTabBar";
+import { InputBase$ChangeEvent } from "sap/m/InputBase";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -59,26 +58,17 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 			this._oEditPollinationInputModel = new JSONModel(oEditedPollination);
 			oViewToAddTo.setModel(this._oEditPollinationInputModel, "editPollinationInput");
 			this._oEditPollinationDialog.open();
-
-            // // depending on pollination status, open the correct initial icon tab bar tab
-            // const oIconTabBar = <IconTabBar>oViewToAddTo.byId('editPollinationIconTabBar');
-            // if (oEditedPollination.pollination_status === "seed")
-            //     oIconTabBar.setSelectedKey("icon_tab_seed_details");
-            // else if (oEditedPollination.pollination_status === "germinated")
-            //         oIconTabBar.setSelectedKey("icon_tab_germination_details");
-            // else
-            //     oIconTabBar.setSelectedKey("icon_tab_pollination_details");
 		});
 	}
 
-	public onAfterCloseEditPollinationDialog(oEvent: Event) {
+	public onAfterCloseEditPollinationDialog(oEvent: Dialog$AfterCloseEvent) {
 		// destroy model and fragment, works for both regular closing and hitting ESC
 		var oDialog = oEvent.getSource();
 		oDialog.destroy();
 		this._oEditPollinationInputModel.destroy();
 	}
 
-	public onOpenColorPalettePopover(oEvent: Event) {
+	public onOpenColorPalettePopover(oEvent: Button$PressEvent) {
 		const oButton = <Button>oEvent.getSource()
 		// read colors from settings model
 		var aColors = this._oSettingsModel.getProperty("/colors");
@@ -95,7 +85,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		this._oColorPalettePopoverMinDefautButton.openBy(oButton);
 	}
 
-	private _onSelectColorInColorPalettePopover(oEvent: Event) {
+	private _onSelectColorInColorPalettePopover(oEvent: ColorPalettePopover$ColorSelectEvent) {
 		// update color in model
 		this._oEditPollinationInputModel.setProperty("/label_color_rgb", oEvent.getParameter("value"));
 		this._oEditPollinationInputModel.updateBindings(false);
@@ -104,27 +94,27 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Edit pollination handlers
 	/////////////////////////////////////////////////////////////////////////////////////////////////////	
-    public onChangeInputPreventNonFloat(oEvent: Event) : void{
+    public onChangeInputPreventNonFloat(oEvent: InputBase$ChangeEvent) : void{
         // prevent non-float (i.e. non-numerical) input
-        var newValue = oEvent.getParameter('newValue');
+        var newValue = oEvent.getParameter('value');
         if(isNaN(Number(newValue))){
-            var sPath = (<Control>oEvent.getSource()).getBindingPath('value');  // e.g. '/seed_capsule_length'
+            var sPath = (<Control>oEvent.getSource()).getBindingPath('value')!;  // e.g. '/seed_capsule_length'
             this._oEditPollinationInputModel.setProperty(sPath, undefined);
             this._oEditPollinationInputModel.updateBindings(false);
         }
     }
 
-    public onChangeInputPreventNonInt(oEvent: Event) : void{
+    public onChangeInputPreventNonInt(oEvent: InputBase$ChangeEvent) : void{
         // prevent non-integer (i.e. non-numerical or decimal) input
-        var newValue = oEvent.getParameter('newValue');
+        var newValue = oEvent.getParameter('value');
         if(isNaN(Number(newValue)) || !Number.isInteger(Number(newValue))){
-            var sPath = (<Control>oEvent.getSource()).getBindingPath('value');  // e.g. '/seed_capsule_length'
+            var sPath = (<Control>oEvent.getSource()).getBindingPath('value')!;  // e.g. '/seed_capsule_length'
             this._oEditPollinationInputModel.setProperty(sPath, undefined);
             this._oEditPollinationInputModel.updateBindings(false);
         }
     }
 
-	public onPressSubmitEditPollinationAndFinish(oEvent: Event) {
+	public onPressSubmitEditPollinationAndFinish(oEvent: Button$PressEvent) {
 		MessageBox.confirm("Finish Pollination? This will remove it from the list and cannot be undone.",
 			{ onClose: this._onConfirmSubmitEditPollinationAndFinish.bind(this) }
 		);
@@ -170,7 +160,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
         this._oPollinationsHandler.loadPollinations();
 	}
 
-	public async onPressDeletePollination(oEvent: Event) {
+	public async onPressDeletePollination(oEvent: Button$PressEvent) {
 		var pollination_id = this._oEditPollinationInputModel.getData().id;
 		MessageBox.confirm("Really delete Pollination? This cannot be undone.",
 			{ onClose: this._onConfirmDeletePollination.bind(this, pollination_id) }
@@ -191,11 +181,11 @@ export default class EditPollinationDialogHandler extends ManagedObject {
         this._oPollinationsHandler.loadPollinations();
 	}
 
-    public onCancelEditPollinationDialog(dialogId: string) : void {
+    public onCancelEditPollinationDialog(event: Button$PressEvent) : void {
         this._oEditPollinationDialog.close();
     }
 	
-	onPressEditPollinationSetToday(oEvent: Event) {
+	onPressEditPollinationSetToday(oEvent: Button$PressEvent) {
         const oEditedPollination = <LEditPollinationInput> this._oEditPollinationInputModel.getData();
         oEditedPollination.harvest_date = Util.getToday();  // e.g. '2022-11-17';
 		this._oEditPollinationInputModel.updateBindings(false);

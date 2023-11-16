@@ -2,9 +2,9 @@ import ManagedObject from "sap/ui/base/ManagedObject";
 import Control from "sap/ui/core/Control";
 import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
-import Event from "sap/ui/base/Event";
 import Menu from "sap/m/Menu";
 import MLModelTrainer from "./MLModelTrainer";
+import { MenuItem$PressEvent } from "sap/m/MenuItem";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -29,19 +29,19 @@ export default class RetrainModelMenuHandler extends ManagedObject {
 		});
 	}
 
-    public async  onPressRetrainProbabilityModelPollinationToSeed(oEvent: Event) {
+    public async  onPressRetrainProbabilityModelPollinationToSeed(oEvent: MenuItem$PressEvent) {
 		await new MLModelTrainer().triggerRetrainPollinationProbabilityModel();
     }
 
-    public async  onPressRetrainRipeningDaysModel(oEvent: Event) {
+    public async  onPressRetrainRipeningDaysModel(oEvent: MenuItem$PressEvent) {
 		await new MLModelTrainer().triggerRetrainRipeningDaysModel();
     }
 
-    public async  onPressRetrainGerminationDaysModel(oEvent: Event) {
+    public async  onPressRetrainGerminationDaysModel(oEvent: MenuItem$PressEvent) {
 		await new MLModelTrainer().triggerRetrainGerminationDaysModel();
     }
 
-    public async  onPressRetrainGerminationProbabilityModel(oEvent: Event) {
+    public async  onPressRetrainGerminationProbabilityModel(oEvent: MenuItem$PressEvent) {
 		await new MLModelTrainer().triggerRetrainGerminationProbabilityModel();
     }
 

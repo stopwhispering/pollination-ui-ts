@@ -1,13 +1,13 @@
 import { FlowerHistory } from "pollination/ui/interfaces/entities";
-import Dialog from "sap/m/Dialog";
+import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
 import Util from "./Util";
-import Event from "sap/ui/base/Event";
 import Table from "sap/m/Table";
 import Control from "sap/ui/core/Control";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import { Button$PressEvent } from "sap/m/Button";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -47,11 +47,11 @@ export default class FlowerHistoryHandler extends ManagedObject {
 		});
 	}
 
-	onPressCloseFlowerHistory(oEvent: Event) {
+	onPressCloseFlowerHistory(oEvent: Button$PressEvent) {
 		this._oFlowerHistoryDialog.close();
 	}
 
-	onAfterCloseFlowerHistory(oEvent: Event) {
+	onAfterCloseFlowerHistory(oEvent: Dialog$AfterCloseEvent) {
 		this._oFlowerHistoryDialog.destroy();
 	}
 }

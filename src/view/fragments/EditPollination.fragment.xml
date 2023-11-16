@@ -47,7 +47,10 @@
 				</items>
 			</SegmentedButton>
 				
-			<html:hr></html:hr>
+			<!-- @ui5ignore -->
+			<html:hr>
+			<!-- @ui5ignore -->
+			</html:hr>
 
 			<VBox>
 				<Label text="{i18n>EditPollinationFragment.PollinationAt}"/>
@@ -141,7 +144,11 @@
 				<VBox
 					visible="{= ['seed_capsule', 'seed', 'germinated'].includes(${editPollinationInput>/pollination_status}) }"
 				>
-					<html:hr></html:hr>
+				
+					<!-- @ui5ignore -->
+					<html:hr>
+					<!-- @ui5ignore -->
+					</html:hr>
 					
 					<Label text="Number of successful pollinations"/>
 					<HBox class="sapUiTinyMarginBottom">
@@ -164,7 +171,10 @@
 				<VBox
 					visible="{= ['seed', 'germinated'].includes(${editPollinationInput>/pollination_status}) }"
 				>
-					<html:hr></html:hr>
+					<!-- @ui5ignore -->
+					<html:hr>
+					<!-- @ui5ignore -->
+					</html:hr>
 
 					<HBox>
 						<VBox class="sapUiTinyMarginBottom">

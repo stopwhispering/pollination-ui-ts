@@ -33,16 +33,25 @@ export default class Util extends ManagedObject {
 			response = await fetch(
 				request
 			);
-		} catch (error) {
-			// unexpected python error
+
+		} catch (error: unknown) {
+			// only unexpected python errors
 			// e.g. 500 division by zero; no further information available
 			console.log(error)
-			let sMsg = JSON.stringify(error);
+
+			let sMsg = 'Unknown Error\n';
+			if (error instanceof Error) {
+				sMsg += error.toString();
+			} else {
+				sMsg += JSON.stringify(error);
+			}
+
 			MessageToast.show(sMsg);
 			throw error;
 		}
 
 		if (!response.ok) {
+			// HTTPExceptions thrown regularly via FastAPI
 			// todo use ErrorHandling.onFail()
 			
 			const err_body = await response.json();
@@ -50,15 +59,15 @@ export default class Util extends ManagedObject {
 
 			// pydantic validation error
 			if (err_body.detail && Array.isArray(err_body.detail))
-				sMsg = JSON.stringify(err_body.detail);
+				sMsg = 'Pydantic Validation Error\n' + JSON.stringify(err_body.detail);
 
 			// starlette httperror 
 			// raise e.g. via raise HTTPException(status_code=404, detail="Item not found") or subclasses
 			else if (err_body.detail && typeof err_body.detail === "string")
-				sMsg = err_body.detail;
+				sMsg = 'Starlette HTTPException\n' + err_body.detail;
 			
 			else
-				sMsg = JSON.stringify(err_body);
+				sMsg = 'Backend Error\n' + JSON.stringify(err_body);
 
 			console.log(err_body);
 			MessageToast.show(sMsg);

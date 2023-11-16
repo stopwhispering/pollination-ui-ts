@@ -47,6 +47,7 @@
                     class="sapUiTinyMarginBeginEnd"
                 />
                 <HBox
+                    wrap="Wrap"
                     width="5.5rem"
                     items="{
                         path: 'potentialPollenDonorsModel>pollination_attempts',

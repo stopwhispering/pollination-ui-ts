@@ -1,17 +1,17 @@
 import { LSeedPlantingInputData, PollinationRead, SeedPlantingCreate, SeedPlantingRead, SeedPlantingUpdate, SoilWithCountRead } from "pollination/ui/interfaces/entities";
-import Dialog from "sap/m/Dialog";
+import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
-import Event from "sap/ui/base/Event";
 import ActiveSeedPlantingsHandler from "./ActiveSeedPlantingsHandler";
-import Button from "sap/m/Button";
-import ListItem from "sap/ui/core/ListItem";
+import Button, { Button$PressEvent } from "sap/m/Button";
 import MessageToast from "sap/m/MessageToast";
 import SegmentedButton from "sap/m/SegmentedButton";
+import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
+import ListItemBase from "sap/m/ListItemBase";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -85,8 +85,8 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		});
 	}
 	
-	public onSelectSoil(oEvent: Event) {
-		const oSelectedItem = <ListItem>oEvent.getParameter('listItem');
+	public onSelectSoil(oEvent: ListBase$SelectionChangeEvent) {
+		const oSelectedItem = <ListItemBase>oEvent.getParameter('listItem')!;
 		const oSoil = <SoilWithCountRead> oSelectedItem.getBindingContext('soilsModel')!.getObject();
 		const oSeedPlanting: LSeedPlantingInputData = this._oSeedPlantingModel.getData();
 		oSeedPlanting.soil_id = oSoil.id;
@@ -94,7 +94,7 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		this._oSeedPlantingModel.updateBindings(false);
 	}
 
-	public async onPressSaveNew(oEvent: Event) {
+	public async onPressSaveNew(oEvent: Button$PressEvent) {
 		const oNewSeedPlanting: SeedPlantingCreate = this._oSeedPlantingModel.getData();
 		if (!oNewSeedPlanting.soil_id) {
 			MessageToast.show("Please select a soil");
@@ -104,14 +104,14 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		this._oDialog.close();
 	}
 
-	public async onPressUpdate(oEvent: Event){
+	public async onPressUpdate(oEvent: Button$PressEvent){
 		const oSeedPlanting: SeedPlantingRead = this._oSeedPlantingModel.getData();
 		const oSeedPlantingUpdate = <SeedPlantingUpdate> oSeedPlanting;
 		await this._oActiveSeedPlantingsHandler.updateSeedPlanting(oSeedPlantingUpdate);
 		this._oDialog.close();
 	}
 
-	public async onPressDelete(oEvent: Event){
+	public async onPressDelete(oEvent: Button$PressEvent){
 		const oSeedPlanting: SeedPlantingRead = this._oSeedPlantingModel.getData();
 		// await this._oActiveSeedPlantingsHandler.deleteSeedPlanting(oSeedPlanting);
 		// this._oDialog.close();
@@ -126,7 +126,7 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		);
 	}
 
-	public async onPressNewPlant(oEvent: Event){
+	public async onPressNewPlant(oEvent: Button$PressEvent){
 		const oSeedPlanting: SeedPlantingRead = this._oSeedPlantingModel.getData();
 		const sPlantNameProposal = await this._oActiveSeedPlantingsHandler.proposePlantName(oSeedPlanting);
 		await this._askForNewPlantName(sPlantNameProposal, oSeedPlanting);
@@ -154,7 +154,7 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		this._oPlantNameDialog.open();
 	}
 
-	public async onSubmitPlantName(oEvent: Event) {
+	public async onSubmitPlantName(oEvent: Button$PressEvent) {
 		const oInputPlantName = (<JSONModel>this._oPlantNameDialog.getModel("inputPlantNameModel")).getData()
 		const sPlantName = oInputPlantName.plant_name;
 		const oSeedPlanting = <SeedPlantingRead>oInputPlantName.seed_planting;
@@ -178,17 +178,17 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		this._oPlantNameDialog.close();
 	}
 
-	public onCancelPlantName(oEvent: Event) {
+	public onCancelPlantName(oEvent: Button$PressEvent) {
 		this._oPlantNameDialog.close();
 	}
 
-	public onAfterClose(oEvent: Event) {
+	public onAfterClose(oEvent: Dialog$AfterCloseEvent) {
 		// var oDialog = <Dialog>oEvent.getSource();
-		this._oDialog.getModel("seedPlantingModel").destroy();
+		this._oDialog.getModel("seedPlantingModel")!.destroy();
 		this._oDialog.destroy();
 	}
 
-	onCancel(oEvent: Event) {
+	onCancel(oEvent: Button$PressEvent) {
 		this._oDialog.close();
 	}
 	

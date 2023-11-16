@@ -1,22 +1,21 @@
-import Event from "sap/ui/base/Event";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import { browser } from "sap/ui/Device";
+import browser from "sap/ui/Device";
 import BaseController from "./BaseController";
 import MessageToast from "sap/m/MessageToast";
 import FilterOperator from "sap/ui/model/FilterOperator";
 import Filter from "sap/ui/model/Filter";
 import Fragment from "sap/ui/core/Fragment";
 import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData } from "../interfaces/entitiesLocal";
-import Dialog from "sap/m/Dialog";
+import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import List from "sap/m/List";
 import formatter from "../model/formatter";
-import Button from "sap/m/Button";
+import Button, { Button$PressEvent } from "sap/m/Button";
 import Context from "sap/ui/model/Context";
 import StepInput from "sap/m/StepInput";
 import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
-import SearchField from "sap/m/SearchField";
+import SearchField, { SearchField$LiveChangeEvent } from "sap/m/SearchField";
 import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers, SeedPlantingRead } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import Util from "./custom/Util";
@@ -40,6 +39,8 @@ import RetrainModelMenuHandler from "./custom/RetrainModelMenuHandler";
 import OverflowToolbarButton from "sap/m/OverflowToolbarButton";
 import ScrollContainer from "sap/m/ScrollContainer";
 import FilterSettingsDialogHandler from "./custom/FilterSettingsDialogHandler";
+import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
+import { ColorPalette$ColorSelectEvent } from "sap/m/ColorPalette";
 
 /**
  * @namespace pollination.ui.controller
@@ -67,9 +68,9 @@ export default class App extends BaseController {
 		// IconPool.addIcon("pollen", "custom", "icomoon", "e901");
 
 
-		this.getView().setModel(new JSONModel({
+		this.getView()!.setModel(new JSONModel({
 			// isMobile: Device.browser.mobile,
-			isMobile: browser.mobile
+			isMobile: browser.browser.mobile
 		}), "view");
 
 		const oStateModelDefaultData: StateModelData = {
@@ -79,42 +80,42 @@ export default class App extends BaseController {
 			include_finished_pollinations: false,
 		}
 		const oStateModel = new JSONModel(oStateModelDefaultData);
-		this.getView().setModel(oStateModel, "state");
+		this.getView()!.setModel(oStateModel, "state");
 
 		// initialize settings model and it's handler (available colors and pollination status)
 		const oSettingsModel = new JSONModel(); // data type BResultsSettings
-		this.getView().setModel(oSettingsModel, "settingsModel");
+		this.getView()!.setModel(oSettingsModel, "settingsModel");
 		this._oSettingsHandler = new SettingsHandler(oSettingsModel);
 		this._oSettingsHandler.loadSettings();
 
 		// initialize model with ongoing  pollinations in the database and it's handler
 		const oPollinationModel = new JSONModel(<PollinationRead[]>[]);
-		this.getView().setModel(oPollinationModel, "ongoingPollinationsModel");
+		this.getView()!.setModel(oPollinationModel, "ongoingPollinationsModel");
 		this._oPollinationsHandler = new PollinationsHandler(oPollinationModel, oStateModel);
 		this._oPollinationsHandler.loadPollinations();
 
 		// initialize empty model for new pollinations that were not saved, yet
 		var oUnsavedPollinationsModel = new JSONModel([]);  // date type LUnsavedPollination[]
-		this.getView().setModel(oUnsavedPollinationsModel, "newPollinationsModel");
+		this.getView()!.setModel(oUnsavedPollinationsModel, "newPollinationsModel");
 		this._oUnsavedPollinationsHandler = new UnsavedPollinationsHandler(oUnsavedPollinationsModel, this._oPollinationsHandler);		
 
 		// initialize active florescence model and it's handler (active florescences)
 		const oFlorescenceModel = new JSONModel();  // data type BActiveFlorescence[]
-		this.getView().setModel(oFlorescenceModel, "currentFlorescencesModel");
+		this.getView()!.setModel(oFlorescenceModel, "currentFlorescencesModel");
 		this._oActiveFlorescencesHandler = new ActiveFlorescencesHandler(oFlorescenceModel);
 		this._oActiveFlorescencesHandler.loadFlorescences();
 
 		// initialize active seed planting model and it's handler
 		const oSeedPlantingsModel = new JSONModel();  // data type SeedPlantingRead[]
-		this.getView().setModel(oSeedPlantingsModel, "seedPlantingsModel");
+		this.getView()!.setModel(oSeedPlantingsModel, "seedPlantingsModel");
 		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
 
 		this._oFilterSettingsDialogHandler = new FilterSettingsDialogHandler(oStateModel, this._oPollinationsHandler);
 	
 	}
 
-	public async onSelectionChangedCurrentFlorescence(oEvent: Event) {
-		var florescence: Florescence = oEvent.getParameter('listItem').getBindingContext('currentFlorescencesModel').getObject();
+	public async onSelectionChangedCurrentFlorescence(oEvent: ListBase$SelectionChangeEvent) {
+		var florescence = <Florescence>oEvent.getParameter('listItem')!.getBindingContext('currentFlorescencesModel')!.getObject();
 
 		// set scrollcontainer busy, not list, to have the busy indicator in the middle of the scrollcontainer
 		const oPotentialPollenDonorsScrollContainer = <ScrollContainer>this.byId('potentialPollenDonorsScrollContainer');
@@ -124,12 +125,12 @@ export default class App extends BaseController {
 		const oResults = <BResultsPotentialPollenDonors> await Util.get(Util.getServiceUrl('potential_pollen_donors/' + florescence.id));
 		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potential_pollen_donor_collection;
 		var oModel = new JSONModel(aPotentialPollenDonors);
-		this.getView().setModel(oModel, "potentialPollenDonorsModel");
+		this.getView()!.setModel(oModel, "potentialPollenDonorsModel");
 		
 		oPotentialPollenDonorsScrollContainer.setBusy(false);
 
 		// update state model to have add button enabled if both florescence and pollen donor are selected
-		const oStateModel = <JSONModel>this.getView().getModel("state");
+		const oStateModel = <JSONModel>this.getView()!.getModel("state");
 		oStateModel.setProperty('/pollen_donor_selected', false);
 		oStateModel.setProperty('/seed_capsule_selected', true);
 	}
@@ -192,12 +193,12 @@ export default class App extends BaseController {
 	}
 
 
-	public onPressDeleteNewPollinationButton(oEvent: Event) {
+	public onPressDeleteNewPollinationButton(oEvent: Button$PressEvent) {
 		const oUnsavedPollination = <LUnsavedPollination>(<Button>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();  // todo Type
 		this._oUnsavedPollinationsHandler.removePollination(oUnsavedPollination);
 	}
 
-	public onPressSaveNewPollinationButton(oEvent: Event) {
+	public onPressSaveNewPollinationButton(oEvent: Button$PressEvent) {
 		const oControl = <Control>oEvent.getSource()
 		const oUnsavedPollination = <LUnsavedPollination>oControl.getBindingContext("newPollinationsModel")!.getObject();
 
@@ -212,7 +213,7 @@ export default class App extends BaseController {
 	}
 
 
-	public onLiveChangeOngoingPollinationsFilter(oEvent: Event) {
+	public onLiveChangeOngoingPollinationsFilter(oEvent: SearchField$LiveChangeEvent) {
 		// add filter to ongoing pollinations gridlist
 		var aFilters = [];
 		var sQuery = (<SearchField>oEvent.getSource()).getValue();
@@ -246,22 +247,22 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		edit Pollination
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onPressEditOngoingPollination(oEvent: Event): void {
-		const oSettingsModel = <JSONModel>this.getView().getModel("settingsModel");
+	public onPressEditOngoingPollination(oEvent: Button$PressEvent): void {
+		const oSettingsModel = <JSONModel>this.getView()!.getModel("settingsModel");
 		const oOngoingPollination = <PollinationRead>(<Button>oEvent.getSource()).getBindingContext("ongoingPollinationsModel")!.getObject();
-		const oPollinationModel = <JSONModel>this.getView().getModel("ongoingPollinationsModel");
+		const oPollinationModel = <JSONModel>this.getView()!.getModel("ongoingPollinationsModel");
 
 		const oEditPollinationDialogHandler = new EditPollinationDialogHandler(oSettingsModel, this._oActiveFlorescencesHandler, this._oPollinationsHandler);
-		oEditPollinationDialogHandler.openDialogEditOngoingPollination(oOngoingPollination, this.getView());
+		oEditPollinationDialogHandler.openDialogEditOngoingPollination(oOngoingPollination, this.getView()!);
 
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		pollen containers maintenance
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public async onPressOpenPollenContainersMaintenance(oEvent: Event) {
+	public async onPressOpenPollenContainersMaintenance(oEvent: Button$PressEvent) {
 		// open dialog
-		var oView = this.getView();
+		var oView = this.getView()!;
 		if (!this.byId('maintainPollenContainers')) {
 			Fragment.load({
 				name: "pollination.ui.view.fragments.MaintainPollenContainers",
@@ -279,18 +280,18 @@ export default class App extends BaseController {
 		const oResult = <BResultsPollenContainers> await Util.get(Util.getServiceUrl('pollen_containers'));
 		var oModel = new JSONModel(oResult);
 		oModel.setSizeLimit(2000);
-		this.getView().setModel(oModel, "pollenContainersModel");
+		this.getView()!.setModel(oModel, "pollenContainersModel");
 
 	}
 
-	public onAfterClosemaintainPollenContainers(oEvent: Event) {
+	public onAfterClosemaintainPollenContainers(oEvent: Dialog$AfterCloseEvent) {
 		var oDialog = oEvent.getSource();
 		oDialog.destroy();
-		this.getView().getModel("pollenContainersModel").destroy();
+		this.getView()!.getModel("pollenContainersModel")!.destroy();
 	}
 
-	public async onPressSubmitPollenContainers(oEvent: Event) {
-		var oPollenContainersModel = <JSONModel>this.getView().getModel("pollenContainersModel");
+	public async onPressSubmitPollenContainers(oEvent: Button$PressEvent) {
+		var oPollenContainersModel = <JSONModel>this.getView()!.getModel("pollenContainersModel");
 		var oPollenContainersFull = <BResultsPollenContainers>oPollenContainersModel.getData();
 
 		//we only send the pollen containers, not the list of plants that have none
@@ -305,7 +306,7 @@ export default class App extends BaseController {
 		this._oActiveFlorescencesHandler.loadFlorescences();
 	}
 
-	public onPressAddPlantForPollenContainer(oEvent: Event) {
+	public onPressAddPlantForPollenContainer(oEvent: Button$PressEvent) {
 		var iCount = (<StepInput>this.byId('newPlantPollenContainerCount')).getValue();
 		if (iCount <= 0) {
 			MessageToast.show("Please enter a positive number");
@@ -327,7 +328,7 @@ export default class App extends BaseController {
 		}
 
 		// insert into pollen containers list
-		var oPollenContainersModel = <JSONModel>this.getView().getModel("pollenContainersModel");
+		var oPollenContainersModel = <JSONModel>this.getView()!.getModel("pollenContainersModel");
 		var aPollenContainers = oPollenContainersModel.getData().pollen_container_collection;
 		aPollenContainers.push(oNewPollenContainerItem);
 
@@ -344,54 +345,54 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		add/delete/update active florescences
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onPressEditActiveFlorescence(oEvent: Event) {
+	public onPressEditActiveFlorescence(oEvent: Button$PressEvent) {
 		// open the dialog to edit the selected active florescence
 		if (!this._oEditFlorescenceDialogHandler){
 			this._oEditFlorescenceDialogHandler = new EditFlorescenceDialogHandler(this._oActiveFlorescencesHandler);
 		}
 		const oControl = <Control>oEvent.getSource();
 		const oFlorescence = <BActiveFlorescence>oControl.getBindingContext("currentFlorescencesModel")!.getObject();
-		this._oEditFlorescenceDialogHandler.openDialogEditActiveFlorescence(this.getView(), oFlorescence)
+		this._oEditFlorescenceDialogHandler.openDialogEditActiveFlorescence(this.getView()!, oFlorescence)
 	}
-	public onPressNewActiveFlorescence(oEvent: Event) {
+	public onPressNewActiveFlorescence(oEvent: Button$PressEvent) {
 		// open the dialog to create a new active florescence
 		if (!this._oNewFlorescenceDialogHandler){
 			this._oNewFlorescenceDialogHandler = new NewFlorescenceDialogHandler(this._oActiveFlorescencesHandler);
 		}
-		this._oNewFlorescenceDialogHandler.openDialogNewActiveFlorescence(this.getView());
+		this._oNewFlorescenceDialogHandler.openDialogNewActiveFlorescence(this.getView()!);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		handlers for seed plantings
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onPressAddSeedPlanting(oEvent: Event) {
+	public onPressAddSeedPlanting(oEvent: Button$PressEvent) {
 		// open the dialog to add a new seed planting
 		const oButton = <Button>oEvent.getSource();
 		const oPollination = <PollinationRead> oButton.getBindingContext('ongoingPollinationsModel')!.getObject();
 		if (!this._oSeedPlantingDialogHandler){
 			this._oSeedPlantingDialogHandler = new NewSeedPlantingDialogHandler(this._oActiveSeedPlantingsHandler);
 		}
-		this._oSeedPlantingDialogHandler.openDialogForNewSeedPlanting(this.getView(), oPollination);
+		this._oSeedPlantingDialogHandler.openDialogForNewSeedPlanting(this.getView()!, oPollination);
 	}
 
-	public onPressUpdateSeedPlanting(oEvent: Event) {
+	public onPressUpdateSeedPlanting(oEvent: ListBase$SelectionChangeEvent) {
 		const oListItem = <CustomListItem>oEvent.getParameter('listItem');
 		const oSeedPlanting = <SeedPlantingRead>oListItem.getBindingContext('ongoingPollinationsModel')!.getObject();
 		if (!this._oSeedPlantingDialogHandler){
 			this._oSeedPlantingDialogHandler = new NewSeedPlantingDialogHandler(this._oActiveSeedPlantingsHandler);
 		}
-		this._oSeedPlantingDialogHandler.openDialogForUpdateSeedPlanting(this.getView(), oSeedPlanting);
+		this._oSeedPlantingDialogHandler.openDialogForUpdateSeedPlanting(this.getView()!, oSeedPlanting);
 		
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		Open dialog displaying flowering plants history in tabular format
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	public onOverflowToolbarButtonPressOpenFlowerHistory(oEvent: Event) {
+	public onOverflowToolbarButtonPressOpenFlowerHistory(oEvent: Button$PressEvent) {
 		if (!this._oFlowerHistoryHandler){
 			this._oFlowerHistoryHandler = new FlowerHistoryHandler();
 		}
-		this._oFlowerHistoryHandler.openDialog(this.getView());
+		this._oFlowerHistoryHandler.openDialog(this.getView()!);
 	}
 
 	//////////////////////////////////////////////////////////
@@ -406,7 +407,7 @@ export default class App extends BaseController {
 
 		if (!this._oPreviewImagePopoverHandler)
 			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler()
-		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView(), oAvatar, oFlorescence );
+		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView()!, oAvatar, oFlorescence );
 	}
 
 	public onHoverImagePollenDonor(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
@@ -418,29 +419,29 @@ export default class App extends BaseController {
 
 		if (!this._oPreviewImagePopoverHandler)
 			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler()
-		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView(), oAvatar, oPollenDonor );
+		this._oPreviewImagePopoverHandler.openPreviewImagePopover(this.getView()!, oAvatar, oPollenDonor );
 	}
 
 	// todo get rid of this, move to ImagePreviewPopoverHandler
 	public onHoverAwayFromImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
 		this._oPreviewImagePopoverHandler.close();
 	}
-	onPressOpenRetrainModelMenu(oEvent: Event) {
+	onPressOpenRetrainModelMenu(oEvent: Button$PressEvent) {
 		const oButton = <OverflowToolbarButton>oEvent.getSource();
 
 		if (!this._oRetrainModelMenuHandler){
 			this._oRetrainModelMenuHandler = new RetrainModelMenuHandler();
 		}
-		this._oRetrainModelMenuHandler.openRetrainModelMenu(this.getView(), oButton);
+		this._oRetrainModelMenuHandler.openRetrainModelMenu(this.getView()!, oButton);
 	}
-	onPressAddNewPreviewPollination(oEvent: Event) {
+	onPressAddNewPreviewPollination(oEvent: Button$PressEvent) {
 		//add new unsaved pollination to the list
 		// get selected florescence and selected pollen donor
-		const oActiveFlorescencesList = <List>this.getView().byId('activeFlorescencesList');
+		const oActiveFlorescencesList = <List>this.getView()!.byId('activeFlorescencesList');
 		const oSelectedFlorescenceListItem = <ListItemBase>oActiveFlorescencesList.getSelectedItem(); // todo entity
 		const oFlorescence = <BActiveFlorescence>oSelectedFlorescenceListItem.getBindingContext('currentFlorescencesModel')!.getObject()
 		
-		const oPollenDonorList = <List>this.getView().byId('potentialPollenDonorsList');
+		const oPollenDonorList = <List>this.getView()!.byId('potentialPollenDonorsList');
 		var oSelectedPollenDonorListItem = <ListItemBase>oPollenDonorList.getSelectedItem();
 		var oSelectedPollenDonor = <BPotentialPollenDonor>oSelectedPollenDonorListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
 		
@@ -449,11 +450,11 @@ export default class App extends BaseController {
 	}
 
 	getAvailableColorsForUnsavedPollination(oUnsavedPollination: LUnsavedPollination){
-		const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel");
+		const oUnsavedPollinationsModel = <JSONModel>this.getView()!.getModel("newPollinationsModel");
 		const aUnsavedPollinations: LUnsavedPollination[] = oUnsavedPollinationsModel.getData();
 
 		// get available colors for the florescence
-		const oFlorescenceModel = <JSONModel>this.getView().getModel("currentFlorescencesModel");
+		const oFlorescenceModel = <JSONModel>this.getView()!.getModel("currentFlorescencesModel");
 		const aFlorescences = <BActiveFlorescence[]>oFlorescenceModel.getData();
 		const oFlorescence = aFlorescences.find((florescence) => {
 			return florescence.id === oUnsavedPollination.florescence_id;
@@ -480,28 +481,28 @@ export default class App extends BaseController {
 
 	}
 
-	public onColorSelect(oEvent: Event) {
+	public onColorSelect(oEvent: ColorPalette$ColorSelectEvent) {
 		const sColor = oEvent.getParameter('value');
 		const oUnsavedPollination = <LUnsavedPollination>(<Control>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();
 		oUnsavedPollination.label_color_rgb = sColor;
 
-		const oUnsavedPollinationsModel = <JSONModel>this.getView().getModel("newPollinationsModel");
+		const oUnsavedPollinationsModel = <JSONModel>this.getView()!.getModel("newPollinationsModel");
 		oUnsavedPollinationsModel.updateBindings(true);  // have available colors in all other unsaved pollinations updated, too
 
 		// this._oUnsavedPollinationsHandler.setLabelColorRGB(sColor)
 	}
-	onPressSetNowButton(oEvent: Event) {
+	onPressSetNowButton(oEvent: Button$PressEvent) {
 		const oUnsavedPollination = <LUnsavedPollination>(<Control>oEvent.getSource()).getBindingContext("newPollinationsModel")!.getObject();
 		oUnsavedPollination.pollinated_at = Util.format_timestamp(new Date());
-		(<JSONModel>this.getView().getModel("newPollinationsModel")).updateBindings(false);
+		(<JSONModel>this.getView()!.getModel("newPollinationsModel")).updateBindings(false);
 	}
 	
-	onSelectionChangedPotentialPollenDonor(oEvent: Event) {
+	onSelectionChangedPotentialPollenDonor(oEvent: ListBase$SelectionChangeEvent) {
 		// update state model to have add button enabled if both florescence and pollen donor are selected
-		const oStateModel = <JSONModel>this.getView().getModel("state");
+		const oStateModel = <JSONModel>this.getView()!.getModel("state");
 		oStateModel.setProperty('/pollen_donor_selected', true);
 	}
-	onPressOpenFilterSettings(oEvent: Event) {
-		this._oFilterSettingsDialogHandler.openFilterSettingsDialog(this.getView());
+	onPressOpenFilterSettings(oEvent: Button$PressEvent) {
+		this._oFilterSettingsDialogHandler.openFilterSettingsDialog(this.getView()!);
 	}
 }

@@ -1,7 +1,7 @@
 import { BPlantForNewFlorescence, BResultsPlantsForNewFlorescence, FRequestNewFlorescence } from "pollination/ui/interfaces/entities";
 import { LNewFlorescenceInputData } from "pollination/ui/interfaces/entitiesLocal";
 import { FlorescenceStatus } from "pollination/ui/interfaces/enums";
-import Dialog from "sap/m/Dialog";
+import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Control from "sap/ui/core/Control";
 import Fragment from "sap/ui/core/Fragment";
@@ -9,7 +9,7 @@ import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import Util from "./Util";
-import Event from "sap/ui/base/Event";
+import { Button$PressEvent } from "sap/m/Button";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -56,7 +56,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 		});
 	}
 
-	public async onPressSubmitNewFlorescence(oEvent: Event) {
+	public async onPressSubmitNewFlorescence(oEvent: Button$PressEvent) {
 		// var oNewFlorescenceModel = <JSONModel>oNewFlorescenceDialog.getModel("newFlorescenceModel");
 		const oNewFlorescence: LNewFlorescenceInputData = this._oNewFlorescenceModel.getData();
 		const oNewFlorescenceRequest: FRequestNewFlorescence = {
@@ -71,17 +71,17 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 		await this._oActiveFlorescencesHandler.loadFlorescences();
 	}
 
-	public onAfterCloseNewActiveFlorescence(oEvent: Event) {
+	public onAfterCloseNewActiveFlorescence(oEvent: Dialog$AfterCloseEvent) {
 		// var oDialog = <Dialog>oEvent.getSource();
-		this._oNewFlorescenceDialog.getModel("plantsForNewFlorescenceModel").destroy();
+		this._oNewFlorescenceDialog.getModel("plantsForNewFlorescenceModel")!.destroy();
 		this._oNewFlorescenceModel.destroy();
 		this._oNewFlorescenceDialog.destroy();
 	}
-	onCancelDialog(oEvent: Event) {
+	onCancelDialog(oEvent: Button$PressEvent) {
 		this._oNewFlorescenceDialog.close();
 	}
 	
-	onPressNewFlorescenceSetToday(oEvent: Event) {
+	onPressNewFlorescenceSetToday(oEvent: Button$PressEvent) {
 		const oNewFlorescence = <LNewFlorescenceInputData>this._oNewFlorescenceModel.getData();
 		oNewFlorescence.inflorescence_appeared_at = Util.getToday();  // e.g. '2022-11-17';
 		this._oNewFlorescenceModel.updateBindings(false);

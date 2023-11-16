@@ -64,7 +64,7 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this.removePollination(oUnsavedPollination);
 	}
 
-	public addPollination(oPollination: LUnsavedPollination) {
+	private addPollination(oPollination: LUnsavedPollination) {
 		this._aUnsavedPollinations.push(oPollination);
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}

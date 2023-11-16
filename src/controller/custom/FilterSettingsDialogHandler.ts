@@ -1,10 +1,9 @@
-import ViewSettingsDialog from "sap/m/ViewSettingsDialog";
+import ViewSettingsDialog, { ViewSettingsDialog$ConfirmEvent } from "sap/m/ViewSettingsDialog";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Control from "sap/ui/core/Control";
 import Fragment from "sap/ui/core/Fragment";
 import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
-import Event from "sap/ui/base/Event";
 import PollinationsHandler from "./PollinationsHandler";
 
 /**
@@ -48,7 +47,7 @@ export default class FilterSettingsDialogHandler extends ManagedObject {
 
 
 	}
-	onConfirmSettings(oEvent: Event) {
+	onConfirmSettings(oEvent: ViewSettingsDialog$ConfirmEvent) {
 		this._oStateModel.setProperty("/include_ongoing_pollinations", 
                                       this._oFilterSettingsInputModel.getProperty("/ongoing_pollinations"));
 		this._oStateModel.setProperty("/include_finished_pollinations", 
