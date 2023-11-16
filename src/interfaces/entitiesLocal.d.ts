@@ -96,3 +96,13 @@ export interface StateModelData{
     include_ongoing_pollinations: boolean,
     include_finished_pollinations: boolean,
 }
+
+export type LHoverAction = "on" | "out";
+export interface PollinationIndicator$HoverEventParameters {
+    action: LHoverAction;
+}
+export interface PollinationIndicator$PressEventParameters {
+    action: LHoverAction;
+}
+export type PollinationIndicator$HoverEvent = Event<PollinationIndicator$HoverEventParameters, PollinationIndicator>;
+export type PollinationIndicator$PressEvent = Event<PollinationIndicator$PressEventParameters, PollinationIndicator>;

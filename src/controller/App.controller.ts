@@ -5,7 +5,7 @@ import MessageToast from "sap/m/MessageToast";
 import FilterOperator from "sap/ui/model/FilterOperator";
 import Filter from "sap/ui/model/Filter";
 import Fragment from "sap/ui/core/Fragment";
-import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData } from "../interfaces/entitiesLocal";
+import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData, LHoverEventParams, PollinationIndicator$HoverEvent, PollinationIndicator$PressEvent } from "../interfaces/entitiesLocal";
 import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import List from "sap/m/List";
 import formatter from "../model/formatter";
@@ -16,7 +16,7 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField, { SearchField$LiveChangeEvent } from "sap/m/SearchField";
-import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers, SeedPlantingRead } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers, SeedPlantingRead, BPollinationAttempt } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import Util from "./custom/Util";
 import NewFlorescenceDialogHandler from "./custom/NewFlorescenceDialogHandler";
@@ -41,6 +41,10 @@ import ScrollContainer from "sap/m/ScrollContainer";
 import FilterSettingsDialogHandler from "./custom/FilterSettingsDialogHandler";
 import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
 import { ColorPalette$ColorSelectEvent } from "sap/m/ColorPalette";
+import Event from "sap/ui/base/Event";
+import BindingMode from "sap/ui/model/BindingMode";
+import HistoricalPollinationPopoverHandler from "./custom/HistoricalPollinationPopoverHandler";
+import PasswordField from "sap/ui/commons/PasswordField";
 
 /**
  * @namespace pollination.ui.controller
@@ -58,6 +62,7 @@ export default class App extends BaseController {
 	private _oSeedPlantingDialogHandler: SeedPlantingDialogHandler;  // lazy loaded
 	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
 	private _oPreviewImagePopoverHandler: PreviewImagePopoverHandler
+	private _oHistoricalPollinationPopoverHandler: HistoricalPollinationPopoverHandler
 	private _oRetrainModelMenuHandler: RetrainModelMenuHandler;
 	private _oFilterSettingsDialogHandler: FilterSettingsDialogHandler;
 
@@ -504,5 +509,37 @@ export default class App extends BaseController {
 	}
 	onPressOpenFilterSettings(oEvent: Button$PressEvent) {
 		this._oFilterSettingsDialogHandler.openFilterSettingsDialog(this.getView()!);
+	}
+
+	private _openHistoricalPollinationPopover(oHistoricalPollination: BPollinationAttempt, oControl: Control) {
+		if (!this._oHistoricalPollinationPopoverHandler)
+			this._oHistoricalPollinationPopoverHandler = new HistoricalPollinationPopoverHandler(this.getView()!)
+		
+		this._oHistoricalPollinationPopoverHandler.openPopover(oHistoricalPollination, oControl);
+	}
+
+	private _closeHistoricalPollinationPopover() {
+		if (!!this._oHistoricalPollinationPopoverHandler)
+			this._oHistoricalPollinationPopoverHandler.close();
+	}
+
+	pressHistoricalPollinationIndicator(oEvent: PollinationIndicator$PressEvent) {
+		const oContext = <Context>(<Control>oEvent.getSource()).getBindingContext("potentialPollenDonorsModel");
+		const oHistoricalPollination = <BPollinationAttempt>oContext.getObject();
+		this._openHistoricalPollinationPopover(oHistoricalPollination, oEvent.getSource());
+	}
+
+	hoverHistoricalPollinationIndicator(oEvent: PollinationIndicator$HoverEvent) {
+		const sAction = oEvent.getParameter('action');
+		switch (sAction) {
+			case 'on':
+				const oContext = <Context>(<Control>oEvent.getSource()).getBindingContext("potentialPollenDonorsModel");
+				const oHistoricalPollination = <BPollinationAttempt>oContext.getObject();
+				this._openHistoricalPollinationPopover(oHistoricalPollination, oEvent.getSource());
+				break;
+			case 'out':
+				this._closeHistoricalPollinationPopover();
+				break;
+		}
 	}
 }

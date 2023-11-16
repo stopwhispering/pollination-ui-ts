@@ -20,7 +20,6 @@
 					title="{i18n>AppView.Intitle}"
 					homeIcon="././img/bee_favicon.svg"
 				>
-					<!-- homeIcon="{:= Helper.resolvePath('./img/bee_favicon.svg') }" -->
 					<f:additionalContent>
 						<OverflowToolbarButton
 							icon="sap-icon://excel-attachment"

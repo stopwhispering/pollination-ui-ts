@@ -22,11 +22,6 @@ export default class TrafficLight extends Control {
 		apiVersion: 2,
         render: (oRm: RenderManager, oControl: TrafficLight) => {
 
-
-			// oRm.openStart("div", oControl);
-            // oRm.openEnd();
-			// oRm.close("div");
-
 			oRm.openStart("div", oControl);
             // @ts-ignore
 			oRm.style("width", oControl.getSize());
