@@ -6,7 +6,7 @@
 		placement="Auto"
 		showHeader="false"
 		horizontalScrolling="false"
-		contentWidth="16rem"
+		contentWidth="21rem"
 		>
 
         <FlexBox
@@ -14,6 +14,15 @@
         >
             <core:Fragment
                 fragmentName="pollination.ui.view.embedded.PollinationAttemptTemplate"
+                type="XML"
+            />
+        </FlexBox>
+
+        <FlexBox
+            visible="{= ${pollinationsModel>/pollination_status} === 'seed' || ${pollinationsModel>/pollination_status} === 'germinated'  }"
+        >
+            <core:Fragment
+                fragmentName="pollination.ui.view.embedded.PollinationWithPlantingsTemplate"
                 type="XML"
             />
         </FlexBox>

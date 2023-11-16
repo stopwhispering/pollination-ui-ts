@@ -82,21 +82,6 @@
                         ' container(s) left' }"
                     class="sapUiTinyMarginBeginEnd"
                 />
-                <HBox
-                    width="4.5rem"
-                    items="{
-                        path: 'potentialPollenDonorsModel>resulting_plants',
-                        templateShareable: false
-                    }"
-                >
-                    <CustomListItem>
-                        <Label
-                            text="{= (${potentialPollenDonorsModel>reverse} ? '(🌱)' : '🌱' ) }"
-                            tooltip="{= ${potentialPollenDonorsModel>plant_id} +
-                                ' '+ ${potentialPollenDonorsModel>plant_name} }"
-                        />
-                    </CustomListItem>
-                </HBox>
             </HBox>
         </HBox>
     </CustomListItem>
