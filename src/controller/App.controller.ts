@@ -5,7 +5,7 @@ import MessageToast from "sap/m/MessageToast";
 import FilterOperator from "sap/ui/model/FilterOperator";
 import Filter from "sap/ui/model/Filter";
 import Fragment from "sap/ui/core/Fragment";
-import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData, LHoverEventParams, PollinationIndicator$HoverEvent, PollinationIndicator$PressEvent } from "../interfaces/entitiesLocal";
+import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData, PollinationIndicator$HoverEvent, PollinationIndicator$PressEvent } from "../interfaces/entitiesLocal";
 import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import List from "sap/m/List";
 import formatter from "../model/formatter";
@@ -95,7 +95,7 @@ export default class App extends BaseController {
 
 		// initialize model with ongoing  pollinations in the database and it's handler
 		const oPollinationModel = new JSONModel(<PollinationRead[]>[]);
-		this.getView()!.setModel(oPollinationModel, "ongoingPollinationsModel");
+		this.getView()!.setModel(oPollinationModel, "pollinationsModel");
 		this._oPollinationsHandler = new PollinationsHandler(oPollinationModel, oStateModel);
 		this._oPollinationsHandler.loadPollinations();
 
@@ -254,8 +254,8 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public onPressEditOngoingPollination(oEvent: Button$PressEvent): void {
 		const oSettingsModel = <JSONModel>this.getView()!.getModel("settingsModel");
-		const oOngoingPollination = <PollinationRead>(<Button>oEvent.getSource()).getBindingContext("ongoingPollinationsModel")!.getObject();
-		const oPollinationModel = <JSONModel>this.getView()!.getModel("ongoingPollinationsModel");
+		const oOngoingPollination = <PollinationRead>(<Button>oEvent.getSource()).getBindingContext("pollinationsModel")!.getObject();
+		const oPollinationModel = <JSONModel>this.getView()!.getModel("pollinationsModel");
 
 		const oEditPollinationDialogHandler = new EditPollinationDialogHandler(oSettingsModel, this._oActiveFlorescencesHandler, this._oPollinationsHandler);
 		oEditPollinationDialogHandler.openDialogEditOngoingPollination(oOngoingPollination, this.getView()!);
@@ -373,7 +373,7 @@ export default class App extends BaseController {
 	public onPressAddSeedPlanting(oEvent: Button$PressEvent) {
 		// open the dialog to add a new seed planting
 		const oButton = <Button>oEvent.getSource();
-		const oPollination = <PollinationRead> oButton.getBindingContext('ongoingPollinationsModel')!.getObject();
+		const oPollination = <PollinationRead> oButton.getBindingContext('pollinationsModel')!.getObject();
 		if (!this._oSeedPlantingDialogHandler){
 			this._oSeedPlantingDialogHandler = new NewSeedPlantingDialogHandler(this._oActiveSeedPlantingsHandler);
 		}
@@ -382,7 +382,7 @@ export default class App extends BaseController {
 
 	public onPressUpdateSeedPlanting(oEvent: ListBase$SelectionChangeEvent) {
 		const oListItem = <CustomListItem>oEvent.getParameter('listItem');
-		const oSeedPlanting = <SeedPlantingRead>oListItem.getBindingContext('ongoingPollinationsModel')!.getObject();
+		const oSeedPlanting = <SeedPlantingRead>oListItem.getBindingContext('pollinationsModel')!.getObject();
 		if (!this._oSeedPlantingDialogHandler){
 			this._oSeedPlantingDialogHandler = new NewSeedPlantingDialogHandler(this._oActiveSeedPlantingsHandler);
 		}
@@ -538,7 +538,7 @@ export default class App extends BaseController {
 				this._openHistoricalPollinationPopover(oHistoricalPollination, oEvent.getSource());
 				break;
 			case 'out':
-				this._closeHistoricalPollinationPopover();
+				// this._closeHistoricalPollinationPopover();
 				break;
 		}
 	}
