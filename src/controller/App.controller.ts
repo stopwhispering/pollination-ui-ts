@@ -41,10 +41,9 @@ import ScrollContainer from "sap/m/ScrollContainer";
 import FilterSettingsDialogHandler from "./custom/FilterSettingsDialogHandler";
 import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
 import { ColorPalette$ColorSelectEvent } from "sap/m/ColorPalette";
-import Event from "sap/ui/base/Event";
-import BindingMode from "sap/ui/model/BindingMode";
 import HistoricalPollinationPopoverHandler from "./custom/HistoricalPollinationPopoverHandler";
-import PasswordField from "sap/ui/commons/PasswordField";
+import { HoverImage$HoverEvent, HoverImage$PressEvent } from "../control/HoverImage";
+import Image, { Image$PressEvent } from "sap/m/Image";
 
 /**
  * @namespace pollination.ui.controller
@@ -405,25 +404,33 @@ export default class App extends BaseController {
 	//////////////////////////////////////////////////////////
 	// Preview Image Popup Handlers
 	//////////////////////////////////////////////////////////
-	public onHoverImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
+	// public onHoverImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
+	public onHoverImage(oEvent: HoverImage$HoverEvent): void {
 		// only for non-touch devices
 		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
 		if (is_touch)
 			return;
 
-		const oBindingContext = oAvatar.getBindingContext('currentFlorescencesModel')!;
-		const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
-		if (!oFlorescence.plant_preview_image_id)
-			return;
-			this._showPreviewImage(oAvatar, oFlorescence);
+		const sAction = oEvent.getParameter('action');
+		if (sAction === 'on') {
+			const oImage = <Image>oEvent.getSource();
+			const oBindingContext = oImage.getBindingContext('currentFlorescencesModel')!;
+			const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
+			if (!oFlorescence.plant_preview_image_id)
+				return;
+			this._showPreviewImage(oImage, oFlorescence);
+
+		} else if (sAction === 'out') {
+			this._oPreviewImagePopoverHandler.close();
+		}
 	}
 
-	onPressFlorescencePreviewImage(oEvent: Avatar$PressEvent) {
+	onPressFlorescencePreviewImage(oEvent: Image$PressEvent) {
 		const oBindingContext = oEvent.getSource().getBindingContext('currentFlorescencesModel')!;
 		const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
 		if (!oFlorescence.plant_preview_image_id)
 			return;
-			this._showPreviewImage(oEvent.getSource(), oFlorescence);
+		this._showPreviewImage(oEvent.getSource(), oFlorescence);
 	}
 
 	private _showPreviewImage(oOpenBy: Control, oObject: BActiveFlorescence | BPotentialPollenDonor): void {
@@ -432,36 +439,35 @@ export default class App extends BaseController {
 		this._oPreviewImagePopoverHandler.openPreviewImagePopover(oOpenBy, oObject );
 	}
 
-	public onHoverImagePollenDonor(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
+	public onHoverImagePollenDonor(oEvent: HoverImage$HoverEvent): void{
 		// only for non-touch devices
 		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
 		if (is_touch)
 			return;
 		
-		const oBindingContext = oAvatar.getBindingContext('potentialPollenDonorsModel')!;
-		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
-		if (!oPollenDonor.plant_preview_image_id)
-			return;
-		this._showPreviewImage(oAvatar, oPollenDonor);
+		const sAction = oEvent.getParameter('action');
+		if (sAction === 'on') {
+			const oImage = <Image>oEvent.getSource();
+			const oBindingContext = oImage.getBindingContext('potentialPollenDonorsModel')!;
+			const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
+			if (!oPollenDonor.plant_preview_image_id)
+				return;
+			this._showPreviewImage(oImage, oPollenDonor);
+
+		} else if (sAction === 'out') {
+			this._oPreviewImagePopoverHandler.close();
+		}
+
 	}
 
-	onPressPollenPreviewImage(oEvent: Avatar$PressEvent) {
+	onPressPollenPreviewImage(oEvent: Image$PressEvent) {
 		const oBindingContext = oEvent.getSource().getBindingContext('currentFlorescencesModel')!;
 		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
 		if (!oPollenDonor.plant_preview_image_id)
 			return;
-			this._showPreviewImage(oEvent.getSource(), oPollenDonor);
+		this._showPreviewImage(oEvent.getSource(), oPollenDonor);
 	}
 
-	// todo get rid of this, move to ImagePreviewPopoverHandler
-	public onHoverAwayFromImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
-		// only for non-touch devices
-		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
-		if (is_touch)
-			return;
-		
-		this._oPreviewImagePopoverHandler.close();
-	}
 	onPressOpenRetrainModelMenu(oEvent: Button$PressEvent) {
 		const oButton = <OverflowToolbarButton>oEvent.getSource();
 

@@ -1,11 +1,7 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-	core:require="{
-		Helper: 'pollination/ui/util/Helper',
-		addMouseOverDelegate: 'pollination/ui/util/addMouseOverDelegate',
-		addMouseOverDelegatePollenDonor: 'pollination/ui/util/addMouseOverDelegatePollenDonor'
-	}"
+	xmlns:custom="pollination.ui.control"
 >
     <CustomListItem>
         <HBox>
@@ -87,21 +83,17 @@
                     </HBox>
                 </VBox>
             </HBox>
-            <Avatar
-                displaySize="XS"
-                showBorder="true"
-                initials="{= ${currentFlorescencesModel>plant_name}.substr(0,2) }"
+            <custom:HoverImage
+                width="48px"
+                densityAware="true"
+                visible="{= !!${currentFlorescencesModel>plant_preview_image_id} }"
                 src="{
                     path: 'currentFlorescencesModel>plant_preview_image_id',
-                    formatter: '.formatter.getImageUrlAvatarXS'
+                    formatter: '.formatter.getImageUrlAvatarS'
                 }"
-                tooltip="{
-                    path: 'currentFlorescencesModel>plant_preview_image_id',
-                    formatter: 'addMouseOverDelegate'
-                }"
-                press=".onPressFlorescencePreviewImage"
-                displayShape="Square"
-            />
+                press="onPressFlorescencePreviewImage"
+                hover=".onHoverImage"
+                />
         </HBox>
     </CustomListItem>
     

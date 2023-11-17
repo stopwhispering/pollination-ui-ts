@@ -13,9 +13,6 @@ export default class Component extends UIComponent {
 		manifest: "json"
 	};
 
-	public onInit() {
-	}
-
 	public init() {
 		// @ts-ignore
 		UIComponent.prototype.init.apply(this, arguments);
@@ -24,7 +21,9 @@ export default class Component extends UIComponent {
 		oDeviceModel.setDefaultBindingMode("OneWay");
 		this.setModel(oDeviceModel, "device");
 		
+		// @ts-ignore
 		IconPool.addIcon("flower", "custom", "icomoon", "e900");
+		// @ts-ignore
 		IconPool.addIcon("pollen", "custom", "icomoon", "e901");
 	 }
 }

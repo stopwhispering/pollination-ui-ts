@@ -3,9 +3,7 @@
     xmlns:core="sap.ui.core"
 	xmlns:custom="pollination.ui.control"
     core:require="{
-        Helper: 'pollination/ui/util/Helper',
-        addMouseOverDelegate: 'pollination/ui/util/addMouseOverDelegate',
-        addMouseOverDelegatePollenDonor: 'pollination/ui/util/addMouseOverDelegatePollenDonor'
+        Helper: 'pollination/ui/util/Helper'
     }"
 >
     <CustomListItem highlight="{=
@@ -14,21 +12,17 @@
         <HBox>
             <!-- <CheckBox selected="{completed}"  /> -->
             <HBox justifyContent="Center">
-                <Avatar
-                    displaySize="XS"
-                    showBorder="true"
-                    initials="{= ${potentialPollenDonorsModel>plant_name}.substr(0,2) }"
+                <custom:HoverImage
+                    width="48px"
+                    densityAware="true"
+                    visible="{= !!${potentialPollenDonorsModel>plant_preview_image_id} }"
                     src="{
                         path: 'potentialPollenDonorsModel>plant_preview_image_id',
-                        formatter: '.formatter.getImageUrlAvatarXS'
+                        formatter: '.formatter.getImageUrlAvatarS'
                     }"
-                    tooltip="{
-                        path: 'potentialPollenDonorsModel>plant_preview_image_id',
-                        formatter: 'addMouseOverDelegatePollenDonor'
-                    }"
-                    displayShape="Square"
                     press=".onPressPollenPreviewImage"
-                />
+                    hover=".onHoverImagePollenDonor"
+                    />
                 <Text
                     text="{potentialPollenDonorsModel>plant_id}"
                     class="sapUiTinyMarginBegin"

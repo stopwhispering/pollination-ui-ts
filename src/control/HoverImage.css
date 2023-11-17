@@ -1,0 +1,11 @@
+
+.rounded > img{
+    /* apply rounded corners to all images */
+    border-radius: 5px;
+  }
+  
+
+  /* .rounded {
+    background: no-repeat center;
+  } */
+  
