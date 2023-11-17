@@ -461,7 +461,8 @@ export default class App extends BaseController {
 	}
 
 	onPressPollenPreviewImage(oEvent: Image$PressEvent) {
-		const oBindingContext = oEvent.getSource().getBindingContext('currentFlorescencesModel')!;
+		const oImage = <Image>oEvent.getSource();
+		const oBindingContext = oImage.getBindingContext('potentialPollenDonorsModel')!;
 		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
 		if (!oPollenDonor.plant_preview_image_id)
 			return;
