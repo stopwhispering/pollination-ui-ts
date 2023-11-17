@@ -111,34 +111,11 @@ export default class PollinationIndicator extends Control {
             oRm.class("circle_all-text"); 
             oRm.class(class_); 
 
-            // // @ts-ignore
-            // if(oControl.getAsc()){
-            //     // @ts-ignore
-            //     if(oControl.getValue() > oControl.getRlimit()){
-            //         oRm.class("circlered-text"); 
-            //         // @ts-ignore
-            //     }else if((oControl.getValue() <= oControl.getRlimit()) && (oControl.getValue() > oControl.getGlimit())){
-            //         oRm.class("circleyellow-text"); 			
-            //     }else{
-            //         oRm.class("circlegreen-text"); 			
-            //     }
-            // }else{
-            //     // @ts-ignore
-            //     if(oControl.getValue() <= oControl.getRlimit()){
-            //         oRm.class("circlered-text"); 
-            //         // @ts-ignore
-            //     }else if((oControl.getValue() > oControl.getRlimit()) && (oControl.getValue() < oControl.getGlimit())){
-            //         oRm.class("circleyellow-text"); 			
-            //     }else{
-            //         oRm.class("circlegreen-text"); 			
-            //     }		
-            // }
             oRm.openEnd();
 
 			oRm.openStart("div").openEnd();  
             // @ts-ignore
             oRm.text(text);  
-            // oRm.text(oControl.getText());  
 			oRm.close("div");
 
 			oRm.close("div");

@@ -406,7 +406,11 @@ export default class App extends BaseController {
 	// Preview Image Popup Handlers
 	//////////////////////////////////////////////////////////
 	public onHoverImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
-		// apply _onHoverImageShow function to popover
+		// only for non-touch devices
+		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
+		if (is_touch)
+			return;
+
 		const oBindingContext = oAvatar.getBindingContext('currentFlorescencesModel')!;
 		const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
 		if (!oFlorescence.plant_preview_image_id)
@@ -429,7 +433,11 @@ export default class App extends BaseController {
 	}
 
 	public onHoverImagePollenDonor(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
-		// apply _onHoverImageShow function to popover
+		// only for non-touch devices
+		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
+		if (is_touch)
+			return;
+		
 		const oBindingContext = oAvatar.getBindingContext('potentialPollenDonorsModel')!;
 		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
 		if (!oPollenDonor.plant_preview_image_id)
@@ -447,6 +455,11 @@ export default class App extends BaseController {
 
 	// todo get rid of this, move to ImagePreviewPopoverHandler
 	public onHoverAwayFromImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
+		// only for non-touch devices
+		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
+		if (is_touch)
+			return;
+		
 		this._oPreviewImagePopoverHandler.close();
 	}
 	onPressOpenRetrainModelMenu(oEvent: Button$PressEvent) {
@@ -548,6 +561,11 @@ export default class App extends BaseController {
 	}
 
 	hoverHistoricalPollinationIndicator(oEvent: PollinationIndicator$HoverEvent) {
+		// only for non-touch devices
+		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
+		if (is_touch)
+			return;
+
 		const sAction = oEvent.getParameter('action');
 		switch (sAction) {
 			case 'on':
