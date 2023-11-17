@@ -45,11 +45,17 @@ export default class formatter extends ManagedObject {
     }
 
 
-    getImageUrlAvatarS(image_id: int | undefined){
+    getImageUrlAvatarL(image_id: int | undefined){
         if(!image_id)
             return undefined;
-        return Util.getImageUrl(image_id, 'rem', 3, 3);
+        return Util.getImageUrl(image_id, 'rem', 5, 5);
     }
+
+    // getImageUrlAvatarS(image_id: int | undefined){
+    //     if(!image_id)
+    //         return undefined;
+    //     return Util.getImageUrl(image_id, 'rem', 3, 3);
+    // }
 
     html_for_pollination_probability(probability_pollination_to_seed: float) {
         // dates in format '%Y-%m-%d', e.g. '2022-11-16'

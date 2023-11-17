@@ -68,7 +68,8 @@ export default class PreviewImagePopoverHandler extends ManagedObject {
 
     private _getImageUrl(image_id: int): string {
         // get url for image in preview popup openened when hovering in florescence list
-        return Util.getImageUrl(image_id, 'px', 288, 288)!;
+        // return Util.getImageUrl(image_id, 'px', 288, 288)!;
+        return Util.getImageUrl(image_id)!;
     }
 
     public onClickImage(oEvent: Image$PressEvent): void {

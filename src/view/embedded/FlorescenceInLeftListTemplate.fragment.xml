@@ -84,12 +84,12 @@
                 </VBox>
             </HBox>
             <custom:HoverImage
-                width="48px"
+                width="80px"
                 densityAware="true"
                 visible="{= !!${currentFlorescencesModel>plant_preview_image_id} }"
                 src="{
                     path: 'currentFlorescencesModel>plant_preview_image_id',
-                    formatter: '.formatter.getImageUrlAvatarS'
+                    formatter: '.formatter.getImageUrlAvatarL'
                 }"
                 press="onPressFlorescencePreviewImage"
                 hover=".onHoverImage"

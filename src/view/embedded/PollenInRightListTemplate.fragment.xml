@@ -13,12 +13,12 @@
             <!-- <CheckBox selected="{completed}"  /> -->
             <HBox justifyContent="Center">
                 <custom:HoverImage
-                    width="48px"
+                    width="80px"
                     densityAware="true"
                     visible="{= !!${potentialPollenDonorsModel>plant_preview_image_id} }"
                     src="{
                         path: 'potentialPollenDonorsModel>plant_preview_image_id',
-                        formatter: '.formatter.getImageUrlAvatarS'
+                        formatter: '.formatter.getImageUrlAvatarL'
                     }"
                     press=".onPressPollenPreviewImage"
                     hover=".onHoverImagePollenDonor"

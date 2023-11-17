@@ -8,8 +8,8 @@
 		horizontalScrolling="false"
 		verticalScrolling="false"
 		id="popoverPopupImage"
-		contentWidth="290px"
 		>
+		<!-- contentWidth="290px" -->
 		<VBox>
 		<Label 
     		text="[{preview_image_model>/plant_id}] {preview_image_model>/plant_name}"
@@ -18,6 +18,7 @@
 
     	<Image 
 			id="idHoverImage"
+			width="1000px"
     		press=".onClickImage"
 			src="{preview_image_model>/plant_preview_image_url}"
 			/>
