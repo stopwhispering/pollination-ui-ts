@@ -35,64 +35,94 @@
 					press=".onPressEditOngoingPollination"
 				/>
 			</HBox>
-			<VBox>
-				<FormattedText
-					htmlText="&lt;strong&gt;{
-						path: 'pollinationsModel>seed_capsule_plant_id'
-					}&lt;/strong&gt; 
-						{
-						path: 'pollinationsModel>seed_capsule_plant_name'
-					} &lt;strong&gt;☓&lt;/strong&gt; 
-						&lt;strong&gt;{
-						path: 'pollinationsModel>pollen_donor_plant_id'
-					}&lt;/strong&gt; 
-						{
-						path: 'pollinationsModel>pollen_donor_plant_name'
-					}"
-					class="sapUiTinyMarginBottom"
-				/>
-				<Label
-					visible="{=
-						!!${pollinationsModel>florescence_comment}
-					}"
-					text="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
-					tooltip="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
-				/>
-			</VBox>
-			<HBox wrap="Wrap">
-				<GenericTag
-					text="{
-						path: 'pollinationsModel>pollen_type'
-					}"
-					design="StatusIconHidden"
-					status="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-					class="sapUiTinyMarginEnd"
-				/>
-				<GenericTag
-					text="{
-						path: 'pollinationsModel>location_text'
-					}"
-					design="StatusIconHidden"
-					class="sapUiTinyMarginEnd"
-				/>
-				<GenericTag
-					visible="{= (!!${pollinationsModel>count_attempted}) }"
-					text="{pollinationsModel>count_attempted}"
-					tooltip="{pollinationsModel>count_attempted} flower(s)"
-					design="StatusIconHidden"
-					class="sapUiTinyMarginEnd"
-					status="Warning"
-				/>
-				<GenericTag
-					text="{pollinationsModel>pollen_quality}"
-					tooltip="Pollen Quality: {pollinationsModel>pollen_quality}"
-					design="StatusIconHidden"
-					class="sapUiTinyMarginEnd"
-					status="{=
-						${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
-					}"
-				/>
+			
+			<HBox>
+			
+                <VBox
+                    class="sapUiTinyMarginEnd">
+                    <Image
+                        width="80px"
+                        densityAware="true"
+                        visible="{= !!${pollinationsModel>seed_capsule_plant_preview_image_id} }"
+                        src="{
+                            path: 'pollinationsModel>seed_capsule_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarL'
+                        }"
+                        class="roundedBorders"
+                    />
+                    <Image
+                        width="80px"
+                        densityAware="true"
+                        visible="{= !!${pollinationsModel>pollen_donor_plant_preview_image_id} }"
+                        src="{
+                            path: 'pollinationsModel>pollen_donor_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarL'
+                        }"
+                        class="roundedBorders"
+                        />
+                </VBox>
+			
+				<VBox>
+					<FormattedText
+						htmlText="&lt;strong&gt;{
+							path: 'pollinationsModel>seed_capsule_plant_id'
+						}&lt;/strong&gt; 
+							{
+							path: 'pollinationsModel>seed_capsule_plant_name'
+						} &lt;strong&gt;☓&lt;/strong&gt; 
+							&lt;strong&gt;{
+							path: 'pollinationsModel>pollen_donor_plant_id'
+						}&lt;/strong&gt; 
+							{
+							path: 'pollinationsModel>pollen_donor_plant_name'
+						}"
+						class="sapUiTinyMarginBottom"
+					/>
+					<Label
+						visible="{=
+							!!${pollinationsModel>florescence_comment}
+						}"
+						text="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
+						tooltip="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
+					/>
+					<HBox wrap="Wrap">
+						<GenericTag
+							text="{
+								path: 'pollinationsModel>pollen_type'
+							}"
+							design="StatusIconHidden"
+							status="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
+							class="sapUiTinyMarginEnd"
+						/>
+						<GenericTag
+							text="{
+								path: 'pollinationsModel>location_text'
+							}"
+							design="StatusIconHidden"
+							class="sapUiTinyMarginEnd"
+						/>
+						<GenericTag
+							visible="{= (!!${pollinationsModel>count_attempted}) }"
+							text="{pollinationsModel>count_attempted}"
+							tooltip="{pollinationsModel>count_attempted} flower(s)"
+							design="StatusIconHidden"
+							class="sapUiTinyMarginEnd"
+							status="Warning"
+						/>
+						<GenericTag
+							text="{pollinationsModel>pollen_quality}"
+							tooltip="Pollen Quality: {pollinationsModel>pollen_quality}"
+							design="StatusIconHidden"
+							class="sapUiTinyMarginEnd"
+							status="{=
+								${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
+							}"
+						/>
+					</HBox>
+				</VBox>
 			</HBox>
+			
+
 			<VBox>
 				<HBox
 					class="sapUiSmallMarginTop"

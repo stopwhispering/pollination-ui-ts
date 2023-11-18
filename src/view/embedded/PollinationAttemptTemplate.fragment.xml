@@ -85,16 +85,6 @@
                         }"
                         class="roundedBorders"
                     />
-                    <!-- <Image
-                        width="48px"
-                        densityAware="true"
-                        visible="{= !!${pollinationsModel>pollen_donor_plant_preview_image_id} }"
-                        src="{
-                            path: 'pollinationsModel>pollen_donor_plant_preview_image_id',
-                            formatter: '.formatter.getImageUrlAvatarS'
-                        }"
-                        class="roundedBorders"
-                        /> -->
                     <Image
                         width="48px"
                         densityAware="true"
