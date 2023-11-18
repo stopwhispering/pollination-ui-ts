@@ -14,8 +14,14 @@ export default class HoverImage extends Image {
 
 
     static readonly metadata: MetadataOptions = {                              
+      properties: {
+        plantName: {type: "string", defaultValue: null},
+        plantId: {type: "int", defaultValue: null}
+      },
       events: {
         hover: {},  // onmouseover, onmouseout; existing events are not overwritten
+        press: {},   // onclick
+        hoverPress: {}  // fired from onmouseover, onmouseout, onclick
       }
     }
 
@@ -26,13 +32,22 @@ export default class HoverImage extends Image {
     }
 
     onmouseover = () => {  
-        const params: HoverImage$HoverEventParameters = {action: "on"};
-        this.fireEvent('hover', params);
+        const params: HoverImage$HoverEventParameters = {event: "onmouseover"};
+        // this.fireEvent('hover', params);
+        this.fireEvent('hoverPress', params);
     };
     
     onmouseout = () => {  
-        const params: HoverImage$HoverEventParameters = {action: "out"};
-        this.fireEvent('hover', params);
+        const params: HoverImage$HoverEventParameters = {event: "onmouseout"};
+        // this.fireEvent('hover', params);
+        this.fireEvent('hoverPress', params);
+    };
+
+    onclick = () => {  
+      const params: HoverImage$HoverEventParameters = {event: "onclick"};
+        // this.fireEvent('press', params);
+        // this.fireEvent('press');
+        this.fireEvent('hoverPress');
     };
 
     static renderer = {

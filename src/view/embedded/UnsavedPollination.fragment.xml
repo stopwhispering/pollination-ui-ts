@@ -2,6 +2,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:c="sap.ui.core"
+	xmlns:custom="pollination.ui.control"
 >
     <!-- outer alignment: species + controls at top, buttons at bottom -->
     <VBox
@@ -14,7 +15,7 @@
             <HBox>
                 <VBox
                     class="sapUiTinyMarginEnd">
-                    <Image
+                    <custom:HoverImage
                         width="80px"
                         densityAware="true"
                         visible="{= !!${newPollinationsModel>seed_capsule_plant_preview_image_id} }"
@@ -23,8 +24,11 @@
                             formatter: '.formatter.getImageUrlAvatarL'
                         }"
                         class="roundedBorders"
+                        plantName="{newPollinationsModel>seedCapsulePlantName}"
+                        plantId="{newPollinationsModel>seed_capsule_plant_id}"
+                        hoverPress=".onHoverPressPreviewImage"
                     />
-                    <Image
+                    <custom:HoverImage
                         width="80px"
                         densityAware="true"
                         visible="{= !!${newPollinationsModel>pollen_donor_plant_preview_image_id} }"
@@ -33,6 +37,9 @@
                             formatter: '.formatter.getImageUrlAvatarL'
                         }"
                         class="roundedBorders"
+                        plantName="{newPollinationsModel>pollenDonorPlantName}"
+                        plantId="{newPollinationsModel>pollen_donor_plant_id}"
+                        hoverPress=".onHoverPressPreviewImage"
                     />
                     <!-- <Image
                         width="80px"

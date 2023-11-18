@@ -5,7 +5,7 @@ import MessageToast from "sap/m/MessageToast";
 import FilterOperator from "sap/ui/model/FilterOperator";
 import Filter from "sap/ui/model/Filter";
 import Fragment from "sap/ui/core/Fragment";
-import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData, PollinationIndicator$HoverEvent, PollinationIndicator$PressEvent } from "../interfaces/entitiesLocal";
+import { Florescence, NewPollenContainerItem, Plant, LUnsavedPollination, StateModelData, PollinationIndicator$HoverEvent, PollinationIndicator$PressEvent, LPreviewImageBasics } from "../interfaces/entitiesLocal";
 import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import List from "sap/m/List";
 import formatter from "../model/formatter";
@@ -42,8 +42,8 @@ import FilterSettingsDialogHandler from "./custom/FilterSettingsDialogHandler";
 import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
 import { ColorPalette$ColorSelectEvent } from "sap/m/ColorPalette";
 import HistoricalPollinationPopoverHandler from "./custom/HistoricalPollinationPopoverHandler";
-import { HoverImage$HoverEvent, HoverImage$PressEvent } from "../control/HoverImage";
-import Image, { Image$PressEvent } from "sap/m/Image";
+import HoverImage, { HoverImage$HoverPressEvent} from "../control/HoverImage";
+import JSONPropertyBinding from "sap/ui/model/json/JSONPropertyBinding";
 
 /**
  * @namespace pollination.ui.controller
@@ -154,16 +154,7 @@ export default class App extends BaseController {
 	public getPollinationStatusGroup(oContext: Context) {
 		// we can't change order here, only format the group text
 		const oPollination = <PollinationRead>oContext.getProperty('');
-		// const sPollinationStatus = oPollination.pollination_status.toUpperCase().replace('_', ' ');
 		const sCapsulePlantName = oPollination.seed_capsule_plant_name.toUpperCase();
-		// let sGroup: string;
-		// if (!!oPollination.florescence_comment){
-		// 	sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ') - ' + oPollination.florescence_comment;
-		// } else {
-		// 	// return oContext.getProperty('pollination_status').toUpperCase().replace('_', ' ');
-		// 	sGroup = sPollinationStatus + ' (' + sCapsulePlantName + ')';
-		// }
-		
 		const sGroup = oPollination.seed_capsule_plant_id + ' ' + sCapsulePlantName;
 
 		return {
@@ -404,69 +395,30 @@ export default class App extends BaseController {
 	//////////////////////////////////////////////////////////
 	// Preview Image Popup Handlers
 	//////////////////////////////////////////////////////////
-	// public onHoverImage(oAvatar: Avatar, evtDelegate: JQuery.Event): void {
-	public onHoverImage(oEvent: HoverImage$HoverEvent): void {
-		// only for non-touch devices
-		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
-		if (is_touch)
-			return;
+	onHoverPressPreviewImage(oEvent: HoverImage$HoverPressEvent) {
 
-		const sAction = oEvent.getParameter('action');
-		if (sAction === 'on') {
-			const oImage = <Image>oEvent.getSource();
-			const oBindingContext = oImage.getBindingContext('currentFlorescencesModel')!;
-			const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
-			if (!oFlorescence.plant_preview_image_id)
-				return;
-			this._showPreviewImage(oImage, oFlorescence);
+		// we need the original, i.e. unformatted, preview image id
+		const oImage = <HoverImage>oEvent.getSource();
+		const oSrcBinding = <JSONPropertyBinding>oImage.getBinding('src');
+		const iPreviewImageId: number | undefined = oSrcBinding.getRawValue()
 
-		} else if (sAction === 'out') {
-			this._oPreviewImagePopoverHandler.close();
-		}
-	}
-
-	onPressFlorescencePreviewImage(oEvent: Image$PressEvent) {
-		const oBindingContext = oEvent.getSource().getBindingContext('currentFlorescencesModel')!;
-		const oFlorescence = <BActiveFlorescence> oBindingContext.getObject();
-		if (!oFlorescence.plant_preview_image_id)
-			return;
-		this._showPreviewImage(oEvent.getSource(), oFlorescence);
-	}
-
-	private _showPreviewImage(oOpenBy: Control, oObject: BActiveFlorescence | BPotentialPollenDonor): void {
-		if (!this._oPreviewImagePopoverHandler)
-			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler(this.getView()!)
-		this._oPreviewImagePopoverHandler.openPreviewImagePopover(oOpenBy, oObject );
-	}
-
-	public onHoverImagePollenDonor(oEvent: HoverImage$HoverEvent): void{
-		// only for non-touch devices
-		const is_touch = this.getOwnerComponent()!.getModel('device')!.getProperty('/support/touch')
-		if (is_touch)
+		if (!iPreviewImageId)
 			return;
 		
-		const sAction = oEvent.getParameter('action');
-		if (sAction === 'on') {
-			const oImage = <Image>oEvent.getSource();
-			const oBindingContext = oImage.getBindingContext('potentialPollenDonorsModel')!;
-			const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
-			if (!oPollenDonor.plant_preview_image_id)
-				return;
-			this._showPreviewImage(oImage, oPollenDonor);
-
-		} else if (sAction === 'out') {
-			this._oPreviewImagePopoverHandler.close();
+		const oPreviewImageBasics: LPreviewImageBasics = {
+			plant_id: oImage.getPlantId(),
+			plant_name: oImage.getPlantName(),
+			plant_preview_image_id: iPreviewImageId
 		}
-
+		
+		this._showPreviewImage(oImage, oPreviewImageBasics);
 	}
 
-	onPressPollenPreviewImage(oEvent: Image$PressEvent) {
-		const oImage = <Image>oEvent.getSource();
-		const oBindingContext = oImage.getBindingContext('potentialPollenDonorsModel')!;
-		const oPollenDonor = <BPotentialPollenDonor> oBindingContext.getObject();
-		if (!oPollenDonor.plant_preview_image_id)
-			return;
-		this._showPreviewImage(oEvent.getSource(), oPollenDonor);
+	private _showPreviewImage(oOpenBy: Control, oPreviewImageBasics: LPreviewImageBasics): void {
+		if (!this._oPreviewImagePopoverHandler)
+			this._oPreviewImagePopoverHandler = new PreviewImagePopoverHandler(this.getView()!)
+		
+		this._oPreviewImagePopoverHandler.openPreviewImagePopover(oOpenBy, oPreviewImageBasics );
 	}
 
 	onPressOpenRetrainModelMenu(oEvent: Button$PressEvent) {
@@ -554,11 +506,6 @@ export default class App extends BaseController {
 			this._oHistoricalPollinationPopoverHandler = new HistoricalPollinationPopoverHandler(this.getView()!)
 		
 		this._oHistoricalPollinationPopoverHandler.openPopover(oHistoricalPollination, oControl);
-	}
-
-	private _closeHistoricalPollinationPopover() {
-		if (!!this._oHistoricalPollinationPopoverHandler)
-			this._oHistoricalPollinationPopoverHandler.close();
 	}
 
 	pressHistoricalPollinationIndicator(oEvent: PollinationIndicator$PressEvent) {

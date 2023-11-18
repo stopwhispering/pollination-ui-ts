@@ -86,10 +86,16 @@ export interface LEditFlorescenceInput extends BActiveFlorescence{
 
 export type LColorProperties = "flower_color" | "flower_color_second";
 
-export interface LPreviewImage{
-    plant_id: int,
-    plant_name: string,
+export interface LPreviewImageBasics{
+    plant_id?: int,
+    plant_name?: string,
     plant_preview_image_id: int,
+}
+
+export interface LPreviewImage extends LPreviewImageBasics{
+    // plant_id: int,
+    // plant_name: string,
+    // plant_preview_image_id: int,
     plant_preview_image_url: string
 }
 

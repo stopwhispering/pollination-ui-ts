@@ -20,8 +20,9 @@
                         path: 'potentialPollenDonorsModel>plant_preview_image_id',
                         formatter: '.formatter.getImageUrlAvatarL'
                     }"
-                    press=".onPressPollenPreviewImage"
-                    hover=".onHoverImagePollenDonor"
+                    plantName="{potentialPollenDonorsModel>plant_name}"
+                    plantId="{potentialPollenDonorsModel>plant_id}"
+                    hoverPress=".onHoverPressPreviewImage"
                     />
                 <Text
                     text="{potentialPollenDonorsModel>plant_id}"

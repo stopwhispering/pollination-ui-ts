@@ -91,8 +91,9 @@
                     path: 'currentFlorescencesModel>plant_preview_image_id',
                     formatter: '.formatter.getImageUrlAvatarL'
                 }"
-                press="onPressFlorescencePreviewImage"
-                hover=".onHoverImage"
+                plantName="{currentFlorescencesModel>plant_name}"
+                plantId="{currentFlorescencesModel>plant_id}"
+                hoverPress=".onHoverPressPreviewImage"
                 />
         </HBox>
     </CustomListItem>
