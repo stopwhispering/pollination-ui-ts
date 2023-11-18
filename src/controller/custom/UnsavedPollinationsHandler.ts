@@ -77,8 +77,12 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 			florescence_comment: oFlorescence.comment,
 			seedCapsulePlantName: oFlorescence.plant_name,
 			seed_capsule_plant_id: oFlorescence.plant_id,
+			seed_capsule_plant_preview_image_id: oFlorescence.plant_preview_image_id,
+
 			pollenDonorPlantName: oPollenDonor.plant_name,
 			pollen_donor_plant_id: oPollenDonor.plant_id,
+			pollen_donor_plant_preview_image_id: oPollenDonor.plant_preview_image_id,
+
 			pollen_type: oPollenDonor.pollen_type,
 			
 			// defaults

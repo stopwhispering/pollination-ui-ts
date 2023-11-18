@@ -3,42 +3,85 @@
     xmlns:core="sap.ui.core"
     xmlns:c="sap.ui.core"
 >
-
     <!-- outer alignment: species + controls at top, buttons at bottom -->
-    <VBox 
+    <VBox
         class="sapUiSmallMargin"
         height="94%"
-        justifyContent="SpaceBetween">
-
+        justifyContent="SpaceBetween"
+    >
         <!-- species -->
         <VBox>
-            <FormattedText
-                htmlText="&lt;strong&gt;{
-                    path: 'newPollinationsModel>seed_capsule_plant_id'
-                }&lt;/strong&gt; 
-                    {
-                    path: 'newPollinationsModel>seedCapsulePlantName'
-                } &lt;strong&gt;☓&lt;/strong&gt; 
-                    &lt;strong&gt;{
-                    path: 'newPollinationsModel>pollen_donor_plant_id'
-                }&lt;/strong&gt; 
-                    {
-                    path: 'newPollinationsModel>pollenDonorPlantName'
-                }"
-                class="sapUiTinyMarginBottom"
-            />
-            <Label
-                class="sapUiTinyMarginBottom"
-                visible="{=
-                    !!${newPollinationsModel>florescence_comment}
-                }"
-                text="[{newPollinationsModel>florescence_comment}]"
-                tooltip="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
-            />
-
-            <HBox
-                class="sapUiTinyMarginBottom"
-            >
+            <HBox>
+                <VBox
+                    class="sapUiTinyMarginEnd">
+                    <Image
+                        width="80px"
+                        densityAware="true"
+                        visible="{= !!${newPollinationsModel>seed_capsule_plant_preview_image_id} }"
+                        src="{
+                            path: 'newPollinationsModel>seed_capsule_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarL'
+                        }"
+                        class="roundedBorders"
+                    />
+                    <Image
+                        width="80px"
+                        densityAware="true"
+                        visible="{= !!${newPollinationsModel>pollen_donor_plant_preview_image_id} }"
+                        src="{
+                            path: 'newPollinationsModel>pollen_donor_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarL'
+                        }"
+                        class="roundedBorders"
+                    />
+                    <!-- <Image
+                        width="80px"
+                        densityAware="true"
+                        visible="{= !!${newPollinationsModel>seed_capsule_plant_preview_image_id} }"
+                        src="{
+                            path: 'newPollinationsModel>seed_capsule_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarL'
+                        }"
+                        class="roundedBorders"
+                    /> -->
+                </VBox>
+                <VBox>
+                    <FormattedText
+                        htmlText="&lt;strong&gt;{
+                            path: 'newPollinationsModel>seed_capsule_plant_id'
+                        }&lt;/strong&gt; 
+                            {
+                            path: 'newPollinationsModel>seedCapsulePlantName'
+                        } &lt;strong&gt;☓&lt;/strong&gt; 
+                            &lt;strong&gt;{
+                            path: 'newPollinationsModel>pollen_donor_plant_id'
+                        }&lt;/strong&gt; 
+                            {
+                            path: 'newPollinationsModel>pollenDonorPlantName'
+                        }"
+                        class="sapUiTinyMarginBottom"
+                    />
+                    <HBox justifyContent="SpaceBetween">
+                        <Label
+                            class="sapUiTinyMarginBottom"
+                            visible="{=
+                                !!${newPollinationsModel>florescence_comment}
+                            }"
+                            text="[{newPollinationsModel>florescence_comment}]"
+                            tooltip="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
+                        />
+                        <GenericTag
+                            class="sapUiTinyMarginBegin"
+                            text="{
+                                path: 'newPollinationsModel>pollen_type'
+                            }"
+                            design="StatusIconHidden"
+                            status="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
+                        />
+                    </HBox>
+                </VBox>
+            </HBox>
+            <HBox class="sapUiTinyMarginBottom">
                 <DateTimePicker
                     width="11rem"
                     displayFormat="yyyy-MM-dd HH:mm"
@@ -57,26 +100,27 @@
                     press=".onPressSetNowButton"
                 />
             </HBox>
-            <HBox>
-                <Label
-                    text="Flowers"
-                    class="sapUiTinyMarginEnd"
-                />
-                <StepInput
-                    width="3rem"
-                    max="9"
-                    min="1"
-                    required="true"
-                    textAlign="Center"
-                    value="{newPollinationsModel>count_attempted}"
-                />
-            </HBox>
-            <VBox class="sapUiTinyMarginBottom">
+            <HBox justifyContent="SpaceBetween">
+                <VBox>
+                    <Label
+                        text="Flowers"
+                        class="sapUiTinyMarginEnd"
+                    />
+                    <StepInput
+                        width="3rem"
+                        max="9"
+                        min="1"
+                        required="true"
+                        textAlign="Center"
+                        value="{newPollinationsModel>count_attempted}"
+                    />
+                </VBox>
+            <!-- <VBox class="sapUiTinyMarginBottom">
                 <HBox
                     alignItems="Center"
                     justifyContent="SpaceBetween"
-                >
-                    <HBox alignItems="Center">
+                > -->
+                    <VBox alignItems="Center">
                         <Label
                             text="Pollen Quality"
                             class="sapUiTinyMarginEnd"
@@ -93,16 +137,17 @@
                                 <FlexItemData growFactor="1" />
                             </layoutData>
                         </Switch>
-                    </HBox>
-                    <GenericTag
+                    </VBox>
+                    <!-- <GenericTag
                         text="{
                             path: 'newPollinationsModel>pollen_type'
                         }"
                         design="StatusIconHidden"
                         status="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-                    />
-                </HBox>
-            </VBox>
+                    /> -->
+                <!-- </HBox>
+            </VBox> -->
+            </HBox>
             <HBox
                 justifyContent="SpaceBetween"
                 alignItems="Center"
@@ -152,9 +197,7 @@
                     </core:Icon>
                 </FlexBox>
             </HBox>
-        
         </VBox>
-
         <!-- buttons -->
         <HBox
             justifyContent="SpaceBetween"
@@ -173,6 +216,5 @@
                 press=".onPressSaveNewPollinationButton"
             />
         </HBox>
-
     </VBox>
 </c:FragmentDefinition>

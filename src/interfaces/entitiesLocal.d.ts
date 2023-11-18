@@ -11,11 +11,14 @@ export interface LUnsavedPollination {
     florescence_id: int;
     seedCapsulePlantName: string;
     seed_capsule_plant_id: int;
+    seed_capsule_plant_preview_image_id?: int;
     // florescenceStatus: string;
     florescence_comment?: string;
     label_color_rgb?: string;
     pollenDonorPlantName: string;
     pollen_donor_plant_id: int;
+    pollen_donor_plant_preview_image_id?: int;
+    
     pollen_type: string;
     goodPollenQuality: boolean;  // not saved to backend
     // pollen_quality: PollenQuality;  // mapped from goodPollenQuality when saving
