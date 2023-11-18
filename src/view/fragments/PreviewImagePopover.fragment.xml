@@ -17,7 +17,6 @@
 			/>
 
     	<Image 
-			id="idHoverImage"
 			width="700px"
     		press=".onClickImage"
 			src="{preview_image_model>/plant_preview_image_url}"

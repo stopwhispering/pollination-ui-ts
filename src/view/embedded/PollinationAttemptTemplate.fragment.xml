@@ -72,7 +72,40 @@
                 />
                 <!-- </FlexBox> -->
             </HBox>
-            <VBox>
+            <HBox>
+                <VBox
+                    class="sapUiTinyMarginEnd">
+                    <Image
+                        width="48px"
+                        densityAware="true"
+                        visible="{= !!${pollinationsModel>seed_capsule_plant_preview_image_id} }"
+                        src="{
+                            path: 'pollinationsModel>seed_capsule_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarS'
+                        }"
+                        class="roundedBorders"
+                    />
+                    <!-- <Image
+                        width="48px"
+                        densityAware="true"
+                        visible="{= !!${pollinationsModel>pollen_donor_plant_preview_image_id} }"
+                        src="{
+                            path: 'pollinationsModel>pollen_donor_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarS'
+                        }"
+                        class="roundedBorders"
+                        /> -->
+                    <Image
+                        width="48px"
+                        densityAware="true"
+                        visible="{= !!${pollinationsModel>pollen_donor_plant_preview_image_id} }"
+                        src="{
+                            path: 'pollinationsModel>pollen_donor_plant_preview_image_id',
+                            formatter: '.formatter.getImageUrlAvatarS'
+                        }"
+                        class="roundedBorders"
+                        />
+                </VBox>
                 <FormattedText
                     htmlText="&lt;strong&gt;{
                         path: 'pollinationsModel>seed_capsule_plant_id'
@@ -88,7 +121,7 @@
                     }"
                     class="sapUiTinyMarginBottom"
                 />
-            </VBox>
+            </HBox>
             <HBox wrap="Wrap">
                 <GenericTag
                     text="{

@@ -38,8 +38,10 @@ export interface BActiveFlorescence {
 export interface PollinationRead {
   seed_capsule_plant_id: number;
   seed_capsule_plant_name: string;
+  seed_capsule_plant_preview_image_id?: number;
   pollen_donor_plant_id: number;
   pollen_donor_plant_name: string;
+  pollen_donor_plant_preview_image_id?: number;
   pollinated_at?: string;
   pollen_type: string;
   location?: string;

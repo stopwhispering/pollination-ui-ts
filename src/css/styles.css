@@ -166,3 +166,8 @@
     content: "\e901";
   }
   
+
+.roundedBorders{
+  /* apply rounded corners to image */
+  border-radius: 5px;
+}
