@@ -377,10 +377,13 @@ export default class App extends BaseController {
 		if (!this._oSeedPlantingDialogHandler){
 			this._oSeedPlantingDialogHandler = new NewSeedPlantingDialogHandler(this._oActiveSeedPlantingsHandler);
 		}
-		this._oSeedPlantingDialogHandler.openDialogForUpdateSeedPlanting(this.getView()!, oSeedPlanting);
-
+		
 		const oList = <List>oEvent.getSource();
-		oList.removeSelections(true);
+		const fnRemoveSelections = () => {oList.removeSelections(true);};
+
+		this._oSeedPlantingDialogHandler.openDialogForUpdateSeedPlanting(this.getView()!, oSeedPlanting, fnRemoveSelections);
+
+		
 		
 	}
 

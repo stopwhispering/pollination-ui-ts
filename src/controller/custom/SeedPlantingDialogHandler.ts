@@ -12,6 +12,7 @@ import MessageToast from "sap/m/MessageToast";
 import SegmentedButton from "sap/m/SegmentedButton";
 import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
 import ListItemBase from "sap/m/ListItemBase";
+import Event from "sap/ui/base/Event";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -22,6 +23,7 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 	private _oDialog: Dialog;
 	private _oSeedPlantingModel: JSONModel;
 	private _oPlantNameDialog: Dialog;
+	private _fnRemoveSelections?: Function;
 
 	public constructor(oActiveSeedPlantingsHandler: ActiveSeedPlantingsHandler) {
 		super();
@@ -49,8 +51,10 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		this.loadSoilsList(this._oDialog);
 	}
 
-	public async openDialogForUpdateSeedPlanting(oViewToAddTo: View, oSeedPlanting: SeedPlantingRead) {
+	public async openDialogForUpdateSeedPlanting(oViewToAddTo: View, oSeedPlanting: SeedPlantingRead, fnRemoveSelections: Function) {
 		// to allow for safe canceling, we don't work on the original data (from App.view) but on a clone
+		this._fnRemoveSelections = fnRemoveSelections;  // to clear list selections after closing dialog
+		
 		const oSeedPlantingClone = JSON.parse(JSON.stringify(oSeedPlanting));
 		this._oSeedPlantingModel = new JSONModel(oSeedPlantingClone);
 		const sTitle = oSeedPlantingClone.seed_capsule_plant_name + ' × ' + oSeedPlantingClone.pollen_donor_plant_name;
@@ -186,10 +190,17 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		// var oDialog = <Dialog>oEvent.getSource();
 		this._oDialog.getModel("seedPlantingModel")!.destroy();
 		this._oDialog.destroy();
+
+		if (this._fnRemoveSelections) {
+			this._fnRemoveSelections();
+		}
 	}
 
 	onCancel(oEvent: Button$PressEvent) {
 		this._oDialog.close();
 	}
-	
+	onPressSetTodayButton(oEvent: Button$PressEvent) {
+		this._oSeedPlantingModel.setProperty('/germinated_first_on', Util.getToday());
+		this._oSeedPlantingModel.updateBindings(false);
+	}
 }

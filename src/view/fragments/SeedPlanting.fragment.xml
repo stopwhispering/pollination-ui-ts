@@ -146,14 +146,21 @@
                 <VBox>
                     <Label 
                         text="Germinated on"/>
-                    <DatePicker
-                        width="11rem"
-                        displayFormat="yyyy-MM-dd"
-                        valueFormat="yyyy-MM-dd"
-                        value="{
-                            path: 'seedPlantingModel>/germinated_first_on'
-                        }"
-                    />
+                    <HBox>
+                        <DatePicker
+                            width="11rem"
+                            displayFormat="yyyy-MM-dd"
+                            valueFormat="yyyy-MM-dd"
+                            value="{
+                                path: 'seedPlantingModel>/germinated_first_on'
+                            }"
+                        />
+                        <Button
+                            icon="sap-icon://calendar"
+                            type="Transparent"
+                            press=".onPressSetTodayButton"
+                        />
+                    </HBox>
                 </VBox>
                 <VBox>
                     <Label 
