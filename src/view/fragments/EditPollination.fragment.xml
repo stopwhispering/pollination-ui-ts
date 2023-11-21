@@ -56,12 +56,21 @@
 				<Label text="{i18n>EditPollinationFragment.PollinationAt}"/>
 				<HBox class="sapUiTinyMarginBottom">
 					<CheckBox selected="{editPollinationInput>/pollinated_at_known}"/>
-					<MaskInput
+					<DateTimePicker
+						width="11rem"
+						enabled="{editPollinationInput>/pollinated_at_known}"
+						displayFormat="yyyy-MM-dd HH:mm"
+						valueFormat="yyyy-MM-dd HH:mm"
+						value="{editPollinationInput>/pollinated_at}"
+						placeholder="Enter Date"
+						showCurrentTimeButton="true"
+					/>
+					<!-- <MaskInput
 						enabled="{editPollinationInput>/pollinated_at_known}"
 						value="{editPollinationInput>/pollinated_at}"
 						mask="9999-99-99 99:99"
 						width="8.5rem"
-					/>
+					/> -->
 					
 					<HBox
 						alignItems="Center"
