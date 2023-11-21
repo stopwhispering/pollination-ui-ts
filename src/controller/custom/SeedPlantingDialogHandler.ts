@@ -13,6 +13,7 @@ import SegmentedButton from "sap/m/SegmentedButton";
 import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
 import ListItemBase from "sap/m/ListItemBase";
 import Event from "sap/ui/base/Event";
+import { UpdateSeedPlantingInputData } from "pollination/ui/interfaces/entitiesLocal";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -55,7 +56,10 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		// to allow for safe canceling, we don't work on the original data (from App.view) but on a clone
 		this._fnRemoveSelections = fnRemoveSelections;  // to clear list selections after closing dialog
 		
-		const oSeedPlantingClone = JSON.parse(JSON.stringify(oSeedPlanting));
+		const oSeedPlantingClone = <UpdateSeedPlantingInputData>JSON.parse(JSON.stringify(oSeedPlanting));
+		oSeedPlantingClone.count_germinated_known = (oSeedPlantingClone.count_germinated !== undefined && 
+													 oSeedPlantingClone.count_germinated !== null);
+		
 		this._oSeedPlantingModel = new JSONModel(oSeedPlantingClone);
 		const sTitle = oSeedPlantingClone.seed_capsule_plant_name + ' × ' + oSeedPlantingClone.pollen_donor_plant_name;
 
@@ -109,7 +113,8 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 	}
 
 	public async onPressUpdate(oEvent: Button$PressEvent){
-		const oSeedPlanting: SeedPlantingRead = this._oSeedPlantingModel.getData();
+		const oSeedPlanting: UpdateSeedPlantingInputData = this._oSeedPlantingModel.getData();
+		oSeedPlanting.count_germinated = oSeedPlanting.count_germinated_known ? oSeedPlanting.count_germinated : undefined;
 		const oSeedPlantingUpdate = <SeedPlantingUpdate> oSeedPlanting;
 		await this._oActiveSeedPlantingsHandler.updateSeedPlanting(oSeedPlantingUpdate);
 		this._oDialog.close();

@@ -166,7 +166,9 @@
                     <Label 
                         text="Number of seeds germinated"/>
                     <HBox>
+                        <CheckBox selected="{seedPlantingModel>/count_germinated_known}"/>
                         <Slider
+                            enabled="{seedPlantingModel>/count_germinated_known}"
                             value="{seedPlantingModel>/count_germinated}"
                             inputsAsTooltips="true"
                             enableTickmarks="true"

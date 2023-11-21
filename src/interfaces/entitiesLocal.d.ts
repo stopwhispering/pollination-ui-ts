@@ -1,4 +1,4 @@
-import { BActiveFlorescence, PollenQuality, PollinationRead } from "./entities";
+import { BActiveFlorescence, PollenQuality, PollinationRead, SeedPlantingRead } from "./entities";
 import { FlorescenceStatus, FlorescenceStatus } from "./enums";
 
 /**
@@ -107,6 +107,10 @@ export interface StateModelData{
     include_ongoing_pollinations: boolean,
     include_finished_pollinations: boolean,
     flower_history_include_inactive: boolean,
+}
+
+export interface UpdateSeedPlantingInputData extends SeedPlantingRead{
+    count_germinated_known: boolean;
 }
 
 export type LHoverAction = "on" | "out";
