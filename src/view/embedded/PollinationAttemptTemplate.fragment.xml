@@ -52,16 +52,22 @@
                             design="StatusIconHidden"
                             class="sapUiTinyMarginEnd"
                         />
-                        <Button
+                        <core:Icon
+                            class="sapUiSmallMarginBegin"
+                            visible="{= !!${pollinationsModel>ongoing} }"
+                            src="sap-icon://edit"
+                            press=".onPressEditOngoingPollination"
+                        />
+                        <!-- <Button
                             class="sapUiSmallMarginBegin"
                             visible="{= !!${pollinationsModel>ongoing} }"
                             icon="sap-icon://edit"
                             type="Transparent"
                             press=".onPressEditOngoingPollination"
-                        />
+                        /> -->
                     </HBox>
                     <HBox alignItems="Center"
-                            class="sapUiSmallMarginBottom">
+                            class="sapUiTinyMarginBottom">
                         <ProgressIndicator
                             width="8rem"
                             displayValue="{pollinationsModel>current_ripening_days} / {pollinationsModel>predicted_ripening_days}"
