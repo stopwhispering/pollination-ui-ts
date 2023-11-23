@@ -25,9 +25,10 @@
             />
         </f:customData>
         <VBox class="sapUiSmallMargin">
-            <HBox alignItems="Start">
+            <HBox alignItems="Start" justifyContent="SpaceBetween">
                 <core:Icon
                     src="sap-icon://color-fill"
+                    class="sapUiTinyMarginEnd"
                     color="{
                         path: 'pollinationsModel>label_color_rgb'
                     }"
@@ -45,32 +46,55 @@
                 >
                 </Label> -->
                 <VBox>
-                    <GenericTag
-                        text="{= (!!${pollinationsModel>pollinated_at} ? ${pollinationsModel>pollinated_at} : 'unknown date') }"
-                        design="StatusIconHidden"
-                        class="sapUiTinyMarginEnd"
-                    />
-                    <ProgressIndicator
-                        class="sapUiSmallMarginBottom"
-                        displayValue="{pollinationsModel>current_ripening_days} / {pollinationsModel>predicted_ripening_days}"
-                        percentValue="{= (${pollinationsModel>current_ripening_days} / ${pollinationsModel>predicted_ripening_days}) * 100 }"
-                        visible="{= !!${pollinationsModel>predicted_ripening_days} }"
-                        state="{
-                            parts: [
-                                'pollinationsModel>current_ripening_days',
-                                'pollinationsModel>predicted_ripening_days'
-                            ],
-                            formatter: '.formatter.seed_ripening_progress_indicator_state'
-                        }"
-                    />
+                    <HBox>
+                        <GenericTag
+                            text="{= (!!${pollinationsModel>pollinated_at} ? ${pollinationsModel>pollinated_at} : 'unknown date') }"
+                            design="StatusIconHidden"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Button
+                            class="sapUiSmallMarginBegin"
+                            visible="{= !!${pollinationsModel>ongoing} }"
+                            icon="sap-icon://edit"
+                            type="Transparent"
+                            press=".onPressEditOngoingPollination"
+                        />
+                    </HBox>
+                    <HBox alignItems="Center"
+                            class="sapUiSmallMarginBottom">
+                        <ProgressIndicator
+                            width="8rem"
+                            displayValue="{pollinationsModel>current_ripening_days} / {pollinationsModel>predicted_ripening_days}"
+                            percentValue="{= (${pollinationsModel>current_ripening_days} / ${pollinationsModel>predicted_ripening_days}) * 100 }"
+                            visible="{= !!${pollinationsModel>predicted_ripening_days} }"
+                            state="{
+                                parts: [
+                                    'pollinationsModel>current_ripening_days',
+                                    'pollinationsModel>predicted_ripening_days'
+                                ],
+                                formatter: '.formatter.seed_ripening_progress_indicator_state'
+                            }"
+                        />
+                        <custom:TrafficLight 
+                            visible="{= !!${pollinationsModel>probability_pollination_to_seed} &amp;&amp; 
+                                         (${pollinationsModel>probability_pollination_to_seed} >= 0) }"
+                            size="1.6rem" 
+                            class="sapUiSmallMarginBegin"
+                            value="{pollinationsModel>probability_pollination_to_seed}" 
+                            text="{pollinationsModel>probability_pollination_to_seed}%"
+                            tooltip="{= ${pollinationsModel>probability_pollination_to_seed}.toString() + '%' }"
+                            asc="false"
+                            glimit="35" 
+                            rlimit="15"/>
+                    </HBox>
                 </VBox>
                 <!-- <FlexBox> -->
-                <Button
+                <!-- <Button
                     visible="{= !!${pollinationsModel>ongoing} }"
                     icon="sap-icon://edit"
                     type="Transparent"
                     press=".onPressEditOngoingPollination"
-                />
+                /> -->
                 <!-- </FlexBox> -->
             </HBox>
             <HBox>
