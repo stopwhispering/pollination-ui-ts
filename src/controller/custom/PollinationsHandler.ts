@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
-import { PollinationRead, BResultsOngoingPollinations } from "pollination/ui/interfaces/entities";
+import { PollinationRead, GetPollinationsResponse } from "pollination/ui/interfaces/entities";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -24,7 +24,7 @@ export default class PollinationsHandler extends ManagedObject {
 		const sQueryParams = 'include_ongoing_pollinations=' + include_ongoing_pollinations + 
 							 '&include_finished_pollinations=' + include_finished_pollinations;
 
-		const oResult = <BResultsOngoingPollinations> await Util.get(Util.getServiceUrl('ongoing_pollinations?'+sQueryParams));
+		const oResult = <GetPollinationsResponse> await Util.get(Util.getServiceUrl('ongoing_pollinations?'+sQueryParams));
 		const aOngoingPollinations = <PollinationRead[]>oResult.ongoing_pollination_collection;
 		this._oPollinationModel.setData(aOngoingPollinations);
 		return aOngoingPollinations;

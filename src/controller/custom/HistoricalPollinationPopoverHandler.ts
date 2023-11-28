@@ -55,9 +55,4 @@ export default class HistoricalPollinationPopoverHandler extends ManagedObject {
         return oPopover;
     }
 
-    public close(): void {
-        if(this._oPopover && this._oPopover.isOpen())
-            this._oPopover.close();
-    }
-
 }

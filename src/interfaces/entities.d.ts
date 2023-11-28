@@ -2,7 +2,7 @@
  * @namespace pollination.ui.interfaces.entities
  */
 
-import { FlorescenceStatus, BFloweringState } from "./enums";
+import { FlorescenceStatus, FloweringState } from "./enums";
 
 // from other modules
 export interface BMessage {
@@ -120,7 +120,7 @@ export interface BPollinationStatus {
   key: string;
   text: string;
 }
-export interface BPotentialPollenDonor {
+export interface PotentialPollenDonor {
   plant_id: number;
   plant_name: string;
   plant_preview_image_id?: number;
@@ -135,7 +135,7 @@ export interface BResultsActiveFlorescences {
   message?: BMessage;
   active_florescence_collection: BActiveFlorescence[];
 }
-export interface BResultsOngoingPollinations {
+export interface GetPollinationsResponse {
   action: string;
   message?: BMessage;
   ongoing_pollination_collection: PollinationRead[];
@@ -162,7 +162,7 @@ export interface PollenContainerCreateUpdate {
 export interface BResultsPotentialPollenDonors {
   action: string;
   message?: BMessage;
-  potential_pollen_donor_collection: BPotentialPollenDonor[];
+  potential_pollen_donor_collection: PotentialPollenDonor[];
 }
 export interface SettingsRead {
   colors: string[];
@@ -221,7 +221,7 @@ export interface PollinationCreate {
   count_attempted: number;
 }
 
-export interface FRequestPollenContainers {
+export interface CreateUpdatePollenContainersRequest {
   pollen_container_collection: PollenContainerCreateUpdate[];
 }
 
@@ -229,18 +229,18 @@ export interface FlowerHistoryRow {
   plant_id: int
   plant_name: string
   year: string
-  month_01: BFloweringState
-  month_02: BFloweringState
-  month_03: BFloweringState
-  month_04: BFloweringState
-  month_05: BFloweringState
-  month_06: BFloweringState
-  month_07: BFloweringState
-  month_08: BFloweringState
-  month_09: BFloweringState
-  month_10: BFloweringState
-  month_11: BFloweringState
-  month_12: BFloweringState
+  month_01: FloweringState
+  month_02: FloweringState
+  month_03: FloweringState
+  month_04: FloweringState
+  month_05: FloweringState
+  month_06: FloweringState
+  month_07: FloweringState
+  month_08: FloweringState
+  month_09: FloweringState
+  month_10: FloweringState
+  month_11: FloweringState
+  month_12: FloweringState
 }
 
 export interface FlowerHistory {

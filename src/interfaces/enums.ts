@@ -18,7 +18,7 @@ export enum FlorescenceStatus {
   ABORTED = 'aborted',
 }
 
-export type BFloweringState = "inflorescence_growing" | "flowering" | "seeds_ripening" | "not_flowering";
+export type FloweringState = "inflorescence_growing" | "flowering" | "seeds_ripening" | "not_flowering";
 
 export type BMessageType = "Information" | "None" | "Success" | "Warning" | "Error" | "Debug";
 

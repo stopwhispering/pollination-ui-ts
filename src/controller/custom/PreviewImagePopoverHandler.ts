@@ -1,4 +1,4 @@
-import { BActiveFlorescence, BPotentialPollenDonor } from "pollination/ui/interfaces/entities";
+import { BActiveFlorescence, PotentialPollenDonor } from "pollination/ui/interfaces/entities";
 import formatter from "pollination/ui/model/formatter";
 import Popover from "sap/m/Popover";
 import ManagedObject from "sap/ui/base/ManagedObject";

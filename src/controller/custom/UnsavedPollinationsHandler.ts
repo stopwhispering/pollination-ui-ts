@@ -2,7 +2,7 @@ import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
 import { LUnsavedPollination } from "pollination/ui/interfaces/entitiesLocal";
-import { BActiveFlorescence, BPotentialPollenDonor, PollinationCreate } from "pollination/ui/interfaces/entities";
+import { BActiveFlorescence, PotentialPollenDonor, PollinationCreate } from "pollination/ui/interfaces/entities";
 import PollinationsHandler from "./PollinationsHandler";
 import { PollenQuality } from "pollination/ui/interfaces/enums";
 
@@ -69,7 +69,7 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
-	public preview(oFlorescence: BActiveFlorescence, oPollenDonor: BPotentialPollenDonor) {
+	public preview(oFlorescence: BActiveFlorescence, oPollenDonor: PotentialPollenDonor) {
 
 		// create unsaved pollination using mainly default values
 		const oNewPollination: LUnsavedPollination = {

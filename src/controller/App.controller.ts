@@ -16,7 +16,7 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField, { SearchField$LiveChangeEvent } from "sap/m/SearchField";
-import { BActiveFlorescence, PollinationRead, BPotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, FRequestPollenContainers, SeedPlantingRead, BPollinationAttempt } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, PotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, CreateUpdatePollenContainersRequest, SeedPlantingRead, BPollinationAttempt } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import Util from "./custom/Util";
 import NewFlorescenceDialogHandler from "./custom/NewFlorescenceDialogHandler";
@@ -128,7 +128,7 @@ export default class App extends BaseController {
 		oPotentialPollenDonorsScrollContainer.setBusy(true);
 
 		const oResults = <BResultsPotentialPollenDonors> await Util.get(Util.getServiceUrl('potential_pollen_donors/' + florescence.id));
-		const aPotentialPollenDonors = <BPotentialPollenDonor[]>oResults.potential_pollen_donor_collection;
+		const aPotentialPollenDonors = <PotentialPollenDonor[]>oResults.potential_pollen_donor_collection;
 		var oModel = new JSONModel(aPotentialPollenDonors);
 		this.getView()!.setModel(oModel, "potentialPollenDonorsModel");
 		
@@ -291,7 +291,7 @@ export default class App extends BaseController {
 		var oPollenContainersFull = <BResultsPollenContainers>oPollenContainersModel.getData();
 
 		//we only send the pollen containers, not the list of plants that have none
-		var oPollenContainers: FRequestPollenContainers = {
+		var oPollenContainers: CreateUpdatePollenContainersRequest = {
 			"pollen_container_collection": oPollenContainersFull.pollen_container_collection
 		}
 
@@ -444,7 +444,7 @@ export default class App extends BaseController {
 		
 		const oPollenDonorList = <List>this.getView()!.byId('potentialPollenDonorsList');
 		var oSelectedPollenDonorListItem = <ListItemBase>oPollenDonorList.getSelectedItem();
-		var oSelectedPollenDonor = <BPotentialPollenDonor>oSelectedPollenDonorListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
+		var oSelectedPollenDonor = <PotentialPollenDonor>oSelectedPollenDonorListItem.getBindingContext('potentialPollenDonorsModel')!.getObject();
 		
 		// this._oTemporaryPollinationsHandler.preview(oFlorescence, oSelectedPollenDonor)
 		this._oUnsavedPollinationsHandler.preview(oFlorescence, oSelectedPollenDonor);
