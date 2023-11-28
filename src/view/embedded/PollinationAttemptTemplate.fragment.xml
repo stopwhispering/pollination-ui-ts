@@ -58,13 +58,6 @@
                             src="sap-icon://edit"
                             press=".onPressEditOngoingPollination"
                         />
-                        <!-- <Button
-                            class="sapUiSmallMarginBegin"
-                            visible="{= !!${pollinationsModel>ongoing} }"
-                            icon="sap-icon://edit"
-                            type="Transparent"
-                            press=".onPressEditOngoingPollination"
-                        /> -->
                     </HBox>
                     <HBox alignItems="Center"
                             class="sapUiTinyMarginBottom">
@@ -95,12 +88,6 @@
                     </HBox>
                 </VBox>
                 <!-- <FlexBox> -->
-                <!-- <Button
-                    visible="{= !!${pollinationsModel>ongoing} }"
-                    icon="sap-icon://edit"
-                    type="Transparent"
-                    press=".onPressEditOngoingPollination"
-                /> -->
                 <!-- </FlexBox> -->
             </HBox>
             <HBox>

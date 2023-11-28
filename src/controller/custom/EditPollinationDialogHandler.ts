@@ -45,6 +45,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		oEditedPollination.count_capsules_known = !!oEditedPollination.count_capsules;
 
 		oEditedPollination.count_pollinated = oEditedPollination.count_pollinated || 0;
+		oEditedPollination.count_capsules = oEditedPollination.count_capsules || 0;
 		
 
 		// open dialog
@@ -144,6 +145,23 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		}
 		if (!oEditedPollination.count_capsules_known) {
 			oEditedPollination.count_capsules = undefined;
+		}
+		
+		// the inputs are bound to the model and might update undefined values to empty strings
+		if (!oEditedPollination.seed_capsule_length) {
+			oEditedPollination.seed_capsule_length = undefined;
+		}
+		if (!oEditedPollination.seed_capsule_width) {
+			oEditedPollination.seed_capsule_width = undefined;
+		}
+		if (!oEditedPollination.seed_count) {
+			oEditedPollination.seed_count = undefined;
+		}
+		if (!oEditedPollination.seed_length) {
+			oEditedPollination.seed_length = undefined;
+		}
+		if (!oEditedPollination.seed_width) {
+			oEditedPollination.seed_width = undefined;
 		}
 
 		// set finished if confirmed

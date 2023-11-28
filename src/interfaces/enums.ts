@@ -20,12 +20,10 @@ export enum FlorescenceStatus {
 
 export type FloweringState = "inflorescence_growing" | "flowering" | "seeds_ripening" | "not_flowering";
 
-export type BMessageType = "Information" | "None" | "Success" | "Warning" | "Error" | "Debug";
+export type MessageType = "Information" | "None" | "Success" | "Warning" | "Error" | "Debug";
 
 export enum PollenQuality {
   GOOD = 'good',
   BAD = 'bad',
   UNKNOWN = 'unknown',
 }
-
-// export type PollenQuality = "GOOD" | "BAD" | "UNKNOWN";

@@ -44,6 +44,7 @@ import { ColorPalette$ColorSelectEvent } from "sap/m/ColorPalette";
 import HistoricalPollinationPopoverHandler from "./custom/HistoricalPollinationPopoverHandler";
 import HoverImage, { HoverImage$HoverPressEvent} from "../control/HoverImage";
 import JSONPropertyBinding from "sap/ui/model/json/JSONPropertyBinding";
+import Icon, { Icon$PressEvent } from "sap/ui/core/Icon";
 
 /**
  * @namespace pollination.ui.controller
@@ -243,10 +244,10 @@ export default class App extends BaseController {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		edit Pollination
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	public onPressEditOngoingPollination(oEvent: Button$PressEvent): void {
 		const oSettingsModel = <JSONModel>this.getView()!.getModel("settingsModel");
-		const oOngoingPollination = <PollinationRead>(<Button>oEvent.getSource()).getBindingContext("pollinationsModel")!.getObject();
-		const oPollinationModel = <JSONModel>this.getView()!.getModel("pollinationsModel");
+		const oOngoingPollination = <PollinationRead>(<Button | Icon>oEvent.getSource()).getBindingContext("pollinationsModel")!.getObject();
 
 		const oEditPollinationDialogHandler = new EditPollinationDialogHandler(oSettingsModel, this._oActiveFlorescencesHandler, this._oPollinationsHandler);
 		oEditPollinationDialogHandler.openDialogEditOngoingPollination(oOngoingPollination, this.getView()!);
