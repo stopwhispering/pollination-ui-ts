@@ -27,7 +27,7 @@
                 <Text
                     text="{potentialPollenDonorsModel>plant_id}"
                     class="sapUiTinyMarginBegin"
-                    width="1.6rem"
+                    width="2.0rem"
                 />
                 <Text
                     text="{potentialPollenDonorsModel>plant_name}"

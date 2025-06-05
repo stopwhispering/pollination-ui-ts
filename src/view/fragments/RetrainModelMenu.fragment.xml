@@ -15,5 +15,8 @@
 		<MenuItem
 			text="Re-Train Germination Probability Model"
 			press=".onPressRetrainGerminationProbabilityModel"/>
+		<MenuItem
+			text="Re-Train Florescence Probability Model"
+			press=".onPressRetrainFlorescenceProbabilityModel"/>
 	</Menu>
 </core:FragmentDefinition>

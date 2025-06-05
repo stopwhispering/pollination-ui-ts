@@ -45,4 +45,8 @@ export default class RetrainModelMenuHandler extends ManagedObject {
 		await new MLModelTrainer().triggerRetrainGerminationProbabilityModel();
     }
 
+    public async  onPressRetrainFlorescenceProbabilityModel(oEvent: MenuItem$PressEvent) {
+		await new MLModelTrainer().triggerRetrainFlorescenceProbabilityModel();
+    }
+
 }

@@ -10,7 +10,7 @@
                     <Text
                         text="{currentFlorescencesModel>plant_id}"
                         class="sapUiTinyMarginBegin"
-                        width="1.6rem"
+                        width="2.0rem"
                     />
                     <Button
                         class="tinyButton sapUiTinyMarginBegin"

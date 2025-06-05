@@ -5,7 +5,7 @@ import Text from "sap/m/Text";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import { ValueState } from "sap/ui/core/library";
 import Util from "pollination/ui/controller/custom/Util";
-import { BResultsRetraining, BResultsRetrainingGerminationDays, BResultsRetrainingGerminationProbability, BResultsRetrainingPollinationToSeedsModel, BResultsRetrainingRipeningDays } from "pollination/ui/interfaces/entities";
+import { BResultsRetraining, BResultsRetrainingFlorescenceProbability, BResultsRetrainingGerminationDays, BResultsRetrainingGerminationProbability, BResultsRetrainingPollinationToSeedsModel, BResultsRetrainingRipeningDays } from "pollination/ui/interfaces/entities";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -29,6 +29,11 @@ export default class MLModelTrainer extends ManagedObject {
 
 	public async triggerRetrainGerminationProbabilityModel() {
         const oResult = <BResultsRetrainingGerminationProbability> await Util.post(Util.getServiceUrl('retrain_germination_probability_model'));
+        this._openResponseDialog(oResult);
+    }
+
+	public async triggerRetrainFlorescenceProbabilityModel() {
+        const oResult = <BResultsRetrainingFlorescenceProbability> await Util.post(Util.getServiceUrl('retrain_florescence_probability_model'));
         this._openResponseDialog(oResult);
     }
 

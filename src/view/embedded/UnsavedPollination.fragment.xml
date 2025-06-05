@@ -52,7 +52,7 @@
                         class="roundedBorders"
                     /> -->
                 </VBox>
-                <VBox>
+                <VBox width="160px">
                     <FormattedText
                         htmlText="&lt;strong&gt;{
                             path: 'newPollinationsModel>seed_capsule_plant_id'
@@ -76,6 +76,7 @@
                             }"
                             text="[{newPollinationsModel>florescence_comment}]"
                             tooltip="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
+                            wrapping="true"
                         />
                         <GenericTag
                             class="sapUiTinyMarginBegin"
@@ -85,6 +86,7 @@
                             design="StatusIconHidden"
                             status="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
                         />
+                            <!-- status="{= (${newPollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }" -->
                     </HBox>
                 </VBox>
             </HBox>
