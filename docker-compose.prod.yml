@@ -1,7 +1,7 @@
 services:
       pollination-frontend:
         restart: always
-
+        
         labels:
           # make traefik use this sub-domain in entrypoing "https-ep" (as defined in docker-compose.yml)
           # note: router name is arbitrary but must be unique among containers
@@ -12,3 +12,6 @@ services:
 
           # enable basic auth as defined in traefik's docker compose file
           - traefik.http.routers.pollination-frontend.middlewares=my-basic-auth
+         
+          
+          
