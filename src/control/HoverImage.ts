@@ -32,15 +32,15 @@ export default class HoverImage extends Image {
     }
 
     onmouseover = () => {  
-        const params: HoverImage$HoverEventParameters = {event: "onmouseover"};
-        // this.fireEvent('hover', params);
-        this.fireEvent('hoverPress', params);
+        // const params: HoverImage$HoverEventParameters = {event: "onmouseover"};
+        // // this.fireEvent('hover', params);
+        // this.fireEvent('hoverPress', params);
     };
     
     onmouseout = () => {  
-        const params: HoverImage$HoverEventParameters = {event: "onmouseout"};
-        // this.fireEvent('hover', params);
-        this.fireEvent('hoverPress', params);
+        // const params: HoverImage$HoverEventParameters = {event: "onmouseout"};
+        // // this.fireEvent('hover', params);
+        // this.fireEvent('hoverPress', params);
     };
 
     onclick = () => {  
