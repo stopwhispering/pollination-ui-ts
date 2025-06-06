@@ -6,8 +6,8 @@
 >
 
 
+        <!-- highlight="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }" -->
     <f:GridListItem
-        highlight="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
         class="formatByOngoing ongoingPollinationStatus"
     >
         <f:customData>
@@ -120,55 +120,65 @@
                         hoverPress=".onHoverPressPreviewImage"
                         />
                 </VBox>
-                <FormattedText
-                    htmlText="&lt;strong&gt;{
-                        path: 'pollinationsModel>seed_capsule_plant_id'
-                    }&lt;/strong&gt; 
-                        {
-                        path: 'pollinationsModel>seed_capsule_plant_name'
-                    } &lt;strong&gt;☓&lt;/strong&gt; 
-                        &lt;strong&gt;{
-                        path: 'pollinationsModel>pollen_donor_plant_id'
-                    }&lt;/strong&gt; 
-                        {
-                        path: 'pollinationsModel>pollen_donor_plant_name'
-                    }"
-                    class="sapUiTinyMarginBottom"
-                />
-            </HBox>
-            <HBox wrap="Wrap">
-                <GenericTag
-                    text="{
-                        path: 'pollinationsModel>pollen_type'
-                    }"
-                    design="StatusIconHidden"
-                    status="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
-                    class="sapUiTinyMarginEnd"
-                />
-                <GenericTag
-                    text="{
-                        path: 'pollinationsModel>location_text'
-                    }"
-                    design="StatusIconHidden"
-                    class="sapUiTinyMarginEnd"
-                />
-                <GenericTag
-                    visible="{= (!!${pollinationsModel>count_attempted}) }"
-                    text="{pollinationsModel>count_attempted}"
-                    tooltip="{pollinationsModel>count_attempted} flower(s)"
-                    design="StatusIconHidden"
-                    class="sapUiTinyMarginEnd"
-                    status="Warning"
-                />
-                <GenericTag
-                    text="{pollinationsModel>pollen_quality}"
-                    tooltip="Pollen Quality: {pollinationsModel>pollen_quality}"
-                    design="StatusIconHidden"
-                    class="sapUiTinyMarginEnd"
-                    status="{=
-                        ${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
-                    }"
-                />
+                <VBox>
+                    <FormattedText
+                        htmlText="&lt;strong&gt;{
+                            path: 'pollinationsModel>seed_capsule_plant_id'
+                        }&lt;/strong&gt; 
+                            {
+                            path: 'pollinationsModel>seed_capsule_plant_name'
+                        } &lt;strong&gt;☓&lt;/strong&gt; 
+                            &lt;strong&gt;{
+                            path: 'pollinationsModel>pollen_donor_plant_id'
+                        }&lt;/strong&gt; 
+                            {
+                            path: 'pollinationsModel>pollen_donor_plant_name'
+                        }"
+                        class="sapUiTinyMarginBottom"
+                    />
+                    <HBox wrap="Wrap" alignItems="Center">
+                        <ObjectStatus 
+                            visible="{= (!!${pollinationsModel>count_attempted}) }"
+                            text="{pollinationsModel>count_attempted}"
+                            tooltip="{pollinationsModel>count_attempted} flower(s)"
+                            class="sapUiTinyMarginEnd"
+                            inverted="true"
+                            icon="sap-icon://begin"
+                        />
+                        <GenericTag
+                            text="{
+                                path: 'pollinationsModel>pollen_type'
+                            }"
+                            design="StatusIconHidden"
+                            status="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <GenericTag
+                            text="{
+                                path: 'pollinationsModel>location_text'
+                            }"
+                            design="StatusIconHidden"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <!-- <GenericTag
+                            visible="{= (!!${pollinationsModel>count_attempted}) }"
+                            text="{pollinationsModel>count_attempted}"
+                            tooltip="{pollinationsModel>count_attempted} flower(s)"
+                            design="StatusIconHidden"
+                            class="sapUiTinyMarginEnd"
+                            status="Warning"
+                        /> -->
+                        <GenericTag
+                            text="{pollinationsModel>pollen_quality}"
+                            tooltip="Pollen Quality: {pollinationsModel>pollen_quality}"
+                            design="StatusIconHidden"
+                            class="sapUiTinyMarginEnd"
+                            status="{=
+                                ${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
+                            }"
+                        />
+                    </HBox>
+                </VBox>
             </HBox>
         </VBox>
     </f:GridListItem>

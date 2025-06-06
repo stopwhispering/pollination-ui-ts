@@ -19,11 +19,13 @@
                         press=".onPressEditActiveFlorescence"
                     />
                 </VBox>
-                <Text
-                    text="{=
-                        ${currentFlorescencesModel>plant_name} + 
-                        (!!${currentFlorescencesModel>comment} ? ' [' + ${currentFlorescencesModel>comment} + ']' : '')
-                       }"
+                <FormattedText 
+                    htmlText="{= ${currentFlorescencesModel>plant_name} 
+                        + '&lt;br&gt;' 
+                        + '&lt;span style=&quot;color:gray; font-style: italic;&quot;&gt;' + ${currentFlorescencesModel>plant_taxon_name}
+                        + (!!${currentFlorescencesModel>comment} ? '&lt;br&gt; [' + ${currentFlorescencesModel>comment} + ']' : '')
+                        + '&lt;/span&gt;'
+                    }"
                     class="sapUiTinyMarginBegin"
                     width="16rem"
                 />

@@ -17,6 +17,7 @@ export interface BActiveFlorescence {
   id: number;
   plant_id: number;
   plant_name: string;
+  plant_taxon_name: string;
   plant_self_pollinates?: boolean;
   self_pollinated?: boolean;
   plant_preview_image_id: number | undefined;
