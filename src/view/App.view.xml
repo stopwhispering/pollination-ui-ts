@@ -142,7 +142,7 @@
 							>
 								<Button
 									icon="sap-icon://add"
-									enabled="{= !!${state>/seed_capsule_selected} &amp;&amp; !!${state>/pollen_donor_selected} }"
+									enabled="{= !!${state>/seed_capsule_selected} &amp;&amp; !!${state>/pollen_donor_selected} &amp;&amp; ${state>/florescence_status} === 'flowering' }"
 									class="sapUiSmallMarginTop"
 									press=".onPressAddNewPreviewPollination"
 								/>
@@ -187,8 +187,11 @@
 								items="{
 									path: 'pollinationsModel>/',
 									sorter: [{
-										path: 'seed_capsule_plant_name',
+										path: 'florescence_status',
+										descending: true,
 										group: '.getSeedCapsulePlantGroup'
+									}, {
+										path: 'seed_capsule_plant_name'
 									}, {
 										path: 'florescence_id'
 									}, {

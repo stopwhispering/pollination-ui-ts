@@ -81,6 +81,7 @@ export default class App extends BaseController {
 		const oStateModelDefaultData: StateModelData = {
 			seed_capsule_selected: false,
 			pollen_donor_selected: false,
+			florescence_status: undefined,
 			include_ongoing_pollinations: true,
 			include_finished_pollinations: false,
 			flower_history_include_inactive: false,
@@ -139,6 +140,7 @@ export default class App extends BaseController {
 		const oStateModel = <JSONModel>this.getView()!.getModel("state");
 		oStateModel.setProperty('/pollen_donor_selected', false);
 		oStateModel.setProperty('/seed_capsule_selected', true);
+		oStateModel.setProperty('/florescence_status', florescence.florescence_status);
 	}
 
 
@@ -168,6 +170,7 @@ export default class App extends BaseController {
 		// we can't change order here, only format the group text
 		const oPollination = <PollinationRead>oContext.getProperty('');
 		let sFlorescence: string;
+
 		if (!!oPollination.florescence_comment){
 			sFlorescence = oPollination.seed_capsule_plant_name.toUpperCase() + ' [' + oPollination.florescence_comment + ']';
 		} else {
@@ -176,12 +179,13 @@ export default class App extends BaseController {
 		const sGroup = oPollination.seed_capsule_plant_id + ' ' + sFlorescence;
 		return {
 			key: sGroup,
+			florescence_status: oPollination.florescence_status,
 		};
 	}	
 
 	public getGroupHeader(oGroup: any) {
 		return new GroupHeaderListItem({
-			title : oGroup.key
+			title : oGroup.key + ' (' + oGroup.florescence_status + ')',
 		})
 	}
 

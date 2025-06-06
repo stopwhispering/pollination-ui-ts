@@ -53,6 +53,7 @@ export interface PollinationRead {
   location_text: string;
   florescence_id: number;
   florescence_comment?: string;
+  florescence_status: FlorescenceStatus;
   label_color_rgb: string;
   id: number;
   pollination_status: string;

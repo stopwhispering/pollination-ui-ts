@@ -102,6 +102,7 @@ export interface LPreviewImage extends LPreviewImageBasics{
 export interface StateModelData{
     seed_capsule_selected: boolean,
     pollen_donor_selected: boolean,
+    florescence_status: FlorescenceStatus | undefined,
     
     // filter settings dialog
     include_ongoing_pollinations: boolean,
