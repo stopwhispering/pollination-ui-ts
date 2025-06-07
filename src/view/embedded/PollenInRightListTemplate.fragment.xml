@@ -25,27 +25,22 @@
                     hoverPress=".onHoverPressPreviewImage"
                     />
                 <VBox>
-                <Text
-                    text="{potentialPollenDonorsModel>plant_id}"
-                    class="sapUiTinyMarginBegin"
-                    width="2.0rem"
-                />
-                                <FormattedText
-                    width="4.5rem"
-                    htmlText="{
-                        path: 'potentialPollenDonorsModel>count_stored_pollen_containers',
-                        formatter: '.formatter.html_for_count_stored_pollen_containers'
-                    }"
-                    tooltip="{= ${potentialPollenDonorsModel>count_stored_pollen_containers} +
-                        ' container(s) left' }"
-                    class="sapUiTinyMarginBeginEnd"
-                />
+                    <Text
+                        text="{potentialPollenDonorsModel>plant_id}"
+                        class="sapUiTinyMarginBegin"
+                        width="2.0rem"
+                    />
+                    <FormattedText
+                        width="4.5rem"
+                        htmlText="{
+                            path: 'potentialPollenDonorsModel>count_stored_pollen_containers',
+                            formatter: '.formatter.html_for_count_stored_pollen_containers'
+                        }"
+                        tooltip="{= ${potentialPollenDonorsModel>count_stored_pollen_containers} +
+                            ' container(s) left' }"
+                        class="sapUiTinyMarginBeginEnd"
+                    />
                 </VBox>
-                <!-- <Text
-                    text="{potentialPollenDonorsModel>plant_name}"
-                    class="sapUiTinyMarginBeginEnd"
-                    width="16rem"
-                /> -->
                 <FormattedText 
                     htmlText="{= ${potentialPollenDonorsModel>plant_name} 
                         + '&lt;br&gt;' 
