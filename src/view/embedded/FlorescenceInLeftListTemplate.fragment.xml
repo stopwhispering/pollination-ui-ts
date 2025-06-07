@@ -29,18 +29,22 @@
                     class="sapUiTinyMarginBegin"
                     width="16rem"
                 />
+                <VBox width="2rem">
                 <Text
                     text="⸙ {currentFlorescencesModel>branches_count}"
+                    visible="{= !!${currentFlorescencesModel>branches_count} }"
                     tooltip="{currentFlorescencesModel>branches_count} branch(es)"
                     class="sapUiTinyMarginBegin"
                     width="1.4rem"
                 />
                 <Text
                     text="⁕ {currentFlorescencesModel>flowers_count}"
+                    visible="{= !!${currentFlorescencesModel>flowers_count} }"
                     tooltip="{currentFlorescencesModel>flowers_count} flowers"
                     class="sapUiTinyMarginBegin"
                     width="2rem"
                 />
+                </VBox>
                 <VBox alignItems="Center">
                     <FormattedText
                         htmlText="{
