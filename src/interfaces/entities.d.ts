@@ -2,7 +2,7 @@
  * @namespace pollination.ui.interfaces.entities
  */
 
-import { FlorescenceStatus, FloweringState } from "./enums";
+import { FlorescenceStatus, FloweringState, PollinationStatus } from "./enums";
 
 // from other modules
 export interface BMessage {

@@ -74,9 +74,10 @@
                                 formatter: '.formatter.seed_ripening_progress_indicator_state'
                             }"
                         />
+                            <!-- visible="{= !!${pollinationsModel>probability_pollination_to_seed} &amp;&amp; 
+                                         (${pollinationsModel>probability_pollination_to_seed} >= 0) }" -->
                         <custom:TrafficLight 
-                            visible="{= !!${pollinationsModel>probability_pollination_to_seed} &amp;&amp; 
-                                         (${pollinationsModel>probability_pollination_to_seed} >= 0) }"
+                            visible="{= !!${pollinationsModel>probability_pollination_to_seed}}"
                             size="1.6rem" 
                             class="sapUiSmallMarginBegin"
                             value="{pollinationsModel>probability_pollination_to_seed}" 
@@ -136,14 +137,21 @@
                         }"
                         class="sapUiTinyMarginBottom"
                     />
+                    
                     <HBox wrap="Wrap" alignItems="Center">
+                        <!-- number of pollination attempts and successful pollinations (if seed_capsule stage)
+                        in attempt stage, show it grey; in seed_capsule stage, show it green unless count of successful pollinations is not set, then show it orange -->
                         <ObjectStatus 
                             visible="{= (!!${pollinationsModel>count_attempted}) }"
-                            text="{pollinationsModel>count_attempted}"
-                            tooltip="{pollinationsModel>count_attempted} flower(s)"
+                            text="{= !!${pollinationsModel>count_pollinated} ? ${pollinationsModel>count_pollinated} + '/' + ${pollinationsModel>count_attempted} : ${pollinationsModel>count_attempted} }"
+                            tooltip="{= ${pollinationsModel>count_attempted} + ' pollination attempt(s)' + 
+                                (${pollinationsModel>count_pollinated} ? '\n' + ${pollinationsModel>count_pollinated} + ' successful' : '') }"
                             class="sapUiTinyMarginEnd"
                             inverted="true"
                             icon="sap-icon://begin"
+                            state="{= ${pollinationsModel>pollination_status} === 'seed_capsule' 
+                            ? (!${pollinationsModel>count_pollinated} ? 'Warning' : 'Success') : 'None' 
+                            }"
                         />
                         <GenericTag
                             text="{
