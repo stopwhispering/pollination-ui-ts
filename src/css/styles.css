@@ -42,11 +42,11 @@
 /* Pollination Boxes */
 
 .ongoingPollinationStatus[data-pollination_status='attempt'] {
-  background-color: rgb(220, 223, 225);
+  background-color: rgb(224 243 207);
 }
 
 .ongoingPollinationStatus[data-pollination_status='seed_capsule'] {
-  background-color: #dfbfa5;
+  background-color: #9d724f;
 }
 
 .formatByOngoing[data-is_ongoing="false"] {
