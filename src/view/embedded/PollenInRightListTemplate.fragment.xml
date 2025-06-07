@@ -66,7 +66,7 @@
                 />
                 <HBox
                     wrap="Wrap"
-                    width="5.5rem"
+                    width="8.5rem"
                     items="{
                         path: 'potentialPollenDonorsModel>pollination_attempts',
                         templateShareable: false
