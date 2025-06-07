@@ -128,7 +128,7 @@
                         }&lt;/strong&gt; 
                             {
                             path: 'pollinationsModel>seed_capsule_plant_name'
-                        } &lt;strong&gt;☓&lt;/strong&gt; 
+                        } &lt;strong&gt;×&lt;/strong&gt; 
                             &lt;strong&gt;{
                             path: 'pollinationsModel>pollen_donor_plant_id'
                         }&lt;/strong&gt; 

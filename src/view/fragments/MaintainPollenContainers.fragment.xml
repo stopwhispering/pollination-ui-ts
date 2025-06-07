@@ -40,7 +40,7 @@
                                 width="4.5rem"
                                 htmlText="{
                                     path: 'pollenContainersModel>count_stored_pollen_containers',
-                                    formatter: '.formatter.html_for_count_stored_pollen_containers'
+                                    formatter: '.formatter.html_for_count_stored_pollen_containers_indicator'
                                 }"/>
 
                         </HBox>

@@ -59,7 +59,7 @@
                         }&lt;/strong&gt; 
                             {
                             path: 'newPollinationsModel>seedCapsulePlantName'
-                        } &lt;strong&gt;☓&lt;/strong&gt; 
+                        } &lt;strong&gt;×&lt;/strong&gt; 
                             &lt;strong&gt;{
                             path: 'newPollinationsModel>pollen_donor_plant_id'
                         }&lt;/strong&gt; 

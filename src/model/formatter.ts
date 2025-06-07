@@ -8,19 +8,35 @@ import List from "sap/m/List";
  * @namespace pollination.ui.model
  */
 export default class formatter extends ManagedObject {
-    public html_for_count_stored_pollen_containers(iCount: int) {
+    // public html_for_count_stored_pollen_containers(iCount: int) {
+    //     if (!iCount || iCount == 0) {
+    //         return '';
+    //     }
+    //     if (iCount == 1) {
+    //         var color = '#FF0000';
+    //     } else if (iCount <= 3) {
+    //         color = '#FFA500';
+    //     } else {
+    //         color = '#329e0b';
+    //     }
+    //     const text = iCount;
+
+    //     return '<span style="color:' + color + '">' + text + '</span>';
+    // }
+
+    public html_for_count_stored_pollen_containers_indicator(iCount: int) {
         if (!iCount || iCount == 0) {
             return '';
         }
         if (iCount == 1) {
             var color = '#FF0000';
-            var text = '▊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + iCount;
+            var text = '▊';
         } else if (iCount <= 3) {
             color = '#FFA500';
-            text = '▊▊&nbsp;&nbsp;&nbsp;' + iCount;
+            text = '▊▊';
         } else {
             color = '#329e0b';
-            text = '▊▊▊' + iCount;
+            text = '▊▊▊';
         }
 
         return '<span style="color:' + color + '">' + text + '</span>';

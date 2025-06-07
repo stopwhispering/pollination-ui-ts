@@ -31,14 +31,14 @@
                         width="2.0rem"
                     />
                     <FormattedText
-                        width="4.5rem"
+                        width="3rem"
                         htmlText="{
                             path: 'potentialPollenDonorsModel>count_stored_pollen_containers',
-                            formatter: '.formatter.html_for_count_stored_pollen_containers'
+                            formatter: '.formatter.html_for_count_stored_pollen_containers_indicator'
                         }"
                         tooltip="{= ${potentialPollenDonorsModel>count_stored_pollen_containers} +
                             ' container(s) left' }"
-                        class="sapUiTinyMarginBeginEnd"
+                        class="sapUiTinyMarginBegin"
                     />
                 </VBox>
                 <FormattedText 
@@ -47,7 +47,6 @@
                         + '&lt;span style=&quot;color:gray; font-style: italic;&quot;&gt;' + ${potentialPollenDonorsModel>plant_taxon_name}
                         + '&lt;/span&gt;'
                     }"
-                    class="sapUiTinyMarginBegin"
                     width="12rem"
                 />                
                 <FormattedText
