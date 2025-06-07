@@ -58,11 +58,11 @@
 							<!-- <VBox> -->
 							<!-- <FlexBox> -->
 							<HBox alignItems="Start"
-								width="70rem"
+								width="59rem"
 								class="florescenceAndPollinationBox">
 								<ScrollContainer
 									height="18rem"
-									width="33rem"
+									width="27rem"
 									vertical="true"
 									horizontal="false"
 									focusable="true"
@@ -99,7 +99,7 @@
 								</ScrollContainer>
 								<ScrollContainer
 									height="18rem"
-									width="36rem"
+									width="30rem"
 									class="sapUiSmallMarginEnd"
 									vertical="true"
 									horizontal="false"

@@ -29,11 +29,20 @@
                     class="sapUiTinyMarginBegin"
                     width="2.0rem"
                 />
-                <Text
+                <!-- <Text
                     text="{potentialPollenDonorsModel>plant_name}"
                     class="sapUiTinyMarginBeginEnd"
                     width="16rem"
-                />
+                /> -->
+                <FormattedText 
+                    htmlText="{= ${potentialPollenDonorsModel>plant_name} 
+                        + '&lt;br&gt;' 
+                        + '&lt;span style=&quot;color:gray; font-style: italic;&quot;&gt;' + ${potentialPollenDonorsModel>plant_taxon_name}
+                        + '&lt;/span&gt;'
+                    }"
+                    class="sapUiTinyMarginBegin"
+                    width="12rem"
+                />                
                 <FormattedText
                     width="2.5rem"
                     htmlText="{

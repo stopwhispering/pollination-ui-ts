@@ -125,6 +125,7 @@ export interface BPollinationStatus {
 export interface PotentialPollenDonor {
   plant_id: number;
   plant_name: string;
+  plant_taxon_name: string;
   plant_preview_image_id?: number;
   pollen_type: string;
   count_stored_pollen_containers?: number;

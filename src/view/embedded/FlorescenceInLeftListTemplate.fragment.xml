@@ -27,7 +27,7 @@
                         + '&lt;/span&gt;'
                     }"
                     class="sapUiTinyMarginBegin"
-                    width="16rem"
+                    width="12rem"
                 />
                 <VBox width="2rem">
                 <Text
