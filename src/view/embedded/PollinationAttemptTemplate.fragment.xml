@@ -182,7 +182,7 @@
                             design="StatusIconHidden"
                             class="sapUiTinyMarginEnd"
                             status="{=
-                                ${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Warning'
+                                ${pollinationsModel>pollen_quality} === 'good' ? 'Success' : 'Error'
                             }"
                         />
                     </HBox>
