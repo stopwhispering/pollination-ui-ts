@@ -5,7 +5,6 @@
 	xmlns:custom="pollination.ui.control"
 >
 
-
         <!-- highlight="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }" -->
     <f:GridListItem
         class="formatByOngoing ongoingPollinationStatus"
@@ -63,6 +62,7 @@
                             class="sapUiTinyMarginBottom">
                         <ProgressIndicator
                             width="8rem"
+                            enabled="{pollinationsModel>ongoing}"
                             displayValue="{pollinationsModel>current_ripening_days} / {pollinationsModel>predicted_ripening_days}"
                             percentValue="{= (${pollinationsModel>current_ripening_days} / ${pollinationsModel>predicted_ripening_days}) * 100 }"
                             visible="{= !!${pollinationsModel>predicted_ripening_days} }"
