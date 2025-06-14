@@ -57,82 +57,90 @@
 							<!-- <VBox> -->
 							<!-- <VBox> -->
 							<!-- <FlexBox> -->
-							<HBox alignItems="Start"
-								width="59rem"
-								class="florescenceAndPollinationBox">
-								<ScrollContainer
-									height="18rem"
-									width="27rem"
-									vertical="true"
-									horizontal="false"
-									focusable="true"
-								>
-									<List
-										id="activeFlorescencesList"
-										items="{
-											path: 'currentFlorescencesModel>/',
-											sorter: [{
-												path: 'florescence_status',
-												descending: false,
-												group: '.getFlorescenceStatusGroup'
-											}, {
-												path: 'first_flower_opened_at',
-												descending: true
-											}]
-										}"
-										mode="SingleSelectMaster"
-										growing="true"
-										growingScrollToLoad="true"
-										showNoData="false"
-										showSeparators="Inner"
-										selectionChange="onSelectionChangedCurrentFlorescence"
-										class="sapUiSmallMarginEnd"
-									>
-										<core:Fragment
-											fragmentName="pollination.ui.view.embedded.FlorescenceInLeftListTemplate"
-											type="XML"
-										/>
-									</List>
-									<layoutData>
-										<FlexItemData growFactor="1" />
-									</layoutData>
-								</ScrollContainer>
-								<ScrollContainer
-									height="18rem"
-									width="36rem"
-									class="sapUiSmallMarginEnd"
-									vertical="true"
-									horizontal="false"
-									focusable="true"
-									id="potentialPollenDonorsScrollContainer"
-								>
-									<List
-										id="potentialPollenDonorsList"
-										items="{
-											path: 'potentialPollenDonorsModel>/',
-											sorter: {
-												path: 'pollen_type',
-												descending: false,
-												group: '.getPollenTypeGroup'
-											}
-										}"
-										mode="SingleSelectMaster"
-										growing="true"
-										growingScrollToLoad="true"
-										showNoData="false"
-										showSeparators="Inner"
-										selectionChange=".onSelectionChangedPotentialPollenDonor"
-									>
-										<core:Fragment
-											fragmentName="pollination.ui.view.embedded.PollenInRightListTemplate"
-											type="XML"
-										/>
-									</List>
-									<layoutData>
-										<FlexItemData growFactor="2" />
-									</layoutData>
-								</ScrollContainer>
-							</HBox>
+							<ScrollContainer
+							>
+								<content>
+									
+									<HBox alignItems="Start"
+										width="59rem"
+										class="florescenceAndPollinationBox">
+										<ScrollContainer
+											height="18rem"
+											width="27rem"
+											vertical="true"
+											horizontal="false"
+											focusable="true"
+										>
+											<List
+												id="activeFlorescencesList"
+												items="{
+													path: 'currentFlorescencesModel>/',
+													sorter: [{
+														path: 'florescence_status',
+														descending: false,
+														group: '.getFlorescenceStatusGroup'
+													}, {
+														path: 'first_flower_opened_at',
+														descending: true
+													}]
+												}"
+												mode="SingleSelectMaster"
+												growing="true"
+												growingScrollToLoad="true"
+												showNoData="false"
+												showSeparators="Inner"
+												selectionChange="onSelectionChangedCurrentFlorescence"
+												class="sapUiSmallMarginEnd"
+											>
+												<core:Fragment
+													fragmentName="pollination.ui.view.embedded.FlorescenceInLeftListTemplate"
+													type="XML"
+												/>
+											</List>
+											<layoutData>
+												<FlexItemData growFactor="1" />
+											</layoutData>
+										</ScrollContainer>
+										<ScrollContainer
+											height="18rem"
+											width="30rem"
+											class="sapUiSmallMarginEnd"
+											vertical="true"
+											horizontal="false"
+											focusable="true"
+											id="potentialPollenDonorsScrollContainer"
+										>
+											<List
+												id="potentialPollenDonorsList"
+												items="{
+													path: 'potentialPollenDonorsModel>/',
+													sorter: {
+														path: 'pollen_type',
+														descending: false,
+														group: '.getPollenTypeGroup'
+													}
+												}"
+												mode="SingleSelectMaster"
+												growing="true"
+												growingScrollToLoad="true"
+												showNoData="false"
+												showSeparators="Inner"
+												selectionChange=".onSelectionChangedPotentialPollenDonor"
+											>
+												<core:Fragment
+													fragmentName="pollination.ui.view.embedded.PollenInRightListTemplate"
+													type="XML"
+												/>
+											</List>
+											<layoutData>
+												<FlexItemData growFactor="2" />
+											</layoutData>
+										</ScrollContainer>
+									</HBox>
+							
+								</content>
+								
+							</ScrollContainer>
 							<!-- </FlexBox> -->
 							
 							<!-- </VBox> -->
