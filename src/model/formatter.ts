@@ -90,7 +90,7 @@ export default class formatter extends ManagedObject {
     }
 
     seed_ripening_progress_indicator_state(current_ripening_days: int, predicted_ripening_days: int){
-        if (current_ripening_days/predicted_ripening_days > 1.15){
+        if (current_ripening_days/predicted_ripening_days > 2.0){
             return 'Error';
         } else if (current_ripening_days/predicted_ripening_days > 0.95){
             return 'Warning';
