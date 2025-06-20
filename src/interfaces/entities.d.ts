@@ -67,6 +67,7 @@ export interface PollinationRead {
   seed_count?: number;
   seed_capsule_description?: string;
   seed_description?: string;
+  pollen_quality: string;
   // days_until_first_germination?: number;
   // first_seeds_sown?: number;
   // first_seeds_germinated?: number;

@@ -43,6 +43,7 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		oEditedPollination.harvest_date_known = !!oEditedPollination.harvest_date;
 		oEditedPollination.count_pollinated_known = !!oEditedPollination.count_pollinated;
 		oEditedPollination.count_capsules_known = !!oEditedPollination.count_capsules;
+		oEditedPollination.goodPollenQuality = oPollination.pollen_quality === "good";
 
 		oEditedPollination.count_pollinated = oEditedPollination.count_pollinated || 0;
 		oEditedPollination.count_capsules = oEditedPollination.count_capsules || 0;
@@ -162,6 +163,13 @@ export default class EditPollinationDialogHandler extends ManagedObject {
 		}
 		if (!oEditedPollination.seed_width) {
 			oEditedPollination.seed_width = undefined;
+		}
+
+		// pollen_quality is a string, we need to map from it from goodPollenQuality
+		if (oEditedPollination.goodPollenQuality) {
+			oEditedPollination.pollen_quality = "good";
+		} else {
+			oEditedPollination.pollen_quality = "bad";
 		}
 
 		// set finished if confirmed

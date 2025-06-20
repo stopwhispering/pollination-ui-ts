@@ -69,6 +69,7 @@ export interface LEditPollinationInput extends PollinationRead{
     harvest_date_known: boolean;
     count_pollinated_known: boolean;
     count_capsules_known: boolean;
+    goodPollenQuality: boolean;  // not saved to backend, but used for UI
 }
 
 export interface LEditFlorescenceInput extends BActiveFlorescence{

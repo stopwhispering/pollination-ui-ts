@@ -94,28 +94,54 @@
 						/>
 					</HBox>
 				</HBox>
-				<Label text="Location"/>
-				<SegmentedButton
-					selectedKey="{
-						path: 'editPollinationInput>/location'
-					}"
-					class="sapUiTinyMarginBottom"
-				>
-					<items>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.Indoor}"
-							key="indoor"
+
+				<HBox>
+					<VBox>
+						<Label text="Location"/>
+						<SegmentedButton
+							selectedKey="{
+								path: 'editPollinationInput>/location'
+							}"
+							class="sapUiTinyMarginBottom"
+						>
+							<items>
+								<SegmentedButtonItem
+									text="{i18n>EditPollinationFragment.Indoor}"
+									key="indoor"
+								/>
+								<SegmentedButtonItem
+									text="{i18n>EditPollinationFragment.IndoorLED}"
+									key="indoor_led"
+								/>
+								<SegmentedButtonItem
+									text="{i18n>EditPollinationFragment.Outdoor}"
+									key="outdoor"
+								/>
+							</items>
+						</SegmentedButton>
+					</VBox>
+
+					<VBox alignItems="Center" class="sapUiMediumMarginBegin">
+						<Label
+							text="Pollen Quality"
+							class="sapUiTinyMarginEnd"
+							vAlign="Middle"
 						/>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.IndoorLED}"
-							key="indoor_led"
-						/>
-						<SegmentedButtonItem
-							text="{i18n>EditPollinationFragment.Outdoor}"
-							key="outdoor"
-						/>
-					</items>
-				</SegmentedButton>
+						<!-- todo newPollinationsModel>pollen_quality currently good/bad, but must be true/false -->
+						<Switch
+							state="{editPollinationInput>/goodPollenQuality}"
+							customTextOn="+"
+							customTextOff="-"
+							tooltip="Pollen Quality: Good / Bad"
+						>
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+						</Switch>
+					</VBox>
+
+				</HBox>
+
 				<HBox>
 					<VBox>
 						<Label text="Number of Flowers"/>
