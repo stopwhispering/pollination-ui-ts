@@ -87,7 +87,7 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 			
 			// defaults
 			pollinated_at: Util.format_timestamp(new Date()),
-			location: 'indoor',  // todo enum
+			location: 'outdoor',  // todo enum
 			count_attempted: 1,
 			label_color_rgb: "transparent",
 			// pollen_quality: PollenQuality.GOOD,
