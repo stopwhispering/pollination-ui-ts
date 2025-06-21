@@ -99,6 +99,19 @@ export default class formatter extends ManagedObject {
         }
     }
 
+    pollinationAttemptFormattedTextHtml(seed_capsule_plant_id: int, seed_capsule_plant_name: string, pollen_donor_plant_id: int, pollen_donor_plant_name: string) {
+        let text = '';
+        text += '<strong>' + seed_capsule_plant_id + '</strong> ' + seed_capsule_plant_name;
+        text += ' <strong>×</strong> ';
+        text += '<strong>' + pollen_donor_plant_id + '</strong> ' + pollen_donor_plant_name;
+        
+        if (seed_capsule_plant_id == pollen_donor_plant_id) {
+            text = '<span style="color: #FFA500;">' + text + '</span>';
+        }
+        
+        return text;
+    }
+
     germination_progress_indicator_state(current_germination_days: int, predicted_germination_days: int){
         if (current_germination_days/predicted_germination_days > 1.25){
             return 'Error';

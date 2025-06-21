@@ -6,8 +6,12 @@
         Helper: 'pollination/ui/util/Helper'
     }"
 >
-    <CustomListItem highlight="{=
+    <!-- <CustomListItem highlight="{=
         (${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 'None') 
+       }"> -->
+    <CustomListItem highlight="{=
+        (${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 
+        ${potentialPollenDonorsModel>is_same_plant} ? 'Warning' : 'None') 
        }">
         <HBox>
             <!-- <CheckBox selected="{completed}"  /> -->

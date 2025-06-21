@@ -130,6 +130,8 @@ export interface PotentialPollenDonor {
   plant_preview_image_id?: number;
   pollen_type: string;
   count_stored_pollen_containers?: number;
+  is_same_plant: boolean;
+  is_same_florescence: boolean;
   already_ongoing_attempt: boolean;
   probability_pollination_to_seed?: number;
   pollination_attempts: BPollinationAttempt[];

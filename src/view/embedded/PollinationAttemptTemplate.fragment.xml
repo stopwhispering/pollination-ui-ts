@@ -123,18 +123,15 @@
                 </VBox>
                 <VBox>
                     <FormattedText
-                        htmlText="&lt;strong&gt;{
-                            path: 'pollinationsModel>seed_capsule_plant_id'
-                        }&lt;/strong&gt; 
-                            {
-                            path: 'pollinationsModel>seed_capsule_plant_name'
-                        } &lt;strong&gt;×&lt;/strong&gt; 
-                            &lt;strong&gt;{
-                            path: 'pollinationsModel>pollen_donor_plant_id'
-                        }&lt;/strong&gt; 
-                            {
-                            path: 'pollinationsModel>pollen_donor_plant_name'
-                        }"
+                        htmlText="{
+                                parts: [
+                                    'pollinationsModel>seed_capsule_plant_id',
+                                    'pollinationsModel>seed_capsule_plant_name',
+                                    'pollinationsModel>pollen_donor_plant_id',
+                                    'pollinationsModel>pollen_donor_plant_name'
+                                ],
+                                formatter: '.formatter.pollinationAttemptFormattedTextHtml'
+                            }"
                         class="sapUiTinyMarginBottom"
                     />
                     
