@@ -44,6 +44,15 @@
                             ' container(s) left' }"
                         class="sapUiTinyMarginBegin"
                     />
+                    <FormattedText
+                        htmlText="{=  
+                            '&lt;span style=&quot;color:gray;&quot;&gt;' + ${potentialPollenDonorsModel>count_stored_pollen_containers}
+                            + '&lt;/span&gt;'
+                        }"
+                        visible="{= !!${potentialPollenDonorsModel>count_stored_pollen_containers} }"
+                        class="sapUiTinyMarginBegin"
+                        width="2.0rem"
+                    />
                 </VBox>
                 <FormattedText 
                     htmlText="{= ${potentialPollenDonorsModel>plant_name} 
