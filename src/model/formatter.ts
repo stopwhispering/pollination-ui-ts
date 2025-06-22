@@ -53,8 +53,8 @@ export default class formatter extends ManagedObject {
             if (i > 0) {
                 text += ', ';
             }
-            // cut off first two letters (e.g. '2022-11-16' -> '22-11-16')
-            text += previous_flower_closing_dates[i].substring(2, 10);
+            // cut off day (e.g. '2022-11-16' -> '2022-11')
+            text += previous_flower_closing_dates[i].substring(0, 7);
         }
         return text + '</span>';
     }
