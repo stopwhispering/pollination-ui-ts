@@ -42,6 +42,23 @@ export default class formatter extends ManagedObject {
         return '<span style="color:' + color + '">' + text + '</span>';
     }
 
+    
+    public html_for_previous_flower_closing_dates(previous_flower_closing_dates: string[]) {
+        // dates in format '%Y-%m-%d', e.g. '2022-11-16'
+        if (!previous_flower_closing_dates || previous_flower_closing_dates.length == 0) {
+            return '';
+        }
+        var text = '<span style="color:gray;">';
+        for (var i = 0; i < previous_flower_closing_dates.length; i++) {
+            if (i > 0) {
+                text += ', ';
+            }
+            // cut off first two letters (e.g. '2022-11-16' -> '22-11-16')
+            text += previous_flower_closing_dates[i].substring(2, 10);
+        }
+        return text + '</span>';
+    }
+
     html_for_active_florescence_dates(inflorescence_appeared_at: string, first_flower_opened_at: string, last_flower_closed_at: string, florescence_status: FlorescenceStatus) {
         // dates in format '%Y-%m-%d', e.g. '2022-11-16'
         switch (florescence_status) {

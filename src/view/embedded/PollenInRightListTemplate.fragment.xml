@@ -54,14 +54,24 @@
                         width="2.0rem"
                     />
                 </VBox>
-                <FormattedText 
-                    htmlText="{= ${potentialPollenDonorsModel>plant_name} 
-                        + '&lt;br&gt;' 
-                        + '&lt;span style=&quot;color:gray; font-style: italic;&quot;&gt;' + ${potentialPollenDonorsModel>plant_taxon_name}
-                        + '&lt;/span&gt;'
-                    }"
-                    width="12rem"
-                />                
+                <VBox>
+                    <FormattedText 
+                        htmlText="{= ${potentialPollenDonorsModel>plant_name} 
+                            + '&lt;br&gt;' 
+                            + '&lt;span style=&quot;color:gray; font-style: italic;&quot;&gt;' + ${potentialPollenDonorsModel>plant_taxon_name}
+                            + '&lt;/span&gt;'
+                        }"
+                        width="12rem"
+                    />
+                    <FormattedText 
+                        htmlText="{
+                            parts: ['potentialPollenDonorsModel>previous_flower_closing_dates'],
+                            formatter: '.formatter.html_for_previous_flower_closing_dates'
+                        }"
+                        width="12rem"
+                        visible="{= !!${potentialPollenDonorsModel>previous_flower_closing_dates} }"
+                    />
+                </VBox>            
                 <FormattedText
                     width="2.5rem"
                     htmlText="{
