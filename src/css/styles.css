@@ -171,3 +171,18 @@
   /* apply rounded corners to image */
   border-radius: 5px;
 }
+
+/* attempt; we use a darker green here as the default attempt color is almost invisible as highlight indicator */
+.customHighlight .sapMLIBHighlightIndication01 {
+  /* background-color: #E0F3CF !important;  */
+  background-color: #2ad254 !important; 
+}
+
+/* seed_capsule */
+.customHighlight .sapMLIBHighlightIndication02 {
+  background-color: #9d724f !important; 
+}
+/* attempt but not ongoing anymore, i.e. failed */
+.customHighlight .sapMLIBHighlightIndication03 {
+  background-color: #FF0000 !important; 
+}

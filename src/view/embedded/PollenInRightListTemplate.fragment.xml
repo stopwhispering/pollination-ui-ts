@@ -9,10 +9,18 @@
     <!-- <CustomListItem highlight="{=
         (${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 'None') 
        }"> -->
-    <CustomListItem highlight="{=
+       <!-- highlight="{=
         (${potentialPollenDonorsModel>already_ongoing_attempt} ? 'Error' : 
         ${potentialPollenDonorsModel>is_same_plant} ? 'Warning' : 'None') 
-       }">
+       }" -->
+       <!-- highlight="Indication01" -->
+    <CustomListItem  
+       class="customHighlight"
+       highlight="{
+            path: 'potentialPollenDonorsModel>pollination_attempts',
+            formatter: '.formatter.getCustomHighlightIndicator'
+       }"
+       >
         <HBox>
             <!-- <CheckBox selected="{completed}"  /> -->
             <HBox justifyContent="Center">

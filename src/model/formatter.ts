@@ -146,4 +146,32 @@ export default class formatter extends ManagedObject {
         }
         return text;
     }
+
+    getCustomHighlightIndicator(pollination_attempts: BPollinationAttempt[]) {
+        // if empty, return undefined;
+        if (!pollination_attempts || pollination_attempts.length === 0) {
+            return undefined;
+        }
+
+        
+        // remove attempts if reverse is True
+        pollination_attempts = pollination_attempts.filter(attempt => attempt.reverse === false);
+
+        // see styles.css for corresponding styles (overwritten Indicator colors))
+        for (const attempt of pollination_attempts) {
+            if (attempt.pollination_status === PollinationStatus.SEED_CAPSULE) {
+                return 'Indication02';
+            }
+        }
+        for (const attempt of pollination_attempts) {
+            if (attempt.pollination_status === PollinationStatus.ATTEMPT && attempt.ongoing === true) {
+                return 'Indication01';
+            }
+        }
+        for (const attempt of pollination_attempts) {
+            if (attempt.pollination_status === PollinationStatus.ATTEMPT && attempt.ongoing === false) {
+                return 'Indication03';
+            }
+        }
+    }
 }
