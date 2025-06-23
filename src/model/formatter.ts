@@ -148,11 +148,9 @@ export default class formatter extends ManagedObject {
     }
 
     getCustomHighlightIndicator(pollination_attempts: BPollinationAttempt[]) {
-        // if empty, return undefined;
         if (!pollination_attempts || pollination_attempts.length === 0) {
             return undefined;
         }
-
         
         // remove attempts if reverse is True
         pollination_attempts = pollination_attempts.filter(attempt => attempt.reverse === false);
