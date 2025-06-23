@@ -129,6 +129,18 @@ export default class formatter extends ManagedObject {
         return text;
     }
 
+    potentialPollenDonorFormattedTextHtml(plant_name: string, plant_taxon_name: string, is_same_plant: boolean) {
+        let text = '';
+        text += plant_name;
+        text += '<br>';
+        text += '<span style="color:gray; font-style: italic;">' + plant_taxon_name + '</span>';
+        if (is_same_plant) {
+            text = '<span style="color: #FFA500;">' + text + '</span>';
+        }
+        return text;
+                        
+    }
+
     germination_progress_indicator_state(current_germination_days: int, predicted_germination_days: int){
         if (current_germination_days/predicted_germination_days > 1.25){
             return 'Error';

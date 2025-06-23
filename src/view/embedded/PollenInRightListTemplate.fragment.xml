@@ -64,10 +64,13 @@
                 </VBox>
                 <VBox>
                     <FormattedText 
-                        htmlText="{= ${potentialPollenDonorsModel>plant_name} 
-                            + '&lt;br&gt;' 
-                            + '&lt;span style=&quot;color:gray; font-style: italic;&quot;&gt;' + ${potentialPollenDonorsModel>plant_taxon_name}
-                            + '&lt;/span&gt;'
+                        htmlText="{
+                            parts: [
+                                'potentialPollenDonorsModel>plant_name',
+                                'potentialPollenDonorsModel>plant_taxon_name',
+                                'potentialPollenDonorsModel>is_same_plant'
+                            ],
+                            formatter: '.formatter.potentialPollenDonorFormattedTextHtml'
                         }"
                         width="12rem"
                     />
