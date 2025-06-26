@@ -222,11 +222,12 @@
 											glimit="78" 
 											rlimit="69"/>
 										</HBox>
+										<!-- visible="{= !!${pollinationsModel>predicted_germination_days} }" -->
 										<ProgressIndicator
 											class="sapUiSmallMarginBottom"
-											displayValue="{pollinationsModel>current_germination_days} / {pollinationsModel>predicted_germination_days}"
+											displayValue="{pollinationsModel>current_germination_days} / {pollinationsModel>predicted_germination_days} days"
 											percentValue="{= (${pollinationsModel>current_germination_days} / ${pollinationsModel>predicted_germination_days}) * 100 }"
-											visible="{= !!${pollinationsModel>predicted_germination_days} }"
+											
 											state="{
 												parts: [
 													'pollinationsModel>current_germination_days',
