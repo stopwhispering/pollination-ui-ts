@@ -8,6 +8,8 @@
 				<items>
 					<ViewSettingsItem text="Current Pollinations" 
 						selected="{filterSettingsInput>/ongoing_pollinations}" />
+					<ViewSettingsItem text="Recently Finished Pollinations" 
+						selected="{filterSettingsInput>/recently_finished_pollinations}" />
 					<ViewSettingsItem text="Finished Pollinations" 
 						selected="{filterSettingsInput>/finished_pollinations}" />
 				</items>

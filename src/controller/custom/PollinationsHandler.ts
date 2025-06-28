@@ -20,8 +20,10 @@ export default class PollinationsHandler extends ManagedObject {
 
 	public async loadPollinations(): Promise<PollinationRead[]> {
 		const include_ongoing_pollinations = this._oStateModel.getProperty('/include_ongoing_pollinations');
+		const include_recently_finished_pollinations = this._oStateModel.getProperty('/include_recently_finished_pollinations');
 		const include_finished_pollinations = this._oStateModel.getProperty('/include_finished_pollinations');
 		const sQueryParams = 'include_ongoing_pollinations=' + include_ongoing_pollinations + 
+							 '&include_recently_finished_pollinations=' + include_recently_finished_pollinations +
 							 '&include_finished_pollinations=' + include_finished_pollinations;
 
 		const oResult = <GetPollinationsResponse> await Util.get(Util.getServiceUrl('ongoing_pollinations?'+sQueryParams));

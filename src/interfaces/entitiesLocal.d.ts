@@ -107,6 +107,7 @@ export interface StateModelData{
     
     // filter settings dialog
     include_ongoing_pollinations: boolean,
+    include_recently_finished_pollinations: boolean,
     include_finished_pollinations: boolean,
     flower_history_include_inactive: boolean,
 }
