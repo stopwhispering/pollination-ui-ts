@@ -83,7 +83,7 @@ export default class App extends BaseController {
 			pollen_donor_selected: false,
 			florescence_status: undefined,
 			include_ongoing_pollinations: true,
-			include_recently_finished_pollinations: true,
+			include_recently_finished_pollinations: false,
 			include_finished_pollinations: false,
 			flower_history_include_inactive: false,
 		}
