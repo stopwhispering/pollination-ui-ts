@@ -5,7 +5,7 @@
 	xmlns:core="sap.ui.core"
 >
 	<f:GridListItem highlight="{= (${pollinationsModel>pollen_type} === 'fresh' ? 'Success' : 'Information') }">
-		<VBox class="sapUiSmallMargin">
+		<VBox class="sapUiSmallMargin" >
 			<HBox alignItems="Center">
 				<core:Icon
 					src="sap-icon://color-fill"
@@ -68,7 +68,7 @@
                         />
                 </VBox>
 			
-				<VBox>
+				<VBox width="14.5rem">
 					<FormattedText
 						htmlText="&lt;strong&gt;{
 							path: 'pollinationsModel>seed_capsule_plant_id'
@@ -91,7 +91,7 @@
 						text="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
 						tooltip="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
 					/>
-					<HBox wrap="Wrap">
+					<HBox wrap="Wrap" alignItems="Center">
 						<GenericTag
 							text="{
 								path: 'pollinationsModel>pollen_type'
@@ -107,14 +107,28 @@
 							design="StatusIconHidden"
 							class="sapUiTinyMarginEnd"
 						/>
-						<GenericTag
+							<!-- text="{pollinationsModel>count_attempted}" -->
+						<!-- <GenericTag
 							visible="{= (!!${pollinationsModel>count_attempted}) }"
-							text="{pollinationsModel>count_attempted}"
+							text="{= !!${pollinationsModel>count_pollinated} ? ${pollinationsModel>count_pollinated} + '/' + ${pollinationsModel>count_attempted} : ${pollinationsModel>count_attempted} }"
+                            
 							tooltip="{pollinationsModel>count_attempted} flower(s)"
 							design="StatusIconHidden"
 							class="sapUiTinyMarginEnd"
 							status="Warning"
-						/>
+						/> -->
+                        <ObjectStatus 
+                            visible="{= (!!${pollinationsModel>count_attempted}) }"
+                            text="{= !!${pollinationsModel>count_pollinated} ? ${pollinationsModel>count_pollinated} + '/' + ${pollinationsModel>count_attempted} : ${pollinationsModel>count_attempted} }"
+                            tooltip="{= ${pollinationsModel>count_attempted} + ' pollination attempt(s)' + 
+                                (${pollinationsModel>count_pollinated} ? '\n' + ${pollinationsModel>count_pollinated} + ' successful' : '') }"
+                            class="sapUiTinyMarginEnd"
+                            inverted="true"
+                            icon="sap-icon://begin"
+                            state="{= ${pollinationsModel>pollination_status} === 'seed_capsule' 
+                            ? (!${pollinationsModel>count_pollinated} ? 'Warning' : 'Success') : 'None' 
+                            }"
+                        />						
 						<GenericTag
 							text="{pollinationsModel>pollen_quality}"
 							tooltip="Pollen Quality: {pollinationsModel>pollen_quality}"
