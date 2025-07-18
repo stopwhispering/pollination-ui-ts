@@ -232,18 +232,33 @@
 												<HBox>
 													<Button text="Reset Seed Capsule Filter" press="onSeedCapsulePlantsSelectNone" />
 												</HBox>
-												<List 
+
+												<f:GridList
 													id="uniqueSeedCapsulePlantsList"
 													items="{uniqueSeedCapsulePlantsModel>/}"
-													mode="MultiSelect"
-													selectionChange=".onSelectionChangedUniqueSeedCapsulePlants"
 													>
-													<StandardListItem 
-														title="{uniqueSeedCapsulePlantsModel>plant_id} {uniqueSeedCapsulePlantsModel>plant_name}" 
-														selected="{uniqueSeedCapsulePlantsModel>selected}"
-													/>
-												</List>
+
+													<f:GridListItem 
+														press=".onPressSeedCapsulePlantForFiltering"
+														type="Active"
+														>
+														<HBox 
+															alignItems="Center" 
+															width="100%">
+														<CheckBox
+															selected="{uniqueSeedCapsulePlantsModel>selected}"
+															select=".onSelectionChangedUniqueSeedCapsulePlants"
+														/>
+														<Label
+															text="{uniqueSeedCapsulePlantsModel>plant_id} {uniqueSeedCapsulePlantsModel>plant_name}"
+															wrapping="true"
+														/>
+														</HBox>
+													</f:GridListItem>
+
+												</f:GridList>
 											</VBox>									
+										
 											<SearchField
 												placeholder="Filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
 												liveChange=".onLiveChangeOngoingPollinationsFilter"

@@ -24,7 +24,7 @@ import PollinationsHandler from "./custom/PollinationsHandler";
 import SettingsHandler from "./custom/SettingsHandler";
 import ActiveFlorescencesHandler from "./custom/ActiveFlorescencesHandler";
 import EditFlorescenceDialogHandler from "./custom/EditFlorescenceDialogHandler";
-import ListItemBase from "sap/m/ListItemBase";
+import ListItemBase, { ListItemBase$PressEvent } from "sap/m/ListItemBase";
 import UnsavedPollinationsHandler from "./custom/UnsavedPollinationsHandler";
 import EditPollinationDialogHandler from "./custom/EditPollinationDialogHandler";
 import FlowerHistoryHandler from "./custom/FlowerHistoryHandler";
@@ -251,7 +251,7 @@ export default class App extends BaseController {
 		this._filterOngoingPollinations(aFilters);
 	}
 
-	onSelectionChangedUniqueSeedCapsulePlants(oEvent: ListBase$SelectionChangeEvent) {
+	onSelectionChangedUniqueSeedCapsulePlants() {
 		// add filter to ongoing pollinations gridlist
 		// cf. onLiveChangeOngoingPollinationsFilter (only one filter is applied at a time)
 		
@@ -272,21 +272,19 @@ export default class App extends BaseController {
 		this._filterOngoingPollinations(aFilters);
 	}
 
-	// onSeedCapsulePlantsSelectAll(oEvent: ListBase$SelectionChangeEvent) {
-	// 	// select all seed capsule plants for filtering
-	// 	const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
-	// 	const aPlants = <UniqueCapsulePlant[]>oUniqueCapsulePlantsModel.getData();
-	// 	aPlants.forEach((oPlant) => {
-	// 		oPlant.selected = true;
-	// 	});
-	// 	oUniqueCapsulePlantsModel.updateBindings(false);
+	onPressSeedCapsulePlantForFiltering(oEvent: ListItemBase$PressEvent) {
+		// toggle selection of seed capsule plant for filtering
+		const oPlant = <UniqueCapsulePlant>(<ListItemBase>oEvent.getSource()).getBindingContext("uniqueSeedCapsulePlantsModel")!.getObject();
+		oPlant.selected = !oPlant.selected;
 
-	// 	const oList = <List>this.byId("uniqueSeedCapsulePlantsList");
-	// 	// make sure the selection change event is fired to update the ongoing pollinations list
-	// 	oList.fireSelectionChange();
-	// }
+		// update model
+		const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
+		oUniqueCapsulePlantsModel.updateBindings(false);
 
-	onSeedCapsulePlantsSelectNone(oEvent: ListBase$SelectionChangeEvent) {
+		this.onSelectionChangedUniqueSeedCapsulePlants();
+	}
+
+	onSeedCapsulePlantsSelectNone(oEvent: Button$PressEvent) {
 		// deselect all seed capsule plants for filtering (reset filter)
 		const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
 		const aPlants = <UniqueCapsulePlant[]>oUniqueCapsulePlantsModel.getData();
@@ -295,9 +293,7 @@ export default class App extends BaseController {
 		});
 		oUniqueCapsulePlantsModel.updateBindings(false);
 
-		const oList = <List>this.byId("uniqueSeedCapsulePlantsList");
-		// make sure the selection change event is fired to update the ongoing pollinations list
-		oList.fireSelectionChange();
+		this.onSelectionChangedUniqueSeedCapsulePlants();
 	}	
 
 
