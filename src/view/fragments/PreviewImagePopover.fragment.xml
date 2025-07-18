@@ -6,10 +6,9 @@
 		placement="Auto"
 		showHeader="false"
 		horizontalScrolling="false"
-		verticalScrolling="false"
+		verticalScrolling="true"
 		id="popoverPopupImage"
 		>
-		<!-- contentWidth="290px" -->
 		<VBox>
 		<Label 
     		text="[{preview_image_model>/plant_id}] {preview_image_model>/plant_name}"
@@ -17,8 +16,8 @@
 			/>
 
     	<Image 
-			width="700px"
     		press=".onClickImage"
+			width="100%"
 			src="{preview_image_model>/plant_preview_image_url}"
 			/>
 		</VBox>
