@@ -16,7 +16,7 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField, { SearchField$LiveChangeEvent } from "sap/m/SearchField";
-import { BActiveFlorescence, PollinationRead, PotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, CreateUpdatePollenContainersRequest, SeedPlantingRead, BPollinationAttempt } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, PotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, CreateUpdatePollenContainersRequest, SeedPlantingRead, BPollinationAttempt, UniqueCapsulePlant } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import Util from "./custom/Util";
 import NewFlorescenceDialogHandler from "./custom/NewFlorescenceDialogHandler";
@@ -99,7 +99,9 @@ export default class App extends BaseController {
 		// initialize model with ongoing  pollinations in the database and it's handler
 		const oPollinationModel = new JSONModel(<PollinationRead[]>[]);
 		this.getView()!.setModel(oPollinationModel, "pollinationsModel");
-		this._oPollinationsHandler = new PollinationsHandler(oPollinationModel, oStateModel);
+		const oUniqueCapsulePlantsModel = new JSONModel(<UniqueCapsulePlant[]>[]);
+		this.getView()!.setModel(oUniqueCapsulePlantsModel, "uniqueSeedCapsulePlantsModel");
+		this._oPollinationsHandler = new PollinationsHandler(oPollinationModel, oUniqueCapsulePlantsModel, oStateModel);
 		this._oPollinationsHandler.loadPollinations();
 
 		// initialize empty model for new pollinations that were not saved, yet
@@ -214,9 +216,23 @@ export default class App extends BaseController {
 		this._oUnsavedPollinationsHandler.savePollination(oUnsavedPollination)
 	}
 
+	private _filterOngoingPollinations(aFilters: Filter[]) {
+		// update list binding for upper gridList (include static filter)
+		var oList = <GridList>this.byId("ongoingPollinationsList");
+		var oBinding = <ListBinding>oList.getBinding("items");
+		// to allow live-filtering without losing the static filters, we need to set the filter type to "Control"
+		// (static filter is of type "Application" by default which would override the live-filter)
+		oBinding.filter(aFilters, "Control");
+
+		// update list binding for lower gridList (include static filter)
+		var oList = <GridList>this.byId("pollinationsWithPlantingsList");
+		var oBinding = <ListBinding>oList.getBinding("items");
+		oBinding.filter(aFilters, "Control");
+	}
 
 	public onLiveChangeOngoingPollinationsFilter(oEvent: SearchField$LiveChangeEvent) {
 		// add filter to ongoing pollinations gridlist
+		// cf. onSelectionChangedUniqueSeedCapsulePlants (only one filter is applied at a time)
 		var aFilters = [];
 		var sQuery = (<SearchField>oEvent.getSource()).getValue();
 		if (sQuery && sQuery.length > 0) {
@@ -232,18 +248,57 @@ export default class App extends BaseController {
 			aFilters.push(filter);
 		}
 
-		// update list binding for upper gridList (include static filter)
-		var oList = <GridList>this.byId("ongoingPollinationsList");
-		var oBinding = <ListBinding>oList.getBinding("items");
-		// to allow live-filtering without losing the static filters, we need to set the filter type to "Control"
-		// (static filter is of type "Application" by default which would override the live-filter)
-		oBinding.filter(aFilters, "Control");
-
-		// update list binding for lower gridList (include static filter)
-		var oList = <GridList>this.byId("pollinationsWithPlantingsList");
-		var oBinding = <ListBinding>oList.getBinding("items");
-		oBinding.filter(aFilters, "Control");
+		this._filterOngoingPollinations(aFilters);
 	}
+
+	onSelectionChangedUniqueSeedCapsulePlants(oEvent: ListBase$SelectionChangeEvent) {
+		// add filter to ongoing pollinations gridlist
+		// cf. onLiveChangeOngoingPollinationsFilter (only one filter is applied at a time)
+		
+		// get selected seed capsule plants
+		const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
+		const aPlants = <UniqueCapsulePlant[]>oUniqueCapsulePlantsModel.getData();
+
+		var aFilters: Filter[] = [];
+		// filter on selected seed capsule plants
+		var aSelectedPlants = aPlants.filter((oPlant) => {
+			return oPlant.selected;
+		});
+		// add filter for selected seed capsule plants
+		aSelectedPlants.forEach((oPlant) => {
+			aFilters.push(new Filter("seed_capsule_plant_id", FilterOperator.EQ, oPlant.plant_id));
+		});
+
+		this._filterOngoingPollinations(aFilters);
+	}
+
+	// onSeedCapsulePlantsSelectAll(oEvent: ListBase$SelectionChangeEvent) {
+	// 	// select all seed capsule plants for filtering
+	// 	const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
+	// 	const aPlants = <UniqueCapsulePlant[]>oUniqueCapsulePlantsModel.getData();
+	// 	aPlants.forEach((oPlant) => {
+	// 		oPlant.selected = true;
+	// 	});
+	// 	oUniqueCapsulePlantsModel.updateBindings(false);
+
+	// 	const oList = <List>this.byId("uniqueSeedCapsulePlantsList");
+	// 	// make sure the selection change event is fired to update the ongoing pollinations list
+	// 	oList.fireSelectionChange();
+	// }
+
+	onSeedCapsulePlantsSelectNone(oEvent: ListBase$SelectionChangeEvent) {
+		// deselect all seed capsule plants for filtering (reset filter)
+		const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
+		const aPlants = <UniqueCapsulePlant[]>oUniqueCapsulePlantsModel.getData();
+		aPlants.forEach((oPlant) => {
+			oPlant.selected = false;
+		});
+		oUniqueCapsulePlantsModel.updateBindings(false);
+
+		const oList = <List>this.byId("uniqueSeedCapsulePlantsList");
+		// make sure the selection change event is fired to update the ongoing pollinations list
+		oList.fireSelectionChange();
+	}	
 
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -544,4 +599,7 @@ export default class App extends BaseController {
 				break;
 		}
 	}
+
+
+
 }

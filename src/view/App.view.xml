@@ -186,9 +186,12 @@
 								</f:GridList>
 								<!-- @ui5ignore -->
 								<html:hr>
-									<!-- @ui5ignore -->
+								<!-- @ui5ignore -->
 								</html:hr>
 							</VBox>
+
+
+							<!-- Ongoing Pollinations, displayed only if there are any -->
 							<f:GridList
 								headerText="Ongoing Pollinations"
 								id="ongoingPollinationsList"
@@ -223,12 +226,30 @@
 								class="sapUiResponsiveContentPadding"
 							>
 								<f:headerToolbar>
-									<Toolbar style="Clear">
-										<SearchField
-											placeholder="Filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
-											liveChange=".onLiveChangeOngoingPollinationsFilter"
-											width="100%"
-										/>
+									<Toolbar style="Clear" height="auto" >
+										<VBox width="100%">
+											<VBox>
+												<HBox>
+													<Button text="Reset Seed Capsule Filter" press="onSeedCapsulePlantsSelectNone" />
+												</HBox>
+												<List 
+													id="uniqueSeedCapsulePlantsList"
+													items="{uniqueSeedCapsulePlantsModel>/}"
+													mode="MultiSelect"
+													selectionChange=".onSelectionChangedUniqueSeedCapsulePlants"
+													>
+													<StandardListItem 
+														title="{uniqueSeedCapsulePlantsModel>plant_id} {uniqueSeedCapsulePlantsModel>plant_name}" 
+														selected="{uniqueSeedCapsulePlantsModel>selected}"
+													/>
+												</List>
+											</VBox>									
+											<SearchField
+												placeholder="Filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
+												liveChange=".onLiveChangeOngoingPollinationsFilter"
+												width="100%"
+											/>
+										</VBox>
 									</Toolbar>
 								</f:headerToolbar>
 								<f:customLayout>

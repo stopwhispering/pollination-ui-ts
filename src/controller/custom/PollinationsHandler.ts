@@ -9,12 +9,14 @@ import { PollinationRead, GetPollinationsResponse } from "pollination/ui/interfa
 export default class PollinationsHandler extends ManagedObject {
 
 	private _oPollinationModel: JSONModel;
+	private _oUniqueCapsulePlantsModel: JSONModel;
     private _oStateModel: JSONModel;
 
-    public constructor(oPollinationModel: JSONModel, oStateModel: JSONModel) {
+    public constructor(oPollinationModel: JSONModel, oUniqueCapsulePlantsModel: JSONModel, oStateModel: JSONModel) {
         super();
 		
 		this._oPollinationModel = oPollinationModel;
+		this._oUniqueCapsulePlantsModel = oUniqueCapsulePlantsModel;
 		this._oStateModel = oStateModel;
     }
 
@@ -29,6 +31,22 @@ export default class PollinationsHandler extends ManagedObject {
 		const oResult = <GetPollinationsResponse> await Util.get(Util.getServiceUrl('ongoing_pollinations?'+sQueryParams));
 		const aOngoingPollinations = <PollinationRead[]>oResult.ongoing_pollination_collection;
 		this._oPollinationModel.setData(aOngoingPollinations);
+
+		// For filtering, we also need a list of unique capsule plant IDs and then add their respective name
+		// const aUniqueCapsulePlantIds = Array.from(new Set(aOngoingPollinations.map(pollination => pollination.seed_capsule_plant_id)));
+		const aUniqueSeedCapsulePlants = Array.from(new Set(aOngoingPollinations.map(pollination => pollination.seed_capsule_plant_id)))
+			.map(id => {
+				const pollination = aOngoingPollinations.find(p => p.seed_capsule_plant_id === id);
+				return {
+					plant_id: id,
+					plant_name: pollination ? pollination.seed_capsule_plant_name : '',
+					selected: false // default to deselected (if all are deselected, the filter will not apply)
+				};
+			});
+		// sort by plant id
+		aUniqueSeedCapsulePlants.sort((a, b) => a.plant_id - b.plant_id);
+		this._oUniqueCapsulePlantsModel.setData(aUniqueSeedCapsulePlants);
+
 		return aOngoingPollinations;
 	}
 }

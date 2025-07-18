@@ -75,6 +75,13 @@ export interface PollinationRead {
 
   seed_plantings: SeedPlantingRead[];
 }
+
+export interface UniqueCapsulePlant {
+  plant_id: number;
+  plant_name: string;
+  selected: boolean; // for filtering
+}
+
 export interface PollinationUpdate {
   seed_capsule_plant_id: number;
   pollen_donor_plant_id: number;
