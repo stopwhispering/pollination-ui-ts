@@ -192,11 +192,21 @@
                     showSeparators="Inner"
                     class="sapUiSmallMarginEnd">
                     <CustomListItem>
-                        <Label 
-                            text="{seedPlantingModel>id}"
-                            class="sapUiTinyMarginEnd" />
-                        <Label 
-                            text="{seedPlantingModel>plant_name}" />
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
+                            <HBox alignItems="Center">
+                                <Label 
+                                    text="{seedPlantingModel>id}" 
+                                    class="sapUiTinyMarginEnd" />
+                                <Label 
+                                    text="{seedPlantingModel>plant_name}" />
+                            </HBox>
+                            <Button
+                                icon="sap-icon://detail-view"
+                                type="Transparent"
+                                press=".onOpenPlantDetailsInNewTab"
+                                tooltip="View details"
+                            />
+                        </HBox>
                     </CustomListItem>
                 </List>
                 <Button

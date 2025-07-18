@@ -1,4 +1,4 @@
-import { LSeedPlantingInputData, PollinationRead, SeedPlantingCreate, SeedPlantingRead, SeedPlantingUpdate, SoilWithCountRead } from "pollination/ui/interfaces/entities";
+import { LSeedPlantingInputData, PlantEssentials, PollinationRead, SeedPlantingCreate, SeedPlantingRead, SeedPlantingUpdate, SoilWithCountRead } from "pollination/ui/interfaces/entities";
 import Dialog, { Dialog$AfterCloseEvent } from "sap/m/Dialog";
 import MessageBox from "sap/m/MessageBox";
 import ManagedObject from "sap/ui/base/ManagedObject";
@@ -207,5 +207,17 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 	onPressSetTodayButton(oEvent: Button$PressEvent) {
 		this._oSeedPlantingModel.setProperty('/germinated_first_on', Util.getToday());
 		this._oSeedPlantingModel.updateBindings(false);
+	}
+
+	onOpenPlantDetailsInNewTab(oEvent: Event) {
+		const oControl = <Button>oEvent.getSource();
+		const oContext = oControl.getBindingContext("seedPlantingModel");
+		if (!oContext) {
+			MessageToast.show('No plant selected');
+			return;
+		}
+		const oPlant = <PlantEssentials>oContext.getObject();
+		const sUrl = Util.getPlantDetailsUrl(oPlant.id);
+		window.open(sUrl, '_blank');
 	}
 }

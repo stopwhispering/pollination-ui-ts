@@ -18,4 +18,15 @@ export default class Constants extends ManagedObject {
             return 'https://plants.astroloba.net/api/';
         }
     })();
+
+    public static plants_url = (() => {
+        // we want to make this work both in dev environment and in production
+        if ((window.location.hostname === "localhost") && (window.location.port === "8081")){
+            // dev environment (serving via ui5 from pycharm)
+            return 'http://localhost:8080/index.html#/';
+        } else {
+            // prod environment
+            return 'https://plants.astroloba.net/#/';
+        }
+    })();
 }

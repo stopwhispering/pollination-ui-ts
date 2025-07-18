@@ -137,4 +137,8 @@ export default class Util extends ManagedObject {
 		return sHex;
 	}
 
+	public static getPlantDetailsUrl(plant_id: int): string {
+		return Constants.plants_url + 'detail/' + plant_id.toString() + '/TwoColumnsMidExpanded/';
+	}
+
 }
