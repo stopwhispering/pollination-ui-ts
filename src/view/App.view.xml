@@ -245,14 +245,13 @@
 														<HBox 
 															alignItems="Center" 
 															width="100%">
-														<CheckBox
-															selected="{uniqueSeedCapsulePlantsModel>selected}"
-															select=".onSelectionChangedUniqueSeedCapsulePlants"
-														/>
-														<Label
-															text="{uniqueSeedCapsulePlantsModel>plant_id} {uniqueSeedCapsulePlantsModel>plant_name}"
-															wrapping="true"
-														/>
+															<CheckBox
+																selected="{uniqueSeedCapsulePlantsModel>selected}"
+																select=".onSelectionChangedUniqueSeedCapsulePlants"
+															/>
+															<Text
+																text="{uniqueSeedCapsulePlantsModel>plant_id} {uniqueSeedCapsulePlantsModel>plant_name}"
+															/>
 														</HBox>
 													</f:GridListItem>
 
