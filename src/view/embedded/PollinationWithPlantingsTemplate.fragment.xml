@@ -88,8 +88,8 @@
 						visible="{=
 							!!${pollinationsModel>florescence_comment}
 						}"
-						text="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
-						tooltip="{pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
+						text="({pollinationsModel>florescence_comment})"
+						tooltip="Florescence ID {pollinationsModel>florescence_id} ({pollinationsModel>florescence_comment})"
 					/>
 					<HBox wrap="Wrap" alignItems="Center">
 						<GenericTag

@@ -52,7 +52,6 @@
                         <Slider
                             value="{seedPlantingModel>/count_planted}"
                             inputsAsTooltips="true"
-                            enableTickmarks="false"
                             min="1"
                             max="25"
                             width="18rem"

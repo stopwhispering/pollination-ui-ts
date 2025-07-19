@@ -72,7 +72,7 @@
                                 !!${newPollinationsModel>florescence_comment}
                             }"
                             text="[{newPollinationsModel>florescence_comment}]"
-                            tooltip="{newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
+                            tooltip="Florescence ID {newPollinationsModel>florescence_id} ({newPollinationsModel>florescence_comment})"
                             wrapping="true"
                         />
                         <GenericTag
