@@ -45,12 +45,22 @@
                         <Label 
                             text="{i18n>NewActiveFlorescenceFragment.InflorescenceAppearedAt}"/>
                         <HBox>
-                            <MaskInput 
+                            <DatePicker
+                                id="inpInflorescenceAppearedAt"
+                                width="9rem"
+                                placeholder="yyyy-MM-dd"
+                                displayFormat="yyyy-MM-dd"
+                                valueFormat="yyyy-MM-dd"
+                                value="{
+                                    path: 'newFlorescenceModel>/inflorescence_appeared_at'
+                                }"
+                            />
+                            <!-- <MaskInput 
                                 id="inpInflorescenceAppearedAt"
                                 value="{newFlorescenceModel>/inflorescence_appeared_at}"
                                 mask="9999-99-99" 
                                 width="9rem"
-                                class="sapUiTinyMarginEnd"  />
+                                class="sapUiTinyMarginEnd"  /> -->
                             <Button 
                                 icon="sap-icon://calendar"
                                 type="Transparent"
