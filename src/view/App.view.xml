@@ -202,7 +202,7 @@
 										descending: true,
 										group: '.getSeedCapsulePlantGroup'
 									}, {
-										path: 'seed_capsule_plant_name'
+										path: 'seed_capsule_plant_id'
 									}, {
 										path: 'florescence_id'
 									}, {
@@ -230,7 +230,7 @@
 										<VBox width="100%">
 											<VBox>
 												<HBox>
-													<Button text="Reset Seed Capsule Filter" press="onSeedCapsulePlantsSelectNone" />
+													<Button text="Reset" press="onSeedCapsulePlantsSelectNone" />
 												</HBox>
 
 												<f:GridList
@@ -259,7 +259,7 @@
 											</VBox>									
 										
 											<SearchField
-												placeholder="Filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
+												placeholder="... or filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
 												liveChange=".onLiveChangeOngoingPollinationsFilter"
 												width="100%"
 											/>
@@ -289,8 +289,8 @@
 								items="{
 									path: 'pollinationsModel>/',
 									sorter: [{
-										path: 'seed_capsule_plant_name',
-										descending: true,
+										path: 'seed_capsule_plant_id',
+										descending: false,
 										group: '.getPollinationStatusGroup'
 									}, {
 										path: 'harvest_date',
