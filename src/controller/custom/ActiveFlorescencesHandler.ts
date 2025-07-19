@@ -22,4 +22,9 @@ export default class ActiveFlorescencesHandler extends ManagedObject {
 		const aActiveFlorescences: BActiveFlorescence[] = oResult.active_florescence_collection;
 		this._oFlorescenceModel.setData(aActiveFlorescences);
 	}
+
+	public hasActiveFlorescence(plantId: number): boolean {
+		const aActiveFlorescences: BActiveFlorescence[] = this._oFlorescenceModel.getData();
+		return aActiveFlorescences.some(f => f.plant_id === plantId);
+	}
 }

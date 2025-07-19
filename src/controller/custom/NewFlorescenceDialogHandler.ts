@@ -10,6 +10,7 @@ import JSONModel from "sap/ui/model/json/JSONModel";
 import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import Util from "./Util";
 import { Button$PressEvent } from "sap/m/Button";
+import MessageBox from "sap/m/MessageBox";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -64,6 +65,13 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			florescence_status: oNewFlorescence.florescence_status,
 			inflorescence_appeared_at: oNewFlorescence.inflorescence_appeared_at,
 			comment: oNewFlorescence.comment
+		}
+
+		// reject if plant already has an active florescence (Note: This check is technically not required, only active for the UI)
+		// str to number
+		if (this._oActiveFlorescencesHandler.hasActiveFlorescence(parseInt(oNewFlorescence.plant_id!.toString(), 10))) {
+			MessageBox.error("This plant already has an active florescence. Although technically possible, creating a second active florescence has been disabled. ");			
+			return;
 		}
 
 		await Util.post(Util.getServiceUrl('active_florescences'), oNewFlorescenceRequest);
