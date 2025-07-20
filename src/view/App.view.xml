@@ -244,6 +244,7 @@
 														>
 														<HBox 
 															alignItems="Center" 
+  															height="70px"
 															width="100%">
 															<CheckBox
 																selected="{uniqueSeedCapsulePlantsModel>selected}"
