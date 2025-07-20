@@ -184,4 +184,13 @@ export default class formatter extends ManagedObject {
             }
         }
     }
+
+    getTooltipForSameParentTaxaPlant(plant: any) {
+        // todo plant entity
+        var plant_name = plant.plant_id + ' ' + plant.plant_name;
+        var a = plant.parent_plant_capsule_id + ' ' + plant.parent_plant_capsule_name + ' × ';
+        var b = plant.parent_plant_pollen_id + ' ' + plant.parent_plant_pollen_name;
+        var tooltip = plant_name + ' (' + a + b + ')';
+        return tooltip;
+    }
 }

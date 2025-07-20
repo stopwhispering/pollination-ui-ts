@@ -92,29 +92,52 @@
                     tooltip="{= ${potentialPollenDonorsModel>probability_pollination_to_seed}.toString() + '%' }"
                     class="sapUiTinyMarginBeginEnd"
                 />
-                <HBox
-                    wrap="Wrap"
-                    width="5.5rem"
-                    items="{
-                        path: 'potentialPollenDonorsModel>pollination_attempts',
-                        templateShareable: false
-                    }"
+                <VBox
                 >
-                    <CustomListItem>
-                    
-                        <custom:PollinationIndicator 
-                            pollinationStatus="{potentialPollenDonorsModel>pollination_status}"
-                            ongoing="{potentialPollenDonorsModel>ongoing}"
-                            reverse="{potentialPollenDonorsModel>reverse}"
-                            
-                            size="1.6rem" 
-                            press=".pressHistoricalPollinationIndicator"
-                            hover=".hoverHistoricalPollinationIndicator"
-                            />
+                    <HBox
+                        wrap="Wrap"
+                        width="5.5rem"
+                        items="{
+                            path: 'potentialPollenDonorsModel>pollination_attempts',
+                            templateShareable: false
+                        }"
+                    >
+                        <CustomListItem>
+                        
+                            <custom:PollinationIndicator 
+                                pollinationStatus="{potentialPollenDonorsModel>pollination_status}"
+                                ongoing="{potentialPollenDonorsModel>ongoing}"
+                                reverse="{potentialPollenDonorsModel>reverse}"
+                                
+                                size="1.6rem" 
+                                press=".pressHistoricalPollinationIndicator"
+                                hover=".hoverHistoricalPollinationIndicator"
+                                />
 
-                    </CustomListItem>
-                </HBox>
-
+                        </CustomListItem>
+                    </HBox>
+                    <HBox
+                        class="sapUiSmallMarginTop"
+                        wrap="Wrap"
+                        width="5.5rem"
+                        items="{
+                            path: 'potentialPollenDonorsModel>same_parent_taxa_plants',
+                            templateShareable: false
+                        }"
+                    >
+                            <!-- tooltip="{potentialPollenDonorsModel>plant_id} {potentialPollenDonorsModel>plant_name}" -->
+                        <core:Icon 
+                            src="sap-icon://nutrition-activity"
+                            decorative="false"
+                            class="sapUiTinyMarginBegin"
+                            tooltip="{
+                                path: 'potentialPollenDonorsModel>',
+                                formatter: '.formatter.getTooltipForSameParentTaxaPlant'
+                            }"
+                            color="{= ${potentialPollenDonorsModel>active} ? 'green' : 'red' }"
+                        />  
+                    </HBox>
+                </VBox>
 
             </HBox>
         </HBox>
