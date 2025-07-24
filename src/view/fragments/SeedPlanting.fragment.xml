@@ -197,7 +197,9 @@
                                     text="{seedPlantingModel>id}" 
                                     class="sapUiTinyMarginEnd" />
                                 <Label 
-                                    text="{seedPlantingModel>plant_name}" />
+                                    text="{seedPlantingModel>plant_name}"
+                                    wrapping="true"
+                                    width="320px" />
                             </HBox>
                             <Button
                                 icon="sap-icon://detail-view"

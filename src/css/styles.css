@@ -186,3 +186,11 @@
 .customHighlight .sapMLIBHighlightIndication03 {
   background-color: #FF0000 !important; 
 }
+
+.plantNameGenericTag {
+    max-width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}

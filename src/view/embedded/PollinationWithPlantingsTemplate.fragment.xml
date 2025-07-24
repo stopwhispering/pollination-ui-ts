@@ -305,7 +305,7 @@
 										tooltip="{pollinationsModel>id} {pollinationsModel>plant_name}"
 										design="StatusIconHidden"
 										status="Success"
-										class="sapUiTinyMarginEnd"
+										class="plantNameGenericTag"
 									/>
 								</CustomListItem>
 							</List>
