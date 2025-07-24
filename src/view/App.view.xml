@@ -244,7 +244,7 @@
 														>
 														<HBox 
 															alignItems="Center" 
-  															height="70px"
+  															height="55px"
 															width="100%">
 															<CheckBox
 																selected="{uniqueSeedCapsulePlantsModel>selected}"
@@ -252,6 +252,8 @@
 															/>
 															<Text
 																text="{uniqueSeedCapsulePlantsModel>plant_id} {uniqueSeedCapsulePlantsModel>plant_name}"
+																wrapping="true"
+																maxLines="3"
 															/>
 														</HBox>
 													</f:GridListItem>
