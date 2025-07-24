@@ -8,6 +8,7 @@
 		title="Edit Florescence (ID {editedFlorescenceModel>/id})"
 		class="sapUiContentPadding sapUiSizeCompact"
 		afterClose=".onAfterCloseEditFlorescenceDialog"
+		contentWidth="29em"
 	>
 		<content>
 			<VBox>
@@ -40,13 +41,24 @@
 						<Label text="Inflorescence appeared at"/>
 						<HBox>
 							<CheckBox selected="{editedFlorescenceModel>/inflorescence_appeared_at_known}"/>
-							<MaskInput
+							<!-- <MaskInput
 								enabled="{editedFlorescenceModel>/inflorescence_appeared_at_known}"
 								value="{editedFlorescenceModel>/inflorescence_appeared_at}"
 								mask="9999-99-99"
 								width="6rem"
 								class="sapUiTinyMarginEnd"
-							/>
+							/> -->
+                            <DatePicker
+								enabled="{editedFlorescenceModel>/inflorescence_appeared_at_known}"
+                                placeholder="yyyy-MM-dd"
+                                displayFormat="yyyy-MM-dd"
+                                valueFormat="yyyy-MM-dd"
+								class="sapUiTinyMarginEnd"
+								width="8rem"
+                                value="{
+                                    path: 'editedFlorescenceModel>/inflorescence_appeared_at'
+                                }"
+                            />
 							<Button
 								icon="sap-icon://calendar"
 								type="Transparent"
@@ -76,13 +88,24 @@
 								}"
 								selected="{editedFlorescenceModel>/first_flower_opened_at_known}"
 							/>
-							<MaskInput
+							<!-- <MaskInput
 								enabled="{editedFlorescenceModel>/first_flower_opened_at_known}"
 								value="{editedFlorescenceModel>/first_flower_opened_at}"
 								mask="9999-99-99"
 								width="6rem"
 								class="sapUiTinyMarginEnd"
-							/>
+							/> -->
+                            <DatePicker
+								enabled="{editedFlorescenceModel>/first_flower_opened_at_known}"
+                                placeholder="yyyy-MM-dd"
+                                displayFormat="yyyy-MM-dd"
+                                valueFormat="yyyy-MM-dd"
+								class="sapUiTinyMarginEnd"
+								width="8rem"
+                                value="{
+                                    path: 'editedFlorescenceModel>/first_flower_opened_at'
+                                }"
+                            />
 							<Button
 								icon="sap-icon://calendar"
 								type="Transparent"
@@ -136,7 +159,7 @@
 							min="1"
 							max="50"
 							class="sapUiMediumMarginBottom"
-							width="18rem"
+							width="20rem"
 						/>
 					</HBox>
 				</VBox>
@@ -162,7 +185,7 @@
 								max="8.0"
 								step="0.1"
 								class="sapUiMediumMarginBottom"
-								width="11rem"
+								width="11.7rem"
 							/>
 						</VBox>
 						<VBox>
@@ -180,7 +203,7 @@
 								max="3.0"
 								step="0.1"
 								class="sapUiMediumMarginBottom"
-								width="11rem"
+								width="11.7rem"
 							/>
 						</VBox>
 					</HBox>
@@ -198,7 +221,7 @@
 								selectedKey="{editedFlorescenceModel>/flower_colors_differentiation}"
 								enabled="{editedFlorescenceModel>/flower_colors_known}"
 								class="sapUiTinyMarginEnd"
-								width="18rem"
+								width="20rem"
 							>
 								<items>
 									<SegmentedButtonItem
@@ -266,7 +289,7 @@
 						<SegmentedButton
 							selectedKey="{editedFlorescenceModel>/stigma_position}"
 							enabled="{editedFlorescenceModel>/stigma_position_known}"
-							width="23rem"
+							width="24rem"
 						>
 							<items>
 								<SegmentedButtonItem
@@ -301,13 +324,24 @@
 								enabled="{= ${editedFlorescenceModel>/florescence_status} === 'finished'}"
 								selected="{editedFlorescenceModel>/last_flower_closed_at_known}"
 							/>
-							<MaskInput
+							<!-- <MaskInput
 								enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
 								value="{editedFlorescenceModel>/last_flower_closed_at}"
 								mask="9999-99-99"
 								width="6rem"
 								class="sapUiTinyMarginEnd"
-							/>
+							/> -->
+                            <DatePicker
+								enabled="{editedFlorescenceModel>/last_flower_closed_at_known}"
+                                placeholder="yyyy-MM-dd"
+                                displayFormat="yyyy-MM-dd"
+                                valueFormat="yyyy-MM-dd"
+								class="sapUiTinyMarginEnd"
+								width="8rem"
+                                value="{
+                                    path: 'editedFlorescenceModel>/last_flower_closed_at'
+                                }"
+                            />
 							<Button
 								icon="sap-icon://calendar"
 								type="Transparent"
@@ -316,7 +350,8 @@
 							/>
 						</HBox>
 					</VBox>
-					<VBox>
+					<VBox
+								class="sapUiSmallMarginEnd">
 						<CheckBox
 							text="Self-pollinated"
 							selected="{editedFlorescenceModel>/self_pollinated}"
