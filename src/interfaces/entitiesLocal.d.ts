@@ -59,6 +59,7 @@ export interface LNewFlorescenceInputData {
     plant_name: string|undefined,
     florescence_status: FlorescenceStatus;
     inflorescence_appeared_at: string|undefined,
+    first_flower_opened_at: string|undefined,
     comment: string|undefined,
 }
 

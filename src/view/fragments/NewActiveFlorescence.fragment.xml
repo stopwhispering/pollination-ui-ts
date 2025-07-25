@@ -13,13 +13,12 @@
             <VBox>
                 <SegmentedButton 
                     selectedKey="{newFlorescenceModel>/florescence_status}"
-                    enabled="false"
                     width="24.5rem"
                     class="sapUiSmallMarginBottom">
                     <items>
-                        <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.InflorescenceAppeared}" key="inflorescence_appeared" />
+                        <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.InflorescenceAppeared}" key="inflorescence_appeared" press=".onPressInflorescenceAppeared" />
                         <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.Flowering}" key="flowering" />
-                        <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.Finished}" key="finished"/>
+                        <SegmentedButtonItem text="{i18n>NewActiveFlorescenceFragment.Finished}" key="finished" enabled="false"/>
                     </items>
                 </SegmentedButton>
 
@@ -42,6 +41,8 @@
                     </VBox>
 
                     <VBox>
+
+                    <VBox>
                         <Label 
                             text="{i18n>NewActiveFlorescenceFragment.InflorescenceAppearedAt}"/>
                         <HBox>
@@ -55,12 +56,6 @@
                                     path: 'newFlorescenceModel>/inflorescence_appeared_at'
                                 }"
                             />
-                            <!-- <MaskInput 
-                                id="inpInflorescenceAppearedAt"
-                                value="{newFlorescenceModel>/inflorescence_appeared_at}"
-                                mask="9999-99-99" 
-                                width="9rem"
-                                class="sapUiTinyMarginEnd"  /> -->
                             <Button 
                                 icon="sap-icon://calendar"
                                 type="Transparent"
@@ -68,6 +63,33 @@
                                 app:inputId= "inpInflorescenceAppearedAt"
                                 />
                         </HBox>
+                    </VBox>
+
+                    <VBox>
+                        <Label 
+                            text="First flower opened at"/>
+                        <HBox>
+                            <DatePicker
+                                id="inpFirstFlowerOpenedAt"
+                                width="9rem"
+                                placeholder="yyyy-MM-dd"
+                                displayFormat="yyyy-MM-dd"
+                                valueFormat="yyyy-MM-dd"
+                                enabled="{= ${newFlorescenceModel>/florescence_status} === 'flowering' }"
+                                value="{
+                                    path: 'newFlorescenceModel>/first_flower_opened_at'
+                                }"
+                            />
+                            <Button 
+                                icon="sap-icon://calendar"
+                                type="Transparent"
+                                press=".onPressNewFlorescenceSetTodayFirstFlowerOpenedAt"
+                                app:inputId= "inpFirstFlowerOpenedAt"
+                                enabled="{= ${newFlorescenceModel>/florescence_status} === 'flowering' }"
+                                />
+                        </HBox>
+                    </VBox>                    
+
                     </VBox>
 
                 </HBox>

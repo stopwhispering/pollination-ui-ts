@@ -219,6 +219,7 @@ export interface FRequestNewFlorescence {
   plant_id: number;
   florescence_status: string;
   inflorescence_appeared_at?: string;
+  first_flower_opened_at?: string;
   comment?: string;
 }
 

@@ -11,6 +11,8 @@ import ActiveFlorescencesHandler from "./ActiveFlorescencesHandler";
 import Util from "./Util";
 import { Button$PressEvent } from "sap/m/Button";
 import MessageBox from "sap/m/MessageBox";
+import Event from "sap/ui/base/Event";
+import { SegmentedButtonItem$PressEvent } from "sap/m/SegmentedButtonItem";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -35,6 +37,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			plant_name: undefined,
 			florescence_status: FlorescenceStatus.INFLORESCENCE_APPEARED,
 			inflorescence_appeared_at: undefined,
+			first_flower_opened_at: undefined,
 			comment: undefined
 		}
 		this._oNewFlorescenceModel = new JSONModel(oNewFlorescence);
@@ -64,6 +67,7 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 			plant_id: oNewFlorescence.plant_id!,  // can't click submit without selecting a plant before
 			florescence_status: oNewFlorescence.florescence_status,
 			inflorescence_appeared_at: oNewFlorescence.inflorescence_appeared_at,
+			first_flower_opened_at: oNewFlorescence.first_flower_opened_at,
 			comment: oNewFlorescence.comment
 		}
 
@@ -91,6 +95,18 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 	onPressNewFlorescenceSetToday(oEvent: Button$PressEvent) {
 		const oNewFlorescence = <LNewFlorescenceInputData>this._oNewFlorescenceModel.getData();
 		oNewFlorescence.inflorescence_appeared_at = Util.getToday();  // e.g. '2022-11-17';
+		this._oNewFlorescenceModel.updateBindings(false);
+	}
+	
+	onPressNewFlorescenceSetTodayFirstFlowerOpenedAt(oEvent: Button$PressEvent) {
+		// todo same function via app:inputId
+		const oNewFlorescence = <LNewFlorescenceInputData>this._oNewFlorescenceModel.getData();
+		oNewFlorescence.first_flower_opened_at = Util.getToday();  // e.g. '2022-11-17';
+		this._oNewFlorescenceModel.updateBindings(false);
+	}
+	onPressInflorescenceAppeared(oEvent: SegmentedButtonItem$PressEvent) {
+		const oNewFlorescence = <LNewFlorescenceInputData>this._oNewFlorescenceModel.getData();
+		oNewFlorescence.first_flower_opened_at = undefined;  // reset first flower opened at
 		this._oNewFlorescenceModel.updateBindings(false);
 	}
 }
