@@ -68,7 +68,6 @@ export default class NewFlorescenceDialogHandler extends ManagedObject {
 		}
 
 		// reject if plant already has an active florescence (Note: This check is technically not required, only active for the UI)
-		// str to number
 		if (this._oActiveFlorescencesHandler.hasActiveFlorescence(parseInt(oNewFlorescence.plant_id!.toString(), 10))) {
 			MessageBox.error("This plant already has an active florescence. Although technically possible, creating a second active florescence has been disabled. ");			
 			return;
