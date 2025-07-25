@@ -310,7 +310,7 @@
 									}],
 									and: false
 								}"
-								class="sapUiResponsiveContentPadding"
+								class="sapUiNoContentPadding"
 							>
 								<f:customLayout>
 									<grid:GridBasicLayout
