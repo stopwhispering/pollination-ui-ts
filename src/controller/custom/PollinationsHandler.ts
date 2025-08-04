@@ -1,7 +1,7 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
-import { PollinationRead, GetPollinationsResponse } from "pollination/ui/interfaces/entities";
+import { PollinationRead, GetPollinationsResponse, UniqueCapsulePlant } from "pollination/ui/interfaces/entities";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -34,13 +34,16 @@ export default class PollinationsHandler extends ManagedObject {
 
 		// For filtering, we also need a list of unique capsule plant IDs and then add their respective name
 		// const aUniqueCapsulePlantIds = Array.from(new Set(aOngoingPollinations.map(pollination => pollination.seed_capsule_plant_id)));
+		const aOldUniqueCapsulePlants = this._oUniqueCapsulePlantsModel.getData() || [];
+		const aCurrentlySelectedPlantIds = aOldUniqueCapsulePlants.filter((capsule: UniqueCapsulePlant) => capsule.selected).map((capsule: UniqueCapsulePlant) => capsule.plant_id);
+		
 		const aUniqueSeedCapsulePlants = Array.from(new Set(aOngoingPollinations.map(pollination => pollination.seed_capsule_plant_id)))
 			.map(id => {
 				const pollination = aOngoingPollinations.find(p => p.seed_capsule_plant_id === id);
 				return {
 					plant_id: id,
 					plant_name: pollination ? pollination.seed_capsule_plant_name : '',
-					selected: false // default to deselected (if all are deselected, the filter will not apply)
+					selected: aCurrentlySelectedPlantIds.includes(id) // keep the selection state from the previous model; default to deselected (if all are deselected, the filter will not apply)
 				};
 			});
 		// sort by plant id
