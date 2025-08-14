@@ -198,6 +198,11 @@
 										class="sapUiTinyMarginBottom"
 									/>
 									<Label
+										text="Planted {pollinationsModel>count_planted} seeds"
+										tooltip="{pollinationsModel>count_planted} seeds"
+										class="sapUiTinyMarginBottom"
+									/>
+									<Label
 										text="{pollinationsModel>soil_name}"
 										tooltip="{pollinationsModel>soil_name} (Soil ID {pollinationsModel>soil_id})"
 										class="sapUiTinyMarginBottom"
