@@ -9,6 +9,18 @@
 		contentWidth="60rem"
 	>
 		<content>
+
+			<HBox>
+				<Label text="Include Inactive Plants" 
+					labelFor="flowerHistorySwitch" />
+				<Switch 
+					id="flowerHistorySwitch"
+					state="{state>/flower_history_include_inactive}"
+					customTextOn=" " 
+					customTextOff=" "
+					change=".onSwitchIncludeInactivePlants"
+					/>
+			</HBox>
 			<Table
 				id="flowerHistoryList"
 				items="{flower_history>/rows}"

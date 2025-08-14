@@ -8,6 +8,7 @@ import Table from "sap/m/Table";
 import Control from "sap/ui/core/Control";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import { Button$PressEvent } from "sap/m/Button";
+import { Switch$ChangeEvent } from "sap/m/Switch";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -57,5 +58,20 @@ export default class FlowerHistoryHandler extends ManagedObject {
 
 	onAfterCloseFlowerHistory(oEvent: Dialog$AfterCloseEvent) {
 		this._oFlowerHistoryDialog.destroy();
+	}
+
+	onSwitchIncludeInactivePlants(oEvent: Switch$ChangeEvent) {
+		const bState = oEvent.getParameter("state");
+		if (bState != this._oStateModel.getProperty("/flower_history_include_inactive")){
+			throw new Error("State of flower_history_include_inactive does not match the state model");
+		}
+
+		//reload from backend
+		const sUrl = Util.getServiceUrl('flower_history?include_inactive_plants=' + bState);
+		Util.get(sUrl).then((oFlowerHistory: FlowerHistory) => {
+			const oFlowerHistoryModel = new JSONModel(oFlowerHistory);
+			oFlowerHistoryModel.setSizeLimit(2000);
+			this._oFlowerHistoryDialog.setModel(oFlowerHistoryModel, "flower_history");
+		});
 	}
 }
