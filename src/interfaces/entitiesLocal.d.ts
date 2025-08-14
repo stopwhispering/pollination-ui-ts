@@ -18,6 +18,8 @@ export interface LUnsavedPollination {
     pollenDonorPlantName: string;
     pollen_donor_plant_id: int;
     pollen_donor_plant_preview_image_id?: int;
+
+    probability_pollination_to_seed?: int;  // 0-100, lazy loaded from backend
     
     pollen_type: string;
     goodPollenQuality: boolean;  // not saved to backend

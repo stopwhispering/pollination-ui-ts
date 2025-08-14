@@ -361,3 +361,9 @@ export interface PlantEssentials{
 export interface SeedPlantingPlantNameProposal{
   plant_name_proposal: string;
 }
+
+export interface BResponsePredictProbabilityPollinationToSeed {
+  action: string;
+  message?: BMessage;
+  probability_pollination_to_seed: int;  // 0-100
+}

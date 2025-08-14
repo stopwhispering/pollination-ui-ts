@@ -204,9 +204,12 @@
                 </FlexBox>
             </HBox>
         </VBox>
+
+        
         <!-- buttons -->
         <HBox
             justifyContent="SpaceBetween"
+            alignItems="Center"
             class="sapUiTinyMarginTop"
         >
             <Button
@@ -214,6 +217,18 @@
                 type="Negative"
                 press=".onPressDeleteNewPollinationButton"
             />
+            
+            <custom:TrafficLight 
+                visible="{= !!${newPollinationsModel>probability_pollination_to_seed}}"
+                size="1.6rem" 
+                class="sapUiSmallMarginBegin"
+                value="{newPollinationsModel>probability_pollination_to_seed}" 
+                text="{newPollinationsModel>probability_pollination_to_seed}%"
+                tooltip="{= ${newPollinationsModel>probability_pollination_to_seed}.toString() + '%' }"
+                asc="false"
+                glimit="35" 
+                rlimit="15"/>
+
             <Button
                 enabled="{= !!${newPollinationsModel>label_color_rgb} &amp;&amp;
                     ${newPollinationsModel>label_color_rgb} !== 'transparent'}"

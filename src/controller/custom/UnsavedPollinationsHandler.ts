@@ -2,7 +2,7 @@ import ManagedObject from "sap/ui/base/ManagedObject";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Util from "./Util";
 import { LUnsavedPollination } from "pollination/ui/interfaces/entitiesLocal";
-import { BActiveFlorescence, PotentialPollenDonor, PollinationCreate } from "pollination/ui/interfaces/entities";
+import { BActiveFlorescence, PotentialPollenDonor, PollinationCreate, BResponsePredictProbabilityPollinationToSeed } from "pollination/ui/interfaces/entities";
 import PollinationsHandler from "./PollinationsHandler";
 import { PollenQuality } from "pollination/ui/interfaces/enums";
 
@@ -92,8 +92,20 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 			label_color_rgb: "transparent",
 			// pollen_quality: PollenQuality.GOOD,
 			goodPollenQuality: true,  // not saved to backend but used to determine pollen_quality
+
+			probability_pollination_to_seed: NaN,  // lazy loaded from backend
 		}
 		this.addPollination(oNewPollination);
+
+		// call backend to predict probability of pollination to seed
+		// todo use more properties in the model as predictors; then call this upon changing properties like number or quality
+		const sQueryParams = 'florescence_id=' + oFlorescence.id + 
+							 '&pollen_donor_plant_id=' + oPollenDonor.plant_id + 
+							 '&pollen_type=' + oPollenDonor.pollen_type;
+		Util.get(Util.getServiceUrl('probability_pollination_to_seed?'+sQueryParams)).then((oResponse: BResponsePredictProbabilityPollinationToSeed) => {
+			oNewPollination.probability_pollination_to_seed = oResponse.probability_pollination_to_seed;
+			this._oUnsavedPollinationsModel.updateBindings(false);
+		});
 	}
 
 }
