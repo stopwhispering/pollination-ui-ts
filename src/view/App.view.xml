@@ -80,8 +80,8 @@
 														descending: false,
 														group: '.getFlorescenceStatusGroup'
 													}, {
-														path: 'first_flower_opened_at',
-														descending: true
+														path: 'plant_id',
+														descending: false
 													}]
 												}"
 												mode="SingleSelectMaster"
@@ -114,11 +114,14 @@
 												id="potentialPollenDonorsList"
 												items="{
 													path: 'potentialPollenDonorsModel>/',
-													sorter: {
+													sorter: [{
 														path: 'pollen_type',
 														descending: false,
 														group: '.getPollenTypeGroup'
-													}
+													}, {
+														path: 'plant_id',
+														descending: false
+													}]
 												}"
 												mode="SingleSelectMaster"
 												growing="true"
