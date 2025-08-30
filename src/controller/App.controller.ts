@@ -45,6 +45,8 @@ import HistoricalPollinationPopoverHandler from "./custom/HistoricalPollinationP
 import HoverImage, { HoverImage$HoverPressEvent} from "../control/HoverImage";
 import JSONPropertyBinding from "sap/ui/model/json/JSONPropertyBinding";
 import Icon, { Icon$PressEvent } from "sap/ui/core/Icon";
+import Event from "sap/ui/base/Event";
+import { SegmentedButton$SelectionChangeEvent } from "sap/m/SegmentedButton";
 
 /**
  * @namespace pollination.ui.controller
@@ -594,6 +596,23 @@ export default class App extends BaseController {
 				// this._closeHistoricalPollinationPopover();
 				break;
 		}
+	}
+	onFilterPotentialPollenDonors(oEvent: SegmentedButton$SelectionChangeEvent) {
+		const sSelectedKey = oEvent.getParameter('item')?.getKey();
+		const oPotentialPollenDonorsList = <List>this.getView()!.byId("potentialPollenDonorsList");
+		const oBinding = <ListBinding>oPotentialPollenDonorsList.getBinding("items");
+		const aFilters = [];
+
+		if (sSelectedKey === 'both') {
+			// remove filter altogether
+			aFilters.length = 0;
+		}
+		else {
+			aFilters.push(new Filter("pollen_type", FilterOperator.EQ, sSelectedKey));
+		}
+
+		// Assume oBinding always exists
+		oBinding.filter(aFilters);
 	}
 
 

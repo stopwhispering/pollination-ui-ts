@@ -65,7 +65,7 @@
 										width="59rem"
 										class="florescenceAndPollinationBox">
 										<ScrollContainer
-											height="18rem"
+											height="20rem"
 											width="27rem"
 											vertical="true"
 											horizontal="false"
@@ -102,7 +102,7 @@
 											</layoutData>
 										</ScrollContainer>
 										<ScrollContainer
-											height="18rem"
+											height="20rem"
 											width="30rem"
 											class="sapUiSmallMarginEnd"
 											vertical="true"
@@ -110,6 +110,17 @@
 											focusable="true"
 											id="potentialPollenDonorsScrollContainer"
 										>
+											<SegmentedButton 
+												selectedKey="fresh"
+												selectionChange=".onFilterPotentialPollenDonors"
+												enabled="{= !!${state>/seed_capsule_selected} }"
+												>
+												<items>
+													<SegmentedButtonItem text="Fresh" key="fresh" />
+													<SegmentedButtonItem text="Frozen" key="frozen" />
+													<SegmentedButtonItem text="Both" key="both" />
+												</items>
+											</SegmentedButton>
 											<List
 												id="potentialPollenDonorsList"
 												items="{
