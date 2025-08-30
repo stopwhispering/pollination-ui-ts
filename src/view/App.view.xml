@@ -65,7 +65,7 @@
 										width="59rem"
 										class="florescenceAndPollinationBox">
 										<ScrollContainer
-											height="20rem"
+											height="24rem"
 											width="27rem"
 											vertical="true"
 											horizontal="false"
@@ -102,7 +102,7 @@
 											</layoutData>
 										</ScrollContainer>
 										<ScrollContainer
-											height="20rem"
+											height="24rem"
 											width="30rem"
 											class="sapUiSmallMarginEnd"
 											vertical="true"
