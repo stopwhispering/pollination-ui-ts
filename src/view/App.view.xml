@@ -111,6 +111,7 @@
 											id="potentialPollenDonorsScrollContainer"
 										>
 											<SegmentedButton 
+												id="filterPotentialPollenDonors"
 												selectedKey="fresh"
 												selectionChange=".onFilterPotentialPollenDonors"
 												enabled="{= !!${state>/seed_capsule_selected} }"

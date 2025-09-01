@@ -46,7 +46,7 @@ import HoverImage, { HoverImage$HoverPressEvent} from "../control/HoverImage";
 import JSONPropertyBinding from "sap/ui/model/json/JSONPropertyBinding";
 import Icon, { Icon$PressEvent } from "sap/ui/core/Icon";
 import Event from "sap/ui/base/Event";
-import { SegmentedButton$SelectionChangeEvent } from "sap/m/SegmentedButton";
+import SegmentedButton, { SegmentedButton$SelectionChangeEvent } from "sap/m/SegmentedButton";
 
 /**
  * @namespace pollination.ui.controller
@@ -146,6 +146,8 @@ export default class App extends BaseController {
 		oStateModel.setProperty('/pollen_donor_selected', false);
 		oStateModel.setProperty('/seed_capsule_selected', true);
 		oStateModel.setProperty('/florescence_status', florescence.florescence_status);
+
+		this.filterPotentialPollenDonors();
 	}
 
 
@@ -597,8 +599,11 @@ export default class App extends BaseController {
 				break;
 		}
 	}
-	onFilterPotentialPollenDonors(oEvent: SegmentedButton$SelectionChangeEvent) {
-		const sSelectedKey = oEvent.getParameter('item')?.getKey();
+
+	filterPotentialPollenDonors(){
+		const oFilter = <SegmentedButton>this.byId('filterPotentialPollenDonors');
+		const sSelectedKey = oFilter.getSelectedKey();
+		// const sSelectedKey = oEvent.getParameter('item')?.getKey();
 		const oPotentialPollenDonorsList = <List>this.getView()!.byId("potentialPollenDonorsList");
 		const oBinding = <ListBinding>oPotentialPollenDonorsList.getBinding("items");
 		const aFilters = [];
@@ -613,6 +618,25 @@ export default class App extends BaseController {
 
 		// Assume oBinding always exists
 		oBinding.filter(aFilters);
+	}
+
+	onFilterPotentialPollenDonors(oEvent: SegmentedButton$SelectionChangeEvent) {
+		this.filterPotentialPollenDonors();
+		// const sSelectedKey = oEvent.getParameter('item')?.getKey();
+		// const oPotentialPollenDonorsList = <List>this.getView()!.byId("potentialPollenDonorsList");
+		// const oBinding = <ListBinding>oPotentialPollenDonorsList.getBinding("items");
+		// const aFilters = [];
+
+		// if (sSelectedKey === 'both') {
+		// 	// remove filter altogether
+		// 	aFilters.length = 0;
+		// }
+		// else {
+		// 	aFilters.push(new Filter("pollen_type", FilterOperator.EQ, sSelectedKey));
+		// }
+
+		// // Assume oBinding always exists
+		// oBinding.filter(aFilters);
 	}
 
 
