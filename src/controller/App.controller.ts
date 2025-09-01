@@ -47,6 +47,7 @@ import JSONPropertyBinding from "sap/ui/model/json/JSONPropertyBinding";
 import Icon, { Icon$PressEvent } from "sap/ui/core/Icon";
 import Event from "sap/ui/base/Event";
 import SegmentedButton, { SegmentedButton$SelectionChangeEvent } from "sap/m/SegmentedButton";
+import Sorter from "sap/ui/model/Sorter";
 
 /**
  * @namespace pollination.ui.controller
@@ -618,6 +619,15 @@ export default class App extends BaseController {
 
 		// Assume oBinding always exists
 		oBinding.filter(aFilters);
+
+		// finally, change sort order by pollen_type ('fresh': sort by id, 'frozen': sort by plant_name, 'both': group by pollen_type, then sort by plant_name)
+		if (sSelectedKey === 'both') {
+			oBinding.sort([new Sorter("pollen_type", false, this.getPollenTypeGroup), new Sorter("plant_name", false)]);
+		} else if (sSelectedKey === 'fresh') {
+			oBinding.sort(new Sorter("id", false));
+		} else {
+			oBinding.sort(new Sorter("plant_name", false));
+		}
 	}
 
 	onFilterPotentialPollenDonors(oEvent: SegmentedButton$SelectionChangeEvent) {
