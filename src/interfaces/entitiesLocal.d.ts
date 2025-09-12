@@ -113,6 +113,7 @@ export interface StateModelData{
     include_recently_finished_pollinations: boolean,
     include_finished_pollinations: boolean,
     flower_history_include_inactive: boolean,
+    flower_history_include_not_yet_flowered_plants: boolean,
 }
 
 export interface UpdateSeedPlantingInputData extends SeedPlantingRead{

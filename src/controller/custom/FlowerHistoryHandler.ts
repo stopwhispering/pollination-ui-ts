@@ -36,7 +36,8 @@ export default class FlowerHistoryHandler extends ManagedObject {
 			this._oFlowerHistoryDialog.open();
 
 			const flower_history_include_inactive = this._oStateModel.getProperty('/flower_history_include_inactive');
-			const sUrl = Util.getServiceUrl('flower_history?include_inactive_plants=' + flower_history_include_inactive);
+			const bStateIncludeNotYetFlowered = this._oStateModel.getProperty("/flower_history_include_not_yet_flowered_plants");
+			const sUrl = Util.getServiceUrl('flower_history?include_inactive_plants=' + flower_history_include_inactive + '&include_not_yet_flowered_plants=' + bStateIncludeNotYetFlowered);
 			const oFlowerHistory = <FlowerHistory> await Util.get(sUrl);
 			const oFlowerHistoryModel = new JSONModel(oFlowerHistory);
 			oFlowerHistoryModel.setSizeLimit(2000);
@@ -61,13 +62,32 @@ export default class FlowerHistoryHandler extends ManagedObject {
 	}
 
 	onSwitchIncludeInactivePlants(oEvent: Switch$ChangeEvent) {
-		const bState = oEvent.getParameter("state");
-		if (bState != this._oStateModel.getProperty("/flower_history_include_inactive")){
+		const bStateIncludeInactive = oEvent.getParameter("state");
+		if (bStateIncludeInactive != this._oStateModel.getProperty("/flower_history_include_inactive")){
 			throw new Error("State of flower_history_include_inactive does not match the state model");
 		}
 
+		const bStateIncludeNotYetFlowered = this._oStateModel.getProperty("/flower_history_include_not_yet_flowered_plants");
+
 		//reload from backend
-		const sUrl = Util.getServiceUrl('flower_history?include_inactive_plants=' + bState);
+		const sUrl = Util.getServiceUrl('flower_history?include_inactive_plants=' + bStateIncludeInactive + '&include_not_yet_flowered_plants=' + bStateIncludeNotYetFlowered);
+		Util.get(sUrl).then((oFlowerHistory: FlowerHistory) => {
+			const oFlowerHistoryModel = new JSONModel(oFlowerHistory);
+			oFlowerHistoryModel.setSizeLimit(2000);
+			this._oFlowerHistoryDialog.setModel(oFlowerHistoryModel, "flower_history");
+		});
+	}
+
+	onSwitchIncludeNotYetFloweredPlants(oEvent: Switch$ChangeEvent) {
+		const bStateIncludeNotYetFlowered = oEvent.getParameter("state");
+		if (bStateIncludeNotYetFlowered != this._oStateModel.getProperty("/flower_history_include_not_yet_flowered_plants")){
+			throw new Error("State of flower_history_include_not_yet_flowered_plants does not match the state model");
+		}
+
+		const bStateIncludeInactive = this._oStateModel.getProperty("/flower_history_include_inactive");
+
+		//reload from backend
+		const sUrl = Util.getServiceUrl('flower_history?include_not_yet_flowered_plants=' + bStateIncludeNotYetFlowered + '&include_inactive_plants=' + bStateIncludeInactive);
 		Util.get(sUrl).then((oFlowerHistory: FlowerHistory) => {
 			const oFlowerHistoryModel = new JSONModel(oFlowerHistory);
 			oFlowerHistoryModel.setSizeLimit(2000);

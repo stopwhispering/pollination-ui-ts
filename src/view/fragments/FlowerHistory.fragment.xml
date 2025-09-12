@@ -10,15 +10,28 @@
 	>
 		<content>
 
-			<HBox>
-				<Label text="Include Inactive Plants" 
-					labelFor="flowerHistorySwitch" />
+			<HBox class="sapUiSmallMargin" alignItems="Center">
+				<Label text="Include Inactive Plants"
+					labelFor="flowerHistorySwitch" 
+					class="sapUiSmallMarginEnd"
+					/>
 				<Switch 
 					id="flowerHistorySwitch"
 					state="{state>/flower_history_include_inactive}"
 					customTextOn=" " 
 					customTextOff=" "
 					change=".onSwitchIncludeInactivePlants"
+					class="sapUiMediumMarginEnd"
+					/>
+				<Label text="Include Plants not Yet Flowered" 
+					labelFor="flowerHistorySwitchNotYetFlowered" 
+					class="sapUiSmallMarginEnd"/>
+				<Switch 
+					id="flowerHistorySwitchNotYetFlowered"
+					state="{state>/flower_history_include_not_yet_flowered_plants}"
+					customTextOn=" " 
+					customTextOff=" "
+					change=".onSwitchIncludeNotYetFloweredPlants"
 					/>
 			</HBox>
 			<Table

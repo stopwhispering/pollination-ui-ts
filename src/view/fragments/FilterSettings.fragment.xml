@@ -18,6 +18,8 @@
 				<items>
 					<ViewSettingsItem text="Inactive Plants" 
 						selected="{filterSettingsInput>/flower_history_include_inactive}" />
+					<ViewSettingsItem text="Plants not Yet Flowered"
+						selected="{filterSettingsInput>/flower_history_include_not_yet_flowered_plants}" />
 				</items>
 			</ViewSettingsFilterItem>
 		</filterItems>

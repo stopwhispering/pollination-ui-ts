@@ -93,6 +93,7 @@ export default class App extends BaseController {
 			include_recently_finished_pollinations: false,
 			include_finished_pollinations: false,
 			flower_history_include_inactive: false,
+			flower_history_include_not_yet_flowered_plants: false,
 		}
 		const oStateModel = new JSONModel(oStateModelDefaultData);
 		this.getView()!.setModel(oStateModel, "state");

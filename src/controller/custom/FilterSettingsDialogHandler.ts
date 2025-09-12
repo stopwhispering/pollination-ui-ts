@@ -39,11 +39,13 @@ export default class FilterSettingsDialogHandler extends ManagedObject {
             const include_recently_finished_pollinations = this._oStateModel.getProperty('/include_recently_finished_pollinations');
             const include_finished_pollinations = this._oStateModel.getProperty('/include_finished_pollinations');
 			const flower_history_include_inactive = this._oStateModel.getProperty('/flower_history_include_inactive');
+            const flower_history_include_not_yet_flowered_plants = this._oStateModel.getProperty('/flower_history_include_not_yet_flowered_plants');
             this._oFilterSettingsInputModel = new JSONModel(
                 {'ongoing_pollinations': include_ongoing_pollinations,
                  'recently_finished_pollinations': include_recently_finished_pollinations,
                  'finished_pollinations': include_finished_pollinations,
-                 'flower_history_include_inactive': flower_history_include_inactive}
+                 'flower_history_include_inactive': flower_history_include_inactive,
+                 'flower_history_include_not_yet_flowered_plants': flower_history_include_not_yet_flowered_plants}
             );
 			this._oFilterSettingsDialog.setModel(this._oFilterSettingsInputModel, "filterSettingsInput");
 			this._oFilterSettingsDialog.open();
@@ -61,6 +63,8 @@ export default class FilterSettingsDialogHandler extends ManagedObject {
 
 		this._oStateModel.setProperty("/flower_history_include_inactive", 
                                       this._oFilterSettingsInputModel.getProperty("/flower_history_include_inactive"));
+        this._oStateModel.setProperty("/flower_history_include_not_yet_flowered_plants",
+                                      this._oFilterSettingsInputModel.getProperty("/flower_history_include_not_yet_flowered_plants"));
 
                                       
         // this._oActiveFlorescencesHandler.loadFlorescences();
