@@ -48,6 +48,8 @@ import Icon, { Icon$PressEvent } from "sap/ui/core/Icon";
 import Event from "sap/ui/base/Event";
 import SegmentedButton, { SegmentedButton$SelectionChangeEvent } from "sap/m/SegmentedButton";
 import Sorter from "sap/ui/model/Sorter";
+import PollinationStatisticsDialogHandler from "./custom/PollinationStatisticsDialogHandler";
+import PollinationStatisticsHandler from "./custom/PollinationStatisticsHandler";
 
 /**
  * @namespace pollination.ui.controller
@@ -64,10 +66,12 @@ export default class App extends BaseController {
 	private _oEditFlorescenceDialogHandler: EditFlorescenceDialogHandler;  // lazy loaded
 	private _oSeedPlantingDialogHandler: SeedPlantingDialogHandler;  // lazy loaded
 	private _oFlowerHistoryHandler: FlowerHistoryHandler;  // lazy loaded
+	private _oPollinationStatisticsDialogHandler: PollinationStatisticsDialogHandler;  // lazy loaded
 	private _oPreviewImagePopoverHandler: PreviewImagePopoverHandler
 	private _oHistoricalPollinationPopoverHandler: HistoricalPollinationPopoverHandler
 	private _oRetrainModelMenuHandler: RetrainModelMenuHandler;
 	private _oFilterSettingsDialogHandler: FilterSettingsDialogHandler;
+	private _oPollinationStatisticsHandler: PollinationStatisticsHandler;
 
 	public onInit() {
 
@@ -122,6 +126,12 @@ export default class App extends BaseController {
 		const oSeedPlantingsModel = new JSONModel();  // data type SeedPlantingRead[]
 		this.getView()!.setModel(oSeedPlantingsModel, "seedPlantingsModel");
 		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
+
+		// initialize pollination statistics model and it's handler
+		const oPollinationStatisticsModel = new JSONModel(); // data type todo
+		this.getView()!.setModel(oSettingsModel, "pollinationStatisticsModel");
+		this._oPollinationStatisticsHandler = new PollinationStatisticsHandler(oPollinationStatisticsModel);
+		this._oPollinationStatisticsHandler.loadPollinationStatistics();
 
 		this._oFilterSettingsDialogHandler = new FilterSettingsDialogHandler(oStateModel, this._oPollinationsHandler);
 	
@@ -460,6 +470,14 @@ export default class App extends BaseController {
 		this._oFlowerHistoryHandler.openDialog(this.getView()!);
 	}
 
+	onPressOpenPollinationStatistics(oEvent: Button$PressEvent) {
+		// open the dialog to show pollination statistics
+		if (!this._oPollinationStatisticsDialogHandler){
+			this._oPollinationStatisticsDialogHandler = new PollinationStatisticsDialogHandler(this._oPollinationStatisticsHandler);
+		}
+		this._oPollinationStatisticsDialogHandler.openDialog(this.getView()!);
+	}
+
 	//////////////////////////////////////////////////////////
 	// Preview Image Popup Handlers
 	//////////////////////////////////////////////////////////
@@ -497,6 +515,7 @@ export default class App extends BaseController {
 		}
 		this._oRetrainModelMenuHandler.openRetrainModelMenu(this.getView()!, oButton);
 	}
+
 	onPressAddNewPreviewPollination(oEvent: Button$PressEvent) {
 		//add new unsaved pollination to the list
 		// get selected florescence and selected pollen donor

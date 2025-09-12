@@ -37,6 +37,11 @@
 							press=".onPressOpenPollenContainersMaintenance"
 						/>
 						<OverflowToolbarButton
+							icon="sap-icon://chart-axis"
+							tooltip="{i18n>AppView.PollinationStatistics}"
+							press=".onPressOpenPollinationStatistics"
+						/>
+						<OverflowToolbarButton
 							icon="sap-icon://e-learning"
 							tooltip="Retrain Machine Learning Models"
 							press=".onPressOpenRetrainModelMenu"
