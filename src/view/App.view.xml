@@ -222,6 +222,8 @@
 										descending: true,
 										group: '.getSeedCapsulePlantGroup'
 									}, {
+										path: 'florescence_min_current_ripening_days'
+									}, {
 										path: 'seed_capsule_plant_id'
 									}, {
 										path: 'florescence_id'
