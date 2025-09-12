@@ -36,6 +36,7 @@ export default class PollinationStatisticsDialogHandler extends ManagedObject {
 		}).then(async (oControl: Control | Control[]) => {
 			this._oPollinationStatisticsDialog = <Dialog>oControl;
 			oViewToAddTo.addDependent(this._oPollinationStatisticsDialog);
+			await this._oPollinationStatisticsHandler.loadPollinationStatistics();
 			this._oPollinationStatisticsDialog.setModel(this._oPollinationStatisticsHandler.getModel(), "pollination_statistics");
 			this._oPollinationStatisticsDialog.open();
 		});

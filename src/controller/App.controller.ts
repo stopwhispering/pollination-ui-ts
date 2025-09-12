@@ -127,11 +127,11 @@ export default class App extends BaseController {
 		this.getView()!.setModel(oSeedPlantingsModel, "seedPlantingsModel");
 		this._oActiveSeedPlantingsHandler = new ActiveSeedPlantingsHandler(oSeedPlantingsModel, this._oPollinationsHandler);
 
-		// initialize pollination statistics model and it's handler
+		// initialize pollination statistics model and it's handler (lazy-loaded upon opening)
 		const oPollinationStatisticsModel = new JSONModel(); // data type todo
-		this.getView()!.setModel(oSettingsModel, "pollinationStatisticsModel");
+		// this.getView()!.setModel(oPollinationStatisticsModel, "pollinationStatisticsModel");
 		this._oPollinationStatisticsHandler = new PollinationStatisticsHandler(oPollinationStatisticsModel);
-		this._oPollinationStatisticsHandler.loadPollinationStatistics();
+		// this._oPollinationStatisticsHandler.loadPollinationStatistics();  
 
 		this._oFilterSettingsDialogHandler = new FilterSettingsDialogHandler(oStateModel, this._oPollinationsHandler);
 	
