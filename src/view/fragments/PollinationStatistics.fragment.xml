@@ -9,28 +9,14 @@
 		contentWidth="60rem"
 	>
 		<content>
-            <Table>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Label text="n_recent_pollinations_still_open" />
-                            <Label text="{pollination_statistics>/n_recent_pollinations_still_open}" />
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem>
-                        <cells>
-                            <Label text="n_recent_pollinations_successful" />
-                            <Label text="{pollination_statistics>/n_recent_pollinations_successful}" />
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem>
-                        <cells>
-                            <Label text="n_recent_pollinations_failed" />
-                            <Label text="{pollination_statistics>/n_recent_pollinations_failed}" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
+            <Table
+                items="{pollination_statistics>/texts_tabular}">
                 <columns>
+                    <Column>
+                        <header>
+                            <Label text="Period" />
+                        </header>
+                    </Column>
                     <Column>
                         <header>
                             <Label text="Statistic" />
@@ -42,6 +28,15 @@
                         </header>
                     </Column>
                 </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Label text="{pollination_statistics>period}" />
+                            <Label text="{pollination_statistics>label}" />
+                            <Label text="{pollination_statistics>value}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
             </Table>
 		</content>
 
