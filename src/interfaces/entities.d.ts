@@ -187,6 +187,7 @@ export interface BResultsRetraining{
     estimator: string;
     metric_name: string;
     metric_value: float;
+    notes?: string;
 }
 export interface BResultsRetrainingPollinationToSeedsModel extends BResultsRetraining{}
 export interface BResultsRetrainingRipeningDays extends BResultsRetraining{}

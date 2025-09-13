@@ -38,14 +38,19 @@ export default class MLModelTrainer extends ManagedObject {
     }
 
     private _openResponseDialog(oResult: BResultsRetraining) {
+        var sText = "Trained Model: " 
+                                + oResult.model + "\n" 
+                                + oResult.estimator + "\n"
+                                + oResult.metric_name + ": " + oResult.metric_value
+        if (oResult.notes) {
+            sText += "\nNotes: " + oResult.notes;
+        }
+
         const oSuccessMessageDialog = new Dialog({
             type: DialogType.Message,
             title: "Success",
             state: ValueState.Success,
-            content: new Text({ text: "Trained Model: " 
-                                + oResult.model + "\n" 
-                                + oResult.estimator + "\n"
-                                + oResult.metric_name + ": " + oResult.metric_value }),
+            content: new Text({ text: sText }),
             beginButton: new Button({
                 type: ButtonType.Emphasized,
                 text: "OK",
