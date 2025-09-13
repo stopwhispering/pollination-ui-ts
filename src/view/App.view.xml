@@ -36,8 +36,9 @@
 							tooltip="{i18n>AppView.MaintainPollenContainers}"
 							press=".onPressOpenPollenContainersMaintenance"
 						/>
+							<!-- icon="sap-icon://chart-axis" -->
 						<OverflowToolbarButton
-							icon="sap-icon://chart-axis"
+							icon="././img/pollination_statistics.svg"
 							tooltip="{i18n>AppView.PollinationStatistics}"
 							press=".onPressOpenPollinationStatistics"
 						/>
