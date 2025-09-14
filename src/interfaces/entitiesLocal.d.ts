@@ -7,7 +7,7 @@ import { FlorescenceStatus, FlorescenceStatus } from "./enums";
 export interface LUnsavedPollination {
     pollinated_at: string;
     location: string;
-    count_attempted: 1;
+    count_attempted: 1;  // 1???????????????? todo
     florescence_id: int;
     seedCapsulePlantName: string;
     seed_capsule_plant_id: int;

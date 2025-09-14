@@ -69,6 +69,24 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
+	public predictPollinationToSeed(oUnsavedPollination: LUnsavedPollination) {
+
+		// call backend to predict probability of pollination to seed
+
+		// convert local datetime to utc datetime string
+		var datetime_utc = new Date(oUnsavedPollination.pollinated_at).toISOString();  // e.g. '2025-09-14T13:53:00.000Z'; converted to UTC in backend
+		const sQueryParams = 'florescence_id=' + oUnsavedPollination.florescence_id + 
+							 '&pollen_donor_plant_id=' + oUnsavedPollination.pollen_donor_plant_id + 
+							 '&pollen_type=' + oUnsavedPollination.pollen_type +
+							 '&count_attempted=' + oUnsavedPollination.count_attempted +
+							 '&pollen_quality=' + (oUnsavedPollination.goodPollenQuality ? PollenQuality.GOOD : PollenQuality.BAD) +
+							 '&pollinated_at_datetime_utc=' + datetime_utc;
+		Util.get(Util.getServiceUrl('probability_pollination_to_seed?'+sQueryParams)).then((oResponse: BResponsePredictProbabilityPollinationToSeed) => {
+			oUnsavedPollination.probability_pollination_to_seed = oResponse.probability_pollination_to_seed;
+			this._oUnsavedPollinationsModel.updateBindings(false);
+		});
+	}
+
 	public preview(oFlorescence: BActiveFlorescence, oPollenDonor: PotentialPollenDonor) {
 
 		// create unsaved pollination using mainly default values
@@ -90,22 +108,12 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 			location: 'outdoor',  // todo enum
 			count_attempted: 1,
 			label_color_rgb: "transparent",
-			// pollen_quality: PollenQuality.GOOD,
 			goodPollenQuality: true,  // not saved to backend but used to determine pollen_quality
 
 			probability_pollination_to_seed: NaN,  // lazy loaded from backend
 		}
 		this.addPollination(oNewPollination);
-
-		// call backend to predict probability of pollination to seed
-		// todo use more properties in the model as predictors; then call this upon changing properties like number or quality
-		const sQueryParams = 'florescence_id=' + oFlorescence.id + 
-							 '&pollen_donor_plant_id=' + oPollenDonor.plant_id + 
-							 '&pollen_type=' + oPollenDonor.pollen_type;
-		Util.get(Util.getServiceUrl('probability_pollination_to_seed?'+sQueryParams)).then((oResponse: BResponsePredictProbabilityPollinationToSeed) => {
-			oNewPollination.probability_pollination_to_seed = oResponse.probability_pollination_to_seed;
-			this._oUnsavedPollinationsModel.updateBindings(false);
-		});
+		this.predictPollinationToSeed(oNewPollination);
 	}
 
 }

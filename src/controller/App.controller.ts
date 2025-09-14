@@ -11,7 +11,7 @@ import List from "sap/m/List";
 import formatter from "../model/formatter";
 import Button, { Button$PressEvent } from "sap/m/Button";
 import Context from "sap/ui/model/Context";
-import StepInput from "sap/m/StepInput";
+import StepInput, { StepInput$ChangeEvent } from "sap/m/StepInput";
 import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
@@ -50,6 +50,8 @@ import SegmentedButton, { SegmentedButton$SelectionChangeEvent } from "sap/m/Seg
 import Sorter from "sap/ui/model/Sorter";
 import PollinationStatisticsDialogHandler from "./custom/PollinationStatisticsDialogHandler";
 import PollinationStatisticsHandler from "./custom/PollinationStatisticsHandler";
+import Switch, { Switch$ChangeEvent } from "sap/m/Switch";
+import DatePicker, { DatePicker$ChangeEvent } from "sap/m/DatePicker";
 
 /**
  * @namespace pollination.ui.controller
@@ -652,23 +654,28 @@ export default class App extends BaseController {
 
 	onFilterPotentialPollenDonors(oEvent: SegmentedButton$SelectionChangeEvent) {
 		this.filterPotentialPollenDonors();
-		// const sSelectedKey = oEvent.getParameter('item')?.getKey();
-		// const oPotentialPollenDonorsList = <List>this.getView()!.byId("potentialPollenDonorsList");
-		// const oBinding = <ListBinding>oPotentialPollenDonorsList.getBinding("items");
-		// const aFilters = [];
-
-		// if (sSelectedKey === 'both') {
-		// 	// remove filter altogether
-		// 	aFilters.length = 0;
-		// }
-		// else {
-		// 	aFilters.push(new Filter("pollen_type", FilterOperator.EQ, sSelectedKey));
-		// }
-
-		// // Assume oBinding always exists
-		// oBinding.filter(aFilters);
 	}
 
+	onCountAttemptedStepInputChange(oEvent: StepInput$ChangeEvent) {
+		const oStepInput = <StepInput>oEvent.getSource();
+		const oUnsavedPollination = <LUnsavedPollination>oStepInput.getBindingContext("newPollinationsModel")!.getObject();
+		oUnsavedPollination.probability_pollination_to_seed = undefined;  // reset predicted probability field
 
+		this._oUnsavedPollinationsHandler.predictPollinationToSeed(oUnsavedPollination);
+	}
+	onPollenQualitySwitchChange(oEvent: Switch$ChangeEvent) {
+		const oSwitch = <Switch>oEvent.getSource();
+		const oUnsavedPollination = <LUnsavedPollination>oSwitch.getBindingContext("newPollinationsModel")!.getObject();
+		oUnsavedPollination.probability_pollination_to_seed = undefined;  // reset predicted probability field
 
+		this._oUnsavedPollinationsHandler.predictPollinationToSeed(oUnsavedPollination);
+		
+	}
+	onChangePollinatedAtDateTimePicker(oEvent: DatePicker$ChangeEvent) {
+		const oDatePicker = <DatePicker>oEvent.getSource();
+		const oUnsavedPollination = <LUnsavedPollination>oDatePicker.getBindingContext("newPollinationsModel")!.getObject();
+		oUnsavedPollination.probability_pollination_to_seed = undefined;  // reset predicted probability field
+
+		this._oUnsavedPollinationsHandler.predictPollinationToSeed(oUnsavedPollination);
+	}
 }

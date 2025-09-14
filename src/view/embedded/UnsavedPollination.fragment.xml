@@ -97,6 +97,7 @@
                     }"
                     placeholder="Enter Date"
                     showCurrentTimeButton="true"
+                    change=".onChangePollinatedAtDateTimePicker"
                 />
                 <!-- todo -->
                 <!-- app:inputId="inpHarvestDate" -->
@@ -118,6 +119,7 @@
                         min="1"
                         required="true"
                         textAlign="Center"
+                        change=".onCountAttemptedStepInputChange"
                         value="{newPollinationsModel>count_attempted}"
                     />
                 </VBox>
@@ -138,6 +140,7 @@
                             customTextOn="+"
                             customTextOff="-"
                             tooltip="Pollen Quality: Good / Bad"
+                            change=".onPollenQualitySwitchChange"
                         >
                             <layoutData>
                                 <FlexItemData growFactor="1" />
