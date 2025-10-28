@@ -14,6 +14,7 @@ import { ListBase$SelectionChangeEvent } from "sap/m/ListBase";
 import ListItemBase from "sap/m/ListItemBase";
 import Event from "sap/ui/base/Event";
 import { UpdateSeedPlantingInputData } from "pollination/ui/interfaces/entitiesLocal";
+import BusyDialog from "sap/m/BusyDialog";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -167,19 +168,32 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		const oInputPlantName = (<JSONModel>this._oPlantNameDialog.getModel("inputPlantNameModel")).getData()
 		const sPlantName = oInputPlantName.plant_name;
 		const oSeedPlanting = <SeedPlantingRead>oInputPlantName.seed_planting;
+
+		//display waiting dialog
+		const oBusyDialog = new BusyDialog({
+			title: "Please wait",
+			text: "Creating new plant..."
+			});
+		oBusyDialog.open();
+
 		//as we are working on a clone of the original data and only the latter is updated, we need
 		// to update our clone to have the new plant shown in the dialog
 		const aOngoingPollinations: PollinationRead[] = await this._oActiveSeedPlantingsHandler.createNewPlantForSeedPlanting(oSeedPlanting, sPlantName);
 		// find our pollination in the list of reloaded ongoing pollinations
 		const oReloadedPollination = aOngoingPollinations.find((oPollination: PollinationRead) => oPollination.id == oInputPlantName.seed_planting.pollination_id);
 		if (!oReloadedPollination) {
+			oBusyDialog.close();
 			throw new Error("Could not find pollination with id " + oInputPlantName.seed_planting.pollination_id);
 		}
 		// find our seed planting
 		const oReloadedSeedPlanting = oReloadedPollination.seed_plantings.find((oSeedPlanting: SeedPlantingRead) => oSeedPlanting.id == oInputPlantName.seed_planting.id);
 		if (!oReloadedSeedPlanting) {
+			oBusyDialog.close();
 			throw new Error("Could not find seed planting with id " + oInputPlantName.seed_planting.id);
 		}
+
+		oBusyDialog.close();
+
 		// set our clone's list of plants to a new clone of the reloaded plants
 		const aClonedReloadedPlants = JSON.parse(JSON.stringify(oReloadedSeedPlanting.plants));
 		this._oSeedPlantingModel.setProperty('/plants', aClonedReloadedPlants);
