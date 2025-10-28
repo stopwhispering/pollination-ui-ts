@@ -112,12 +112,11 @@
                             items="{
                                 path: 'soilsModel>/',
                                 sorter: [{
-                                    path: 'florescence_status',
-                                    descending: false,
-                                    group: '.getFlorescenceStatusGroup'
+                                    path: 'last_usage_datetime_seed_planting',
+                                    descending: 'true'
                                 }, {
-                                    path: 'first_flower_opened_at',
-                                    descending: true
+                                    path: 'last_usage_datetime_repotting',
+                                    descending: 'true'
                                 }]
                             }"
                             mode="SingleSelectMaster"
