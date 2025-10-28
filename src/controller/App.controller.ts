@@ -410,6 +410,8 @@ export default class App extends BaseController {
 
 		oPollenContainersModel.updateBindings(false);
 		oPollenContainer.clearSelection();
+
+		(<StepInput>this.byId('newPlantPollenContainerCount')).setValue(0);
 	}
 
 
