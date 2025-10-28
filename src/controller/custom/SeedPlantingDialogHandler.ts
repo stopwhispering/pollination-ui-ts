@@ -153,8 +153,7 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 			controller: this,
 		});
 		this._oDialog.addDependent(this._oPlantNameDialog);
-			// oDialog.setModel(this._oSeedPlantingModel, "seedPlantingModel");
-		// return oDialog;
+		
 		const oInputPlantName = {
 			plant_name: sPlantNameProposal,
 			seed_planting: oSeedPlanting
@@ -165,9 +164,20 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 	}
 
 	public async onSubmitPlantName(oEvent: Button$PressEvent) {
+		
+		// if we're still in 'Planted' state, we need to update to 'Germinated' first; no need to ask user
+		// cf. onPressUpdate
 		const oInputPlantName = (<JSONModel>this._oPlantNameDialog.getModel("inputPlantNameModel")).getData()
 		const sPlantName = oInputPlantName.plant_name;
 		const oSeedPlanting = <SeedPlantingRead>oInputPlantName.seed_planting;
+		// const oSeedPlanting: UpdateSeedPlantingInputData = this._oSeedPlantingModel.getData();
+		oSeedPlanting.count_germinated = oSeedPlanting.count_germinated_known ? oSeedPlanting.count_germinated : undefined;
+		const oSeedPlantingUpdate = <SeedPlantingUpdate> oSeedPlanting;
+		await this._oActiveSeedPlantingsHandler.updateSeedPlanting(oSeedPlantingUpdate);		
+		
+		// const oInputPlantName = (<JSONModel>this._oPlantNameDialog.getModel("inputPlantNameModel")).getData()
+		// const sPlantName = oInputPlantName.plant_name;
+		// const oSeedPlanting = <SeedPlantingRead>oInputPlantName.seed_planting;
 
 		//display waiting dialog
 		const oBusyDialog = new BusyDialog({
