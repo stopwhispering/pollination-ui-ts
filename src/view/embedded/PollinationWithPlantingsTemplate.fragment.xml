@@ -198,6 +198,13 @@
 										class="sapUiTinyMarginBottom"
 									/>
 									<Label
+									 	visible="{= !!${pollinationsModel>count_germinated} }"
+										text="Planted {pollinationsModel>count_planted} seeds, {pollinationsModel>count_germinated} germ."
+										tooltip="{pollinationsModel>count_planted} seeds, {pollinationsModel>count_germinated} germinated"
+										class="sapUiTinyMarginBottom"
+									/>
+									<Label
+									 	visible="{= !${pollinationsModel>count_germinated} }"
 										text="Planted {pollinationsModel>count_planted} seeds"
 										tooltip="{pollinationsModel>count_planted} seeds"
 										class="sapUiTinyMarginBottom"
