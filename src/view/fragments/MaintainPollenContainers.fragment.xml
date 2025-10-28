@@ -13,10 +13,17 @@
             <List
                 items="{ 
                     path: 'pollenContainersModel>/pollen_container_collection',
-                    sorter: [{ path: 'genus',
-                               descending: 'true',
-                               group: '.getGenusGroup' }]
-                    }"
+                    sorter: [
+                        { 
+                            path: 'genus',
+                            descending: 'true',
+                            group: '.getGenusGroup' 
+                        }, 
+                        { 
+                            path: 'plant_name'
+                        }
+                    ]
+                }"
                 showSeparators="Inner"
                 class="sapUiSmallMargin"
                 >
