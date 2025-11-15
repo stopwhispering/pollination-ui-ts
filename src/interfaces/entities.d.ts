@@ -189,6 +189,12 @@ export interface BResultsRetraining{
     metric_value: float;
     notes?: string;
 }
+
+export interface BResultsRetrainingPollinationToSeedsModel{
+  results: BResultsRetraining;
+  image_urls: string[];
+}
+
 export interface BResultsRetrainingPollinationToSeedsModel extends BResultsRetraining{}
 export interface BResultsRetrainingRipeningDays extends BResultsRetraining{}
 export interface BResultsRetrainingGerminationDays extends BResultsRetraining{}
