@@ -77,8 +77,8 @@ export default class MLModelTrainer extends ManagedObject {
         aImageUrls = aImageUrls.map(url => `${url}?timestamp=${new Date().getTime()}`);
 
         const oCarousel = new Carousel({
-            height: "700px",
-            width: "1200px",
+            height: "600px",
+            width: "900px",
             backgroundDesign:"Solid",
             pages: aImageUrls.map(url => new Image(
                 { 
