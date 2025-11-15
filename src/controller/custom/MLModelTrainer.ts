@@ -85,7 +85,7 @@ export default class MLModelTrainer extends ManagedObject {
         });
 
         const oDialog = new Dialog({
-            title: "Message",
+            title: "Success",
             content: [oVBox],
             endButton: new Button({
                 text: "Close",
