@@ -5,7 +5,7 @@ import Text from "sap/m/Text";
 import ManagedObject from "sap/ui/base/ManagedObject";
 import { ValueState } from "sap/ui/core/library";
 import Util from "pollination/ui/controller/custom/Util";
-import { BResultsRetraining, BResultsRetrainingFlorescenceProbability, BResultsRetrainingGerminationDays, BResultsRetrainingGerminationProbability, BResultsRetrainingPollinationToSeedsModel, BResultsRetrainingRipeningDays } from "pollination/ui/interfaces/entities";
+import { BResultsRetraining, BResultsRetrainingFlorescenceProbability, BResultsRetrainingGerminationDays, BResultsRetrainingGerminationProbability, BResultsRetrainingMultipleMetrics, BResultsRetrainingPollinationToSeedsModel, BResultsRetrainingRipeningDays } from "pollination/ui/interfaces/entities";
 import Carousel from "sap/m/Carousel";
 import Image from "sap/m/Image";
 import VBox from "sap/m/VBox";
@@ -58,11 +58,14 @@ export default class MLModelTrainer extends ManagedObject {
     }
 
 
-    private _openResponseWithImagesDialog(oResult: BResultsRetraining, aImageUrls: string[]) {
+    private _openResponseWithImagesDialog(oResult: BResultsRetrainingMultipleMetrics, aImageUrls: string[]) {
+        // metrics is a dict from string to float; we concatenate its entries into a string
+        // we round to two decimal places
+        var sMetrics = Object.entries(oResult.metrics).map(([key, value]) => `${key}: ${value.toFixed(2)}`).join(", ");
         var sText = "Trained Model: " 
                                 + oResult.model + "\n" 
                                 + oResult.estimator + "\n"
-                                + oResult.metric_name + ": " + oResult.metric_value
+                                + sMetrics;
         if (oResult.notes) {
             sText += "\nNotes: " + oResult.notes;
         }        

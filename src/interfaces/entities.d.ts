@@ -181,7 +181,6 @@ export interface SettingsRead {
   colors: string[];
 }
 
-
 export interface BResultsRetraining{
     model: string;
     estimator: string;
@@ -190,8 +189,15 @@ export interface BResultsRetraining{
     notes?: string;
 }
 
+export interface BResultsRetrainingMultipleMetrics{
+    model: string;
+    estimator: string;
+    metrics: { [key: string]: float };
+    notes?: string;
+}
+
 export interface BResultsRetrainingPollinationToSeedsModel{
-  results: BResultsRetraining;
+  results: BResultsRetrainingMultipleMetrics;
   image_urls: string[];
 }
 
