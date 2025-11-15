@@ -9,6 +9,7 @@ import { BResultsRetraining, BResultsRetrainingFlorescenceProbability, BResultsR
 import Carousel from "sap/m/Carousel";
 import Image from "sap/m/Image";
 import VBox from "sap/m/VBox";
+import BusyIndicator from "sap/ui/core/BusyIndicator";
 
 /**
  * @namespace pollination.ui.controller.custom
@@ -16,7 +17,9 @@ import VBox from "sap/m/VBox";
 export default class MLModelTrainer extends ManagedObject {
 
 	public async triggerRetrainPollinationProbabilityModel() {
+        BusyIndicator.show(0);
         const oResult = <BResultsRetrainingPollinationToSeedsModel> await Util.post(Util.getServiceUrl('retrain_probability_pollination_to_seed_model'));
+        BusyIndicator.hide();
         
         // if results contains an image_urls property, open a dialog to show the images; otherwise, just show the simple text response
         if (oResult.image_urls && oResult.image_urls.length > 0) {
@@ -27,23 +30,31 @@ export default class MLModelTrainer extends ManagedObject {
     }
 
 	public async triggerRetrainRipeningDaysModel() {
+        BusyIndicator.show(0);
         const oResult = <BResultsRetrainingRipeningDays> await Util.post(Util.getServiceUrl('retrain_ripening_days'));
         this._openResponseDialog(oResult);
+        BusyIndicator.hide();
     }
 
 	public async triggerRetrainGerminationDaysModel() {
+        BusyIndicator.show(0);
         const oResult = <BResultsRetrainingGerminationDays> await Util.post(Util.getServiceUrl('retrain_germination_days_model'));
         this._openResponseDialog(oResult);
+        BusyIndicator.hide();
     }
 
 	public async triggerRetrainGerminationProbabilityModel() {
+        BusyIndicator.show(0);
         const oResult = <BResultsRetrainingGerminationProbability> await Util.post(Util.getServiceUrl('retrain_germination_probability_model'));
         this._openResponseDialog(oResult);
+        BusyIndicator.hide();
     }
 
 	public async triggerRetrainFlorescenceProbabilityModel() {
+        BusyIndicator.show(0);
         const oResult = <BResultsRetrainingFlorescenceProbability> await Util.post(Util.getServiceUrl('retrain_florescence_probability_model'));
         this._openResponseDialog(oResult);
+        BusyIndicator.hide();
     }
 
 
