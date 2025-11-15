@@ -73,7 +73,7 @@ export default class MLModelTrainer extends ManagedObject {
                 { 
                     src: url, 
                     backgroundSize: "Contain",
-                    // densityAware: false
+                    densityAware: false
                 })
             )
         });
