@@ -311,6 +311,19 @@
 							<html:hr>
 								<!-- @ui5ignore -->
 							</html:hr>
+
+
+							<!-- <OverflowToolbar> -->
+								<!-- <ToolbarSpacer/> -->
+								<SegmentedButton selectedKey="plant" selectionChange=".sortPollinationsWithPlantingsList">
+									<items>
+										<SegmentedButtonItem text="Sort &amp; Group by Parent Plant" key="plant" />
+										<SegmentedButtonItem text="Sort by Harvest Date" key="harvest_date" />
+									</items>
+								</SegmentedButton>
+								<!-- <ToolbarSpacer/> -->
+							<!-- </OverflowToolbar> -->
+
 							<f:GridList
 								id="pollinationsWithPlantingsList"
 								items="{

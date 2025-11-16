@@ -75,6 +75,8 @@ export default class App extends BaseController {
 	private _oFilterSettingsDialogHandler: FilterSettingsDialogHandler;
 	private _oPollinationStatisticsHandler: PollinationStatisticsHandler;
 
+	private _aPollinationsWithPlantingsListDefaultSorters: Sorter[] = [];
+
 	public onInit() {
 
 
@@ -174,6 +176,29 @@ export default class App extends BaseController {
 	public getFlorescenceStatusGroup(oContext: Context) {
 		return oContext.getProperty('florescence_status').toUpperCase().replace('_', ' ');
 	}
+
+	public sortPollinationsWithPlantingsList(oSelectedItem: SegmentedButton$SelectionChangeEvent) {
+		// change sort order for pollinations with plantings list
+		// for convenience, we save the old xml-based sorters at the beginning and only set the non-default sort order
+		// programmatically here		
+		const oGridList = this.byId("pollinationsWithPlantingsList");
+		const aCurrentSorters = oGridList!.getBinding("items")!.aSorters;
+		const sSelectedKey = oSelectedItem.getParameter('item')!.getKey();
+
+		if (this._aPollinationsWithPlantingsListDefaultSorters.length === 0){ 
+			this._aPollinationsWithPlantingsListDefaultSorters = aCurrentSorters;
+		}
+		
+		let aNewSorters: Sorter[] = [];
+		if (sSelectedKey === 'harvest_date'){
+			aNewSorters.push(new Sorter('harvest_date', false));  // ascending
+		} else {
+			aNewSorters = this._aPollinationsWithPlantingsListDefaultSorters;
+		}
+		this.byId("pollinationsWithPlantingsList")!.getBinding("items")!.sort(aNewSorters);
+	}
+
+
 
 	public getPollinationStatusGroup(oContext: Context) {
 		// we can't change order here, only format the group text
