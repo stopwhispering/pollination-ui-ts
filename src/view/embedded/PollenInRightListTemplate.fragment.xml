@@ -116,6 +116,9 @@
 
                         </CustomListItem>
                     </HBox>
+
+                    <!-- same parent taxa plants, indicated by an apple; no image preview or similar but
+                    mouseover tooltip on desktop and simple message on mobile -->
                     <HBox
                         class="sapUiSmallMarginTop"
                         wrap="Wrap"
@@ -135,6 +138,7 @@
                                 formatter: '.formatter.getTooltipForSameParentTaxaPlant'
                             }"
                             color="{= ${potentialPollenDonorsModel>active} ? 'green' : 'red' }"
+                            press=".onPressSameParentTaxaPlantIcon"
                         />  
                     </HBox>
                 </VBox>

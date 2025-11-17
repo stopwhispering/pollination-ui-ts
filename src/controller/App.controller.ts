@@ -52,6 +52,10 @@ import PollinationStatisticsDialogHandler from "./custom/PollinationStatisticsDi
 import PollinationStatisticsHandler from "./custom/PollinationStatisticsHandler";
 import Switch, { Switch$ChangeEvent } from "sap/m/Switch";
 import DatePicker, { DatePicker$ChangeEvent } from "sap/m/DatePicker";
+import MessageItem from "sap/m/MessageItem";
+import MessagePopover from "sap/m/MessagePopover";
+import MessageType from "sap/ui/core/message/MessageType";
+import MessageBox from "sap/m/MessageBox";
 
 /**
  * @namespace pollination.ui.controller
@@ -714,5 +718,30 @@ export default class App extends BaseController {
 		oUnsavedPollination.probability_pollination_to_seed = undefined;  // reset predicted probability field
 
 		this._oUnsavedPollinationsHandler.predictPollinationToSeed(oUnsavedPollination);
+	}
+	onPressSameParentTaxaPlantIcon(oEvent: Icon$PressEvent) {
+		// display info on same-parent-taxa plant as a popup message
+
+		// todo: types
+		const oSameParentTaxaPlant = oEvent.getSource().getBindingContext('potentialPollenDonorsModel')!.getObject()
+
+        const sPlantName = oSameParentTaxaPlant.plant_id + ' ' + oSameParentTaxaPlant.plant_name;
+        
+		const sParentNameA = oSameParentTaxaPlant.parent_plant_capsule_id + ' ' + oSameParentTaxaPlant.parent_plant_capsule_name + ' × ';
+        const sParentNameB = oSameParentTaxaPlant.parent_plant_pollen_id + ' ' + oSameParentTaxaPlant.parent_plant_pollen_name;
+        const sText = sPlantName + '\n\n' + 'Seed Capsule Plant: ' + sParentNameA + '\n' + 'Pollen Donor Plant: ' + sParentNameB;
+
+		MessageBox.success(sText, {
+			title: "Same Parent Taxa Plant",
+			actions: ["Open Plant", MessageBox.Action.CLOSE],
+			emphasizedAction: MessageBox.Action.CLOSE,
+			onClose: function (sAction: any) {
+				if (sAction === "Open Plant") {
+					// open plant details page in new browser tab
+					const sUrl = Util.getPlantDetailsUrl(oSameParentTaxaPlant.plant_id);
+					window.open(sUrl, '_blank');					
+				}
+			}
+		});		
 	}
 }

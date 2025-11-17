@@ -233,7 +233,7 @@ export default class SeedPlantingDialogHandler extends ManagedObject {
 		this._oSeedPlantingModel.updateBindings(false);
 	}
 
-	onOpenPlantDetailsInNewTab(oEvent: Event) {
+	onOpenPlantDetailsInNewTab(oEvent: Button$PressEvent) {
 		const oControl = <Button>oEvent.getSource();
 		const oContext = oControl.getBindingContext("seedPlantingModel");
 		if (!oContext) {
