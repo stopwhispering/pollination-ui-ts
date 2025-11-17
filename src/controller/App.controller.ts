@@ -56,6 +56,7 @@ import MessageItem from "sap/m/MessageItem";
 import MessagePopover from "sap/m/MessagePopover";
 import MessageType from "sap/ui/core/message/MessageType";
 import MessageBox from "sap/m/MessageBox";
+import { FlorescenceStatus } from "../interfaces/enums";
 
 /**
  * @namespace pollination.ui.controller
@@ -187,9 +188,11 @@ export default class App extends BaseController {
 		// for convenience, we save the old xml-based sorters at the beginning and only set the non-default sort order
 		// programmatically here		
 		const oGridListOngoingPollinations = this.byId("ongoingPollinationsList");
+		// @ts-ignore
 		const aCurrentSorterOngoingPollinationsList = oGridListOngoingPollinations!.getBinding("items")!.aSorters;
 
 		const oGridListPollinationsWithPlantings = this.byId("pollinationsWithPlantingsList");
+		// @ts-ignore
 		const aCurrentSortersPollinationsWithPlantingsList = oGridListPollinationsWithPlantings!.getBinding("items")!.aSorters;
 
 		const sSelectedKey = oSelectedItem.getParameter('item')!.getKey();
@@ -208,7 +211,9 @@ export default class App extends BaseController {
 			aNewSortersOngoingPollinations = this._aOngoingPollinationsListDefaultSorters;
 			aNewSortersPollinationsWithPlantings = this._aPollinationsWithPlantingsListDefaultSorters;
 		}
+		// @ts-ignore
 		this.byId("ongoingPollinationsList")!.getBinding("items")!.sort(aNewSortersOngoingPollinations);
+		// @ts-ignore
 		this.byId("pollinationsWithPlantingsList")!.getBinding("items")!.sort(aNewSortersPollinationsWithPlantings);
 	}
 
@@ -244,9 +249,15 @@ export default class App extends BaseController {
 	}	
 
 	public getGroupHeader(oGroup: any) {
-		return new GroupHeaderListItem({
-			title : oGroup.key + ' (' + oGroup.florescence_status + ')',
-		})
+		if (oGroup.florescence_status == FlorescenceStatus.FINISHED) {
+			return new GroupHeaderListItem({
+				title : '[finished] ' + oGroup.key,
+			})
+		} else {
+			return new GroupHeaderListItem({
+				title : oGroup.key,
+			})
+		}
 	}
 
 	public getGenusGroup(oContext: Context) {
@@ -358,7 +369,7 @@ export default class App extends BaseController {
 	// 		edit Pollination
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public onPressEditOngoingPollination(oEvent: Button$PressEvent): void {
+	public onPressEditOngoingPollination(oEvent: Button$PressEvent): void {  // nothing we can do about that type problem here; all solutions would be worse and much more code
 		const oSettingsModel = <JSONModel>this.getView()!.getModel("settingsModel");
 		const oOngoingPollination = <PollinationRead>(<Button | Icon>oEvent.getSource()).getBindingContext("pollinationsModel")!.getObject();
 
