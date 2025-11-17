@@ -16,7 +16,7 @@ import ComboBox from "sap/m/ComboBox";
 import GridList from "sap/f/GridList";
 import ListBinding from "sap/ui/model/ListBinding";
 import SearchField, { SearchField$LiveChangeEvent } from "sap/m/SearchField";
-import { BActiveFlorescence, PollinationRead, PotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, CreateUpdatePollenContainersRequest, SeedPlantingRead, BPollinationAttempt, UniqueCapsulePlant } from "../interfaces/entities";
+import { BActiveFlorescence, PollinationRead, PotentialPollenDonor, BResultsPotentialPollenDonors, PollinationCreate, BResultsPollenContainers, CreateUpdatePollenContainersRequest, SeedPlantingRead, BPollinationAttempt, UniqueCapsulePlant, PlantPreview } from "../interfaces/entities";
 import Control from "sap/ui/core/Control";
 import Util from "./custom/Util";
 import NewFlorescenceDialogHandler from "./custom/NewFlorescenceDialogHandler";
@@ -722,8 +722,7 @@ export default class App extends BaseController {
 	onPressSameParentTaxaPlantIcon(oEvent: Icon$PressEvent) {
 		// display info on same-parent-taxa plant as a popup message
 
-		// todo: types
-		const oSameParentTaxaPlant = oEvent.getSource().getBindingContext('potentialPollenDonorsModel')!.getObject()
+		const oSameParentTaxaPlant = <PlantPreview>oEvent.getSource().getBindingContext('potentialPollenDonorsModel')!.getObject()
 
         const sPlantName = oSameParentTaxaPlant.plant_id + ' ' + oSameParentTaxaPlant.plant_name;
         

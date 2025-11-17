@@ -130,6 +130,24 @@ export interface BPollinationStatus {
   key: string;
   text: string;
 }
+
+export interface PlantPreview {
+  plant_id: number;
+  plant_name: string;
+  full_botanical_html_name?: string;
+  plant_taxon_id?: number;
+  plant_taxon_name?: string;
+  active: boolean;
+  parent_plant_capsule_id?: number;
+  parent_plant_capsule_name?: string;
+  parent_plant_capsule_taxon_id?: number;
+  parent_plant_capsule_taxon_name?: string;
+  parent_plant_pollen_id?: number;
+  parent_plant_pollen_name?: string;
+  parent_plant_pollen_taxon_id?: number;
+  parent_plant_pollen_taxon_name?: string;
+}
+
 export interface PotentialPollenDonor {
   plant_id: number;
   plant_name: string;
@@ -142,6 +160,8 @@ export interface PotentialPollenDonor {
   already_ongoing_attempt: boolean;
   probability_pollination_to_seed?: number;
   pollination_attempts: BPollinationAttempt[];
+  previous_flower_closing_dates?: string[];
+  same_parent_taxa_plants: PlantPreview[];
 }
 export interface BResultsActiveFlorescences {
   action: string;
