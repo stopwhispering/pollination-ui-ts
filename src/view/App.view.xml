@@ -268,7 +268,7 @@
 														>
 														<HBox 
 															alignItems="Center" 
-  															height="55px"
+															height="55px"
 															width="100%">
 															<CheckBox
 																selected="{uniqueSeedCapsulePlantsModel>selected}"
@@ -284,12 +284,26 @@
 
 												</f:GridList>
 											</VBox>									
-										
-											<SearchField
-												placeholder="... or filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
-												liveChange=".onLiveChangeOngoingPollinationsFilter"
-												width="100%"
-											/>
+
+											<HBox justifyContent="SpaceBetween" alignItems="Center" width="100%" >
+												<SearchField
+													placeholder="... or filter by Plant Name, Plant ID, Pollen Type, or Pollination Date"
+													liveChange=".onLiveChangeOngoingPollinationsFilter"
+													width="100%"
+												>
+													<layoutData>
+														<FlexItemData growFactor="1" />
+													</layoutData>
+												</SearchField>
+
+												<SegmentedButton selectedKey="plant" selectionChange=".sortPollinationsWithPlantingsList"
+													class="sapUiTinyMarginBegin">
+													<items>
+														<SegmentedButtonItem text="Sort &amp; Group by Parent Plant" key="plant" />
+														<SegmentedButtonItem text="Sort by Harvest Date" key="elapsed_time" />
+													</items>
+												</SegmentedButton>
+											</HBox>
 										</VBox>
 									</Toolbar>
 								</f:headerToolbar>
@@ -313,16 +327,7 @@
 							</html:hr>
 
 
-							<!-- <OverflowToolbar> -->
-								<!-- <ToolbarSpacer/> -->
-								<SegmentedButton selectedKey="plant" selectionChange=".sortPollinationsWithPlantingsList">
-									<items>
-										<SegmentedButtonItem text="Sort &amp; Group by Parent Plant" key="plant" />
-										<SegmentedButtonItem text="Sort by Harvest Date" key="harvest_date" />
-									</items>
-								</SegmentedButton>
-								<!-- <ToolbarSpacer/> -->
-							<!-- </OverflowToolbar> -->
+
 
 							<f:GridList
 								id="pollinationsWithPlantingsList"

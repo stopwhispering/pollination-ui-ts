@@ -76,6 +76,7 @@ export default class App extends BaseController {
 	private _oPollinationStatisticsHandler: PollinationStatisticsHandler;
 
 	private _aPollinationsWithPlantingsListDefaultSorters: Sorter[] = [];
+	private _aOngoingPollinationsListDefaultSorters: Sorter[] = [];
 
 	public onInit() {
 
@@ -181,21 +182,30 @@ export default class App extends BaseController {
 		// change sort order for pollinations with plantings list
 		// for convenience, we save the old xml-based sorters at the beginning and only set the non-default sort order
 		// programmatically here		
-		const oGridList = this.byId("pollinationsWithPlantingsList");
-		const aCurrentSorters = oGridList!.getBinding("items")!.aSorters;
+		const oGridListOngoingPollinations = this.byId("ongoingPollinationsList");
+		const aCurrentSorterOngoingPollinationsList = oGridListOngoingPollinations!.getBinding("items")!.aSorters;
+
+		const oGridListPollinationsWithPlantings = this.byId("pollinationsWithPlantingsList");
+		const aCurrentSortersPollinationsWithPlantingsList = oGridListPollinationsWithPlantings!.getBinding("items")!.aSorters;
+
 		const sSelectedKey = oSelectedItem.getParameter('item')!.getKey();
 
 		if (this._aPollinationsWithPlantingsListDefaultSorters.length === 0){ 
-			this._aPollinationsWithPlantingsListDefaultSorters = aCurrentSorters;
+			this._aOngoingPollinationsListDefaultSorters = aCurrentSorterOngoingPollinationsList;
+			this._aPollinationsWithPlantingsListDefaultSorters = aCurrentSortersPollinationsWithPlantingsList;
 		}
 		
-		let aNewSorters: Sorter[] = [];
-		if (sSelectedKey === 'harvest_date'){
-			aNewSorters.push(new Sorter('harvest_date', false));  // ascending
+		let aNewSortersOngoingPollinations: Sorter[] = [];
+		let aNewSortersPollinationsWithPlantings: Sorter[] = [];
+		if (sSelectedKey === 'elapsed_time'){
+			aNewSortersOngoingPollinations.push(new Sorter('pollinated_at', false));  // ascending
+			aNewSortersPollinationsWithPlantings.push(new Sorter('harvest_date', false));  // ascending
 		} else {
-			aNewSorters = this._aPollinationsWithPlantingsListDefaultSorters;
+			aNewSortersOngoingPollinations = this._aOngoingPollinationsListDefaultSorters;
+			aNewSortersPollinationsWithPlantings = this._aPollinationsWithPlantingsListDefaultSorters;
 		}
-		this.byId("pollinationsWithPlantingsList")!.getBinding("items")!.sort(aNewSorters);
+		this.byId("ongoingPollinationsList")!.getBinding("items")!.sort(aNewSortersOngoingPollinations);
+		this.byId("pollinationsWithPlantingsList")!.getBinding("items")!.sort(aNewSortersPollinationsWithPlantings);
 	}
 
 
