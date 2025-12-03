@@ -61,7 +61,7 @@ export default class formatter extends ManagedObject {
 
     uniqueSeedCapsulesHasFilter(list: null | Array<any>) {
         if (list == null || list.length == 0) {
-            return true;
+            return false;
         }
         return list.some(plant => plant.selected === true);
     }
