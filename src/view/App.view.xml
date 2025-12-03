@@ -254,7 +254,9 @@
 										<VBox width="100%">
 											<VBox>
 												<HBox>
-													<Button text="Reset" press="onSeedCapsulePlantsSelectNone" />
+													<Button text="Reset" press="onSeedCapsulePlantsSelectNone" icon="sap-icon://clear-filter"/>
+													<Button text="Currently Flowering" press="onSeedCapsulePlantsSelectCurrentlyFlowering" icon="sap-icon://sort-descending" />
+													<Button text="Unsaved" press="onSeedCapsulePlantsSelectFromUnsaved" icon="sap-icon://sort-descending" enabled="{= !!${newPollinationsModel>/}.length }"/>
 												</HBox>
 
 												<f:GridList
@@ -276,7 +278,6 @@
 															/>
 															<Text
 																text="{uniqueSeedCapsulePlantsModel>plant_id} {uniqueSeedCapsulePlantsModel>plant_name}"
-																wrapping="true"
 																maxLines="3"
 															/>
 														</HBox>

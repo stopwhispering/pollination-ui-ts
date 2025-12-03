@@ -365,6 +365,33 @@ export default class App extends BaseController {
 	}	
 
 
+	onSeedCapsulePlantsSelectCurrentlyFlowering(oEvent: Button$PressEvent) {
+		// select exactly plants that are currently flowering for filtering
+		const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
+		const aPlants = <UniqueCapsulePlant[]>oUniqueCapsulePlantsModel.getData();
+		aPlants.forEach((oPlant) => {
+			// UniqueCapsulePlant has only basic properties, so we need to look up from the currentFlorescencesModel model
+			oPlant.selected = this._oActiveFlorescencesHandler.hasActiveFlorescence(oPlant.plant_id);;
+		});
+		oUniqueCapsulePlantsModel.updateBindings(false);
+
+		this.onSelectionChangedUniqueSeedCapsulePlants();
+	}	
+
+
+	onSeedCapsulePlantsSelectFromUnsaved(oEvent: Button$PressEvent) {
+		// select exactly plants which have an unsaved pollination for filtering
+		const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
+		const aPlants = <UniqueCapsulePlant[]>oUniqueCapsulePlantsModel.getData();
+		aPlants.forEach((oPlant) => {
+			oPlant.selected = this._oUnsavedPollinationsHandler.hasUnsavedPollinationForCapsulePlant(oPlant.plant_id);
+		});
+		oUniqueCapsulePlantsModel.updateBindings(false);
+
+		this.onSelectionChangedUniqueSeedCapsulePlants();
+	}	
+
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 		edit Pollination
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////

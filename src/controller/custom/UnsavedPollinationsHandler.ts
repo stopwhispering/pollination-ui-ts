@@ -69,6 +69,16 @@ export default class UnsavedPollinationsHandler extends ManagedObject {
 		this._oUnsavedPollinationsModel.updateBindings(false);
 	}
 
+	public hasUnsavedPollinationForCapsulePlant(oCapsulePlantId: number): boolean {
+		for (let i = 0; i < this._aUnsavedPollinations.length; i++) {
+			const oUnsavedPollination = this._aUnsavedPollinations[i];
+			if (oUnsavedPollination.seed_capsule_plant_id === oCapsulePlantId) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public predictPollinationToSeed(oUnsavedPollination: LUnsavedPollination) {
 
 		// call backend to predict probability of pollination to seed
