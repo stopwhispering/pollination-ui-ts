@@ -296,6 +296,10 @@ export default class App extends BaseController {
 		var oList = <GridList>this.byId("pollinationsWithPlantingsList");
 		var oBinding = <ListBinding>oList.getBinding("items");
 		oBinding.filter(aFilters, "Control");
+
+		// update uniqueSeedCapsulePlantsModel to refresh selection state
+		const oUniqueCapsulePlantsModel = <JSONModel>this.getView()!.getModel("uniqueSeedCapsulePlantsModel");
+		oUniqueCapsulePlantsModel.updateBindings(true);
 	}
 
 	public onLiveChangeOngoingPollinationsFilter(oEvent: SearchField$LiveChangeEvent) {

@@ -59,6 +59,13 @@ export default class formatter extends ManagedObject {
         return text + '</span>';
     }
 
+    uniqueSeedCapsulesHasFilter(list: null | Array<any>) {
+        if (list == null || list.length == 0) {
+            return true;
+        }
+        return list.some(plant => plant.selected === true);
+    }
+
     html_for_active_florescence_dates(inflorescence_appeared_at: string, first_flower_opened_at: string, last_flower_closed_at: string, florescence_status: FlorescenceStatus) {
         // dates in format '%Y-%m-%d', e.g. '2022-11-16'
         switch (florescence_status) {
@@ -193,4 +200,6 @@ export default class formatter extends ManagedObject {
         var tooltip = plant_name + ' (' + a + b + ')';
         return tooltip;
     }
+
+
 }

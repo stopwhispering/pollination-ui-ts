@@ -254,7 +254,15 @@
 										<VBox width="100%">
 											<VBox>
 												<HBox>
-													<Button text="Reset" press="onSeedCapsulePlantsSelectNone" icon="sap-icon://clear-filter"/>
+													<!-- use a function to determine enabled property -->
+													<Button 
+														text="Reset" 
+														press="onSeedCapsulePlantsSelectNone" 
+														icon="sap-icon://clear-filter"
+														enabled="{
+															path: 'uniqueSeedCapsulePlantsModel>/',
+															formatter: '.formatter.uniqueSeedCapsulesHasFilter'
+														}"/>
 													<Button text="Currently Flowering" press="onSeedCapsulePlantsSelectCurrentlyFlowering" icon="sap-icon://sort-descending" />
 													<Button text="Unsaved" press="onSeedCapsulePlantsSelectFromUnsaved" icon="sap-icon://sort-descending" enabled="{= !!${newPollinationsModel>/}.length }"/>
 												</HBox>
