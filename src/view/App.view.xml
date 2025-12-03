@@ -308,8 +308,8 @@
 												<SegmentedButton selectedKey="plant" selectionChange=".sortPollinationsWithPlantingsList"
 													class="sapUiTinyMarginBegin">
 													<items>
-														<SegmentedButtonItem text="Sort &amp; Group by Parent Plant" key="plant" />
-														<SegmentedButtonItem text="Sort by Harvest Date" key="elapsed_time" />
+														<SegmentedButtonItem text="By Plant" key="plant" tooltip="Group &amp; Sort by Capsule Plant" />
+														<SegmentedButtonItem text="By Date" key="elapsed_time" tooltip="Sort by Elapsed Time" />
 													</items>
 												</SegmentedButton>
 											</HBox>
